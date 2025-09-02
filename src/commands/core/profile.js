@@ -1,5 +1,6 @@
 const { SlashCommandBuilder, EmbedBuilder, ActionRowBuilder, ButtonBuilder, ButtonStyle, MessageFlags } = require('discord.js');
 const UserService = require('../../services/UserService');
+const ProfileDisplay = require('../../components/builders/ProfileDisplay');
 const { COLORS, EMOJIS } = require('../../config/constants');
 
 module.exports = {
@@ -18,70 +19,10 @@ module.exports = {
         try {
             const profile = await userService.getOrCreateUser(targetUser.id, targetUser.username);
 
-            const embed = new EmbedBuilder()
-                .setTitle(`${EMOJIS.DIMENSION} Dimensional Profile`)
-                .setDescription(`**${targetUser.username}**'s journey through the multiverse`)
-                .setColor(COLORS.PRIMARY)
-                .setThumbnail(targetUser.displayAvatarURL({ dynamic: true }))
-                .addFields(
-                    {
-                        name: `${EMOJIS.LEVEL} Level`,
-                        value: `\`${profile.level}\``,
-                        inline: true
-                    },
-                    {
-                        name: `${EMOJIS.EXP} Experience`,
-                        value: `\`${profile.exp.toLocaleString()}\``,
-                        inline: true
-                    },
-                    {
-                        name: `${EMOJIS.ENERGY} Energy`,
-                        value: `\`${profile.dimensionalEnergy}/${profile.maxEnergy}\``,
-                        inline: true
-                    },
-                    {
-                        name: `${EMOJIS.COIN} Coins`,
-                        value: `\`${profile.coins.toLocaleString()}\``,
-                        inline: true
-                    },
-                    {
-                        name: `${EMOJIS.DIMENSION} Current Dimension`,
-                        value: `\`${profile.currentDimension}\``,
-                        inline: true
-                    },
-                    {
-                        name: `${EMOJIS.STREAK} Daily Streak`,
-                        value: `\`${profile.dailyStreak} days\``,
-                        inline: true
-                    }
-                )
-                .setFooter({ text: `ID: ${targetUser.id}` })
-                .setTimestamp();
+            // Use the new V2 profile display
+            const profileDisplay = ProfileDisplay.createProfileEmbed(profile, targetUser);
 
-            // Components V2 - Create action buttons
-            const row = new ActionRowBuilder()
-                .addComponents(
-                    new ButtonBuilder()
-                        .setCustomId(`profile_stats_${targetUser.id}`)
-                        .setLabel('Detailed Stats')
-                        .setStyle(ButtonStyle.Primary)
-                        .setEmoji('📊'),
-                    new ButtonBuilder()
-                        .setCustomId(`profile_collection_${targetUser.id}`)
-                        .setLabel('Characters')
-                        .setStyle(ButtonStyle.Secondary)
-                        .setEmoji('👥'),
-                    new ButtonBuilder()
-                        .setCustomId(`profile_achievements_${targetUser.id}`)
-                        .setLabel('Achievements')
-                        .setStyle(ButtonStyle.Secondary)
-                        .setEmoji('🏆')
-                );
-
-            await interaction.reply({
-                embeds: [embed],
-                components: [row]
-            });
+            await interaction.reply(profileDisplay);
 
         } catch (error) {
             console.error('Profile command error:', error);

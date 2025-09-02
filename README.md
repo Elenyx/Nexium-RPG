@@ -98,7 +98,116 @@ Nexium is an advanced Discord bot that creates an immersive anime multiverse exp
    npm run dev
    ```
 
-## 📖 Commands Guide
+## 🌐 Web Integration
+
+Nexium includes a web interface that syncs with your Discord bot, allowing users to view their character collections online and connect their Discord accounts seamlessly.
+
+### **Features**
+- **Discord OAuth Integration**: Secure login with Discord accounts
+- **Personal Collection Viewer**: Browse your characters with advanced filtering
+- **Character Database**: View all available characters across anime series
+- **Real-time Sync**: Collections update automatically from Discord bot
+- **Responsive Design**: Works perfectly on desktop and mobile devices
+
+### **Web Setup**
+
+1. **Install web dependencies** (already included)
+   ```bash
+   npm install  # Web dependencies are already in package.json
+   ```
+
+2. **Configure Discord OAuth**
+   - Go to [Discord Developer Portal](https://discord.com/developers/applications)
+   - Select your bot application
+   - Go to "OAuth2" → "General"
+   - Add redirect URI: `http://localhost:3001/auth/discord/callback`
+   - Copy Client ID and Client Secret to your `.env` file
+
+3. **Update environment variables**
+   ```env
+   # Add these to your .env file
+   DISCORD_CLIENT_ID=your_discord_client_id
+   DISCORD_CLIENT_SECRET=your_discord_client_secret
+   DISCORD_CALLBACK_URL=http://localhost:3001/auth/discord/callback
+   WEB_PORT=3001
+   SESSION_SECRET=your_super_secret_session_key_here
+   ```
+
+4. **Seed character database**
+   ```bash
+   npm run seed-characters
+   ```
+
+5. **Start web server**
+   ```bash
+   npm run web-dev  # Development mode with auto-reload
+   # or
+   npm run web      # Production mode
+   ```
+
+6. **Access the web interface**
+   - Main site: `http://localhost:3001`
+   - Character database: `http://localhost:3001/characters`
+   - User dashboard: `http://localhost:3001/dashboard` (requires login)
+   - Collection viewer: `http://localhost:3001/collection` (requires login)
+
+### **How It Works**
+1. **Discord Login**: Users authenticate via Discord OAuth2
+2. **Account Linking**: Discord user ID links to web account automatically
+3. **Data Sync**: Character ownership data syncs between Discord bot and web
+4. **Real-time Updates**: Collections update when users summon characters in Discord
+
+### **Integration Points**
+- **Character Collection**: View detailed character stats and images
+- **Progress Tracking**: See collection completion percentages
+- **Rarity Filtering**: Filter characters by rarity, anime, and other criteria
+- **Mobile Friendly**: Responsive design works on all devices
+
+## � Web Deployment
+
+### Railway Deployment (Recommended)
+
+Deploy the full web application to Railway for production:
+
+1. **Connect to Railway:**
+   ```bash
+   npm install -g @railway/cli
+   railway login
+   railway init nexium-web
+   ```
+
+2. **Configure Environment Variables:**
+   ```env
+   DISCORD_CLIENT_ID=your_client_id
+   DISCORD_CLIENT_SECRET=your_client_secret
+   DISCORD_CALLBACK_URL=https://nexium-production.up.railway.app/auth/discord/callback
+   DATABASE_URL=${{Postgres.DATABASE_URL}}
+   SESSION_SECRET=your_session_secret
+   FRONTEND_URL=https://nexium-production.up.railway.app
+   NODE_ENV=production
+   ```
+
+3. **Deploy:**
+   ```bash
+   railway up
+   ```
+
+4. **Seed Database:**
+   ```bash
+   railway connect
+   npm run seed-characters
+   ```
+
+📖 **Detailed Guide:** See [RAILWAY_DEPLOYMENT.md](RAILWAY_DEPLOYMENT.md) for complete instructions.
+
+### Alternative Deployments
+
+- **Vercel:** Good for serverless functions
+- **Render:** Free tier available
+- **Heroku:** Traditional hosting
+- **GitHub Pages:** Static files only (character database, guides)
+
+## �📖 Commands Guide
 
 ### 🌟 **Essential Commands**
 | Command | Description | Usage |

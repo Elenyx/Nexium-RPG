@@ -1,0 +1,520 @@
+/* Collection Page Styles */
+.collection-controls {
+    background: white;
+    border-radius: 15px;
+    padding: 2rem;
+    margin-bottom: 2rem;
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.08);
+    border: 1px solid rgba(0, 0, 0, 0.05);
+}
+
+.search-bar {
+    display: flex;
+    gap: 1rem;
+    margin-bottom: 1.5rem;
+}
+
+.search-input {
+    flex: 1;
+    padding: 0.75rem 1rem;
+    border: 2px solid #e2e8f0;
+    border-radius: 10px;
+    font-size: 1rem;
+    transition: border-color 0.2s;
+}
+
+.search-input:focus {
+    outline: none;
+    border-color: #667eea;
+}
+
+.search-btn {
+    padding: 0.75rem 1.5rem;
+    background: #667eea;
+    color: white;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    font-size: 1rem;
+    transition: background 0.2s;
+}
+
+.search-btn:hover {
+    background: #5a67d8;
+}
+
+.filters {
+    display: flex;
+    gap: 1rem;
+    align-items: center;
+}
+
+.filter-select {
+    padding: 0.75rem 1rem;
+    border: 2px solid #e2e8f0;
+    border-radius: 10px;
+    font-size: 1rem;
+    background: white;
+    cursor: pointer;
+    min-width: 150px;
+}
+
+.filter-select:focus {
+    outline: none;
+    border-color: #667eea;
+}
+
+.sort-btn {
+    padding: 0.75rem 1.5rem;
+    background: #f7fafc;
+    color: #2d3748;
+    border: 2px solid #e2e8f0;
+    border-radius: 10px;
+    cursor: pointer;
+    font-size: 1rem;
+    font-weight: 600;
+    transition: all 0.2s;
+}
+
+.sort-btn:hover {
+    background: #edf2f7;
+    border-color: #cbd5e0;
+}
+
+.collection-stats {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 1rem;
+    margin-bottom: 2rem;
+}
+
+.stat-card {
+    background: white;
+    border-radius: 15px;
+    padding: 1.5rem;
+    text-align: center;
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.08);
+    border: 1px solid rgba(0, 0, 0, 0.05);
+}
+
+.stat-card h3 {
+    margin: 0 0 0.5rem 0;
+    color: #718096;
+    font-size: 0.9rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.stat-number {
+    display: block;
+    font-size: 2.5rem;
+    font-weight: 700;
+    color: #2d3748;
+}
+
+.stat-number.legendary {
+    color: #ffd700;
+}
+
+.stat-number.mythic {
+    color: #ff6b6b;
+}
+
+.character-collection {
+    margin-bottom: 2rem;
+}
+
+.character-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 1.5rem;
+}
+
+.character-card {
+    background: white;
+    border-radius: 15px;
+    overflow: hidden;
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.08);
+    border: 2px solid transparent;
+    transition: all 0.3s ease;
+    cursor: pointer;
+}
+
+.character-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+}
+
+.character-card[data-rarity="legendary"] {
+    border-color: #ffd700;
+    box-shadow: 0 5px 20px rgba(255, 215, 0, 0.2);
+}
+
+.character-card[data-rarity="mythic"] {
+    border-color: #ff6b6b;
+    box-shadow: 0 5px 20px rgba(255, 107, 107, 0.2);
+}
+
+.character-card[data-rarity="epic"] {
+    border-color: #a855f7;
+    box-shadow: 0 5px 20px rgba(168, 85, 247, 0.2);
+}
+
+.character-card[data-rarity="rare"] {
+    border-color: #48bb78;
+    box-shadow: 0 5px 20px rgba(72, 187, 120, 0.2);
+}
+
+.character-image {
+    position: relative;
+    width: 100%;
+    height: 200px;
+    overflow: hidden;
+}
+
+.character-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.3s ease;
+}
+
+.character-card:hover .character-image img {
+    transform: scale(1.05);
+}
+
+.character-rarity-badge {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    padding: 0.25rem 0.5rem;
+    border-radius: 15px;
+    font-size: 0.7rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    color: white;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+}
+
+.character-rarity-badge.common {
+    background: #a0aec0;
+}
+
+.character-rarity-badge.rare {
+    background: #48bb78;
+}
+
+.character-rarity-badge.epic {
+    background: #a855f7;
+}
+
+.character-rarity-badge.legendary {
+    background: #ffd700;
+    color: #2d3748;
+}
+
+.character-rarity-badge.mythic {
+    background: #ff6b6b;
+}
+
+.character-info {
+    padding: 1.5rem;
+}
+
+.character-name {
+    margin: 0 0 0.5rem 0;
+    font-size: 1.2rem;
+    font-weight: 700;
+    color: #2d3748;
+}
+
+.character-anime {
+    margin: 0 0 1rem 0;
+    font-size: 0.9rem;
+    color: #718096;
+    font-weight: 500;
+}
+
+.character-stats {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.stat {
+    font-size: 0.85rem;
+    color: #4a5568;
+    font-weight: 600;
+}
+
+.loading-spinner {
+    text-align: center;
+    padding: 3rem;
+    color: #718096;
+}
+
+.spinner {
+    width: 40px;
+    height: 40px;
+    border: 4px solid #e2e8f0;
+    border-top: 4px solid #667eea;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+    margin: 0 auto 1rem auto;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+.empty-state {
+    text-align: center;
+    padding: 4rem 2rem;
+    background: white;
+    border-radius: 15px;
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.08);
+    border: 1px solid rgba(0, 0, 0, 0.05);
+}
+
+.empty-content h2 {
+    margin: 0 0 1rem 0;
+    color: #2d3748;
+    font-size: 2rem;
+}
+
+.empty-content p {
+    margin: 0 0 2rem 0;
+    color: #718096;
+    font-size: 1.1rem;
+    max-width: 500px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.discord-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 1rem 2rem;
+    background: #5865f2;
+    color: white;
+    text-decoration: none;
+    border-radius: 10px;
+    font-weight: 600;
+    font-size: 1.1rem;
+    transition: all 0.2s;
+    box-shadow: 0 5px 15px rgba(88, 101, 242, 0.3);
+}
+
+.discord-btn:hover {
+    background: #4752c4;
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(88, 101, 242, 0.4);
+}
+
+.discord-icon {
+    font-size: 1.5rem;
+}
+
+/* Modal Styles */
+.modal {
+    position: fixed;
+    z-index: 1000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.8);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.modal-content {
+    background: white;
+    border-radius: 15px;
+    width: 90%;
+    max-width: 600px;
+    max-height: 90vh;
+    overflow-y: auto;
+    position: relative;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+}
+
+.close-btn {
+    position: absolute;
+    top: 15px;
+    right: 20px;
+    font-size: 2rem;
+    font-weight: bold;
+    color: #718096;
+    cursor: pointer;
+    z-index: 1001;
+}
+
+.close-btn:hover {
+    color: #2d3748;
+}
+
+.character-detail {
+    padding: 2rem;
+}
+
+.character-detail-header {
+    display: flex;
+    gap: 1.5rem;
+    margin-bottom: 2rem;
+}
+
+.detail-image {
+    width: 150px;
+    height: 150px;
+    border-radius: 10px;
+    object-fit: cover;
+    flex-shrink: 0;
+}
+
+.detail-info h2 {
+    margin: 0 0 0.5rem 0;
+    font-size: 1.8rem;
+    color: #2d3748;
+}
+
+.detail-anime {
+    margin: 0 0 0.5rem 0;
+    color: #718096;
+    font-size: 1rem;
+}
+
+.detail-rarity {
+    display: inline-block;
+    padding: 0.5rem 1rem;
+    border-radius: 20px;
+    font-size: 0.9rem;
+    font-weight: 700;
+    text-transform: uppercase;
+}
+
+.detail-rarity.legendary {
+    background: #ffd700;
+    color: #2d3748;
+}
+
+.detail-rarity.mythic {
+    background: #ff6b6b;
+    color: white;
+}
+
+.detail-rarity.epic {
+    background: #a855f7;
+    color: white;
+}
+
+.detail-rarity.rare {
+    background: #48bb78;
+    color: white;
+}
+
+.detail-rarity.common {
+    background: #a0aec0;
+    color: white;
+}
+
+.character-detail-stats {
+    margin-bottom: 2rem;
+}
+
+.stat-row {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 0.5rem;
+    padding: 0.5rem 0;
+    border-bottom: 1px solid #e2e8f0;
+}
+
+.stat-row:last-child {
+    border-bottom: none;
+}
+
+.character-detail-description,
+.character-detail-abilities {
+    margin-bottom: 1.5rem;
+}
+
+.character-detail-description h3,
+.character-detail-abilities h3 {
+    margin: 0 0 1rem 0;
+    color: #2d3748;
+    font-size: 1.2rem;
+}
+
+.character-detail-description p {
+    color: #4a5568;
+    line-height: 1.6;
+}
+
+.character-detail-abilities ul {
+    list-style: none;
+    padding: 0;
+}
+
+.character-detail-abilities li {
+    padding: 0.5rem 0;
+    border-bottom: 1px solid #f7fafc;
+    color: #4a5568;
+}
+
+.character-detail-abilities li:before {
+    content: "⚡";
+    margin-right: 0.5rem;
+}
+
+.error {
+    text-align: center;
+    color: #e53e3e;
+    padding: 2rem;
+    font-size: 1.1rem;
+}
+
+@media (max-width: 768px) {
+    .collection-controls {
+        padding: 1rem;
+    }
+
+    .search-bar {
+        flex-direction: column;
+    }
+
+    .filters {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .filter-select {
+        min-width: auto;
+    }
+
+    .collection-stats {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .character-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .character-detail-header {
+        flex-direction: column;
+        text-align: center;
+    }
+
+    .modal-content {
+        width: 95%;
+        margin: 1rem;
+    }
+
+    .character-detail {
+        padding: 1rem;
+    }
+}

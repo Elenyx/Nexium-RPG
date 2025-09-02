@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard - Nexium RPG</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="css/dashboard.css">
+</head>
+<body>
+    <!-- Navigation Header -->
+    <nav class="nav-header">
+        <div class="nav-container">
+            <a href="/" class="nav-logo">NEXIUM</a>
+            <ul class="nav-menu">
+                <li><a href="/collection">My Collection</a></li>
+                <li><a href="/characters">All Characters</a></li>
+                <li><a href="/auth/logout">Logout</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <div class="dashboard-container">
+        <header class="dashboard-header">
+            <div class="user-info">
+                <img id="user-avatar" src="" alt="User Avatar" class="user-avatar">
+                <div class="user-details">
+                    <h1 id="user-greeting">Welcome back!</h1>
+                    <p id="user-stats">Loading your stats...</p>
+                </div>
+            </div>
+        </header>
+
+        <div class="dashboard-grid">
+            <!-- Quick Stats -->
+            <section class="stats-card">
+                <h2>📊 Your Stats</h2>
+                <div class="stats-grid">
+                    <div class="stat-item">
+                        <span class="stat-label">Characters Owned</span>
+                        <span class="stat-value" id="character-count">0</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-label">Total Level</span>
+                        <span class="stat-value" id="total-level">0</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-label">Rare Characters</span>
+                        <span class="stat-value" id="rare-count">0</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-label">Legendary Characters</span>
+                        <span class="stat-value" id="legendary-count">0</span>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Recent Characters -->
+            <section class="recent-card">
+                <h2>🆕 Recent Acquisitions</h2>
+                <div id="recent-characters" class="character-grid">
+                    <p class="loading">Loading your recent characters...</p>
+                </div>
+            </section>
+
+            <!-- Quick Actions -->
+            <section class="actions-card">
+                <h2>⚡ Quick Actions</h2>
+                <div class="action-buttons">
+                    <a href="/collection" class="action-btn primary">
+                        <span class="action-icon">📚</span>
+                        <span class="action-text">View Collection</span>
+                    </a>
+                    <a href="/characters" class="action-btn secondary">
+                        <span class="action-icon">🔍</span>
+                        <span class="action-text">Browse Characters</span>
+                    </a>
+                    <a href="https://discord.com/invite/nexium" class="action-btn discord" target="_blank">
+                        <span class="action-icon">💬</span>
+                        <span class="action-text">Join Discord</span>
+                    </a>
+                </div>
+            </section>
+        </div>
+    </div>
+
+    <script>
+        // Load user data and stats
+        async function loadDashboard() {
+            try {
+                // Load user info
+                const userResponse = await fetch('/api/user');
+                if (!userResponse.ok) {
+                    window.location.href = '/';
+                    return;
+                }
+
+                const user = await userResponse.json();
+                document.getElementById('user-greeting').textContent = `Welcome back, ${user.username}!`;
+                document.getElementById('user-avatar').src = user.avatar;
+
+                // Load user collection
+                const collectionResponse = await fetch('/api/user/collection');
+                const characters = await collectionResponse.json();
+
+                // Update stats
+                updateStats(characters);
+
+                // Show recent characters (last 6)
+                showRecentCharacters(characters.slice(-6));
+
+            } catch (error) {
+                console.error('Error loading dashboard:', error);
+                document.getElementById('user-stats').textContent = 'Error loading stats';
+            }
+        }
+
+        function updateStats(characters) {
+            document.getElementById('character-count').textContent = characters.length;
+            document.getElementById('total-level').textContent = characters.reduce((sum, char) => sum + char.level, 0);
+            document.getElementById('rare-count').textContent = characters.filter(char => char.rarity === 'RARE').length;
+            document.getElementById('legendary-count').textContent = characters.filter(char => ['LEGENDARY', 'MYTHIC'].includes(char.rarity)).length;
+        }
+
+        function showRecentCharacters(characters) {
+            const container = document.getElementById('recent-characters');
+
+            if (characters.length === 0) {
+                container.innerHTML = '<p class="no-characters">No characters yet! Start collecting on Discord.</p>';
+                return;
+            }
+
+            container.innerHTML = characters.map(character => `
+                <div class="character-card" data-rarity="${character.rarity.toLowerCase()}">
+                    <div class="character-image">
+                        <img src="${character.imageUrl}" alt="${character.name}" loading="lazy">
+                    </div>
+                    <div class="character-info">
+                        <h3 class="character-name">${character.name}</h3>
+                        <p class="character-anime">${character.anime}</p>
+                        <span class="character-rarity">${character.rarity}</span>
+                        <span class="character-level">Lv. ${character.level}</span>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        // Load dashboard on page load
+        document.addEventListener('DOMContentLoaded', loadDashboard);
+    </script>
+</body>
+</html>

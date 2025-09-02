@@ -1,16 +1,41 @@
 const defineUser = require('./User');
-// Add other model definitions here as they are created
+const defineCharacter = require('./Character');
+const defineUserCharacter = require('./UserCharacter');
 
 const initializeModels = (sequelize) => {
     const User = defineUser(sequelize);
-    // Initialize other models here
+    const Character = defineCharacter(sequelize);
+    const UserCharacter = defineUserCharacter(sequelize);
 
-    // Define associations here if needed
-    // Example: User.hasMany(OtherModel);
+    // Define associations
+    User.belongsToMany(Character, {
+        through: UserCharacter,
+        foreignKey: 'userId',
+        otherKey: 'characterId',
+        as: 'characters'
+    });
+
+    Character.belongsToMany(User, {
+        through: UserCharacter,
+        foreignKey: 'characterId',
+        otherKey: 'userId',
+        as: 'owners'
+    });
+
+    UserCharacter.belongsTo(User, {
+        foreignKey: 'userId',
+        as: 'user'
+    });
+
+    UserCharacter.belongsTo(Character, {
+        foreignKey: 'characterId',
+        as: 'character'
+    });
 
     return {
         User,
-        // Other models
+        Character,
+        UserCharacter
     };
 };
 

@@ -93,8 +93,20 @@ class ProfileDisplay {
                     .setEmoji('🛒')
             );
 
+        const section6 = new SectionBuilder()
+            .addTextDisplayComponents(
+                td => td.setContent(' ')
+            )
+            .setButtonAccessory(
+                btn => btn
+                    .setLabel('View on Web')
+                    .setStyle(ButtonStyle.Link)
+                    .setURL(`${process.env.FRONTEND_URL || 'https://nexium-production.up.railway.app'}/collection`)
+                    .setEmoji('🌐')
+            );
+
         return {
-            components: [section1, section2, section3, section4, section5],
+            components: [section1, section2, section3, section4, section5, section6],
             flags: MessageFlags.IsComponentsV2
         };
     }
