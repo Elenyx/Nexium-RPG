@@ -15,37 +15,16 @@
             scroll-behavior: smooth;
         }
 
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #0a0a0a 0%, #1a0033 50%, #0a0a0a 100%);
+            color: #e0e0e0;
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
         .container {
-            max-        </section>
-
-        <!-- Guides Section -->
-        <section id="guides" class="guides-section" style="margin: 60px 0; padding: 40px; background: rgba(218, 165, 32, 0.05); border-radius: 15px; border: 1px solid #daa520;">
-            <h2 style="color: #daa520; text-align: center; margin-bottom: 30px; font-size: 2rem;">📖 Quick Start Guide</h2>
-            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 30px; max-width: 1000px; margin: 0 auto;">
-                <div style="padding: 20px; background: rgba(255, 255, 255, 0.05); border-radius: 10px;">
-                    <h3 style="color: #daa520; margin-bottom: 15px;">🎯 Getting Started</h3>
-                    <ol style="color: #d4d4d4; padding-left: 20px;">
-                        <li>Join our Discord server</li>
-                        <li>Use <code style="background: rgba(138, 43, 226, 0.2); padding: 2px 6px; border-radius: 3px;">/summon</code> to get your first character</li>
-                        <li>Check your collection with <code style="background: rgba(138, 43, 226, 0.2); padding: 2px 6px; border-radius: 3px;">/collection</code></li>
-                        <li>Start battling with <code style="background: rgba(138, 43, 226, 0.2); padding: 2px 6px; border-radius: 3px;">/battle</code></li>
-                    </ol>
-                </div>
-                <div style="padding: 20px; background: rgba(255, 255, 255, 0.05); border-radius: 10px;">
-                    <h3 style="color: #daa520; margin-bottom: 15px;">💎 Rarity System</h3>
-                    <ul style="color: #d4d4d4; padding-left: 20px;">
-                        <li><strong style="color: #90EE90;">Common:</strong> Basic characters</li>
-                        <li><strong style="color: #87CEEB;">Rare:</strong> Uncommon finds</li>
-                        <li><strong style="color: #DDA0DD;">Epic:</strong> Powerful warriors</li>
-                        <li><strong style="color: #FFD700;">Legendary:</strong> Elite fighters</li>
-                        <li><strong style="color: #FF6347;">Mythic:</strong> Rare legends</li>
-                        <li><strong style="color: #FF4500;">Dimensional:</strong> Ultimate power</li>
-                    </ul>
-                </div>
-            </div>
-        </section>
-
-        <section class="features" id="features"> 1200px;
+            max-width: 1200px;
             margin: 0 auto;
             padding: 20px;
         }
@@ -361,6 +340,18 @@
             .logo {
                 font-size: 2.5rem;
             }
+
+            .features {
+                grid-template-columns: 1fr;
+            }
+
+            .stats {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .character-showcase {
+                grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            }
         }
 
         /* Animated background elements */
@@ -468,7 +459,34 @@
             </div>
         </section>
 
-        <section class="features" id="features">
+        <!-- Guides Section -->
+        <section id="guides" class="guides-section" style="margin: 60px 0; padding: 40px; background: rgba(218, 165, 32, 0.05); border-radius: 15px; border: 1px solid #daa520;">
+            <h2 style="color: #daa520; text-align: center; margin-bottom: 30px; font-size: 2rem;">📖 Quick Start Guide</h2>
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 30px; max-width: 1000px; margin: 0 auto;">
+                <div style="padding: 20px; background: rgba(255, 255, 255, 0.05); border-radius: 10px;">
+                    <h3 style="color: #daa520; margin-bottom: 15px;">🎯 Getting Started</h3>
+                    <ol style="color: #d4d4d4; padding-left: 20px;">
+                        <li>Join our Discord server</li>
+                        <li>Use <code style="background: rgba(138, 43, 226, 0.2); padding: 2px 6px; border-radius: 3px;">/summon</code> to get your first character</li>
+                        <li>Check your collection with <code style="background: rgba(138, 43, 226, 0.2); padding: 2px 6px; border-radius: 3px;">/collection</code></li>
+                        <li>Start battling with <code style="background: rgba(138, 43, 226, 0.2); padding: 2px 6px; border-radius: 3px;">/battle</code></li>
+                    </ol>
+                </div>
+                <div style="padding: 20px; background: rgba(255, 255, 255, 0.05); border-radius: 10px;">
+                    <h3 style="color: #daa520; margin-bottom: 15px;">💎 Rarity System</h3>
+                    <ul style="color: #d4d4d4; padding-left: 20px;">
+                        <li><strong style="color: #90EE90;">Common:</strong> Basic characters</li>
+                        <li><strong style="color: #87CEEB;">Rare:</strong> Uncommon finds</li>
+                        <li><strong style="color: #DDA0DD;">Epic:</strong> Powerful warriors</li>
+                        <li><strong style="color: #FFD700;">Legendary:</strong> Elite fighters</li>
+                        <li><strong style="color: #FF6347;">Mythic:</strong> Rare legends</li>
+                        <li><strong style="color: #FF4500;">Dimensional:</strong> Ultimate power</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <section class="features">
             <div class="feature-card">
                 <span class="feature-icon">🎴</span>
                 <h3 class="feature-title">Character Collection</h3>
