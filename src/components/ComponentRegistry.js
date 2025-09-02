@@ -78,13 +78,28 @@ class ComponentRegistry {
     }
 
     /**
-     * Creates a character detail view
-     * @param {Object} character - Character data
+     * Creates a modern character collection display
+     * @param {Array} characters - Array of user's characters
      * @param {Object} targetUser - Discord user object
-     * @returns {Object} Character detail embed options
+     * @param {number} page - Current page number
+     * @param {number} totalPages - Total number of pages
+     * @returns {Object} Modern collection embed options
      */
-    createCharacterDetail(character, targetUser) {
-        return CharacterCollection.createCharacterDetailEmbed(character, targetUser);
+    createModernCollection(characters, targetUser, page = 1, totalPages = 1) {
+        return CharacterCollection.createModernCollectionEmbed(characters, targetUser, page, totalPages);
+    }
+
+    /**
+     * Creates an adaptive character collection (chooses best format)
+     * @param {Array} characters - Array of user's characters
+     * @param {Object} targetUser - Discord user object
+     * @param {string} displayMode - 'modern' or 'classic'
+     * @param {number} page - Current page number
+     * @param {number} totalPages - Total number of pages
+     * @returns {Object} Adaptive collection display options
+     */
+    createAdaptiveCollection(characters, targetUser, displayMode = 'modern', page = 1, totalPages = 1) {
+        return CharacterCollection.createAdaptiveCollection(characters, targetUser, displayMode, page, totalPages);
     }
 
     /**

@@ -91,6 +91,12 @@ class ButtonHandler {
             case 'back':
                 await this.profileHandlers.handleBack(interaction, params);
                 return true;
+            case 'switch':
+                await this.profileHandlers.handleCollectionSwitch(interaction, params);
+                return true;
+            case 'switch_modern':
+                await this.profileHandlers.handleCollectionSwitchModern(interaction, params);
+                return true;
             default:
                 return false;
         }

@@ -75,11 +75,18 @@ class ProfileButtonHandlers {
         try {
             await interaction.deferUpdate();
 
-            // TODO: Get user's actual character collection
+            // TODO: Get user's actual character collection from database
             const characters = []; // Placeholder for character data
-            const totalPages = Math.ceil(characters.length / 10) || 1;
+            const totalPages = Math.ceil(characters.length / 6) || 1; // 6 per page for modern view
 
-            const collectionDisplay = this.registry.createCollection(characters, targetUser, 1, totalPages);
+            // Use adaptive collection that chooses the best display format
+            const collectionDisplay = this.registry.createAdaptiveCollection(
+                characters,
+                targetUser,
+                'modern', // Default to modern display
+                1,
+                totalPages
+            );
 
             await interaction.editReply(collectionDisplay);
 
@@ -260,6 +267,80 @@ class ProfileButtonHandlers {
             console.error('Error handling back button:', error);
             await interaction.editReply({
                 content: 'An error occurred while returning to profile.',
+                embeds: [],
+                components: []
+            });
+        }
+    }
+
+    /**
+     * Handles collection view switch button
+     * @param {Object} interaction - Discord interaction
+     * @param {Array} params - Button parameters
+     */
+    async handleCollectionSwitch(interaction, params) {
+        const [userId] = params;
+        const targetUser = await this.client.users.fetch(userId);
+
+        try {
+            await interaction.deferUpdate();
+
+            // TODO: Get user's actual character collection from database
+            const characters = []; // Placeholder for character data
+            const totalPages = Math.ceil(characters.length / 10) || 1; // Use 10 for classic view
+
+            // Switch to classic embed view
+            const collectionDisplay = this.registry.createAdaptiveCollection(
+                characters,
+                targetUser,
+                'classic', // Switch to classic display
+                1,
+                totalPages
+            );
+
+            await interaction.editReply(collectionDisplay);
+
+        } catch (error) {
+            console.error('Error handling collection switch:', error);
+            await interaction.editReply({
+                content: 'An error occurred while switching collection view.',
+                embeds: [],
+                components: []
+            });
+        }
+    }
+
+    /**
+     * Handles switch to modern collection view
+     * @param {Object} interaction - Discord interaction
+     * @param {Array} params - Button parameters
+     */
+    async handleCollectionSwitchModern(interaction, params) {
+        const [userId] = params;
+        const targetUser = await this.client.users.fetch(userId);
+
+        try {
+            await interaction.deferUpdate();
+
+            // TODO: Get user's actual character collection from database
+            const characters = []; // Placeholder for character data
+            const totalPages = Math.ceil(characters.length / 6) || 1; // Use 6 for modern view
+
+            // Switch to modern container view
+            const collectionDisplay = this.registry.createAdaptiveCollection(
+                characters,
+                targetUser,
+                'modern', // Switch to modern display
+                1,
+                totalPages
+            );
+
+            await interaction.editReply(collectionDisplay);
+
+        } catch (error) {
+            console.error('Error handling collection switch to modern:', error);
+            await interaction.editReply({
+                content: 'An error occurred while switching to modern collection view.',
                 embeds: [],
                 components: []
             });
