@@ -286,11 +286,48 @@ class CharacterCollection {
         actionComponents.push(actionRow);
 
         return {
-            content: `${EMOJIS.SUMMON} **${targetUser.username}'s Character Collection**`,
-            components: [...components, ...actionComponents],
+            embeds: [{
+                title: `${EMOJIS.SUMMON} Character Collection`,
+                description: `${targetUser.username}'s anime character collection • Page ${page}/${totalPages}`,
+                color: COLORS.PRIMARY,
+                fields: pageCharacters.length === 0 ? [{
+                    name: '📭 No Characters Found',
+                    value: 'You haven\'t collected any characters yet! Use /summon to get your first character.',
+                    inline: false
+                }] : this.formatCharactersForEmbed(pageCharacters),
+                footer: { text: `Showing ${startIndex + 1}-${Math.min(endIndex, characters.length)} of ${characters.length} characters` }
+            }],
+            components: actionComponents,
             files: files,
             flags: MessageFlags.IsComponentsV2
         };
+    }
+
+    /**
+     * Formats characters for embed display
+     * @param {Array} characters - Array of characters to format
+     * @returns {Array} Array of embed fields
+     */
+    static formatCharactersForEmbed(characters) {
+        const fields = [];
+        const rarities = this.groupCharactersByRarity(characters);
+
+        for (const [rarity, chars] of Object.entries(rarities)) {
+            if (chars.length > 0) {
+                const emoji = this.getRarityEmoji(rarity);
+                const charList = chars.map(char =>
+                    `${emoji} **${char.name}** (Lv.${char.level})`
+                ).join('\n');
+
+                fields.push({
+                    name: `${this.getRarityEmoji(rarity)} ${rarity} Characters (${chars.length})`,
+                    value: charList.length > 1024 ? charList.substring(0, 1021) + '...' : charList,
+                    inline: false
+                });
+            }
+        }
+
+        return fields;
     }
 
     /**
