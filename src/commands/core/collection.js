@@ -1,5 +1,5 @@
 const { SlashCommandBuilder, EmbedBuilder, ActionRowBuilder, ButtonBuilder, ButtonStyle, MessageFlags } = require('discord.js');
-const { User, Character, UserCharacter } = require('../../database/models');
+const { models } = require('../../database/connection');
 const CardAlbum = require('../../services/CardAlbum');
 const { COLORS, EMOJIS } = require('../../config/constants');
 
@@ -26,11 +26,21 @@ module.exports = {
             // Defer reply since image generation might take time
             await interaction.deferReply();
 
+            // Check if database is available
+            if (!models) {
+                const embed = new EmbedBuilder()
+                    .setColor(COLORS.ERROR)
+                    .setTitle(`${EMOJIS.ERROR} Database Unavailable`)
+                    .setDescription('The database is not configured. Please check your environment variables.');
+
+                return await interaction.editReply({ embeds: [embed] });
+            }
+
             // Get user's characters from database
-            const userCharacters = await UserCharacter.findAll({
+            const userCharacters = await models.UserCharacter.findAll({
                 where: { userId: targetUser.id },
                 include: [{
-                    model: Character,
+                    model: models.Character,
                     as: 'character',
                     attributes: ['id', 'name', 'rarity', 'imagePath']
                 }],

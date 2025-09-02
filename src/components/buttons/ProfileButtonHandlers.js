@@ -204,7 +204,7 @@ class ProfileButtonHandlers {
                         .setCustomId(`profile_back_${userId}`)
                         .setLabel('Back to Profile')
                         .setStyle(ButtonStyle.Secondary)
-                        .setEmoji('⬅️')
+                        .setEmoji({ name: '⬅️' })
                 );
 
             await interaction.editReply({

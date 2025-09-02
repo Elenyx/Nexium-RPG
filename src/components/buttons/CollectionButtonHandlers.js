@@ -3,7 +3,7 @@
  */
 
 const { EmbedBuilder, ActionRowBuilder, ButtonBuilder, ButtonStyle } = require('discord.js');
-const { User, Character, UserCharacter } = require('../../database/models');
+const { models } = require('../../database/connection');
 const CardAlbum = require('../../services/CardAlbum');
 const { COLORS, EMOJIS } = require('../../config/constants');
 
@@ -24,11 +24,21 @@ class CollectionButtonHandlers {
         try {
             await interaction.deferUpdate();
 
+            // Check if database is available
+            if (!models) {
+                const embed = new EmbedBuilder()
+                    .setColor(COLORS.ERROR)
+                    .setTitle(`${EMOJIS.ERROR} Database Unavailable`)
+                    .setDescription('The database is not configured.');
+
+                return await interaction.editReply({ embeds: [embed] });
+            }
+
             // Get user's characters from database
-            const userCharacters = await UserCharacter.findAll({
+            const userCharacters = await models.UserCharacter.findAll({
                 where: { userId: targetUserId },
                 include: [{
-                    model: Character,
+                    model: models.Character,
                     as: 'character',
                     attributes: ['id', 'name', 'rarity', 'imagePath']
                 }],

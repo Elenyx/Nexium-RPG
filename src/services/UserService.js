@@ -1,9 +1,9 @@
-const { User } = require('../database/models');
+const { models } = require('../database/connection');
 const logger = require('../utils/logger');
 
 class UserService {
     async getOrCreateUser(userId, username) {
-        if (!User) {
+        if (!models) {
             // Return a mock user object if no database
             return {
                 id: userId,
@@ -21,9 +21,9 @@ class UserService {
         }
 
         try {
-            let user = await User.findByPk(userId);
+            let user = await models.User.findByPk(userId);
             if (!user) {
-                user = await User.create({
+                user = await models.User.create({
                     id: userId,
                     username: username
                 });
@@ -37,19 +37,19 @@ class UserService {
     }
 
     async updateUser(userId, updates) {
-        if (!User) {
+        if (!models) {
             logger.warn('Database not available, cannot update user');
             return null;
         }
 
         try {
-            const [affectedRows] = await User.update(updates, {
+            const [affectedRows] = await models.User.update(updates, {
                 where: { id: userId }
             });
             if (affectedRows === 0) {
                 throw new Error('User not found');
             }
-            return await User.findByPk(userId);
+            return await models.User.findByPk(userId);
         } catch (error) {
             logger.error('Error in updateUser:', error);
             throw error;
@@ -57,13 +57,13 @@ class UserService {
     }
 
     async getUserById(userId) {
-        if (!User) {
+        if (!models) {
             logger.warn('Database not available, cannot get user');
             return null;
         }
 
         try {
-            return await User.findByPk(userId);
+            return await models.User.findByPk(userId);
         } catch (error) {
             logger.error('Error in getUserById:', error);
             throw error;

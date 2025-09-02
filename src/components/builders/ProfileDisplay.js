@@ -42,7 +42,7 @@ class ProfileDisplay {
                     .setCustomId(`profile_inventory_${targetUser.id}`)
                     .setLabel('View Inventory')
                     .setStyle(ButtonStyle.Primary)
-                    .setEmoji('🎒')
+                    .setEmoji({ name: '🎒' })
             );
 
         const section2 = new SectionBuilder()
@@ -54,7 +54,7 @@ class ProfileDisplay {
                     .setCustomId(`profile_collection_${targetUser.id}`)
                     .setLabel('View Collection')
                     .setStyle(ButtonStyle.Secondary)
-                    .setEmoji('📚')
+                    .setEmoji({ name: '📚' })
             );
 
         const section3 = new SectionBuilder()
@@ -66,7 +66,7 @@ class ProfileDisplay {
                     .setCustomId(`profile_stats_${targetUser.id}`)
                     .setLabel('Detailed Stats')
                     .setStyle(ButtonStyle.Secondary)
-                    .setEmoji('📊')
+                    .setEmoji({ name: '📊' })
             );
 
         const section4 = new SectionBuilder()
@@ -78,7 +78,7 @@ class ProfileDisplay {
                     .setCustomId(`profile_daily_${targetUser.id}`)
                     .setLabel('Claim Daily')
                     .setStyle(ButtonStyle.Success)
-                    .setEmoji('🎁')
+                    .setEmoji({ name: '🎁' })
             );
 
         const section5 = new SectionBuilder()
@@ -90,7 +90,7 @@ class ProfileDisplay {
                     .setCustomId(`profile_shop_${targetUser.id}`)
                     .setLabel('Open Shop')
                     .setStyle(ButtonStyle.Primary)
-                    .setEmoji('🛒')
+                    .setEmoji({ name: '🛒' })
             );
 
         return {
@@ -137,7 +137,7 @@ class ProfileDisplay {
                     .setCustomId(`profile_back_${targetUser.id}`)
                     .setLabel('Back to Profile')
                     .setStyle(ButtonStyle.Secondary)
-                    .setEmoji('⬅️')
+                    .setEmoji({ name: '⬅️' })
             );
 
         return {
