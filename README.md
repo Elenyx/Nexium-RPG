@@ -242,7 +242,7 @@ LOG_LEVEL=warn
 # Enable GitHub Pages in repository settings:
 # - Source: Deploy from a branch
 # - Branch: main
-# - Folder: /docs
+# - Folder: / (root directory)
 ```
 
 #### **Process Management**
