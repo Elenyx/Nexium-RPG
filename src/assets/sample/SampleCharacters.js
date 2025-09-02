@@ -18,7 +18,7 @@ const sampleCharacters = [
         health: 100,
         abilities: ['Rasengan', 'Shadow Clone Jutsu', 'Nine-Tails Chakra'],
         description: 'The hyperactive ninja who dreams of becoming Hokage.',
-        imageUrl: 'https://i.imgur.com/8jJfZ9h.jpg', // Naruto placeholder
+        imageUrl: 'https://cdn.myanimelist.net/images/characters/2/284121.jpg', // Naruto Uzumaki
         imagePath: 'src/assets/images/characters/naruto.jpg'
     },
     {
@@ -34,7 +34,7 @@ const sampleCharacters = [
         health: 95,
         abilities: ['Chidori', 'Sharingan', 'Rinnegan'],
         description: 'The brooding avenger seeking power to defeat his brother.',
-        imageUrl: 'https://i.imgur.com/Q3Z3Z3Z.jpg', // Sasuke placeholder
+        imageUrl: 'https://cdn.myanimelist.net/images/characters/7/284129.jpg', // Sasuke Uchiha
         imagePath: 'src/assets/images/characters/sasuke.png'
     },
     {
@@ -50,7 +50,7 @@ const sampleCharacters = [
         health: 110,
         abilities: ['Gum-Gum Pistol', 'Gear Second', 'Gear Third'],
         description: 'The rubber-powered pirate captain with dreams of finding the One Piece.',
-        imageUrl: 'https://i.imgur.com/4Z4Z4Z4.jpg', // Luffy placeholder
+        imageUrl: 'https://cdn.myanimelist.net/images/characters/9/310307.jpg', // Monkey D. Luffy
         imagePath: 'src/assets/images/characters/luffy.png'
     },
     {
@@ -66,7 +66,7 @@ const sampleCharacters = [
         health: 90,
         abilities: ['Alchemy', 'Automail Arm', 'Philosopher\'s Stone'],
         description: 'The young alchemist seeking to restore his brother\'s body.',
-        imageUrl: 'https://i.imgur.com/5Z5Z5Z5.jpg', // Edward placeholder
+        imageUrl: 'https://cdn.myanimelist.net/images/characters/12/287663.jpg', // Edward Elric
         imagePath: 'src/assets/images/characters/edward.png'
     },
     {

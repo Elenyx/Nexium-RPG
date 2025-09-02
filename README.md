@@ -234,13 +234,15 @@ REDIS_URL=redis://your-redis-server:6379
 LOG_LEVEL=warn
 ```
 
-#### **Docker Deployment**
+#### **GitHub Pages CDN**
 ```bash
-# Build image
-docker build -t nexium-bot .
+# Images are automatically hosted via GitHub Pages
+# URL: https://elenyx.github.io/Nexium-RPG/characters/
 
-# Run with docker-compose
-docker-compose up -d
+# Enable GitHub Pages in repository settings:
+# - Source: Deploy from a branch
+# - Branch: main
+# - Folder: /docs
 ```
 
 #### **Process Management**
@@ -290,6 +292,7 @@ We welcome contributions! Please see our [Contributing Guide](CONTRIBUTING.md) f
 - [📖 **API Documentation**](docs/API.md) - Complete API reference
 - [🎮 **Game Mechanics**](docs/GAME_MECHANICS.md) - Detailed gameplay systems
 - [🔧 **Deployment Guide**](docs/DEPLOYMENT.md) - Production deployment
+- [🌐 **GitHub Pages Setup**](docs/README.md) - CDN and website hosting
 - [🐛 **Troubleshooting**](docs/TROUBLESHOOTING.md) - Common issues and solutions
 - [🎨 **Asset Guidelines**](docs/ASSETS.md) - Character and image standards
 

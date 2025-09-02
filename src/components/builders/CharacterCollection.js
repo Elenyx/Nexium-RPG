@@ -207,23 +207,16 @@ class CharacterCollection {
                                     .setContent(`⚔️ **${char.rarity || 'COMMON'}** rarity • Power: ${char.power || 'Unknown'}`)
                             );
 
-                        // Load character image for thumbnail (use external URL to avoid downloadable files)
+                        // Load character image URL (no attachments for Components V2)
                         try {
                             const imageResult = await imageManager.loadCharacterImage(char);
-                            if (imageResult.success) {
-                                if (typeof imageResult.attachment === 'string' && imageResult.attachment.startsWith('http')) {
-                                    // External URL - perfect for thumbnail
-                                    section.setThumbnailAccessory(
-                                        new ThumbnailBuilder()
-                                            .setURL(imageResult.attachment)
-                                            .setDescription(`${char.name} character image`)
-                                    );
-                                } else if (imageResult.attachment) {
-                                    // Local file - convert to external URL or use MediaGallery approach
-                                    // For now, skip thumbnail to avoid downloadable files
-                                    // TODO: Implement external image hosting or use MediaGallery
-                                    console.log(`Skipping thumbnail for ${char.name} - local file would create download`);
-                                }
+                            if (imageResult.success && imageResult.url) {
+                                // Use external URL for thumbnail (no downloadable files!)
+                                section.setThumbnailAccessory(
+                                    new ThumbnailBuilder()
+                                        .setURL(imageResult.url)
+                                        .setDescription(`${char.name} character image`)
+                                );
                             } else if (char.imageUrl) {
                                 // Fallback to character's imageUrl
                                 section.setThumbnailAccessory(
@@ -231,6 +224,9 @@ class CharacterCollection {
                                         .setURL(char.imageUrl)
                                         .setDescription(`${char.name} character image`)
                                 );
+                            } else {
+                                // No image available - section will display without thumbnail
+                                console.log(`No image available for ${char.name} - displaying without thumbnail`);
                             }
                         } catch (error) {
                             console.warn(`Failed to load image for character ${char.name}:`, error.message);
@@ -398,16 +394,14 @@ class CharacterCollection {
      * @returns {Object} Message options with character details
      */
     static async createCharacterDetailEmbed(character, targetUser) {
-        const files = [];
         let imageUrl = null;
 
         // Initialize image manager and load character image
         const imageManager = new CharacterImageManager();
         try {
             const imageResult = await imageManager.loadCharacterImage(character);
-            if (imageResult.success && imageResult.attachment) {
-                files.push(imageResult.attachment);
-                imageUrl = `attachment://${imageResult.filename}`;
+            if (imageResult.success && imageResult.url) {
+                imageUrl = imageResult.url;
             } else if (character.imageUrl) {
                 imageUrl = character.imageUrl;
             }
@@ -475,7 +469,6 @@ class CharacterCollection {
         return {
             embeds: [embed],
             components: [row],
-            files: files,
             flags: MessageFlags.IsComponentsV2
         };
     }

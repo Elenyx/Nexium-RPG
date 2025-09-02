@@ -29,8 +29,8 @@ async function testCharacterCollection() {
 
         console.log('✅ Modern collection created successfully');
         console.log(`   - Components: ${modernCollection.components.length}`);
-        console.log(`   - Files: ${modernCollection.files ? modernCollection.files.length : 0}`);
         console.log(`   - Content: ${modernCollection.content ? 'Present' : 'None'}`);
+        console.log(`   - Flags: ${modernCollection.flags ? 'Present' : 'None'}`);
 
         // Test 2: Adaptive Collection (Modern)
         console.log('\n🔄 Testing Adaptive Collection (Modern)...');
@@ -66,7 +66,7 @@ async function testCharacterCollection() {
         console.log('✅ Character detail created successfully');
         console.log(`   - Embeds: ${characterDetail.embeds.length}`);
         console.log(`   - Components: ${characterDetail.components.length}`);
-        console.log(`   - Files: ${characterDetail.files ? characterDetail.files.length : 0}`);
+        console.log(`   - Flags: ${characterDetail.flags ? 'Present' : 'None'}`);
 
         console.log('\n🎉 All tests passed! Character collection with image integration is working.');
 
