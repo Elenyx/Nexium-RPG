@@ -34,13 +34,16 @@ app.use(helmet({
 
 // CORS configuration
 app.use(cors({
-    origin: process.env.FRONTEND_URL || 'https://elenyx.github.io',
+    origin: process.env.FRONTEND_URL || 'https://nexium-production.up.railway.app',
     credentials: true
 }));
 
 // Body parsing middleware
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+
+// Static file serving
+app.use(express.static(path.join(__dirname, 'public')));
 
 // Session configuration
 app.use(session({
@@ -101,7 +104,11 @@ app.get('/health', (req, res) => {
 
 // Routes
 app.get('/', (req, res) => {
-    res.sendFile(path.join(__dirname, '../docs/index.html'));
+    if (req.isAuthenticated()) {
+        res.redirect('/dashboard');
+    } else {
+        res.sendFile(path.join(__dirname, 'public', 'index.html'));
+    }
 });
 
 // Discord OAuth routes
@@ -168,7 +175,7 @@ app.get('/api/characters', async (req, res) => {
 // Dashboard route
 app.get('/dashboard', (req, res) => {
     if (req.isAuthenticated()) {
-        res.sendFile(path.join(__dirname, '../docs/dashboard.html'));
+        res.sendFile(path.join(__dirname, 'public', 'dashboard.html'));
     } else {
         res.redirect('/');
     }
@@ -177,7 +184,7 @@ app.get('/dashboard', (req, res) => {
 // Collection page route
 app.get('/collection', (req, res) => {
     if (req.isAuthenticated()) {
-        res.sendFile(path.join(__dirname, '../docs/collection.html'));
+        res.sendFile(path.join(__dirname, 'public', 'collection.html'));
     } else {
         res.redirect('/');
     }
@@ -191,7 +198,7 @@ app.use((err, req, res, next) => {
 
 // 404 handler
 app.use((req, res) => {
-    res.status(404).sendFile(path.join(__dirname, '../docs/404.html'));
+    res.status(404).sendFile(path.join(__dirname, 'public', '404.html'));
 });
 
 // Start server

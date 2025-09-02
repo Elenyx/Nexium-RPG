@@ -6,8 +6,8 @@
   "scripts": {
     "start": "node src/index.js",
     "dev": "nodemon src/index.js",
-    "web": "node server/index.js",
-    "web-dev": "nodemon server/index.js",
+    "web": "node web/server.js",
+    "web-dev": "nodemon web/server.js",
     "railway-setup": "node railway-setup.js",
     "migrate": "node src/database/migrations/migrate.js",
     "seed": "node src/database/seeds/seed.js",
