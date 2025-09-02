@@ -1,10 +1,9 @@
 const { DataTypes } = require('sequelize');
-const { sequelize } = require('../connection');
 
-let User = null;
+const defineUser = (sequelize) => {
+    if (!sequelize) return null;
 
-if (sequelize) {
-    User = sequelize.define('User', {
+    return sequelize.define('User', {
         id: {
             type: DataTypes.STRING,
             primaryKey: true
@@ -48,8 +47,12 @@ if (sequelize) {
         createdAt: {
             type: DataTypes.DATE,
             defaultValue: DataTypes.NOW
+        },
+        updatedAt: {
+            type: DataTypes.DATE,
+            defaultValue: DataTypes.NOW
         }
     });
-}
+};
 
-module.exports = User;
+module.exports = defineUser;

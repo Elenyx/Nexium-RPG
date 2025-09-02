@@ -1,7 +1,17 @@
-const User = require('./User');
-// Add other models here as they are created
+const defineUser = require('./User');
+// Add other model definitions here as they are created
 
-module.exports = {
-    User: User || null,
-    // Other models
+const initializeModels = (sequelize) => {
+    const User = defineUser(sequelize);
+    // Initialize other models here
+
+    // Define associations here if needed
+    // Example: User.hasMany(OtherModel);
+
+    return {
+        User,
+        // Other models
+    };
 };
+
+module.exports = initializeModels;

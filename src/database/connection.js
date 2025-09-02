@@ -1,7 +1,9 @@
 const { Sequelize } = require('sequelize');
 const logger = require('../utils/logger');
+const initializeModels = require('./models');
 
 let sequelize;
+let models;
 
 if (process.env.DATABASE_URL) {
     sequelize = new Sequelize(process.env.DATABASE_URL, {
@@ -20,9 +22,13 @@ if (process.env.DATABASE_URL) {
             } : false
         }
     });
+
+    // Initialize models with sequelize instance
+    models = initializeModels(sequelize);
 } else {
     logger.warn('DATABASE_URL not found. Database features will be disabled.');
     sequelize = null;
+    models = null;
 }
 
 const connectDatabase = async () => {
@@ -41,4 +47,4 @@ const connectDatabase = async () => {
     }
 };
 
-module.exports = { sequelize, connectDatabase };
+module.exports = { sequelize, connectDatabase, models };
