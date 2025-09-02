@@ -167,6 +167,6 @@ Currently uses basic console logging. Future integration planned with:
 
 ## Resources
 - [AGENT.md](D:\Nexium\Nexium-RPG\AGENT.md) - Detailed Components V2 guide
-- [README.md](README.md) - Project overview and roadmap
+- [README.md](D:\Nexium\Nexium-RPG\README.md) - Project overview and roadmap
 - [Discord.js Guide](https://discordjs.guide/) - Official documentation
 - [Discord Developer Portal](https://discord.com/developers/docs) - API reference</content>
