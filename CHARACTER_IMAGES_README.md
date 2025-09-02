@@ -108,7 +108,7 @@ const availableImages = imageManager.getAvailableCharacterImages();
 
 Run the test script to verify everything works:
 ```bash
-node test-character-collection.js
+node tests/test-character-collection.js
 ```
 
 ## Features

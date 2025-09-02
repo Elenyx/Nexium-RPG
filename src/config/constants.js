@@ -22,6 +22,7 @@ module.exports = {
         STREAK: '🔥',
         SUMMON: '🎴',
         BATTLE: '⚔️',
+        COLLECTION: '📚',
         SUCCESS: '✅',
         ERROR: '❌',
         WARNING: '⚠️',

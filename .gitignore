@@ -135,6 +135,9 @@ out/
 test-results/
 playwright-report/
 coverage/
+tests/*.png
+tests/*.jpg
+tests/*.jpeg
 
 # Docker
 .dockerignore

@@ -48,6 +48,5 @@ Edit HTML files directly in the `docs/` folder. All changes will be automaticall
 
 ## Links
 
-- **Web App**: Link to Railway deployment for authenticated features
 - **Discord**: Link to Discord server for community support
 - **GitHub**: Link to source code repository

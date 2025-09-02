@@ -2,12 +2,14 @@ const { Collection } = require('discord.js');
 const logger = require('../../utils/logger');
 const ProfileButtonHandlers = require('./ProfileButtonHandlers');
 const ShopButtonHandlers = require('./ShopButtonHandlers');
+const CollectionButtonHandlers = require('./CollectionButtonHandlers');
 
 class ButtonHandler {
     constructor(client) {
         this.client = client;
         this.profileHandlers = new ProfileButtonHandlers(client);
         this.shopHandlers = new ShopButtonHandlers(client);
+        this.collectionHandlers = new CollectionButtonHandlers();
     }
 
     async handle(interaction) {
@@ -144,8 +146,12 @@ class ButtonHandler {
      * @returns {boolean} Whether the button was handled
      */
     async handleCollectionButton(action, interaction, params) {
-        // TODO: Implement collection button handlers
-        logger.info(`Collection button not yet implemented: ${action}`);
+        // Reconstruct the full customId for the collection handler
+        const fullCustomId = `collection_${action}_${params.join('_')}`;
+        if (this.collectionHandlers.canHandle(fullCustomId)) {
+            await this.collectionHandlers.handle(interaction);
+            return true;
+        }
         return false;
     }
 
