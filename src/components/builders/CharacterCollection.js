@@ -298,8 +298,7 @@ class CharacterCollection {
                 footer: { text: `Showing ${startIndex + 1}-${Math.min(endIndex, characters.length)} of ${characters.length} characters` }
             }],
             components: actionComponents,
-            files: files,
-            flags: MessageFlags.IsComponentsV2
+            files: files
         };
     }
 
@@ -541,6 +540,23 @@ class CharacterCollection {
             components: [row],
             flags: MessageFlags.IsComponentsV2
         };
+    }
+
+    /**
+     * Creates an adaptive character collection (chooses best format based on display mode)
+     * @param {Array} characters - Array of user's characters
+     * @param {Object} targetUser - Discord user object
+     * @param {string} displayMode - 'modern' or 'classic'
+     * @param {number} page - Current page number
+     * @param {number} totalPages - Total number of pages
+     * @returns {Object} Message options with embed and components
+     */
+    static async createAdaptiveCollection(characters, targetUser, displayMode = 'modern', page = 1, totalPages = 1) {
+        if (displayMode === 'modern') {
+            return await this.createModernCollectionEmbed(characters, targetUser, page, totalPages);
+        } else {
+            return this.createCollectionEmbed(characters, targetUser, page, totalPages);
+        }
     }
 
     /**

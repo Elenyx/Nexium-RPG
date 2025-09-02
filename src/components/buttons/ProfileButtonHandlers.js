@@ -89,7 +89,14 @@ class ProfileButtonHandlers {
                 totalPages
             );
 
-            await interaction.editReply(collectionDisplay);
+            // Ensure clean response object
+            const cleanResponse = {
+                embeds: collectionDisplay.embeds || [],
+                components: collectionDisplay.components || [],
+                files: collectionDisplay.files || []
+            };
+
+            await interaction.editReply(cleanResponse);
 
         } catch (error) {
             console.error('Error handling collection button:', error);
