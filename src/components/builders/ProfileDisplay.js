@@ -33,6 +33,12 @@ class ProfileDisplay {
             `**Daily Streak:** \`${userData.dailyStreak} days\``
         ].join('\n');
 
+        const progressStats = [
+            `**Next Level:** \`${(userData.level * 1000).toLocaleString()} XP\``,
+            `**Progress:** \`${Math.floor((userData.exp % 1000) / 10)}%\``,
+            `**Energy Regen:** \`+10 every 5 minutes\``
+        ].join('\n');
+
         const section1 = new SectionBuilder()
             .addTextDisplayComponents(
                 td => td.setContent(`# ${EMOJIS.DIMENSION} Dimensional Profile\n**${targetUser.username}**'s journey through the multiverse\n\n${profileStats}`)
@@ -47,7 +53,7 @@ class ProfileDisplay {
 
         const section2 = new SectionBuilder()
             .addTextDisplayComponents(
-                td => td.setContent(' ')
+                td => td.setContent(`## 📊 Progress Details\n${progressStats}`)
             )
             .setButtonAccessory(
                 btn => btn
@@ -59,7 +65,7 @@ class ProfileDisplay {
 
         const section3 = new SectionBuilder()
             .addTextDisplayComponents(
-                td => td.setContent(' ')
+                td => td.setContent(`## ⚡ Energy Status\n**Current:** ${userData.dimensionalEnergy}/${userData.maxEnergy}\n**Regeneration:** Active\n**Last Regen:** ${new Date().toLocaleTimeString()}`)
             )
             .setButtonAccessory(
                 btn => btn
@@ -71,7 +77,7 @@ class ProfileDisplay {
 
         const section4 = new SectionBuilder()
             .addTextDisplayComponents(
-                td => td.setContent(' ')
+                td => td.setContent(`## 💰 Economy Overview\n**Coins:** ${userData.coins.toLocaleString()}\n**Daily Streak:** ${userData.dailyStreak} days\n**Last Daily:** ${userData.lastDaily ? new Date(userData.lastDaily).toLocaleDateString() : 'Never'}`)
             )
             .setButtonAccessory(
                 btn => btn
@@ -83,7 +89,7 @@ class ProfileDisplay {
 
         const section5 = new SectionBuilder()
             .addTextDisplayComponents(
-                td => td.setContent(' ')
+                td => td.setContent(`## 🛒 Shop Access\nBrowse items, characters, and upgrades available in the dimensional shop.`)
             )
             .setButtonAccessory(
                 btn => btn
@@ -110,27 +116,41 @@ class ProfileDisplay {
             `**Level:** ${userData.level}`,
             `**Experience:** ${userData.exp.toLocaleString()}`,
             `**Next Level:** ${(userData.level * 1000).toLocaleString()} XP`,
-            `**Progress:** ${Math.floor((userData.exp % 1000) / 10)}%`
+            `**Progress:** ${Math.floor((userData.exp % 1000) / 10)}%`,
+            `**Level Progress Bar:** ${'█'.repeat(Math.floor((userData.exp % 1000) / 100))}${'░'.repeat(10 - Math.floor((userData.exp % 1000) / 100))}`
         ].join('\n');
 
         const energyStats = [
-            `**Current:** ${userData.dimensionalEnergy}/${userData.maxEnergy}`,
-            `**Regeneration:** +10 every 5 minutes`,
-            `**Last Regen:** ${new Date().toLocaleTimeString()}`
+            `**Current Energy:** ${userData.dimensionalEnergy}/${userData.maxEnergy}`,
+            `**Regeneration Rate:** +10 every 5 minutes`,
+            `**Time to Full:** ${Math.ceil((userData.maxEnergy - userData.dimensionalEnergy) / 10) * 5} minutes`,
+            `**Last Regeneration:** ${new Date().toLocaleTimeString()}`,
+            `**Energy Efficiency:** ${userData.dimensionalEnergy > userData.maxEnergy * 0.8 ? 'High' : userData.dimensionalEnergy > userData.maxEnergy * 0.5 ? 'Medium' : 'Low'}`
         ].join('\n');
 
         const economyStats = [
-            `**Coins:** ${userData.coins.toLocaleString()}`,
+            `**Total Coins:** ${userData.coins.toLocaleString()}`,
             `**Daily Streak:** ${userData.dailyStreak} days`,
-            `**Last Daily:** ${userData.lastDaily ? new Date(userData.lastDaily).toLocaleDateString() : 'Never'}`
+            `**Daily Reward Multiplier:** ${Math.min(userData.dailyStreak * 0.1 + 1, 2).toFixed(1)}x`,
+            `**Last Daily Claim:** ${userData.lastDaily ? new Date(userData.lastDaily).toLocaleDateString() : 'Never'}`,
+            `**Estimated Daily Value:** ${Math.floor(100 * (Math.min(userData.dailyStreak * 0.1 + 1, 2)))} coins`
         ].join('\n');
 
-        const section = new SectionBuilder()
+        const activityStats = [
+            `**Current Dimension:** ${userData.currentDimension}`,
+            `**Total Dimensions Visited:** ${userData.dimensionsVisited || 1}`,
+            `**Account Created:** ${new Date(userData.createdAt || Date.now()).toLocaleDateString()}`,
+            `**Days Active:** ${Math.floor((Date.now() - (userData.createdAt || Date.now())) / (1000 * 60 * 60 * 24))}`,
+            `**Activity Status:** ${userData.dimensionalEnergy > 0 ? 'Active' : 'Resting'}`
+        ].join('\n');
+
+        const detailedStatsSection = new SectionBuilder()
             .addTextDisplayComponents(
-                td => td.setContent(`# ${EMOJIS.LEVEL} Detailed Statistics\n**${targetUser.username}**'s comprehensive stats`),
-                td => td.setContent(`## 📊 Progress Stats\n${progressStats}`),
-                td => td.setContent(`## ⚡ Energy Stats\n${energyStats}`),
-                td => td.setContent(`## 💰 Economy Stats\n${economyStats}`)
+                td => td.setContent(`# ${EMOJIS.LEVEL} Detailed Statistics\n**${targetUser.username}**'s comprehensive dimensional profile\n\nThis section provides in-depth analysis of your dimensional journey.`),
+                td => td.setContent(`## 📊 Progress Statistics\n${progressStats}`),
+                td => td.setContent(`## ⚡ Energy Analysis\n${energyStats}`),
+                td => td.setContent(`## 💰 Economy Details\n${economyStats}`),
+                td => td.setContent(`## 🌌 Activity Overview\n${activityStats}`)
             )
             .setButtonAccessory(
                 btn => btn
@@ -141,7 +161,7 @@ class ProfileDisplay {
             );
 
         return {
-            components: [section],
+            components: [detailedStatsSection],
             flags: MessageFlags.IsComponentsV2
         };
     }
