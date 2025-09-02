@@ -16,8 +16,6 @@ module.exports = {
         const userService = new UserService();
 
         try {
-            await interaction.deferReply();
-
             const profile = await userService.getOrCreateUser(targetUser.id, targetUser.username);
 
             const embed = new EmbedBuilder()
@@ -69,7 +67,7 @@ module.exports = {
                         .setStyle(ButtonStyle.Primary)
                         .setEmoji('📊'),
                     new ButtonBuilder()
-                        .setCustomId(`profile_characters_${targetUser.id}`)
+                        .setCustomId(`profile_collection_${targetUser.id}`)
                         .setLabel('Characters')
                         .setStyle(ButtonStyle.Secondary)
                         .setEmoji('👥'),
@@ -80,14 +78,14 @@ module.exports = {
                         .setEmoji('🏆')
                 );
 
-            await interaction.editReply({
+            await interaction.reply({
                 embeds: [embed],
                 components: [row]
             });
 
         } catch (error) {
             console.error('Profile command error:', error);
-            await interaction.editReply({
+            await interaction.reply({
                 content: 'An error occurred while fetching the profile.',
                 flags: MessageFlags.Ephemeral
             });

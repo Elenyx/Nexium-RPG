@@ -507,6 +507,23 @@ class CharacterCollection {
     }
 
     /**
+     * Creates an adaptive character collection (chooses best format based on display mode)
+     * @param {Array} characters - Array of user's characters
+     * @param {Object} targetUser - Discord user object
+     * @param {string} displayMode - 'modern' or 'classic'
+     * @param {number} page - Current page number
+     * @param {number} totalPages - Total number of pages
+     * @returns {Object} Message options with embed and components
+     */
+    static async createAdaptiveCollection(characters, targetUser, displayMode = 'modern', page = 1, totalPages = 1) {
+        if (displayMode === 'modern') {
+            return await this.createModernCollectionEmbed(characters, targetUser, page, totalPages);
+        } else {
+            return this.createCollectionEmbed(characters, targetUser, page, totalPages);
+        }
+    }
+
+    /**
      * Gets emoji for rarity
      * @param {string} rarity - Character rarity
      * @returns {string} Rarity emoji

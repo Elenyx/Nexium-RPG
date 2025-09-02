@@ -6,6 +6,7 @@
 
 const ComponentRegistry = require('../ComponentRegistry');
 const UserService = require('../../services/UserService');
+const sampleCharacters = require('../../assets/sample/SampleCharacters');
 
 class ProfileButtonHandlers {
     constructor(client) {
@@ -75,8 +76,8 @@ class ProfileButtonHandlers {
         try {
             await interaction.deferUpdate();
 
-            // TODO: Get user's actual character collection from database
-            const characters = []; // Placeholder for character data
+            // Use sample characters for testing
+            const characters = sampleCharacters;
             const totalPages = Math.ceil(characters.length / 6) || 1; // 6 per page for modern view
 
             // Use adaptive collection that chooses the best display format
@@ -285,8 +286,8 @@ class ProfileButtonHandlers {
         try {
             await interaction.deferUpdate();
 
-            // TODO: Get user's actual character collection from database
-            const characters = []; // Placeholder for character data
+            // Use sample characters for testing
+            const characters = sampleCharacters;
             const totalPages = Math.ceil(characters.length / 10) || 1; // Use 10 for classic view
 
             // Switch to classic embed view
@@ -322,8 +323,8 @@ class ProfileButtonHandlers {
         try {
             await interaction.deferUpdate();
 
-            // TODO: Get user's actual character collection from database
-            const characters = []; // Placeholder for character data
+            // Use sample characters for testing
+            const characters = sampleCharacters;
             const totalPages = Math.ceil(characters.length / 6) || 1; // Use 6 for modern view
 
             // Switch to modern container view
