@@ -18,7 +18,7 @@ const sampleCharacters = [
         health: 100,
         abilities: ['Rasengan', 'Shadow Clone Jutsu', 'Nine-Tails Chakra'],
         description: 'The hyperactive ninja who dreams of becoming Hokage.',
-        imageUrl: 'https://example.com/naruto.jpg', // Placeholder URL
+        imageUrl: 'https://i.imgur.com/8jJfZ9h.jpg', // Naruto placeholder
         imagePath: 'src/assets/images/characters/naruto.jpg'
     },
     {
@@ -34,7 +34,7 @@ const sampleCharacters = [
         health: 95,
         abilities: ['Chidori', 'Sharingan', 'Rinnegan'],
         description: 'The brooding avenger seeking power to defeat his brother.',
-        imageUrl: 'https://example.com/sasuke.jpg', // Placeholder URL
+        imageUrl: 'https://i.imgur.com/Q3Z3Z3Z.jpg', // Sasuke placeholder
         imagePath: 'src/assets/images/characters/sasuke.png'
     },
     {
@@ -50,7 +50,7 @@ const sampleCharacters = [
         health: 110,
         abilities: ['Gum-Gum Pistol', 'Gear Second', 'Gear Third'],
         description: 'The rubber-powered pirate captain with dreams of finding the One Piece.',
-        imageUrl: 'https://example.com/luffy.jpg', // Placeholder URL
+        imageUrl: 'https://i.imgur.com/4Z4Z4Z4.jpg', // Luffy placeholder
         imagePath: 'src/assets/images/characters/luffy.png'
     },
     {
@@ -66,7 +66,7 @@ const sampleCharacters = [
         health: 90,
         abilities: ['Alchemy', 'Automail Arm', 'Philosopher\'s Stone'],
         description: 'The young alchemist seeking to restore his brother\'s body.',
-        imageUrl: 'https://example.com/edward.jpg', // Placeholder URL
+        imageUrl: 'https://i.imgur.com/5Z5Z5Z5.jpg', // Edward placeholder
         imagePath: 'src/assets/images/characters/edward.png'
     },
     {
@@ -82,7 +82,7 @@ const sampleCharacters = [
         health: 120,
         abilities: ['Kamehameha', 'Spirit Bomb', 'Super Saiyan'],
         description: 'The legendary Saiyan warrior who protects Earth.',
-        imageUrl: 'https://example.com/goku.jpg', // Placeholder URL
+        imageUrl: 'https://i.imgur.com/6Z6Z6Z6.jpg', // Goku placeholder
         imagePath: 'src/assets/images/characters/goku.png'
     },
     {
@@ -98,7 +98,7 @@ const sampleCharacters = [
         health: 80,
         abilities: ['Death Note', 'Intelligence', 'Strategic Mind'],
         description: 'The brilliant student who discovers a notebook that can kill people.',
-        imageUrl: 'https://example.com/light.jpg', // Placeholder URL
+        imageUrl: 'https://i.imgur.com/7Z7Z7Z7.jpg', // Light placeholder
         imagePath: 'src/assets/images/characters/light.png'
     },
     {

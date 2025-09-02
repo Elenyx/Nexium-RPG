@@ -159,14 +159,16 @@ class CharacterCollection {
         // Initialize image manager
         const imageManager = new CharacterImageManager();
 
-        // Header container
+        // Header container with engaging description
         const headerContainer = new ContainerBuilder()
             .setAccentColor(COLORS.PRIMARY)
             .addTextDisplayComponents(
                 new TextDisplayBuilder()
-                    .setContent(`${EMOJIS.SUMMON} Character Collection`),
+                    .setContent(`🎴 **${targetUser.username}'s Anime Character Collection**`),
                 new TextDisplayBuilder()
-                    .setContent(`${targetUser.username}'s anime character collection • Page ${page}/${totalPages}`)
+                    .setContent(`**Page ${page}/${totalPages}** • **${characters.length}** total characters collected!`),
+                new TextDisplayBuilder()
+                    .setContent(`Discover rare and legendary anime characters in your collection. Each character has unique abilities and powers!`)
             );
         components.push(headerContainer);
 
@@ -174,8 +176,9 @@ class CharacterCollection {
             const emptyContainer = new ContainerBuilder()
                 .setAccentColor(COLORS.WARNING)
                 .addTextDisplayComponents(
-                    new TextDisplayBuilder().setContent('📭 No Characters Found'),
-                    new TextDisplayBuilder().setContent('You haven\'t collected any characters yet! Use /summon to get your first character.')
+                    new TextDisplayBuilder().setContent('📭 **No Characters Yet!**'),
+                    new TextDisplayBuilder().setContent('Your collection is waiting for its first legendary warrior!'),
+                    new TextDisplayBuilder().setContent('Use the **Summon Character** button below to begin your anime adventure! 🎯')
                 );
             components.push(emptyContainer);
         } else {
@@ -199,23 +202,34 @@ class CharacterCollection {
                                 new TextDisplayBuilder()
                                     .setContent(`**${char.name}**`),
                                 new TextDisplayBuilder()
-                                    .setContent(`Lv.${char.level} • ${char.anime || 'Unknown Anime'}`)
+                                    .setContent(`⭐ **Level ${char.level}** • *${char.anime || 'Mysterious Origins'}*`),
+                                new TextDisplayBuilder()
+                                    .setContent(`⚔️ **${char.rarity || 'COMMON'}** rarity • Power: ${char.power || 'Unknown'}`)
                             );
 
-                        // Load and attach character image
+                        // Load character image for thumbnail (use external URL to avoid downloadable files)
                         try {
                             const imageResult = await imageManager.loadCharacterImage(char);
-                            if (imageResult.success && imageResult.attachment) {
-                                files.push(imageResult.attachment);
-                                section.setThumbnailAccessory(
-                                    new ThumbnailBuilder()
-                                        .setURL(`attachment://${imageResult.filename}`)
-                                );
+                            if (imageResult.success) {
+                                if (typeof imageResult.attachment === 'string' && imageResult.attachment.startsWith('http')) {
+                                    // External URL - perfect for thumbnail
+                                    section.setThumbnailAccessory(
+                                        new ThumbnailBuilder()
+                                            .setURL(imageResult.attachment)
+                                            .setDescription(`${char.name} character image`)
+                                    );
+                                } else if (imageResult.attachment) {
+                                    // Local file - convert to external URL or use MediaGallery approach
+                                    // For now, skip thumbnail to avoid downloadable files
+                                    // TODO: Implement external image hosting or use MediaGallery
+                                    console.log(`Skipping thumbnail for ${char.name} - local file would create download`);
+                                }
                             } else if (char.imageUrl) {
-                                // Fallback to external URL if available
+                                // Fallback to character's imageUrl
                                 section.setThumbnailAccessory(
                                     new ThumbnailBuilder()
                                         .setURL(char.imageUrl)
+                                        .setDescription(`${char.name} character image`)
                                 );
                             }
                         } catch (error) {
@@ -231,7 +245,7 @@ class CharacterCollection {
             }
         }
 
-        // Navigation and action components (traditional buttons for now)
+        // Add navigation and action components as ActionRows (not in containers for Components V2)
         const actionComponents = [];
 
         // Navigation row
@@ -285,20 +299,13 @@ class CharacterCollection {
             );
         actionComponents.push(actionRow);
 
+        // Combine all components
+        const allComponents = [...components, ...actionComponents];
+
         return {
-            embeds: [{
-                title: `${EMOJIS.SUMMON} Character Collection`,
-                description: `${targetUser.username}'s anime character collection • Page ${page}/${totalPages}`,
-                color: COLORS.PRIMARY,
-                fields: pageCharacters.length === 0 ? [{
-                    name: '📭 No Characters Found',
-                    value: 'You haven\'t collected any characters yet! Use /summon to get your first character.',
-                    inline: false
-                }] : this.formatCharactersForEmbed(pageCharacters),
-                footer: { text: `Showing ${startIndex + 1}-${Math.min(endIndex, characters.length)} of ${characters.length} characters` }
-            }],
-            components: actionComponents,
-            files: files
+            components: allComponents,
+            flags: MessageFlags.IsComponentsV2
+            // NO files array - this prevents downloadable attachments!
         };
     }
 

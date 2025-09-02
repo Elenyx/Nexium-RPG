@@ -89,14 +89,22 @@ class ProfileButtonHandlers {
                 totalPages
             );
 
-            // Ensure clean response object
-            const cleanResponse = {
-                embeds: collectionDisplay.embeds || [],
-                components: collectionDisplay.components || [],
-                files: collectionDisplay.files || []
+            // Handle Components V2 response format
+            const responseOptions = {
+                components: collectionDisplay.components || []
             };
 
-            await interaction.editReply(cleanResponse);
+            // Add flags for Components V2
+            if (collectionDisplay.flags) {
+                responseOptions.flags = collectionDisplay.flags;
+            }
+
+            // Only add files if they exist (for backward compatibility)
+            if (collectionDisplay.files && collectionDisplay.files.length > 0) {
+                responseOptions.files = collectionDisplay.files;
+            }
+
+            await interaction.editReply(responseOptions);
 
         } catch (error) {
             console.error('Error handling collection button:', error);
