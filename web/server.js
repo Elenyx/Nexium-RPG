@@ -1,10 +1,12 @@
 /**
- * @file server/index.js
+ * @file web/server.js
  * @description Main web server for Nexium RPG with Discord OAuth integration
+ * @note Uses PostgreSQL for session storage (production-ready)
  */
 
 const express = require('express');
 const session = require('express-session');
+const PgSession = require('connect-pg-simple')(session);
 const passport = require('passport');
 const DiscordStrategy = require('passport-discord').Strategy;
 const cors = require('cors');
@@ -47,6 +49,11 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 // Session configuration
 app.use(session({
+    store: new PgSession({
+        conString: process.env.DATABASE_URL,
+        tableName: 'user_sessions',
+        createTableIfMissing: true
+    }),
     secret: process.env.SESSION_SECRET || 'nexium-secret-key',
     resave: false,
     saveUninitialized: false,
