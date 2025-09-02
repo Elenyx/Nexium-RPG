@@ -80,7 +80,7 @@ class ProfileButtonHandlers {
             const totalPages = Math.ceil(characters.length / 6) || 1; // 6 per page for modern view
 
             // Use adaptive collection that chooses the best display format
-            const collectionDisplay = this.registry.createAdaptiveCollection(
+            const collectionDisplay = await this.registry.createAdaptiveCollection(
                 characters,
                 targetUser,
                 'modern', // Default to modern display
@@ -290,7 +290,7 @@ class ProfileButtonHandlers {
             const totalPages = Math.ceil(characters.length / 10) || 1; // Use 10 for classic view
 
             // Switch to classic embed view
-            const collectionDisplay = this.registry.createAdaptiveCollection(
+            const collectionDisplay = await this.registry.createAdaptiveCollection(
                 characters,
                 targetUser,
                 'classic', // Switch to classic display
@@ -327,7 +327,7 @@ class ProfileButtonHandlers {
             const totalPages = Math.ceil(characters.length / 6) || 1; // Use 6 for modern view
 
             // Switch to modern container view
-            const collectionDisplay = this.registry.createAdaptiveCollection(
+            const collectionDisplay = await this.registry.createAdaptiveCollection(
                 characters,
                 targetUser,
                 'modern', // Switch to modern display

@@ -17,6 +17,7 @@ const {
     ThumbnailBuilder
 } = require('discord.js');
 const { COLORS, EMOJIS } = require('../../config/constants');
+const CharacterImageManager = require('./CharacterImageManager');
 
 class CharacterCollection {
     /**
@@ -147,7 +148,7 @@ class CharacterCollection {
      * @param {number} totalPages - Total number of pages
      * @returns {Object} Message options with modern components
      */
-    static createModernCollectionEmbed(characters, targetUser, page = 1, totalPages = 1) {
+    static async createModernCollectionEmbed(characters, targetUser, page = 1, totalPages = 1) {
         const startIndex = (page - 1) * 6; // Show fewer characters per page for better visual layout
         const endIndex = startIndex + 6;
         const pageCharacters = characters.slice(startIndex, endIndex);
@@ -155,13 +156,15 @@ class CharacterCollection {
         const components = [];
         const files = [];
 
+        // Initialize image manager
+        const imageManager = new CharacterImageManager();
+
         // Header container
         const headerContainer = new ContainerBuilder()
             .setAccentColor(COLORS.PRIMARY)
             .addTextDisplayComponents(
                 new TextDisplayBuilder()
-                    .setContent(`${EMOJIS.SUMMON} Character Collection`)
-                    .setStyle('header'),
+                    .setContent(`${EMOJIS.SUMMON} Character Collection`),
                 new TextDisplayBuilder()
                     .setContent(`${targetUser.username}'s anime character collection • Page ${page}/${totalPages}`)
             );
@@ -180,7 +183,7 @@ class CharacterCollection {
             const rarities = this.groupCharactersByRarity(pageCharacters);
 
             // Create containers for each rarity
-            Object.entries(rarities).forEach(([rarity, chars]) => {
+            for (const [rarity, chars] of Object.entries(rarities)) {
                 if (chars.length > 0) {
                     const rarityContainer = new ContainerBuilder()
                         .setAccentColor(this.getRarityColor(rarity))
@@ -189,33 +192,43 @@ class CharacterCollection {
                                 .setContent(`${this.getRarityEmoji(rarity)} ${rarity} Characters (${chars.length})`)
                         );
 
-                    // Add character sections
-                    chars.forEach(char => {
+                    // Add character sections with images
+                    for (const char of chars) {
                         const section = new SectionBuilder()
                             .addTextDisplayComponents(
                                 new TextDisplayBuilder()
-                                    .setContent(`**${char.name}**`)
-                                    .setStyle('bold'),
+                                    .setContent(`**${char.name}**`),
                                 new TextDisplayBuilder()
                                     .setContent(`Lv.${char.level} • ${char.anime || 'Unknown Anime'}`)
                             );
 
-                        // Add thumbnail if character has an image
-                        if (char.imageUrl) {
-                            // For now, we'll use a placeholder thumbnail
-                            // In production, you'd load actual character images
-                            section.setThumbnailAccessory(
-                                new ThumbnailBuilder()
-                                    .setURL(char.imageUrl)
-                            );
+                        // Load and attach character image
+                        try {
+                            const imageResult = await imageManager.loadCharacterImage(char);
+                            if (imageResult.success && imageResult.attachment) {
+                                files.push(imageResult.attachment);
+                                section.setThumbnailAccessory(
+                                    new ThumbnailBuilder()
+                                        .setURL(`attachment://${imageResult.filename}`)
+                                );
+                            } else if (char.imageUrl) {
+                                // Fallback to external URL if available
+                                section.setThumbnailAccessory(
+                                    new ThumbnailBuilder()
+                                        .setURL(char.imageUrl)
+                                );
+                            }
+                        } catch (error) {
+                            console.warn(`Failed to load image for character ${char.name}:`, error.message);
+                            // Continue without image if loading fails
                         }
 
                         rarityContainer.addSectionComponents(section);
-                    });
+                    }
 
                     components.push(rarityContainer);
                 }
-            });
+            }
         }
 
         // Navigation and action components (traditional buttons for now)
@@ -314,9 +327,9 @@ class CharacterCollection {
      * @param {number} totalPages - Total number of pages
      * @returns {Object} Message options with appropriate display format
      */
-    static createAdaptiveCollection(characters, targetUser, displayMode = 'modern', page = 1, totalPages = 1) {
+    static async createAdaptiveCollection(characters, targetUser, displayMode = 'modern', page = 1, totalPages = 1) {
         if (displayMode === 'modern' && this.supportsModernComponents()) {
-            return this.createModernCollectionEmbed(characters, targetUser, page, totalPages);
+            return await this.createModernCollectionEmbed(characters, targetUser, page, totalPages);
         } else {
             return this.createCollectionEmbed(characters, targetUser, page, totalPages);
         }
@@ -341,12 +354,30 @@ class CharacterCollection {
      * @param {Object} targetUser - Discord user object
      * @returns {Object} Message options with character details
      */
-    static createCharacterDetailEmbed(character, targetUser) {
+    static async createCharacterDetailEmbed(character, targetUser) {
+        const files = [];
+        let imageUrl = null;
+
+        // Initialize image manager and load character image
+        const imageManager = new CharacterImageManager();
+        try {
+            const imageResult = await imageManager.loadCharacterImage(character);
+            if (imageResult.success && imageResult.attachment) {
+                files.push(imageResult.attachment);
+                imageUrl = `attachment://${imageResult.filename}`;
+            } else if (character.imageUrl) {
+                imageUrl = character.imageUrl;
+            }
+        } catch (error) {
+            console.warn(`Failed to load image for character ${character.name}:`, error.message);
+            imageUrl = character.imageUrl || null;
+        }
+
         const embed = new EmbedBuilder()
             .setTitle(`${this.getRarityEmoji(character.rarity)} ${character.name}`)
             .setDescription(character.description || 'A mysterious character from the anime multiverse')
             .setColor(this.getRarityColor(character.rarity))
-            .setImage(character.imageUrl || null)
+            .setImage(imageUrl)
             .addFields(
                 {
                     name: '📊 **Stats**',
@@ -401,6 +432,7 @@ class CharacterCollection {
         return {
             embeds: [embed],
             components: [row],
+            files: files,
             flags: MessageFlags.IsComponentsV2
         };
     }
