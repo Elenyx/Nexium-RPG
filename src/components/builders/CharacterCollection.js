@@ -1,0 +1,307 @@
+/**
+ * @file Character Collection Component Builder
+ * @description Creates interactive character collection displays using Discord Components V2
+ * @author Nexium Bot Development Team
+ */
+
+const {
+    EmbedBuilder,
+    ActionRowBuilder,
+    ButtonBuilder,
+    ButtonStyle,
+    StringSelectMenuBuilder,
+    MessageFlags
+} = require('discord.js');
+const { COLORS, EMOJIS } = require('../../config/constants');
+
+class CharacterCollection {
+    /**
+     * Creates a character collection embed with pagination
+     * @param {Array} characters - Array of user's characters
+     * @param {Object} targetUser - Discord user object
+     * @param {number} page - Current page number
+     * @param {number} totalPages - Total number of pages
+     * @returns {Object} Message options with embed and components
+     */
+    static createCollectionEmbed(characters, targetUser, page = 1, totalPages = 1) {
+        const startIndex = (page - 1) * 10;
+        const endIndex = startIndex + 10;
+        const pageCharacters = characters.slice(startIndex, endIndex);
+
+        const embed = new EmbedBuilder()
+            .setTitle(`${EMOJIS.SUMMON} Character Collection`)
+            .setDescription(`**${targetUser.username}**'s anime character collection\nShowing ${startIndex + 1}-${Math.min(endIndex, characters.length)} of ${characters.length} characters`)
+            .setColor(COLORS.PRIMARY)
+            .setThumbnail(targetUser.displayAvatarURL({ dynamic: true }))
+            .setFooter({ text: `Page ${page}/${totalPages} • Use the buttons below to navigate` });
+
+        if (pageCharacters.length === 0) {
+            embed.addFields({
+                name: '📭 No Characters Found',
+                value: 'You haven\'t collected any characters yet!\nUse `/summon` to get your first character.',
+                inline: false
+            });
+        } else {
+            // Group characters by rarity for better display
+            const rarities = {
+                'DIMENSIONAL': [],
+                'MYTHIC': [],
+                'LEGENDARY': [],
+                'EPIC': [],
+                'RARE': [],
+                'COMMON': []
+            };
+
+            pageCharacters.forEach(char => {
+                const rarity = char.rarity || 'COMMON';
+                if (rarities[rarity]) {
+                    rarities[rarity].push(char);
+                }
+            });
+
+            Object.entries(rarities).forEach(([rarity, chars]) => {
+                if (chars.length > 0) {
+                    const emoji = this.getRarityEmoji(rarity);
+                    const charList = chars.map(char =>
+                        `${emoji} **${char.name}** (Lv.${char.level})`
+                    ).join('\n');
+
+                    embed.addFields({
+                        name: `${this.getRarityEmoji(rarity)} ${rarity} Characters`,
+                        value: charList.length > 1024 ? charList.substring(0, 1021) + '...' : charList,
+                        inline: false
+                    });
+                }
+            });
+        }
+
+        const components = [];
+
+        // Navigation row
+        if (totalPages > 1) {
+            const navRow = new ActionRowBuilder()
+                .addComponents(
+                    new ButtonBuilder()
+                        .setCustomId(`collection_prev_${targetUser.id}_${page}`)
+                        .setLabel('Previous')
+                        .setStyle(ButtonStyle.Secondary)
+                        .setEmoji('⬅️')
+                        .setDisabled(page === 1),
+                    new ButtonBuilder()
+                        .setCustomId(`collection_page_${targetUser.id}_${page}`)
+                        .setLabel(`${page}/${totalPages}`)
+                        .setStyle(ButtonStyle.Secondary)
+                        .setDisabled(true),
+                    new ButtonBuilder()
+                        .setCustomId(`collection_next_${targetUser.id}_${page}`)
+                        .setLabel('Next')
+                        .setStyle(ButtonStyle.Secondary)
+                        .setEmoji('➡️')
+                        .setDisabled(page === totalPages)
+                );
+            components.push(navRow);
+        }
+
+        // Action row
+        const actionRow = new ActionRowBuilder()
+            .addComponents(
+                new ButtonBuilder()
+                    .setCustomId(`collection_summon_${targetUser.id}`)
+                    .setLabel('Summon Character')
+                    .setStyle(ButtonStyle.Success)
+                    .setEmoji('🎴'),
+                new ButtonBuilder()
+                    .setCustomId(`collection_filter_${targetUser.id}`)
+                    .setLabel('Filter by Rarity')
+                    .setStyle(ButtonStyle.Primary)
+                    .setEmoji('🔍'),
+                new ButtonBuilder()
+                    .setCustomId(`collection_back_${targetUser.id}`)
+                    .setLabel('Back to Profile')
+                    .setStyle(ButtonStyle.Secondary)
+                    .setEmoji('⬅️')
+            );
+        components.push(actionRow);
+
+        return {
+            embeds: [embed],
+            components: components,
+            flags: MessageFlags.IsComponentsV2
+        };
+    }
+
+    /**
+     * Creates a character detail view
+     * @param {Object} character - Character data
+     * @param {Object} targetUser - Discord user object
+     * @returns {Object} Message options with character details
+     */
+    static createCharacterDetailEmbed(character, targetUser) {
+        const embed = new EmbedBuilder()
+            .setTitle(`${this.getRarityEmoji(character.rarity)} ${character.name}`)
+            .setDescription(character.description || 'A mysterious character from the anime multiverse')
+            .setColor(this.getRarityColor(character.rarity))
+            .setImage(character.imageUrl || null)
+            .addFields(
+                {
+                    name: '📊 **Stats**',
+                    value: [
+                        `**Level:** ${character.level}`,
+                        `**Experience:** ${character.exp || 0}`,
+                        `**Rarity:** ${character.rarity}`,
+                        `**Anime:** ${character.anime || 'Unknown'}`
+                    ].join('\n'),
+                    inline: true
+                },
+                {
+                    name: '⚔️ **Combat Stats**',
+                    value: [
+                        `**Attack:** ${character.attack || 0}`,
+                        `**Defense:** ${character.defense || 0}`,
+                        `**Speed:** ${character.speed || 0}`,
+                        `**Health:** ${character.health || 100}`
+                    ].join('\n'),
+                    inline: true
+                },
+                {
+                    name: '🎯 **Abilities**',
+                    value: character.abilities && character.abilities.length > 0
+                        ? character.abilities.map(ability => `• ${ability}`).join('\n')
+                        : 'No special abilities',
+                    inline: false
+                }
+            )
+            .setFooter({ text: `Owned by ${targetUser.username} • Use /collection to return` })
+            .setTimestamp();
+
+        const row = new ActionRowBuilder()
+            .addComponents(
+                new ButtonBuilder()
+                    .setCustomId(`character_equip_${character.id}_${targetUser.id}`)
+                    .setLabel('Equip Character')
+                    .setStyle(ButtonStyle.Success)
+                    .setEmoji('⚔️'),
+                new ButtonBuilder()
+                    .setCustomId(`character_upgrade_${character.id}_${targetUser.id}`)
+                    .setLabel('Upgrade')
+                    .setStyle(ButtonStyle.Primary)
+                    .setEmoji('⬆️'),
+                new ButtonBuilder()
+                    .setCustomId(`character_back_${targetUser.id}`)
+                    .setLabel('Back to Collection')
+                    .setStyle(ButtonStyle.Secondary)
+                    .setEmoji('⬅️')
+            );
+
+        return {
+            embeds: [embed],
+            components: [row],
+            flags: MessageFlags.IsComponentsV2
+        };
+    }
+
+    /**
+     * Creates a rarity filter select menu
+     * @param {string} userId - User ID
+     * @returns {Object} Message options with filter menu
+     */
+    static createRarityFilter(userId) {
+        const embed = new EmbedBuilder()
+            .setTitle('🔍 Filter Characters by Rarity')
+            .setDescription('Select a rarity to filter your character collection:')
+            .setColor(COLORS.INFO);
+
+        const selectMenu = new StringSelectMenuBuilder()
+            .setCustomId(`collection_filter_select_${userId}`)
+            .setPlaceholder('Choose a rarity...')
+            .addOptions(
+                {
+                    label: 'All Characters',
+                    description: 'Show all characters in your collection',
+                    value: 'all',
+                    emoji: '📚'
+                },
+                {
+                    label: 'Dimensional Characters',
+                    description: 'Ultra rare dimensional characters',
+                    value: 'DIMENSIONAL',
+                    emoji: '🌌'
+                },
+                {
+                    label: 'Mythic Characters',
+                    description: 'Legendary mythic characters',
+                    value: 'MYTHIC',
+                    emoji: '💎'
+                },
+                {
+                    label: 'Legendary Characters',
+                    description: 'Powerful legendary characters',
+                    value: 'LEGENDARY',
+                    emoji: '👑'
+                },
+                {
+                    label: 'Epic Characters',
+                    description: 'Rare epic characters',
+                    value: 'EPIC',
+                    emoji: '💜'
+                },
+                {
+                    label: 'Rare Characters',
+                    description: 'Uncommon rare characters',
+                    value: 'RARE',
+                    emoji: '💙'
+                },
+                {
+                    label: 'Common Characters',
+                    description: 'Basic common characters',
+                    value: 'COMMON',
+                    emoji: '💚'
+                }
+            );
+
+        const row = new ActionRowBuilder()
+            .addComponents(selectMenu);
+
+        return {
+            embeds: [embed],
+            components: [row],
+            flags: MessageFlags.IsComponentsV2
+        };
+    }
+
+    /**
+     * Gets emoji for rarity
+     * @param {string} rarity - Character rarity
+     * @returns {string} Rarity emoji
+     */
+    static getRarityEmoji(rarity) {
+        const emojis = {
+            'DIMENSIONAL': '🌌',
+            'MYTHIC': '💎',
+            'LEGENDARY': '👑',
+            'EPIC': '💜',
+            'RARE': '💙',
+            'COMMON': '💚'
+        };
+        return emojis[rarity] || '❓';
+    }
+
+    /**
+     * Gets color for rarity
+     * @param {string} rarity - Character rarity
+     * @returns {number} Color code
+     */
+    static getRarityColor(rarity) {
+        const colors = {
+            'DIMENSIONAL': COLORS.DIMENSIONAL,
+            'MYTHIC': COLORS.MYTHIC,
+            'LEGENDARY': COLORS.LEGENDARY,
+            'EPIC': COLORS.EPIC,
+            'RARE': COLORS.RARE,
+            'COMMON': COLORS.COMMON
+        };
+        return colors[rarity] || COLORS.PRIMARY;
+    }
+}
+
+module.exports = CharacterCollection;
