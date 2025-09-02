@@ -22,6 +22,9 @@ const { User, Character, UserCharacter } = require('../src/database/models');
 const app = express();
 const PORT = process.env.PORT || process.env.WEB_PORT || 3001;
 
+// Define public directory path
+const publicPath = path.join(__dirname, 'public');
+
 // Security middleware
 app.use(helmet({
     contentSecurityPolicy: {
