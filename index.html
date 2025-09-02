@@ -11,23 +11,99 @@
             box-sizing: border-box;
         }
 
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: linear-gradient(135deg, #0a0a0a 0%, #1a0033 50%, #0a0a0a 100%);
-            color: #e0e0e0;
-            min-height: 100vh;
-            overflow-x: hidden;
+        html {
+            scroll-behavior: smooth;
         }
 
         .container {
-            max-width: 1200px;
+            max-        </section>
+
+        <!-- Guides Section -->
+        <section id="guides" class="guides-section" style="margin: 60px 0; padding: 40px; background: rgba(218, 165, 32, 0.05); border-radius: 15px; border: 1px solid #daa520;">
+            <h2 style="color: #daa520; text-align: center; margin-bottom: 30px; font-size: 2rem;">📖 Quick Start Guide</h2>
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 30px; max-width: 1000px; margin: 0 auto;">
+                <div style="padding: 20px; background: rgba(255, 255, 255, 0.05); border-radius: 10px;">
+                    <h3 style="color: #daa520; margin-bottom: 15px;">🎯 Getting Started</h3>
+                    <ol style="color: #d4d4d4; padding-left: 20px;">
+                        <li>Join our Discord server</li>
+                        <li>Use <code style="background: rgba(138, 43, 226, 0.2); padding: 2px 6px; border-radius: 3px;">/summon</code> to get your first character</li>
+                        <li>Check your collection with <code style="background: rgba(138, 43, 226, 0.2); padding: 2px 6px; border-radius: 3px;">/collection</code></li>
+                        <li>Start battling with <code style="background: rgba(138, 43, 226, 0.2); padding: 2px 6px; border-radius: 3px;">/battle</code></li>
+                    </ol>
+                </div>
+                <div style="padding: 20px; background: rgba(255, 255, 255, 0.05); border-radius: 10px;">
+                    <h3 style="color: #daa520; margin-bottom: 15px;">💎 Rarity System</h3>
+                    <ul style="color: #d4d4d4; padding-left: 20px;">
+                        <li><strong style="color: #90EE90;">Common:</strong> Basic characters</li>
+                        <li><strong style="color: #87CEEB;">Rare:</strong> Uncommon finds</li>
+                        <li><strong style="color: #DDA0DD;">Epic:</strong> Powerful warriors</li>
+                        <li><strong style="color: #FFD700;">Legendary:</strong> Elite fighters</li>
+                        <li><strong style="color: #FF6347;">Mythic:</strong> Rare legends</li>
+                        <li><strong style="color: #FF4500;">Dimensional:</strong> Ultimate power</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <section class="features" id="features"> 1200px;
             margin: 0 auto;
             padding: 20px;
         }
 
+        /* Navigation Header */
+        .nav-header {
+            background: rgba(10, 10, 10, 0.95);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid #8a2be2;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+            padding: 15px 0;
+        }
+
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .nav-logo {
+            font-size: 1.8rem;
+            font-weight: bold;
+            background: linear-gradient(45deg, #8a2be2, #daa520);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            text-decoration: none;
+        }
+
+        .nav-menu {
+            display: flex;
+            gap: 30px;
+            list-style: none;
+        }
+
+        .nav-menu a {
+            color: #e0e0e0;
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s ease;
+            padding: 5px 0;
+        }
+
+        .nav-menu a:hover {
+            color: #daa520;
+        }
+
+        /* Main Header */
         header {
             text-align: center;
-            padding: 60px 0;
+            padding: 120px 0 60px 0;
             background: linear-gradient(45deg, rgba(138, 43, 226, 0.1), rgba(75, 0, 130, 0.1));
             border-bottom: 2px solid #8a2be2;
             margin-bottom: 40px;
@@ -146,11 +222,74 @@
         }
 
         footer {
-            text-align: center;
-            padding: 40px 0;
+            background: rgba(10, 10, 10, 0.95);
+            backdrop-filter: blur(10px);
             border-top: 1px solid #8a2be2;
-            margin-top: 60px;
+            margin-top: 80px;
+            color: #d4d4d4;
+        }
+
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 60px 20px 20px 20px;
+        }
+
+        .footer-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 40px;
+            margin-bottom: 40px;
+        }
+
+        .footer-section h3 {
+            color: #daa520;
+            font-size: 1.2rem;
+            margin-bottom: 20px;
+            font-weight: bold;
+        }
+
+        .footer-section ul {
+            list-style: none;
+        }
+
+        .footer-section ul li {
+            margin-bottom: 10px;
+        }
+
+        .footer-section a {
+            color: #b19cd9;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .footer-section a:hover {
+            color: #daa520;
+        }
+
+        .footer-bottom {
+            border-top: 1px solid #333;
+            padding: 20px 0;
+            text-align: center;
             color: #888;
+            font-size: 0.9rem;
+        }
+
+        .footer-bottom-links {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            margin-bottom: 10px;
+        }
+
+        .footer-bottom-links a {
+            color: #888;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .footer-bottom-links a:hover {
+            color: #daa520;
         }
 
         .character-showcase {
@@ -200,20 +339,27 @@
         }
 
         @media (max-width: 768px) {
+            .nav-container {
+                flex-direction: column;
+                gap: 15px;
+            }
+
+            .nav-menu {
+                gap: 20px;
+            }
+
+            .footer-grid {
+                grid-template-columns: 1fr;
+                gap: 30px;
+            }
+
+            .footer-bottom-links {
+                flex-direction: column;
+                gap: 15px;
+            }
+
             .logo {
                 font-size: 2.5rem;
-            }
-
-            .features {
-                grid-template-columns: 1fr;
-            }
-
-            .stats {
-                grid-template-columns: repeat(2, 1fr);
-            }
-
-            .character-showcase {
-                grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
             }
         }
 
@@ -257,6 +403,19 @@
     </style>
 </head>
 <body>
+    <!-- Navigation Header -->
+    <nav class="nav-header">
+        <div class="nav-container">
+            <a href="#" class="nav-logo">NEXIUM</a>
+            <ul class="nav-menu">
+                <li><a href="#changelog">Changelog</a></li>
+                <li><a href="#guides">Guides</a></li>
+                <li><a href="#blog">Blog</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Floating Background Elements -->
     <div class="bg-element"></div>
     <div class="bg-element"></div>
     <div class="bg-element"></div>
@@ -273,6 +432,23 @@
     </header>
 
     <div class="container">
+        <!-- Changelog Section -->
+        <section id="changelog" class="changelog-section" style="margin: 60px 0; padding: 40px; background: rgba(138, 43, 226, 0.05); border-radius: 15px; border: 1px solid #8a2be2;">
+            <h2 style="color: #daa520; text-align: center; margin-bottom: 30px; font-size: 2rem;">📋 Latest Updates</h2>
+            <div style="max-width: 800px; margin: 0 auto;">
+                <div style="margin-bottom: 20px; padding: 20px; background: rgba(255, 255, 255, 0.05); border-radius: 10px;">
+                    <h3 style="color: #daa520; margin-bottom: 10px;">v2.1.0 - Components V2 Update</h3>
+                    <p style="color: #b19cd9; font-size: 0.9rem; margin-bottom: 10px;">September 2, 2025</p>
+                    <ul style="color: #d4d4d4; padding-left: 20px;">
+                        <li>✅ Migrated to Discord Components V2</li>
+                        <li>✅ Removed attachment dependencies</li>
+                        <li>✅ Added GitHub Pages CDN for images</li>
+                        <li>✅ Enhanced character collection UI</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
         <section class="stats">
             <div>
                 <div class="stat-number">300+</div>
@@ -292,7 +468,7 @@
             </div>
         </section>
 
-        <section class="features">
+        <section class="features" id="features">
             <div class="feature-card">
                 <span class="feature-icon">🎴</span>
                 <h3 class="feature-title">Character Collection</h3>
@@ -379,11 +555,64 @@
     </div>
 
     <footer>
-        <div class="container">
-            <p>&copy; 2025 Nexium RPG Bot. Built with Discord.js Components V2.</p>
-            <p style="margin-top: 10px; font-size: 0.9rem;">
-                <a href="https://github.com/Elenyx/Nexium-RPG" style="color: #8a2be2; text-decoration: none;">View on GitHub</a>
-            </p>
+        <div class="footer-content">
+            <div class="footer-grid">
+                <div class="footer-section">
+                    <h3>📚 Resources</h3>
+                    <ul>
+                        <li><a href="#faq">FAQ</a></li>
+                        <li><a href="#guides">Beginner's Guide</a></li>
+                        <li><a href="#advanced">Advanced Strategies</a></li>
+                        <li><a href="#timeline">Development Timeline</a></li>
+                        <li><a href="#api">API Documentation</a></li>
+                    </ul>
+                </div>
+
+                <div class="footer-section">
+                    <h3>👥 Community</h3>
+                    <ul>
+                        <li><a href="https://discord.gg/nexium" target="_blank">Discord Server</a></li>
+                        <li><a href="#leaderboard">Leaderboards</a></li>
+                        <li><a href="#tournaments">Tournaments</a></li>
+                        <li><a href="#forums">Community Forums</a></li>
+                        <li><a href="#support">Support Center</a></li>
+                    </ul>
+                </div>
+
+                <div class="footer-section">
+                    <h3>⚔️ Nexium</h3>
+                    <ul>
+                        <li><a href="#rules">Server Rules</a></li>
+                        <li><a href="#commands">Bot Commands</a></li>
+                        <li><a href="#items">Items & Shop</a></li>
+                        <li><a href="#characters">Character Database</a></li>
+                        <li><a href="#rewards">Rewards System</a></li>
+                    </ul>
+                </div>
+
+                <div class="footer-section">
+                    <h3>🔗 Quick Links</h3>
+                    <ul>
+                        <li><a href="https://github.com/Elenyx/Nexium-RPG" target="_blank">GitHub Repository</a></li>
+                        <li><a href="#status">Bot Status</a></li>
+                        <li><a href="#invite">Invite Bot</a></li>
+                        <li><a href="#donate">Support Us</a></li>
+                        <li><a href="#contact">Contact</a></li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="footer-bottom">
+                <div class="footer-bottom-links">
+                    <a href="#terms">Terms & Conditions</a>
+                    <a href="#privacy">Privacy Policy</a>
+                    <a href="#server-terms">Server Terms</a>
+                </div>
+                <p>&copy; 2025 Nexium RPG Bot. Built with ❤️ using Discord.js Components V2.</p>
+                <p style="margin-top: 5px; font-size: 0.8rem;">
+                    Not affiliated with any anime franchises. All character images are used for educational purposes.
+                </p>
+            </div>
         </div>
     </footer>
 
