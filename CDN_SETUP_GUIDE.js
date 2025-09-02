@@ -5,9 +5,9 @@
  * For large collections, external URLs are ESSENTIAL. Here's how to set it up:
  *
  * 1. CHOOSE A CDN PROVIDER:
- *    - Cloudflare Images (free tier: 100,000 images/month)
- *    - ImgBB (free, unlimited storage)
- *    - GitHub Pages (free, unlimited)
+ *    - Cloudflare Images
+ *    - ImgBB 
+ *    - GitHub Pages 
  *    - Your own VPS with Nginx
  *
  * 2. ORGANIZE IMAGES:

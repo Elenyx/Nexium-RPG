@@ -7,6 +7,7 @@
 const ComponentRegistry = require('../ComponentRegistry');
 const UserService = require('../../services/UserService');
 const sampleCharacters = require('../../assets/sample/SampleCharacters');
+const { SectionBuilder, TextDisplayBuilder, MessageFlags, ButtonStyle } = require('discord.js');
 
 class ProfileButtonHandlers {
     constructor(client) {
@@ -56,10 +57,13 @@ class ProfileButtonHandlers {
 
         } catch (error) {
             console.error('Error handling inventory button:', error);
+            const errorSection = new SectionBuilder()
+                .addTextDisplayComponents(
+                    td => td.setContent('An error occurred while loading your inventory.')
+                );
             await interaction.editReply({
-                content: 'An error occurred while loading your inventory.',
-                embeds: [],
-                components: []
+                components: [errorSection],
+                flags: MessageFlags.IsComponentsV2
             });
         }
     }
@@ -108,10 +112,13 @@ class ProfileButtonHandlers {
 
         } catch (error) {
             console.error('Error handling collection button:', error);
+            const errorSection = new SectionBuilder()
+                .addTextDisplayComponents(
+                    td => td.setContent('An error occurred while loading your collection.')
+                );
             await interaction.editReply({
-                content: 'An error occurred while loading your collection.',
-                embeds: [],
-                components: []
+                components: [errorSection],
+                flags: MessageFlags.IsComponentsV2
             });
         }
     }
@@ -135,10 +142,13 @@ class ProfileButtonHandlers {
 
         } catch (error) {
             console.error('Error handling stats button:', error);
+            const errorSection = new SectionBuilder()
+                .addTextDisplayComponents(
+                    td => td.setContent('An error occurred while loading detailed stats.')
+                );
             await interaction.editReply({
-                content: 'An error occurred while loading detailed stats.',
-                embeds: [],
-                components: []
+                components: [errorSection],
+                flags: MessageFlags.IsComponentsV2
             });
         }
     }
@@ -164,11 +174,13 @@ class ProfileButtonHandlers {
 
             if (!canClaim) {
                 const timeLeft = Math.ceil((24 * 60 * 60 * 1000 - (now - lastDaily)) / (60 * 60 * 1000));
+                const infoSection = new SectionBuilder()
+                    .addTextDisplayComponents(
+                        td => td.setContent(`⏰ You can claim your daily reward again in ${timeLeft} hours!`)
+                    );
                 await interaction.editReply({
-                    content: `⏰ You can claim your daily reward again in ${timeLeft} hours!`,
-                    embeds: [],
-                    components: [],
-                    flags: 128
+                    components: [infoSection],
+                    flags: MessageFlags.IsComponentsV2
                 });
                 return;
             }
@@ -181,55 +193,34 @@ class ProfileButtonHandlers {
 
             await profile.save();
 
-            const embed = {
-                title: '🎁 Daily Reward Claimed!',
-                description: `You've successfully claimed your daily reward!`,
-                color: 0x10B981,
-                fields: [
-                    {
-                        name: '💰 Reward Earned',
-                        value: `${reward.toLocaleString()} coins`,
-                        inline: true
-                    },
-                    {
-                        name: '🔥 Daily Streak',
-                        value: `${profile.dailyStreak} days`,
-                        inline: true
-                    },
-                    {
-                        name: '💰 New Balance',
-                        value: `${profile.coins.toLocaleString()} coins`,
-                        inline: true
-                    }
-                ],
-                footer: { text: 'Come back tomorrow for more rewards!' }
-            };
-
-            const row = {
-                type: 1,
-                components: [
-                    {
-                        type: 2,
-                        style: 1,
-                        label: 'Back to Profile',
-                        emoji: '⬅️',
-                        custom_id: `profile_back_${userId}`
-                    }
-                ]
-            };
+            const successSection = new SectionBuilder()
+                .addTextDisplayComponents(
+                    td => td.setContent(`# 🎁 Daily Reward Claimed!\nYou've successfully claimed your daily reward!`),
+                    td => td.setContent(`**💰 Reward Earned:** ${reward.toLocaleString()} coins\n**🔥 Daily Streak:** ${profile.dailyStreak} days\n**💰 New Balance:** ${profile.coins.toLocaleString()} coins`),
+                    td => td.setContent(`*Come back tomorrow for more rewards!*`)
+                )
+                .setButtonAccessory(
+                    btn => btn
+                        .setCustomId(`profile_back_${userId}`)
+                        .setLabel('Back to Profile')
+                        .setStyle(ButtonStyle.Secondary)
+                        .setEmoji('⬅️')
+                );
 
             await interaction.editReply({
-                embeds: [embed],
-                components: [row],
-                flags: 128
+                components: [successSection],
+                flags: MessageFlags.IsComponentsV2
             });
 
         } catch (error) {
             console.error('Error handling daily button:', error);
+            const errorSection = new SectionBuilder()
+                .addTextDisplayComponents(
+                    td => td.setContent('An error occurred while claiming your daily reward.')
+                );
             await interaction.editReply({
-                content: 'An error occurred while claiming your daily reward.',
-                embeds: [],
-                components: []
+                components: [errorSection],
+                flags: MessageFlags.IsComponentsV2
             });
         }
     }
@@ -254,10 +245,13 @@ class ProfileButtonHandlers {
 
         } catch (error) {
             console.error('Error handling shop button:', error);
+            const errorSection = new SectionBuilder()
+                .addTextDisplayComponents(
+                    td => td.setContent('An error occurred while opening the shop.')
+                );
             await interaction.editReply({
-                content: 'An error occurred while opening the shop.',
-                embeds: [],
-                components: []
+                components: [errorSection],
+                flags: MessageFlags.IsComponentsV2
             });
         }
     }
@@ -281,10 +275,13 @@ class ProfileButtonHandlers {
 
         } catch (error) {
             console.error('Error handling back button:', error);
+            const errorSection = new SectionBuilder()
+                .addTextDisplayComponents(
+                    td => td.setContent('An error occurred while returning to profile.')
+                );
             await interaction.editReply({
-                content: 'An error occurred while returning to profile.',
-                embeds: [],
-                components: []
+                components: [errorSection],
+                flags: MessageFlags.IsComponentsV2
             });
         }
     }
@@ -318,10 +315,13 @@ class ProfileButtonHandlers {
 
         } catch (error) {
             console.error('Error handling collection switch:', error);
+            const errorSection = new SectionBuilder()
+                .addTextDisplayComponents(
+                    td => td.setContent('An error occurred while switching collection view.')
+                );
             await interaction.editReply({
-                content: 'An error occurred while switching collection view.',
-                embeds: [],
-                components: []
+                components: [errorSection],
+                flags: MessageFlags.IsComponentsV2
             });
         }
     }
@@ -355,10 +355,13 @@ class ProfileButtonHandlers {
 
         } catch (error) {
             console.error('Error handling collection switch to modern:', error);
+            const errorSection = new SectionBuilder()
+                .addTextDisplayComponents(
+                    td => td.setContent('An error occurred while switching to modern collection view.')
+                );
             await interaction.editReply({
-                content: 'An error occurred while switching to modern collection view.',
-                embeds: [],
-                components: []
+                components: [errorSection],
+                flags: MessageFlags.IsComponentsV2
             });
         }
     }
