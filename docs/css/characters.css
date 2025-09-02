@@ -1,17 +1,3 @@
-/* Page Header */
-.page-header {
-    text-align: center;
-    padding: 140px 20px 60px 20px;
-    border-bottom: 1px solid var(--border-color);
-}
-
-.page-header h1 {
-    font-size: 3.5rem;
-    font-weight: 900;
-    color: var(--light-purple);
-    text-shadow: 0 0 20px var(--glow-color);
-}
-
 /* Character Showcase */
 .character-showcase {
     display: grid;
@@ -50,15 +36,143 @@
     font-size: 1.5rem;
     font-weight: 700;
     text-shadow: 2px 2px 5px rgba(0,0,0,0.5);
+    overflow: hidden;
+    position: relative;
+}
+
+.character-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 8px;
 }
 
 .character-name {
     color: var(--light-purple);
     font-weight: bold;
     margin-bottom: 5px;
+    text-shadow: 0 0 10px var(--glow-color);
 }
 
 .character-rarity {
     color: var(--text-secondary);
     font-size: 0.9rem;
+    margin-bottom: 15px;
+    font-weight: 600;
+}
+
+.character-rarity.common { color: #8B8B8B; }
+.character-rarity.rare { color: #4CAF50; }
+.character-rarity.epic { color: #9C27B0; }
+.character-rarity.mythic { color: #FF9800; }
+.character-rarity.legendary { color: #FF5722; }
+.character-rarity.dimensional { color: var(--bright-purple); }
+
+.character-stats {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 15px;
+    padding: 10px;
+    background: rgba(138, 43, 226, 0.1);
+    border-radius: 8px;
+    border: 1px solid rgba(138, 43, 226, 0.2);
+}
+
+.stat {
+    text-align: center;
+    flex: 1;
+}
+
+.stat-label {
+    display: block;
+    color: var(--text-secondary);
+    font-size: 0.8rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    margin-bottom: 5px;
+}
+
+.stat-value {
+    display: block;
+    color: var(--bright-purple);
+    font-size: 1.2rem;
+    font-weight: 700;
+}
+
+.character-description {
+    color: var(--text-primary);
+    font-size: 0.9rem;
+    line-height: 1.4;
+    text-align: center;
+}
+
+/* Rarity Legend */
+.rarity-legend {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 15px;
+    margin-top: 30px;
+}
+
+.rarity-item {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    padding: 15px;
+    background: var(--card-bg);
+    border: 1px solid var(--border-color);
+    border-radius: 10px;
+    transition: all 0.3s ease;
+}
+
+.rarity-item:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(0,0,0,0.2), 0 0 10px var(--glow-color);
+    border-color: var(--primary-purple);
+}
+
+.rarity-badge {
+    padding: 6px 12px;
+    border-radius: 15px;
+    font-size: 0.8rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    min-width: 80px;
+    text-align: center;
+}
+
+.rarity-badge.common {
+    background: linear-gradient(45deg, #8B8B8B, #A9A9A9);
+    color: white;
+}
+
+.rarity-badge.rare {
+    background: linear-gradient(45deg, #4CAF50, #66BB6A);
+    color: white;
+}
+
+.rarity-badge.epic {
+    background: linear-gradient(45deg, #9C27B0, #BA68C8);
+    color: white;
+}
+
+.rarity-badge.mythic {
+    background: linear-gradient(45deg, #FF9800, #FFB74D);
+    color: white;
+}
+
+.rarity-badge.legendary {
+    background: linear-gradient(45deg, #FF5722, #FF8A65);
+    color: white;
+}
+
+.rarity-badge.dimensional {
+    background: linear-gradient(45deg, var(--bright-purple), var(--primary-purple));
+    color: white;
+}
+
+.rarity-description {
+    color: var(--text-primary);
+    font-size: 0.9rem;
+    flex: 1;
 }

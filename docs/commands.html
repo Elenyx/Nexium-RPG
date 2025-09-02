@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nexium RPG - Commands</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+    <!-- Navigation Header -->
+    <nav class="nav-header">
+        <div class="nav-container">
+            <a href="index.html" class="nav-logo">NEXIUM</a>
+            <ul class="nav-menu">
+                <li><a href="changelog.html">Changelog</a></li>
+                <li><a href="guides.html">Guides</a></li>
+                <li><a href="index.html#features">Features</a></li>
+                <li><a href="characters.html">Characters</a></li>
+                <li><a href="commands.html" class="active">Commands</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <header class="page-header">
+        <h1>Bot Commands</h1>
+        <p class="page-subtitle">Complete list of available slash commands and their usage</p>
+    </header>
+
+    <div class="container">
+        <!-- Core Commands -->
+        <section class="info-section">
+            <h2>⚔️ Core Commands</h2>
+            <div class="commands-grid">
+                <div class="command-card">
+                    <div class="command-header">
+                        <h3>/help</h3>
+                        <span class="command-badge core">Core</span>
+                    </div>
+                    <p class="command-description">Get help and information about the bot, including getting started guide and available features.</p>
+                    <div class="command-usage">
+                        <strong>Usage:</strong> <code>/help</code>
+                    </div>
+                    <div class="command-features">
+                        <span>Interactive Buttons</span>
+                        <span>Feature Overview</span>
+                        <span>Support Links</span>
+                    </div>
+                </div>
+
+                <div class="command-card">
+                    <div class="command-header">
+                        <h3>/profile</h3>
+                        <span class="command-badge core">Core</span>
+                    </div>
+                    <p class="command-description">View your dimensional profile or another user's profile, including stats, inventory, and collection.</p>
+                    <div class="command-usage">
+                        <strong>Usage:</strong> <code>/profile [user]</code>
+                    </div>
+                    <div class="command-options">
+                        <strong>Options:</strong>
+                        <ul>
+                            <li><code>user</code> - Optional user to view profile of</li>
+                        </ul>
+                    </div>
+                    <div class="command-features">
+                        <span>Interactive UI</span>
+                        <span>Stats Display</span>
+                        <span>Collection View</span>
+                    </div>
+                </div>
+
+                <div class="command-card">
+                    <div class="command-header">
+                        <h3>/ping</h3>
+                        <span class="command-badge core">Core</span>
+                    </div>
+                    <p class="command-description">Check the bot's latency and response time to ensure optimal performance.</p>
+                    <div class="command-usage">
+                        <strong>Usage:</strong> <code>/ping</code>
+                    </div>
+                    <div class="command-features">
+                        <span>Bot Latency</span>
+                        <span>API Latency</span>
+                        <span>Status Check</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Upcoming Commands -->
+        <section class="info-section">
+            <h2>🚀 Upcoming Commands</h2>
+            <div class="commands-grid">
+                <div class="command-card upcoming">
+                    <div class="command-header">
+                        <h3>/summon</h3>
+                        <span class="command-badge planned">Planned</span>
+                    </div>
+                    <p class="command-description">Summon new characters using energy or coins. Higher rarity characters require more resources.</p>
+                    <div class="command-usage">
+                        <strong>Usage:</strong> <code>/summon [rarity]</code>
+                    </div>
+                    <div class="command-features">
+                        <span>Character Summoning</span>
+                        <span>Rarity System</span>
+                        <span>Resource Management</span>
+                    </div>
+                </div>
+
+                <div class="command-card upcoming">
+                    <div class="command-header">
+                        <h3>/battle</h3>
+                        <span class="command-badge planned">Planned</span>
+                    </div>
+                    <p class="command-description">Challenge other players or fight AI opponents in strategic battles.</p>
+                    <div class="command-usage">
+                        <strong>Usage:</strong> <code>/battle @user</code> or <code>/battle ai</code>
+                    </div>
+                    <div class="command-features">
+                        <span>PvP Combat</span>
+                        <span>PvE Battles</span>
+                        <span>Strategic Gameplay</span>
+                    </div>
+                </div>
+
+                <div class="command-card upcoming">
+                    <div class="command-header">
+                        <h3>/shop</h3>
+                        <span class="command-badge planned">Planned</span>
+                    </div>
+                    <p class="command-description">Browse and purchase items, characters, and upgrades from the in-game shop.</p>
+                    <div class="command-usage">
+                        <strong>Usage:</strong> <code>/shop [category]</code>
+                    </div>
+                    <div class="command-features">
+                        <span>Item Shopping</span>
+                        <span>Daily Deals</span>
+                        <span>Currency System</span>
+                    </div>
+                </div>
+
+                <div class="command-card upcoming">
+                    <div class="command-header">
+                        <h3>/inventory</h3>
+                        <span class="command-badge planned">Planned</span>
+                    </div>
+                    <p class="command-description">Manage your collected characters, items, and equipment.</p>
+                    <div class="command-usage">
+                        <strong>Usage:</strong> <code>/inventory [filter]</code>
+                    </div>
+                    <div class="command-features">
+                        <span>Character Management</span>
+                        <span>Item Organization</span>
+                        <span>Equipment System</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Command Categories -->
+        <section class="info-section">
+            <h2>📊 Command Categories</h2>
+            <div class="categories-grid">
+                <div class="category-card">
+                    <div class="category-icon">⚔️</div>
+                    <h3>Combat</h3>
+                    <p>Battle commands for PvP and PvE gameplay</p>
+                    <div class="category-commands">
+                        <span>/battle</span>
+                        <span>/attack</span>
+                        <span>/defend</span>
+                    </div>
+                </div>
+
+                <div class="category-card">
+                    <div class="category-icon">🛒</div>
+                    <h3>Economy</h3>
+                    <p>Shop, trading, and currency management</p>
+                    <div class="category-commands">
+                        <span>/shop</span>
+                        <span>/trade</span>
+                        <span>/market</span>
+                    </div>
+                </div>
+
+                <div class="category-card">
+                    <div class="category-icon">👥</div>
+                    <h3>Social</h3>
+                    <p>Guild, friends, and community features</p>
+                    <div class="category-commands">
+                        <span>/guild</span>
+                        <span>/friends</span>
+                        <span>/leaderboard</span>
+                    </div>
+                </div>
+
+                <div class="category-card">
+                    <div class="category-icon">⚙️</div>
+                    <h3>Utility</h3>
+                    <p>Help, settings, and utility commands</p>
+                    <div class="category-commands">
+                        <span>/help</span>
+                        <span>/settings</span>
+                        <span>/stats</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <footer>
+        <div class="footer-content">
+            <div class="footer-grid">
+                <div class="footer-section">
+                    <h3>📚 Resources</h3>
+                    <ul>
+                        <li><a href="#">FAQ</a></li>
+                        <li><a href="guides.html">Beginner's Guide</a></li>
+                        <li><a href="#">Advanced Strategies</a></li>
+                        <li><a href="#">Development Timeline</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h3>👥 Community</h3>
+                    <ul>
+                        <li><a href="#" target="_blank">Discord Server</a></li>
+                        <li><a href="#">Leaderboards</a></li>
+                        <li><a href="#">Tournaments</a></li>
+                        <li><a href="#">Support Center</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h3>⚔️ Nexium</h3>
+                    <ul>
+                        <li><a href="#">Server Rules</a></li>
+                        <li><a href="#">Bot Commands</a></li>
+                        <li><a href="characters.html">Character Database</a></li>
+                        <li><a href="#">Rewards System</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h3>🔗 Quick Links</h3>
+                    <ul>
+                        <li><a href="#" target="_blank">GitHub Repository</a></li>
+                        <li><a href="#">Bot Status</a></li>
+                        <li><a href="#">Invite Bot</a></li>
+                        <li><a href="#">Support Us</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 Nexium RPG Bot. All Rights Reserved.</p>
+                 <p style="margin-top: 5px; font-size: 0.8rem;">
+                    Not affiliated with any anime franchises. All character images and names are for representational purposes only.
+                </p>
+            </div>
+        </div>
+    </footer>
+</body>
+</html>

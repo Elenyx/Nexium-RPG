@@ -12,6 +12,7 @@ const DiscordStrategy = require('passport-discord').Strategy;
 const cors = require('cors');
 const helmet = require('helmet');
 const path = require('path');
+const fs = require('fs');
 const { Sequelize } = require('sequelize');
 require('dotenv').config();
 
@@ -44,8 +45,20 @@ app.use(cors({
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-// Static file serving
-app.use(express.static(path.join(__dirname, 'public')));
+// Static file serving with error handling
+app.use(express.static(publicPath, {
+    fallthrough: true
+}));
+
+// Handle static file errors gracefully
+app.use((req, res, next) => {
+    if (req.path.startsWith('/css/') || req.path.startsWith('/js/') || req.path.match(/\.(css|js|png|jpg|jpeg|gif|ico|svg)$/)) {
+        console.warn('Static file not found:', req.path);
+        res.status(404).send('File not found');
+    } else {
+        next();
+    }
+});
 
 // Session configuration
 app.use(session({
@@ -106,7 +119,30 @@ passport.deserializeUser(async (id, done) => {
 
 // Health check endpoint for Railway
 app.get('/health', (req, res) => {
-    res.status(200).json({ status: 'OK', timestamp: new Date().toISOString() });
+    const indexPath = path.join(publicPath, 'index.html');
+    res.status(200).json({ 
+        status: 'OK', 
+        timestamp: new Date().toISOString(),
+        directory: __dirname,
+        cwd: process.cwd(),
+        publicPath: publicPath,
+        publicExists: fs.existsSync(publicPath),
+        indexExists: fs.existsSync(indexPath),
+        files: fs.readdirSync(publicPath).filter(f => f.endsWith('.html')),
+        services: {
+            web: 'running',
+            discord: 'unknown' // This will be updated by the bot
+        }
+    });
+});
+
+// Discord bot health check endpoint
+app.get('/health/discord', (req, res) => {
+    // This endpoint can be called by the Discord bot to update its status
+    res.status(200).json({
+        status: 'OK',
+        message: 'Discord bot health check endpoint ready'
+    });
 });
 
 // Routes
@@ -114,7 +150,14 @@ app.get('/', (req, res) => {
     if (req.isAuthenticated()) {
         res.redirect('/dashboard');
     } else {
-        res.sendFile(path.join(__dirname, 'public', 'index.html'));
+        const indexPath = path.join(publicPath, 'index.html');
+        console.log('Serving index.html from:', indexPath);
+        if (fs.existsSync(indexPath)) {
+            res.sendFile(indexPath);
+        } else {
+            console.error('Index.html not found at:', indexPath);
+            res.status(404).send('Index file not found');
+        }
     }
 });
 
@@ -182,7 +225,7 @@ app.get('/api/characters', async (req, res) => {
 // Dashboard route
 app.get('/dashboard', (req, res) => {
     if (req.isAuthenticated()) {
-        res.sendFile(path.join(__dirname, 'public', 'dashboard.html'));
+        res.sendFile(path.join(publicPath, 'dashboard.html'));
     } else {
         res.redirect('/');
     }
@@ -191,7 +234,7 @@ app.get('/dashboard', (req, res) => {
 // Collection page route
 app.get('/collection', (req, res) => {
     if (req.isAuthenticated()) {
-        res.sendFile(path.join(__dirname, 'public', 'collection.html'));
+        res.sendFile(path.join(publicPath, 'collection.html'));
     } else {
         res.redirect('/');
     }
@@ -205,39 +248,58 @@ app.use((err, req, res, next) => {
 
 // 404 handler
 app.use((req, res) => {
-    res.status(404).sendFile(path.join(__dirname, 'public', '404.html'));
+    res.status(404).sendFile(path.join(publicPath, '404.html'));
 });
 
 // Start server
 const startServer = async () => {
     try {
-        // Initialize database connection
-        const sequelize = new Sequelize(process.env.DATABASE_URL || 'postgresql://localhost:5432/nexium_rpg', {
-            logging: false
-        });
+        console.log('Starting Nexium Web Server...');
 
-        await sequelize.authenticate();
-        console.log('Database connection established successfully.');
+        // Try to initialize database connection (optional for basic serving)
+        try {
+            const sequelize = new Sequelize(process.env.DATABASE_URL || 'postgresql://localhost:5432/nexium_rpg', {
+                logging: false,
+                dialectOptions: {
+                    ssl: process.env.NODE_ENV === 'production' ? { require: true, rejectUnauthorized: false } : false
+                }
+            });
 
-        // Initialize models
-        const models = require('../src/database/models');
-        Object.values(models).forEach(model => {
-            if (typeof model === 'function') {
-                model(sequelize);
-            }
-        });
+            await sequelize.authenticate();
+            console.log('Database connection established successfully.');
 
-        // Sync database
-        await sequelize.sync();
-        console.log('Database synchronized successfully.');
+            // Initialize models
+            const models = require('../src/database/models');
+            Object.values(models).forEach(model => {
+                if (typeof model === 'function') {
+                    model(sequelize);
+                }
+            });
+
+            // Sync database (create tables if they don't exist)
+            await sequelize.sync();
+            console.log('Database synchronized successfully.');
+        } catch (dbError) {
+            console.warn('Database connection failed, but server will start anyway:', dbError.message);
+            console.log('Some features may not work without database connection.');
+        }
 
         app.listen(PORT, () => {
             console.log(`🌐 Nexium Web Server running on http://localhost:${PORT}`);
             console.log(`🔗 Discord OAuth: http://localhost:${PORT}/auth/discord`);
+            console.log(`📊 Health Check: http://localhost:${PORT}/health`);
         });
     } catch (error) {
         console.error('Failed to start server:', error);
-        process.exit(1);
+        // Don't exit process, try to start server anyway
+        try {
+            app.listen(PORT, () => {
+                console.log(`🌐 Nexium Web Server running on http://localhost:${PORT} (limited functionality)`);
+            });
+        } catch (serverError) {
+            console.error('Failed to start server even without database:', serverError);
+            process.exit(1);
+        }
     }
 };
 

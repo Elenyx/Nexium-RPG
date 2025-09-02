@@ -56,6 +56,43 @@ FRONTEND_URL=https://nexium-production.up.railway.app
 REDIS_URL=${{Redis.REDIS_URL}}  # If you add Redis service
 ```
 
+## Step 4: Monitor Deployment
+
+After deployment, check these endpoints:
+
+- **Web Health**: `https://your-app.railway.app/health`
+- **Discord Status**: Check your Discord server to see if the bot is online
+- **Logs**: View Railway logs to see startup messages
+
+### Expected Startup Logs
+
+You should see these messages in the Railway logs:
+
+```
+🚂 Starting Nexium Railway Deployment...
+🔍 Checking environment variables...
+DISCORD_TOKEN: ✅ Set
+DATABASE_URL: ✅ Set
+🚀 Starting Discord Bot...
+🚀 Starting Web Server...
+✅ Both services started successfully!
+🤖 Starting Nexium Discord Bot...
+📊 Connecting to database...
+✅ Database connected successfully
+🔐 Logging into Discord...
+✅ Discord login successful
+✅ Logged in as YourBot#1234 (123456789012345678)
+```
+
+### Troubleshooting
+
+If the Discord bot doesn't start:
+
+1. **Check Environment Variables**: Ensure `DISCORD_TOKEN` is set correctly
+2. **Check Bot Permissions**: Make sure the bot has proper permissions in your Discord server
+3. **Check Logs**: Look for error messages in Railway logs
+4. **Database Issues**: If database connection fails, the bot will still start but some features may not work
+
 ## Step 4: Set Up PostgreSQL Database
 
 1. **Add PostgreSQL to Railway:**

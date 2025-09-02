@@ -270,3 +270,399 @@ footer {
     .info-section h2 { font-size: 2rem; }
     .info-section { padding: 40px 20px; }
 }
+
+/* Page Header */
+.page-header {
+    text-align: center;
+    padding: 140px 20px 60px 20px;
+    border-bottom: 1px solid var(--border-color);
+}
+
+.page-header h1 {
+    font-size: 3.5rem;
+    font-weight: 900;
+    background: linear-gradient(45deg, var(--bright-purple), var(--light-purple));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    margin-bottom: 10px;
+    text-shadow: 0 0 30px var(--glow-color);
+}
+
+.page-subtitle {
+    font-size: 1.2rem;
+    color: var(--text-secondary);
+    margin-bottom: 20px;
+}
+
+/* Changelog Styles */
+.changelog-content {
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+}
+
+.update-card {
+    background: var(--card-bg);
+    border: 1px solid var(--border-color);
+    border-radius: 15px;
+    padding: 30px;
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+}
+
+.update-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 30px rgba(0,0,0,0.3), 0 0 20px var(--glow-color);
+    border-color: var(--primary-purple);
+}
+
+.update-card.latest {
+    border-color: var(--bright-purple);
+    box-shadow: 0 0 25px rgba(138, 43, 226, 0.2);
+}
+
+.update-card.latest::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 4px;
+    background: linear-gradient(90deg, var(--bright-purple), var(--primary-purple));
+}
+
+.update-card h3 {
+    color: var(--light-purple);
+    font-size: 1.8rem;
+    font-weight: 700;
+    margin-bottom: 10px;
+    text-shadow: 0 0 15px var(--glow-color);
+}
+
+.update-date {
+    color: var(--text-secondary);
+    font-size: 0.9rem;
+    margin-bottom: 15px;
+}
+
+.update-badges {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 20px;
+}
+
+.badge {
+    padding: 4px 12px;
+    border-radius: 20px;
+    font-size: 0.8rem;
+    font-weight: 600;
+    text-transform: uppercase;
+}
+
+.badge.major {
+    background: linear-gradient(45deg, #ff6b6b, #ee5a24);
+    color: white;
+}
+
+.badge.ui {
+    background: linear-gradient(45deg, #4ecdc4, #44a08d);
+    color: white;
+}
+
+.badge.foundation {
+    background: linear-gradient(45deg, #45b7d1, #96c93d);
+    color: white;
+}
+
+.badge.database {
+    background: linear-gradient(45deg, #f093fb, #f5576c);
+    color: white;
+}
+
+.badge.initial {
+    background: linear-gradient(45deg, #a8edea, #fed6e3);
+    color: #333;
+}
+
+.update-card ul {
+    list-style: none;
+    padding: 0;
+}
+
+.update-card ul li {
+    color: var(--text-primary);
+    margin-bottom: 8px;
+    padding-left: 20px;
+    position: relative;
+}
+
+.update-card ul li::before {
+    content: '✓';
+    position: absolute;
+    left: 0;
+    color: var(--bright-purple);
+    font-weight: bold;
+}
+
+/* Roadmap Styles */
+.roadmap-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 20px;
+    margin-top: 30px;
+}
+
+.roadmap-item {
+    background: var(--card-bg);
+    border: 1px solid var(--border-color);
+    border-radius: 12px;
+    padding: 25px;
+    text-align: center;
+    transition: all 0.3s ease;
+}
+
+.roadmap-item:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 25px rgba(0,0,0,0.2), 0 0 15px var(--glow-color);
+    border-color: var(--primary-purple);
+}
+
+.roadmap-item h4 {
+    color: var(--light-purple);
+    font-size: 1.3rem;
+    font-weight: 700;
+    margin-bottom: 10px;
+    text-shadow: 0 0 10px var(--glow-color);
+}
+
+.roadmap-item p {
+    color: var(--text-secondary);
+    font-size: 0.95rem;
+    line-height: 1.5;
+    margin-bottom: 15px;
+}
+
+.status {
+    display: inline-block;
+    padding: 4px 12px;
+    border-radius: 15px;
+    font-size: 0.8rem;
+    font-weight: 600;
+    text-transform: uppercase;
+}
+
+.status.in-progress {
+    background: linear-gradient(45deg, #ffa726, #fb8c00);
+    color: white;
+}
+
+.status.planned {
+    background: linear-gradient(45deg, #90a4ae, #546e7a);
+    color: white;
+}
+
+/* Commands Page Styles */
+.commands-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+    gap: 25px;
+    margin-top: 30px;
+}
+
+.command-card {
+    background: var(--card-bg);
+    border: 1px solid var(--border-color);
+    border-radius: 15px;
+    padding: 25px;
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+}
+
+.command-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 30px rgba(0,0,0,0.3), 0 0 20px var(--glow-color);
+    border-color: var(--primary-purple);
+}
+
+.command-card.upcoming {
+    opacity: 0.8;
+    border-style: dashed;
+}
+
+.command-card.upcoming::before {
+    content: 'Coming Soon';
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background: linear-gradient(45deg, #ffa726, #fb8c00);
+    color: white;
+    padding: 4px 12px;
+    border-radius: 15px;
+    font-size: 0.7rem;
+    font-weight: 600;
+    text-transform: uppercase;
+}
+
+.command-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 15px;
+}
+
+.command-header h3 {
+    color: var(--light-purple);
+    font-size: 1.4rem;
+    font-weight: 700;
+    margin: 0;
+    text-shadow: 0 0 15px var(--glow-color);
+}
+
+.command-badge {
+    padding: 4px 12px;
+    border-radius: 15px;
+    font-size: 0.75rem;
+    font-weight: 600;
+    text-transform: uppercase;
+}
+
+.command-badge.core {
+    background: linear-gradient(45deg, #4ecdc4, #44a08d);
+    color: white;
+}
+
+.command-badge.planned {
+    background: linear-gradient(45deg, #90a4ae, #546e7a);
+    color: white;
+}
+
+.command-description {
+    color: var(--text-primary);
+    line-height: 1.6;
+    margin-bottom: 15px;
+}
+
+.command-usage {
+    background: rgba(138, 43, 226, 0.1);
+    border: 1px solid rgba(138, 43, 226, 0.2);
+    border-radius: 8px;
+    padding: 12px;
+    margin-bottom: 15px;
+}
+
+.command-usage code {
+    background: rgba(138, 43, 226, 0.2);
+    color: var(--bright-purple);
+    padding: 2px 6px;
+    border-radius: 4px;
+    font-family: 'Courier New', monospace;
+    font-weight: 600;
+}
+
+.command-options {
+    margin-bottom: 15px;
+}
+
+.command-options strong {
+    color: var(--light-purple);
+    display: block;
+    margin-bottom: 8px;
+}
+
+.command-options ul {
+    list-style: none;
+    padding: 0;
+}
+
+.command-options li {
+    color: var(--text-secondary);
+    margin-bottom: 5px;
+    padding-left: 15px;
+    position: relative;
+}
+
+.command-options li::before {
+    content: '•';
+    position: absolute;
+    left: 0;
+    color: var(--primary-purple);
+}
+
+.command-features {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+}
+
+.command-features span {
+    background: rgba(138, 43, 226, 0.1);
+    color: var(--text-secondary);
+    padding: 4px 10px;
+    border-radius: 12px;
+    font-size: 0.8rem;
+    border: 1px solid rgba(138, 43, 226, 0.2);
+}
+
+/* Categories Grid */
+.categories-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 20px;
+    margin-top: 30px;
+}
+
+.category-card {
+    background: var(--card-bg);
+    border: 1px solid var(--border-color);
+    border-radius: 12px;
+    padding: 25px;
+    text-align: center;
+    transition: all 0.3s ease;
+}
+
+.category-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 25px rgba(0,0,0,0.2), 0 0 15px var(--glow-color);
+    border-color: var(--primary-purple);
+}
+
+.category-icon {
+    font-size: 2.5rem;
+    margin-bottom: 15px;
+    display: block;
+}
+
+.category-card h3 {
+    color: var(--light-purple);
+    font-size: 1.3rem;
+    font-weight: 700;
+    margin-bottom: 10px;
+    text-shadow: 0 0 10px var(--glow-color);
+}
+
+.category-card p {
+    color: var(--text-secondary);
+    font-size: 0.95rem;
+    line-height: 1.5;
+    margin-bottom: 15px;
+}
+
+.category-commands {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    justify-content: center;
+}
+
+.category-commands span {
+    background: rgba(138, 43, 226, 0.1);
+    color: var(--bright-purple);
+    padding: 4px 10px;
+    border-radius: 12px;
+    font-size: 0.8rem;
+    font-weight: 600;
+    border: 1px solid rgba(138, 43, 226, 0.2);
+}
