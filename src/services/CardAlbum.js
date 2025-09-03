@@ -11,10 +11,11 @@ const CharacterImageManager = require('../components/builders/CharacterImageMana
 class CardAlbum {
     constructor() {
         this.canvasWidth = 800;
-        this.canvasHeight = 600;
+        this.canvasHeight = 650;
         this.cardsPerPage = 8;
-        this.cardWidth = 160;
-        this.cardHeight = 200;
+        // Optimized card size for 8 cards (4x2 grid) on 800x650 canvas
+        this.cardWidth = 180; // Fits 4 cards per row with spacing
+        this.cardHeight = Math.round(this.cardWidth * 4 / 3); // ~240px for 3:4 ratio
         this.margin = 20;
         this.cardSpacing = 10;
         this.characterImageManager = new CharacterImageManager();
@@ -103,69 +104,52 @@ class CardAlbum {
      * Draw a single character card
      */
     async drawCharacterCard(ctx, character, x, y, cardNumber) {
-        // Card background with rounded corners
+        // Draw card background/frame
         this.roundedRect(ctx, x, y, this.cardWidth, this.cardHeight, 8);
-        ctx.fillStyle = this.getRarityColor(character.rarity || 'Common');
+        ctx.fillStyle = 'rgba(255, 255, 255, 0.1)'; // Subtle white background
         ctx.fill();
 
         // Card border
-        ctx.strokeStyle = '#ffffff';
+        ctx.strokeStyle = 'rgba(255, 255, 255, 0.3)'; // Subtle border
         ctx.lineWidth = 2;
         this.roundedRect(ctx, x, y, this.cardWidth, this.cardHeight, 8);
         ctx.stroke();
 
-        // Load and draw character image
         try {
-            // Use CharacterImageManager to get the correct image based on current rarity
-            const imageUrl = this.characterImageManager.getCharacterImageUrlByRarity(character);
+            // Get the ImageKit URL for the character
+            const imageUrl = this.getImageKitUrl(character);
+
             if (imageUrl) {
                 const image = await loadImage(imageUrl);
-                const imageSize = 120;
-                const imageX = x + (this.cardWidth - imageSize) / 2;
-                const imageY = y + 15;
 
-                // Draw image with rounded corners
+                // Draw the character image with slight padding
+                const padding = 4;
                 ctx.save();
-                this.roundedRect(ctx, imageX, imageY, imageSize, imageSize, 6);
+                this.roundedRect(ctx, x + padding, y + padding, this.cardWidth - 2 * padding, this.cardHeight - 2 * padding, 6);
                 ctx.clip();
-                ctx.drawImage(image, imageX, imageY, imageSize, imageSize);
+                ctx.drawImage(image, x + padding, y + padding, this.cardWidth - 2 * padding, this.cardHeight - 2 * padding);
                 ctx.restore();
             } else {
                 // Fallback if no image URL available
-                ctx.fillStyle = '#666666';
-                this.roundedRect(ctx, x + 20, y + 15, 120, 120, 6);
+                ctx.fillStyle = 'rgba(102, 102, 102, 0.8)';
+                this.roundedRect(ctx, x + 4, y + 4, this.cardWidth - 8, this.cardHeight - 8, 6);
                 ctx.fill();
                 ctx.fillStyle = '#ffffff';
                 ctx.font = '12px Arial';
                 ctx.textAlign = 'center';
-                ctx.fillText('No Image', x + this.cardWidth / 2, y + 75);
+                ctx.fillText('No Image', x + this.cardWidth / 2, y + this.cardHeight / 2);
             }
         } catch (error) {
             console.error('Error loading character image:', error);
             // Fallback placeholder
-            ctx.fillStyle = '#666666';
-            this.roundedRect(ctx, x + 20, y + 15, 120, 120, 6);
+            ctx.fillStyle = 'rgba(102, 102, 102, 0.8)';
+            this.roundedRect(ctx, x + 4, y + 4, this.cardWidth - 8, this.cardHeight - 8, 6);
             ctx.fill();
+            ctx.fillStyle = '#ffffff';
+            ctx.font = '12px Arial';
+            ctx.textAlign = 'center';
+            ctx.fillText('Error', x + this.cardWidth / 2, y + this.cardHeight / 2);
         }
-
-        // Character name
-        ctx.fillStyle = '#ffffff';
-        ctx.font = 'bold 12px Arial';
-        ctx.textAlign = 'center';
-        const nameY = y + this.cardHeight - 35;
-        ctx.fillText(character.name || 'Unknown', x + this.cardWidth / 2, nameY);
-
-        // Rarity badge
-        ctx.font = '10px Arial';
-        ctx.fillStyle = '#ffff00';
-        const rarityY = y + this.cardHeight - 15;
-        ctx.fillText(character.rarity || 'Common', x + this.cardWidth / 2, rarityY);
-
-        // Card number
-        ctx.fillStyle = '#cccccc';
-        ctx.font = '8px Arial';
-        ctx.textAlign = 'left';
-        ctx.fillText(`#${cardNumber}`, x + 8, y + 15);
     }
 
     /**
@@ -219,20 +203,29 @@ class CardAlbum {
     }
 
     /**
-     * Get character image path
+     * Get ImageKit URL for character
      * @param {Object} character - Character object
-     * @returns {string} Full path to character image
+     * @returns {string|null} ImageKit URL or null if not available
      */
-    getCharacterImagePath(character) {
-        if (!character.imagePath) return null;
+    getImageKitUrl(character) {
+        const { IMAGE_KIT_BASE_URL } = require('../config/constants');
 
-        // If it's already an absolute path, return it
-        if (path.isAbsolute(character.imagePath)) {
-            return character.imagePath;
+        // If character has imagePath, construct ImageKit URL
+        if (character.imagePath) {
+            return `${IMAGE_KIT_BASE_URL}${character.imagePath}`;
         }
 
-        // Otherwise, assume it's relative to the assets/images/characters directory
-        return path.join(__dirname, '../assets/images/characters', character.imagePath);
+        // Fallback to imageUrl if available
+        if (character.imageUrl) {
+            return character.imageUrl;
+        }
+
+        // Fallback to rarity-specific imageUrls
+        if (character.imageUrls && character.imageUrls[character.rarity]) {
+            return character.imageUrls[character.rarity];
+        }
+
+        return null;
     }
 }
 

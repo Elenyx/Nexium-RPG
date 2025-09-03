@@ -148,13 +148,15 @@ class PullImageGenerator {
             throw new Error('No characters provided');
         }
 
-        const cardSize = 200;
+        // 3:4 aspect ratio cards
+        const cardWidth = 200;
+        const cardHeight = Math.round(cardWidth * 4 / 3); // ~267px for 3:4 ratio
         const padding = 20;
-        const cardsPerRow = Math.min(characters.length, Math.floor((maxWidth - padding) / (cardSize + padding)));
+        const cardsPerRow = Math.min(characters.length, Math.floor((maxWidth - padding) / (cardWidth + padding)));
 
         const rows = Math.ceil(characters.length / cardsPerRow);
-        const imageWidth = Math.min(maxWidth, cardsPerRow * (cardSize + padding) + padding);
-        const imageHeight = rows * (cardSize + padding) + padding;
+        const imageWidth = Math.min(maxWidth, cardsPerRow * (cardWidth + padding) + padding);
+        const imageHeight = rows * (cardHeight + padding) + padding;
 
         const canvas = createCanvas(imageWidth, imageHeight);
         const ctx = canvas.getContext('2d');
@@ -168,22 +170,22 @@ class PullImageGenerator {
             const row = Math.floor(i / cardsPerRow);
             const col = i % cardsPerRow;
 
-            const x = padding + col * (cardSize + padding);
-            const y = padding + row * (cardSize + padding);
+            const x = padding + col * (cardWidth + padding);
+            const y = padding + row * (cardHeight + padding);
 
             try {
-                const cardBuffer = await this.generateCharacterCard(characters[i], cardSize, cardSize);
+                const cardBuffer = await this.generateCharacterCard(characters[i], cardWidth, cardHeight);
                 const cardImage = await loadImage(cardBuffer);
-                ctx.drawImage(cardImage, x, y, cardSize, cardSize);
+                ctx.drawImage(cardImage, x, y, cardWidth, cardHeight);
             } catch (error) {
                 console.error(`Failed to generate card for ${characters[i].name}:`, error);
                 // Draw fallback
                 ctx.fillStyle = '#666666';
-                ctx.fillRect(x, y, cardSize, cardSize);
+                ctx.fillRect(x, y, cardWidth, cardHeight);
                 ctx.fillStyle = 'white';
                 ctx.font = '12px Arial';
                 ctx.textAlign = 'center';
-                ctx.fillText('Error', x + cardSize / 2, y + cardSize / 2);
+                ctx.fillText('Error', x + cardWidth / 2, y + cardHeight / 2);
             }
         }
 
