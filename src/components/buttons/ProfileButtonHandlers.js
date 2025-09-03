@@ -6,8 +6,11 @@
 
 const ComponentRegistry = require('../ComponentRegistry');
 const UserService = require('../../services/UserService');
+const CardAlbum = require('../../services/CardAlbum');
 const characters = require('../../assets/characters');
-const { SectionBuilder, TextDisplayBuilder, MessageFlags, ButtonStyle } = require('discord.js');
+const { SectionBuilder, TextDisplayBuilder, MessageFlags, ButtonStyle, EmbedBuilder, ActionRowBuilder, ButtonBuilder } = require('discord.js');
+const { models } = require('../../database/connection');
+const { COLORS, EMOJIS } = require('../../config/constants');
 
 class ProfileButtonHandlers {
     constructor(client) {
@@ -80,46 +83,115 @@ class ProfileButtonHandlers {
         try {
             await interaction.deferUpdate();
 
-            // Use all characters from the new structure
-            const allCharacters = characters.all;
-            const totalPages = Math.ceil(allCharacters.length / 6) || 1; // 6 per page for modern view
+            // Check if database is available
+            if (!models) {
+                const embed = new EmbedBuilder()
+                    .setColor(COLORS.ERROR)
+                    .setTitle(`${EMOJIS.ERROR} Database Unavailable`)
+                    .setDescription('The database is not configured. Please check your environment variables.');
 
-            // Use adaptive collection that chooses the best display format
-            const collectionDisplay = await this.registry.createAdaptiveCollection(
-                allCharacters,
-                targetUser,
-                'modern', // Default to modern display
-                1,
-                totalPages
-            );
-
-            // Handle Components V2 response format
-            const responseOptions = {
-                components: collectionDisplay.components || []
-            };
-
-            // Add flags for Components V2
-            if (collectionDisplay.flags) {
-                responseOptions.flags = collectionDisplay.flags;
+                return await interaction.editReply({ embeds: [embed] });
             }
 
-            // Only add files if they exist (for backward compatibility)
-            if (collectionDisplay.files && collectionDisplay.files.length > 0) {
-                responseOptions.files = collectionDisplay.files;
+            // Get user's characters from database
+            const userCharacters = await models.UserCharacter.findAll({
+                where: { userId: targetUser.id },
+                include: [{
+                    model: models.Character,
+                    as: 'character',
+                    attributes: ['id', 'name', 'rarity', 'imagePath']
+                }],
+                order: [['character', 'rarity', 'DESC'], ['character', 'name', 'ASC']]
+            });
+
+            if (userCharacters.length === 0) {
+                const embed = new EmbedBuilder()
+                    .setColor(COLORS.ERROR)
+                    .setTitle(`${EMOJIS.ERROR} Empty Collection`)
+                    .setDescription(`${targetUser.username} hasn't collected any characters yet!`)
+                    .setFooter({ text: 'Start collecting characters to build your album!' });
+
+                return await interaction.editReply({ embeds: [embed] });
             }
 
-            await interaction.editReply(responseOptions);
+            // Transform data for CardAlbum
+            const characters = userCharacters.map(uc => ({
+                id: uc.character.id,
+                name: uc.character.name,
+                rarity: uc.character.rarity,
+                imagePath: uc.character.imagePath
+            }));
+
+            // Generate the card album image (start with page 0)
+            const cardAlbum = new CardAlbum();
+            const albumBuffer = await cardAlbum.generateAlbum(characters, 0, {
+                id: targetUser.id,
+                username: targetUser.username
+            });
+
+            // Create embed with the generated image
+            const totalPages = Math.ceil(characters.length / 8);
+            const embed = new EmbedBuilder()
+                .setColor(COLORS.SUCCESS)
+                .setTitle(`${EMOJIS.COLLECTION} ${targetUser.username}'s Character Collection`)
+                .setDescription(`**${characters.length}** characters collected • Page **1** of **${totalPages}**`)
+                .setImage('attachment://collection.png')
+                .setFooter({
+                    text: `Use /collection page:2 to view next page`,
+                    iconURL: targetUser.displayAvatarURL()
+                })
+                .setTimestamp();
+
+            // Add navigation buttons if there are multiple pages
+            const components = [];
+            if (totalPages > 1) {
+                const row = new ActionRowBuilder()
+                    .addComponents(
+                        new ButtonBuilder()
+                            .setCustomId(`collection_prev_${targetUser.id}_0_profile`)
+                            .setLabel('Previous')
+                            .setStyle(ButtonStyle.Secondary)
+                            .setEmoji('⬅️')
+                            .setDisabled(true), // First page, so disabled
+                        new ButtonBuilder()
+                            .setCustomId(`collection_next_${targetUser.id}_0_profile`)
+                            .setLabel('Next')
+                            .setStyle(ButtonStyle.Secondary)
+                            .setEmoji('➡️')
+                            .setDisabled(totalPages === 1)
+                    );
+                components.push(row);
+            }
+
+            // Add back to profile button
+            const backRow = new ActionRowBuilder()
+                .addComponents(
+                    new ButtonBuilder()
+                        .setCustomId(`profile_back_${userId}`)
+                        .setLabel('Back to Profile')
+                        .setStyle(ButtonStyle.Secondary)
+                        .setEmoji('⬅️')
+                );
+            components.push(backRow);
+
+            await interaction.editReply({
+                embeds: [embed],
+                files: [{
+                    attachment: albumBuffer,
+                    name: 'collection.png'
+                }],
+                components: components
+            });
 
         } catch (error) {
             console.error('Error handling collection button:', error);
-            const errorSection = new SectionBuilder()
-                .addTextDisplayComponents(
-                    td => td.setContent('An error occurred while loading your collection.')
-                );
-            await interaction.editReply({
-                components: [errorSection],
-                flags: MessageFlags.IsComponentsV2
-            });
+            const errorEmbed = new EmbedBuilder()
+                .setColor(COLORS.ERROR)
+                .setTitle(`${EMOJIS.ERROR} Collection Error`)
+                .setDescription('An error occurred while generating your collection album.')
+                .setFooter({ text: 'Please try again later' });
+
+            await interaction.editReply({ embeds: [errorEmbed] });
         }
     }
 

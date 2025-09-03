@@ -17,8 +17,10 @@ class CollectionButtonHandlers {
      * @param {ButtonInteraction} interaction - The button interaction
      */
     async handle(interaction) {
-        const [action, targetUserId, currentPageStr] = interaction.customId.split('_').slice(1);
+        const parts = interaction.customId.split('_');
+        const [action, targetUserId, currentPageStr, context] = parts.slice(1);
         const currentPage = parseInt(currentPageStr);
+        const isFromProfile = context === 'profile';
         const targetUser = await interaction.client.users.fetch(targetUserId);
 
         try {
@@ -95,22 +97,36 @@ class CollectionButtonHandlers {
             // Add navigation buttons if there are multiple pages
             const components = [];
             if (totalPages > 1) {
+                const contextSuffix = isFromProfile ? '_profile' : '';
                 const row = new ActionRowBuilder()
                     .addComponents(
                         new ButtonBuilder()
-                            .setCustomId(`collection_prev_${targetUserId}_${newPage}`)
+                            .setCustomId(`collection_prev_${targetUserId}_${newPage}${contextSuffix}`)
                             .setLabel('Previous')
                             .setStyle(ButtonStyle.Secondary)
                             .setEmoji('⬅️')
                             .setDisabled(newPage === 0),
                         new ButtonBuilder()
-                            .setCustomId(`collection_next_${targetUserId}_${newPage}`)
+                            .setCustomId(`collection_next_${targetUserId}_${newPage}${contextSuffix}`)
                             .setLabel('Next')
                             .setStyle(ButtonStyle.Secondary)
                             .setEmoji('➡️')
                             .setDisabled(newPage === totalPages - 1)
                     );
                 components.push(row);
+            }
+
+            // Add back to profile button if accessed from profile
+            if (isFromProfile) {
+                const backRow = new ActionRowBuilder()
+                    .addComponents(
+                        new ButtonBuilder()
+                            .setCustomId(`profile_back_${targetUserId}`)
+                            .setLabel('Back to Profile')
+                            .setStyle(ButtonStyle.Secondary)
+                            .setEmoji('⬅️')
+                    );
+                components.push(backRow);
             }
 
             await interaction.editReply({
