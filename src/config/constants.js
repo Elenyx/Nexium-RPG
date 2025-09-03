@@ -26,7 +26,11 @@ module.exports = {
         SUCCESS: '✅',
         ERROR: '❌',
         WARNING: '⚠️',
-        LOADING: '⏳'
+        LOADING: '⏳',
+        SHARD: '💎',
+        GACHA: '🎲',
+        QUEST: '📜',
+        UPGRADE: '⬆️'
     },
 
     RARITIES: {

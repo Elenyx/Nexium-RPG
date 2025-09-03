@@ -73,7 +73,7 @@ const sampleCharacters = [
         id: 'char_005',
         name: 'Goku',
         anime: 'Dragon Ball',
-        rarity: 'DIMENSIONAL',
+        rarity: 'MYTHIC',
         level: 60,
         exp: 18000,
         attack: 95,

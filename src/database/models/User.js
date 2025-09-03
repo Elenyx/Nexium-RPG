@@ -44,6 +44,10 @@ const defineUser = (sequelize) => {
             type: DataTypes.DATE,
             allowNull: true
         },
+        shards: {
+            type: DataTypes.INTEGER,
+            defaultValue: 0
+        },
         createdAt: {
             type: DataTypes.DATE,
             defaultValue: DataTypes.NOW

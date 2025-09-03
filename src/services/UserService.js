@@ -69,6 +69,92 @@ class UserService {
             throw error;
         }
     }
+
+    async addCharacterToUser(userId, characterId, options = {}) {
+        if (!models) {
+            logger.warn('Database not available, cannot add character to user');
+            return null;
+        }
+
+        try {
+            const [userCharacter, created] = await models.UserCharacter.findOrCreate({
+                where: {
+                    userId: userId,
+                    characterId: characterId
+                },
+                defaults: {
+                    userId: userId,
+                    characterId: characterId,
+                    obtainedAt: new Date(),
+                    isFavorite: options.isFavorite || false,
+                    customLevel: options.customLevel || 1,
+                    customExp: options.customExp || 0
+                }
+            });
+
+            if (created) {
+                logger.info(`Added character ${characterId} to user ${userId}`);
+            } else {
+                logger.info(`User ${userId} already owns character ${characterId}`);
+            }
+
+            return {
+                ...userCharacter.toJSON(),
+                isNewlyCreated: created
+            };
+        } catch (error) {
+            logger.error('Error in addCharacterToUser:', error);
+            throw error;
+        }
+    }
+
+    async getUserCharacters(userId, options = {}) {
+        if (!models) {
+            logger.warn('Database not available, cannot get user characters');
+            return [];
+        }
+
+        try {
+            const userCharacters = await models.UserCharacter.findAll({
+                where: { userId: userId },
+                include: [{
+                    model: models.Character,
+                    as: 'character'
+                }],
+                order: options.order || [['obtainedAt', 'DESC']]
+            });
+
+            return userCharacters;
+        } catch (error) {
+            logger.error('Error in getUserCharacters:', error);
+            throw error;
+        }
+    }
+
+    async removeCharacterFromUser(userId, characterId) {
+        if (!models) {
+            logger.warn('Database not available, cannot remove character from user');
+            return false;
+        }
+
+        try {
+            const deleted = await models.UserCharacter.destroy({
+                where: {
+                    userId: userId,
+                    characterId: characterId
+                }
+            });
+
+            if (deleted > 0) {
+                logger.info(`Removed character ${characterId} from user ${userId}`);
+            }
+
+            return deleted > 0;
+        } catch (error) {
+            logger.error('Error in removeCharacterFromUser:', error);
+            throw error;
+        }
+    }
 }
 
 module.exports = UserService;

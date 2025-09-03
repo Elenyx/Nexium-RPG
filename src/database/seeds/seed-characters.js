@@ -3,15 +3,16 @@
  * @description Seeds the Character table with sample character data
  */
 
+require('dotenv').config();
 const sampleCharacters = require('../../assets/sample/SampleCharacters');
-const { Character } = require('../models');
+const { models } = require('../connection');
 
 const seedCharacters = async () => {
     try {
         console.log('🌱 Seeding characters...');
 
         for (const charData of sampleCharacters) {
-            const [character, created] = await Character.findOrCreate({
+            const [character, created] = await models.Character.findOrCreate({
                 where: { id: charData.id },
                 defaults: {
                     id: charData.id,
