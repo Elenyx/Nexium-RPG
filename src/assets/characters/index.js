@@ -7,7 +7,7 @@ const narutoCharacters = require('./naruto');
 
 // Combine all characters from all anime series
 const allCharacters = [
-    ...narutoCharacters.all
+    ...narutoCharacters.allCharacters
 ];
 
 // Export by anime series
