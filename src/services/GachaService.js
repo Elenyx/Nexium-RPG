@@ -12,14 +12,14 @@ class GachaService {
     constructor() {
         this.userService = new UserService();
 
-        // Gacha rates (in percentage)
+        // Gacha rates (in percentage) - Updated to match new rarity system
         this.rates = {
-            COMMON: 60.0,
-            RARE: 25.0,
-            EPIC: 10.0,
-            LEGENDARY: 4.0,
-            MYTHIC: 0.9,
-            DIMENSIONAL: 0.1
+            COMMON: 47.5,
+            RARE: 30.0,
+            EPIC: 15.0,
+            LEGENDARY: 5.0,
+            MYTHIC: 2.0,
+            DIMENSIONAL: 0.5
         };
 
         // Pull costs

@@ -2,11 +2,11 @@
  * Quick test for Components V2 character collection
  */
 const CharacterCollection = require('./src/components/builders/CharacterCollection');
-const sampleCharacters = require('./src/assets/sample/SampleCharacters');
+const characters = require('./src/assets/characters');
 
 async function testComponentsV2() {
   const mockUser = { id: '123', username: 'TestUser', displayAvatarURL: () => 'avatar.jpg' };
-  const result = await CharacterCollection.createModernCollectionEmbed(sampleCharacters, mockUser, 1, 2);
+  const result = await CharacterCollection.createModernCollectionEmbed(characters.all, mockUser, 1, 2);
 
   console.log('🎯 Components V2 Test Results:');
   console.log('✅ Has components:', !!result.components);

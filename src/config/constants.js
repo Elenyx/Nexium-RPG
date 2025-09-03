@@ -34,16 +34,16 @@ module.exports = {
     },
 
     RARITIES: {
-        COMMON: { chance: 0.60, multiplier: 1 },
-        RARE: { chance: 0.25, multiplier: 2 },
-        EPIC: { chance: 0.10, multiplier: 3 },
-        LEGENDARY: { chance: 0.04, multiplier: 5 },
-        MYTHIC: { chance: 0.009, multiplier: 10 },
-        DIMENSIONAL: { chance: 0.001, multiplier: 20 }
+        COMMON: { chance: 0.475, multiplier: 1 },
+        RARE: { chance: 0.300, multiplier: 2 },
+        EPIC: { chance: 0.150, multiplier: 3 },
+        LEGENDARY: { chance: 0.050, multiplier: 5 },
+        MYTHIC: { chance: 0.020, multiplier: 10 },
+        DIMENSIONAL: { chance: 0.005, multiplier: 20 }
     },
 
     // ImageKit.io Configuration for Character Images
-    IMAGE_KIT_BASE_URL: 'https://ik.imagekit.io/nexiumrpg/',
+    IMAGE_KIT_BASE_URL: 'https://ik.imagekit.io/nexium/',
 
     DIMENSIONS: {
         NEXUS_HUB: {

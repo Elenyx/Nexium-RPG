@@ -1,17 +1,17 @@
 /**
  * @file src/database/seeds/seed-characters.js
- * @description Seeds the Character table with sample character data
+ * @description Seeds the Character table with character data from the new organized structure
  */
 
 require('dotenv').config();
-const sampleCharacters = require('../../assets/sample/SampleCharacters');
+const characters = require('../../assets/characters');
 const { models } = require('../connection');
 
 const seedCharacters = async () => {
     try {
         console.log('🌱 Seeding characters...');
 
-        for (const charData of sampleCharacters) {
+        for (const charData of characters.all) {
             const [character, created] = await models.Character.findOrCreate({
                 where: { id: charData.id },
                 defaults: {
@@ -19,27 +19,31 @@ const seedCharacters = async () => {
                     name: charData.name,
                     anime: charData.anime,
                     rarity: charData.rarity,
-                    level: charData.level,
-                    exp: charData.exp,
-                    attack: charData.attack,
-                    defense: charData.defense,
-                    speed: charData.speed,
-                    health: charData.health,
+                    level: charData.baseStats.level,
+                    exp: charData.baseStats.exp,
+                    attack: charData.baseStats.attack,
+                    defense: charData.baseStats.defense,
+                    speed: charData.baseStats.speed,
+                    health: charData.baseStats.health,
                     abilities: charData.abilities,
                     description: charData.description,
                     imageUrl: charData.imageUrl,
-                    imagePath: charData.imagePath
+                    thumbnailUrl: charData.thumbnailUrl,
+                    element: charData.element,
+                    class: charData.class,
+                    region: charData.region,
+                    quote: charData.quote
                 }
             });
 
             if (created) {
-                console.log(`✅ Created character: ${character.name}`);
+                console.log(`✅ Created character: ${character.name} (${character.rarity})`);
             } else {
                 console.log(`⏭️  Character already exists: ${character.name}`);
             }
         }
 
-        console.log('🎉 Character seeding completed!');
+        console.log(`🎉 Character seeding completed! Total: ${characters.all.length} characters`);
     } catch (error) {
         console.error('❌ Error seeding characters:', error);
         throw error;

@@ -5,7 +5,7 @@
  */
 
 const CharacterCollection = require('./src/components/builders/CharacterCollection');
-const sampleCharacters = require('./src/assets/sample/SampleCharacters');
+const characters = require('./src/assets/characters');
 
 async function testCharacterCollection() {
     console.log('🧪 Testing Character Collection with Image Integration...\n');
@@ -21,7 +21,7 @@ async function testCharacterCollection() {
         // Test 1: Modern Collection View
         console.log('📱 Testing Modern Collection View...');
         const modernCollection = await CharacterCollection.createModernCollectionEmbed(
-            sampleCharacters,
+            characters.all,
             mockUser,
             1,
             2
@@ -35,7 +35,7 @@ async function testCharacterCollection() {
         // Test 2: Adaptive Collection (Modern)
         console.log('\n🔄 Testing Adaptive Collection (Modern)...');
         const adaptiveModern = await CharacterCollection.createAdaptiveCollection(
-            sampleCharacters,
+            characters.all,
             mockUser,
             'modern',
             1,
@@ -47,7 +47,7 @@ async function testCharacterCollection() {
         // Test 3: Adaptive Collection (Classic)
         console.log('\n📄 Testing Adaptive Collection (Classic)...');
         const adaptiveClassic = await CharacterCollection.createAdaptiveCollection(
-            sampleCharacters,
+            characters.all,
             mockUser,
             'classic',
             1,
@@ -59,7 +59,7 @@ async function testCharacterCollection() {
         // Test 4: Character Detail View
         console.log('\n👤 Testing Character Detail View...');
         const characterDetail = await CharacterCollection.createCharacterDetailEmbed(
-            sampleCharacters[0], // Naruto
+            characters.all[0], // First character (Naruto)
             mockUser
         );
 

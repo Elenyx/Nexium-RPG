@@ -6,7 +6,7 @@
 
 const ComponentRegistry = require('../ComponentRegistry');
 const UserService = require('../../services/UserService');
-const sampleCharacters = require('../../assets/sample/SampleCharacters');
+const characters = require('../../assets/characters');
 const { SectionBuilder, TextDisplayBuilder, MessageFlags, ButtonStyle } = require('discord.js');
 
 class ProfileButtonHandlers {
@@ -80,13 +80,13 @@ class ProfileButtonHandlers {
         try {
             await interaction.deferUpdate();
 
-            // Use sample characters for testing
-            const characters = sampleCharacters;
-            const totalPages = Math.ceil(characters.length / 6) || 1; // 6 per page for modern view
+            // Use all characters from the new structure
+            const allCharacters = characters.all;
+            const totalPages = Math.ceil(allCharacters.length / 6) || 1; // 6 per page for modern view
 
             // Use adaptive collection that chooses the best display format
             const collectionDisplay = await this.registry.createAdaptiveCollection(
-                characters,
+                allCharacters,
                 targetUser,
                 'modern', // Default to modern display
                 1,
@@ -298,13 +298,13 @@ class ProfileButtonHandlers {
         try {
             await interaction.deferUpdate();
 
-            // Use sample characters for testing
-            const characters = sampleCharacters;
-            const totalPages = Math.ceil(characters.length / 10) || 1; // Use 10 for classic view
+            // Use all characters from the new structure
+            const allCharacters = characters.all;
+            const totalPages = Math.ceil(allCharacters.length / 10) || 1; // Use 10 for classic view
 
             // Switch to classic embed view
             const collectionDisplay = await this.registry.createAdaptiveCollection(
-                characters,
+                allCharacters,
                 targetUser,
                 'classic', // Switch to classic display
                 1,
@@ -338,13 +338,13 @@ class ProfileButtonHandlers {
         try {
             await interaction.deferUpdate();
 
-            // Use sample characters for testing
-            const characters = sampleCharacters;
-            const totalPages = Math.ceil(characters.length / 6) || 1; // Use 6 for modern view
+            // Use all characters from the new structure
+            const allCharacters = characters.all;
+            const totalPages = Math.ceil(allCharacters.length / 6) || 1; // Use 6 for modern view
 
             // Switch to modern container view
             const collectionDisplay = await this.registry.createAdaptiveCollection(
-                characters,
+                allCharacters,
                 targetUser,
                 'modern', // Switch to modern display
                 1,
