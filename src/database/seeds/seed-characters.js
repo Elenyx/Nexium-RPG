@@ -19,21 +19,16 @@ const seedCharacters = async () => {
                     name: charData.name,
                     anime: charData.anime,
                     rarity: charData.rarity,
-                    level: charData.baseStats.level,
-                    exp: charData.baseStats.exp,
+                    level: charData.baseStats.level || 1,
+                    exp: charData.baseStats.exp || 0,
                     attack: charData.baseStats.attack,
                     defense: charData.baseStats.defense,
                     speed: charData.baseStats.speed,
                     health: charData.baseStats.health,
                     abilities: charData.abilities,
                     description: charData.description,
-                    imageUrl: charData.imageUrl,
-                    imageUrls: charData.imageUrls || {},
-                    thumbnailUrl: charData.thumbnailUrl,
-                    element: charData.element,
-                    class: charData.class,
-                    region: charData.region,
-                    quote: charData.quote
+                    imageUrl: charData.image,
+                    imageUrls: charData.imageUrls || {}
                 }
             });
 
