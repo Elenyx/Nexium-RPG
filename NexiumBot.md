@@ -86,6 +86,7 @@ nexium-discord-bot/
 ├── .env.example
 ├── .gitignore
 ├── package.json
+├── railway.json
 ├── Dockerfile
 └── README.md
 ```
@@ -563,7 +564,7 @@ DISCORD_TOKEN=your_discord_bot_token
 CLIENT_ID=your_client_id
 GUILD_ID=your_guild_id_for_dev
 
-# Database Configuration (PostgreSQL)
+# Database Configuration (Railway PostgreSQL)
 DATABASE_URL=postgresql://username:password@host:port/database
 
 # Environment
@@ -583,6 +584,28 @@ ENERGY_REGEN_INTERVAL=300000
 
 # Logging
 LOG_LEVEL=info
+```
+
+### railway.json
+```json
+{
+  "$schema": "https://railway.app/railway.schema.json",
+  "build": {
+    "builder": "NIXPACKS"
+  },
+  "deploy": {
+    "startCommand": "npm start",
+    "restartPolicyType": "ON_FAILURE",
+    "restartPolicyMaxRetries": 10
+  },
+  "healthcheck": {
+    "type": "HTTP",
+    "path": "/health",
+    "port": 3000,
+    "interval": 30,
+    "timeout": 10
+  }
+}
 ```
 
 ### Dockerfile
@@ -672,31 +695,29 @@ module.exports = {
 
 ## 🚀 Deployment Instructions
 
-### Cloud Deployment Options
+### Railway Deployment
 
-#### Option 1: Railway (Full-Stack)
-```bash
-railway login
-railway init
-railway add postgresql
-railway variables set DISCORD_TOKEN=your_token
-railway variables set NODE_ENV=production
-railway up
-```
+1. **Create Railway Project**
+   ```bash
+   railway login
+   railway init
+   ```
 
-#### Option 2: Heroku
-```bash
-heroku create your-app-name
-heroku addons:create heroku-postgresql:hobby-dev
-heroku config:set DISCORD_TOKEN=your_token
-git push heroku main
-```
+2. **Add PostgreSQL Database**
+   ```bash
+   railway add postgresql
+   ```
 
-#### Option 3: VPS/Docker
-```bash
-docker build -t nexium-bot .
-docker run -d --env-file .env nexium-bot
-```
+3. **Set Environment Variables**
+   ```bash
+   railway variables set DISCORD_TOKEN=your_token
+   railway variables set NODE_ENV=production
+   ```
+
+4. **Deploy**
+   ```bash
+   railway up
+   ```
 
 ### Local Development
 

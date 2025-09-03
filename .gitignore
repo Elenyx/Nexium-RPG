@@ -209,6 +209,9 @@ tramp
 
 # Project specific
 NexiumBot.md
+ROADMAP.md
+CHARACTER_IMAGES_README.md
+CDN_SETUP_GUIDE.js
 AGENT.md
 .github/copilot-instructions.md
 
