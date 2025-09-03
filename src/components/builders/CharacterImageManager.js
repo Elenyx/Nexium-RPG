@@ -6,7 +6,7 @@
 
 const fs = require('fs');
 const path = require('path');
-const { COLORS, EMOJIS, IMAGE_KIT_BASE_URL, RARITY_FRAMES } = require('../../config/constants');
+const { COLORS, EMOJIS, IMAGE_KIT_BASE_URL } = require('../../config/constants');
 
 class CharacterImageManager {
     constructor() {
@@ -29,9 +29,6 @@ class CharacterImageManager {
                 // Add more mappings as needed
             }
         };
-
-        // Rarity frames configuration
-        this.rarityFrames = RARITY_FRAMES;
 
         // Image optimization settings
         this.imageSettings = {
@@ -62,32 +59,6 @@ class CharacterImageManager {
 
         const imagePath = path.join(this.basePath, `${characterId}${format}`);
         return fs.existsSync(imagePath) ? imagePath : null;
-    }
-
-    /**
-     * Generates ImageKit URL with rarity frame overlay
-     * @param {string} characterImageUrl - Base character image URL
-     * @param {string} rarity - Character rarity (COMMON, RARE, EPIC, etc.)
-     * @returns {string} ImageKit URL with frame overlay
-     */
-    getCharacterImageWithFrame(characterImageUrl, rarity) {
-        if (!characterImageUrl || !rarity || !this.rarityFrames[rarity]) {
-            return characterImageUrl;
-        }
-
-        // Remove base URL from character image to get relative path
-        const baseUrl = this.externalCDN.baseUrl;
-        let relativePath = characterImageUrl;
-
-        if (characterImageUrl.startsWith(baseUrl)) {
-            relativePath = characterImageUrl.substring(baseUrl.length);
-        }
-
-        // Construct ImageKit URL with frame overlay
-        const framePath = this.rarityFrames[rarity];
-        const transformation = `tr=l-${encodeURIComponent(framePath)},lx-0,ly-0,w-256,h-256,c-at_max`;
-
-        return `${baseUrl}${relativePath}?${transformation}`;
     }
 
     /**
@@ -247,10 +218,9 @@ class CharacterImageManager {
             if (cdnUrl && cdnUrl !== this.getPlaceholderImageUrl(characterId)) {
                 const isValid = await this.validateImageUrl(cdnUrl);
                 if (isValid) {
-                    const framedUrl = this.getCharacterImageWithFrame(cdnUrl, character.rarity);
                     return {
                         success: true,
-                        url: framedUrl,
+                        url: cdnUrl,
                         source: 'cdn'
                     };
                 }
@@ -260,10 +230,9 @@ class CharacterImageManager {
             if (character.imageUrl && character.imageUrl.startsWith('http')) {
                 const isValid = await this.validateImageUrl(character.imageUrl);
                 if (isValid) {
-                    const framedUrl = this.getCharacterImageWithFrame(character.imageUrl, character.rarity);
                     return {
                         success: true,
-                        url: framedUrl,
+                        url: character.imageUrl,
                         source: 'character'
                     };
                 }
@@ -307,13 +276,12 @@ class CharacterImageManager {
     prepareCharacterWithImage(character) {
         const hasImage = this.hasCharacterImage(character.id);
         const imageUrl = hasImage ? this.getOptimizedCharacterImageUrl(character.id) : null;
-        const displayImage = imageUrl ? this.getCharacterImageWithFrame(imageUrl, character.rarity) : this.getPlaceholderImageUrl(character.id);
 
         return {
             ...character,
             hasImage,
             imageUrl,
-            displayImage
+            displayImage: imageUrl || this.getPlaceholderImageUrl(character.id)
         };
     }
 

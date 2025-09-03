@@ -4,14 +4,13 @@
  * @author Nexium Bot Development Team
  */
 
-const { createCanvas, loadImage, registerFont } = require('canvas');
+const { createCanvas, loadImage } = require('canvas');
 const path = require('path');
 const fs = require('fs');
 const { RARITY_FRAMES, IMAGE_KIT_BASE_URL } = require('../config/constants');
 
 class PullImageGenerator {
     constructor() {
-        this.frameCache = new Map();
         this.characterCache = new Map();
 
         // Register fonts if available
@@ -34,32 +33,6 @@ class PullImageGenerator {
             }
         } catch (error) {
             console.warn('Font registration failed:', error.message);
-        }
-    }
-
-    /**
-     * Load and cache rarity frame images
-     * @param {string} rarity - Character rarity
-     * @returns {Promise<Image>} Canvas Image object
-     */
-    async loadRarityFrame(rarity) {
-        if (!rarity || !RARITY_FRAMES[rarity]) {
-            throw new Error(`Invalid rarity: ${rarity}`);
-        }
-
-        if (this.frameCache.has(rarity)) {
-            return this.frameCache.get(rarity);
-        }
-
-        try {
-            const frameUrl = `${IMAGE_KIT_BASE_URL}${RARITY_FRAMES[rarity]}`;
-            const image = await loadImage(frameUrl);
-            this.frameCache.set(rarity, image);
-            return image;
-        } catch (error) {
-            console.warn(`Failed to load frame for ${rarity}:`, error.message);
-            // Return a placeholder frame or throw error
-            throw new Error(`Frame not available for rarity: ${rarity}`);
         }
     }
 
@@ -88,7 +61,7 @@ class PullImageGenerator {
     }
 
     /**
-     * Generate a single character card with rarity frame
+     * Generate a single character card with complete design (art + frame + name)
      * @param {Object} character - Character data
      * @param {number} width - Card width
      * @param {number} height - Card height
@@ -99,32 +72,11 @@ class PullImageGenerator {
         const ctx = canvas.getContext('2d');
 
         try {
-            // Load character image
+            // Load character image (which already includes frame, name, and design)
             const characterImage = await this.loadCharacterImage(character.imageUrl);
 
-            // Load rarity frame
-            const frameImage = await this.loadRarityFrame(character.rarity);
-
-            // Draw character image
-            const charSize = Math.min(width * 0.85, height * 0.85);
-            const charX = (width - charSize) / 2;
-            const charY = (height - charSize) / 2;
-
-            ctx.drawImage(characterImage, charX, charY, charSize, charSize);
-
-            // Draw rarity frame
-            ctx.drawImage(frameImage, 0, 0, width, height);
-
-            // Add character name
-            ctx.fillStyle = 'white';
-            ctx.strokeStyle = 'black';
-            ctx.lineWidth = 3;
-            ctx.font = 'bold 16px Arial';
-            ctx.textAlign = 'center';
-
-            const textY = height - 25;
-            ctx.strokeText(character.name, width / 2, textY);
-            ctx.fillText(character.name, width / 2, textY);
+            // Draw the complete character card image
+            ctx.drawImage(characterImage, 0, 0, width, height);
 
             return canvas.toBuffer('image/png');
 
@@ -239,7 +191,6 @@ class PullImageGenerator {
      * Clear the image caches to free memory
      */
     clearCache() {
-        this.frameCache.clear();
         this.characterCache.clear();
     }
 }

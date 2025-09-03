@@ -42,16 +42,8 @@ module.exports = {
         DIMENSIONAL: { chance: 0.001, multiplier: 20 }
     },
 
-    // ImageKit.io Configuration for Character Images and Frames
+    // ImageKit.io Configuration for Character Images
     IMAGE_KIT_BASE_URL: 'https://ik.imagekit.io/nexiumrpg/',
-    RARITY_FRAMES: {
-        COMMON: 'common-frame.png',
-        RARE: 'rare-frame.png',
-        EPIC: 'epic-frame.png',
-        LEGENDARY: 'legendary-frame.png',
-        MYTHIC: 'mythic-frame.png',
-        DIMENSIONAL: 'dimensional-frame.png',
-    },
 
     DIMENSIONS: {
         NEXUS_HUB: {

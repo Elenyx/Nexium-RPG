@@ -1,10 +1,12 @@
 /**
- * Test script for CharacterImageManager with rarity frames
+ * Test script for CharacterImageManager with complete character cards
  * @file test-rarity-frames.js
- * @description Tests the rarity frame overlay functionality
+ * @description Tests the character image handling with complete card designs
  */
 
 const CharacterImageManager = require('../src/components/builders/CharacterImageManager');
+const path = require('path');
+const fs = require('fs');
 
 async function testRarityFrames() {
     console.log('🖼️ Testing Character Image Manager with Rarity Frames...\n');
@@ -51,27 +53,23 @@ async function testRarityFrames() {
         }
     ];
 
-    console.log('🧪 Testing Rarity Frame URL Generation...\n');
+    console.log('🧪 Testing Character Image Loading...\n');
 
     for (const character of testCharacters) {
         console.log(`🎴 Testing ${character.name} (${character.rarity})...`);
 
-        // Test frame overlay URL generation
-        const framedUrl = imageManager.getCharacterImageWithFrame(character.imageUrl, character.rarity);
-        console.log(`   Original: ${character.imageUrl}`);
-        console.log(`   With Frame: ${framedUrl}`);
-
-        // Test loading character image with frame
+        // Test loading character image (complete card design)
         const imageResult = await imageManager.loadCharacterImage(character);
         console.log(`   Load Result: ${imageResult.success ? '✅ Success' : '❌ Failed'}`);
         if (imageResult.success) {
             console.log(`   Final URL: ${imageResult.url}`);
+            console.log(`   Source: ${imageResult.source}`);
         }
 
         console.log('');
     }
 
-    console.log('🎯 Testing Character Preparation with Frames...\n');
+    console.log('🎯 Testing Character Preparation...\n');
 
     // Test prepareCharacterWithImage
     const preparedCharacters = imageManager.prepareCharactersWithImages(testCharacters);
@@ -79,7 +77,6 @@ async function testRarityFrames() {
     for (const char of preparedCharacters) {
         console.log(`📋 ${char.name}:`);
         console.log(`   Display Image: ${char.displayImage}`);
-        console.log(`   Has Frame: ${char.displayImage.includes('tr=l-') ? '✅ Yes' : '❌ No'}`);
         console.log('');
     }
 
@@ -91,18 +88,20 @@ async function testInvalidInputs() {
 
     const imageManager = new CharacterImageManager();
 
-    // Test with invalid rarity
-    const invalidRarityUrl = imageManager.getCharacterImageWithFrame(
-        'https://ik.imagekit.io/nexiumrpg/test.jpg',
-        'INVALID_RARITY'
-    );
-    console.log(`Invalid Rarity: ${invalidRarityUrl}`);
-    console.log(`Unchanged: ${invalidRarityUrl === 'https://ik.imagekit.io/nexiumrpg/test.jpg' ? '✅ Yes' : '❌ No'}`);
-
     // Test with null/empty inputs
-    const nullUrl = imageManager.getCharacterImageWithFrame(null, 'COMMON');
-    console.log(`Null URL: ${nullUrl}`);
-    console.log(`Unchanged: ${nullUrl === null ? '✅ Yes' : '❌ No'}`);
+    try {
+        const nullCharacter = await imageManager.loadCharacterImage(null);
+        console.log(`Null character: ${nullCharacter.success ? '✅ Unexpected success' : '❌ Failed as expected'}`);
+    } catch (error) {
+        console.log(`Null character: ❌ Failed with error: ${error.message}`);
+    }
+
+    try {
+        const emptyCharacter = await imageManager.loadCharacterImage({});
+        console.log(`Empty character: ${emptyCharacter.success ? '✅ Unexpected success' : '❌ Failed as expected'}`);
+    } catch (error) {
+        console.log(`Empty character: ❌ Failed with error: ${error.message}`);
+    }
 
     console.log('\n✅ Invalid Input Testing Complete!');
 }
