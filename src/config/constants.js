@@ -86,5 +86,21 @@ module.exports = {
             description: 'The world of Bleach',
             energyCost: 15
         }
+    },
+
+    // Welcome System Configuration
+    WELCOME_SYSTEM: {
+        ENABLED: true,
+        DEFAULT_MESSAGE: '🌟 Welcome **{user}** to **{guild}**! 🎉\n\nWe\'re excited to have you join our dimensional adventure!',
+        BANNER_ENABLED: true,
+        AUTO_WELCOME: true,
+        // Channel names to look for (in order of priority)
+        CHANNEL_NAMES: ['welcome', 'general', 'main', 'chat'],
+        // Embed colors for different welcome types
+        EMBED_COLORS: {
+            WELCOME: 0x7C3AED,    // Primary purple
+            JOIN: 0x10B981,       // Success green
+            LEAVE: 0xEF4444       // Error red
+        }
     }
 };
