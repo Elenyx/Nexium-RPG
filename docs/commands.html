@@ -87,45 +87,148 @@
                         <span>Status Check</span>
                     </div>
                 </div>
+
+                <div class="command-card">
+                    <div class="command-header">
+                        <h3>/pull</h3>
+                        <span class="command-badge core">Core</span>
+                    </div>
+                    <p class="command-description">Pull for random characters using coins. Higher rarity characters have lower drop rates.</p>
+                    <div class="command-usage">
+                        <strong>Usage:</strong> <code>/pull [amount]</code>
+                    </div>
+                    <div class="command-options">
+                        <strong>Options:</strong>
+                        <ul>
+                            <li><code>amount</code> - Number of pulls (1-10, costs 100 coins each)</li>
+                        </ul>
+                    </div>
+                    <div class="command-features">
+                        <span>Gacha System</span>
+                        <span>Character Summoning</span>
+                        <span>Rarity Drops</span>
+                    </div>
+                </div>
+
+                <div class="command-card">
+                    <div class="command-header">
+                        <h3>/collection</h3>
+                        <span class="command-badge core">Core</span>
+                    </div>
+                    <p class="command-description">View your character collection as a beautiful card album with pagination.</p>
+                    <div class="command-usage">
+                        <strong>Usage:</strong> <code>/collection [page] [user]</code>
+                    </div>
+                    <div class="command-options">
+                        <strong>Options:</strong>
+                        <ul>
+                            <li><code>page</code> - Page number to view</li>
+                            <li><code>user</code> - Optional user to view collection of</li>
+                        </ul>
+                    </div>
+                    <div class="command-features">
+                        <span>Card Album</span>
+                        <span>Pagination</span>
+                        <span>Visual Display</span>
+                    </div>
+                </div>
+
+                <div class="command-card">
+                    <div class="command-header">
+                        <h3>/battle</h3>
+                        <span class="command-badge core">Core</span>
+                    </div>
+                    <p class="command-description">Battle between two of your characters to test their abilities and strategies.</p>
+                    <div class="command-usage">
+                        <strong>Usage:</strong> <code>/battle character1 character2</code>
+                    </div>
+                    <div class="command-options">
+                        <strong>Options:</strong>
+                        <ul>
+                            <li><code>character1</code> - ID of first character</li>
+                            <li><code>character2</code> - ID of second character</li>
+                        </ul>
+                    </div>
+                    <div class="command-features">
+                        <span>Turn-based Combat</span>
+                        <span>Ability System</span>
+                        <span>Strategic Gameplay</span>
+                    </div>
+                </div>
+
+                <div class="command-card">
+                    <div class="command-header">
+                        <h3>/upgrade</h3>
+                        <span class="command-badge core">Core</span>
+                    </div>
+                    <p class="command-description">Upgrade your characters using shards. Supports both rarity upgrades and level progression.</p>
+                    <div class="command-usage">
+                        <strong>Usage:</strong> <code>/upgrade character_id [type]</code>
+                    </div>
+                    <div class="command-options">
+                        <strong>Options:</strong>
+                        <ul>
+                            <li><code>character_id</code> - ID of the character to upgrade</li>
+                            <li><code>type</code> - Type of upgrade (rarity/level)</li>
+                        </ul>
+                    </div>
+                    <div class="command-features">
+                        <span>Rarity Upgrades</span>
+                        <span>Level Progression</span>
+                        <span>Two-Group System</span>
+                    </div>
+                </div>
+
+                <div class="command-card">
+                    <div class="command-header">
+                        <h3>/rarity-progress</h3>
+                        <span class="command-badge core">Core</span>
+                    </div>
+                    <p class="command-description">Check the rarity upgrade progress for a specific character, including required shards.</p>
+                    <div class="command-usage">
+                        <strong>Usage:</strong> <code>/rarity-progress character_id</code>
+                    </div>
+                    <div class="command-options">
+                        <strong>Options:</strong>
+                        <ul>
+                            <li><code>character_id</code> - ID of the character to check</li>
+                        </ul>
+                    </div>
+                    <div class="command-features">
+                        <span>Progress Tracking</span>
+                        <span>Shard Requirements</span>
+                        <span>Upgrade Path</span>
+                    </div>
+                </div>
+
+                <div class="command-card">
+                    <div class="command-header">
+                        <h3>/quest</h3>
+                        <span class="command-badge core">Core</span>
+                    </div>
+                    <p class="command-description">Complete quests to earn shards, coins, and other rewards. Includes daily and achievement quests.</p>
+                    <div class="command-usage">
+                        <strong>Usage:</strong> <code>/quest [type]</code>
+                    </div>
+                    <div class="command-options">
+                        <strong>Options:</strong>
+                        <ul>
+                            <li><code>type</code> - Quest type (main_story, daily, side_quest, achievement)</li>
+                        </ul>
+                    </div>
+                    <div class="command-features">
+                        <span>Daily Quests</span>
+                        <span>Reward System</span>
+                        <span>Achievement Tracking</span>
+                    </div>
+                </div>
             </div>
         </section>
 
         <!-- Upcoming Commands -->
         <section class="info-section">
-            <h2>🚀 Upcoming Commands</h2>
+            <h2>🚀 Planned Commands</h2>
             <div class="commands-grid">
-                <div class="command-card upcoming">
-                    <div class="command-header">
-                        <h3>/summon</h3>
-                        <span class="command-badge planned">Planned</span>
-                    </div>
-                    <p class="command-description">Summon new characters using energy or coins. Higher rarity characters require more resources.</p>
-                    <div class="command-usage">
-                        <strong>Usage:</strong> <code>/summon [rarity]</code>
-                    </div>
-                    <div class="command-features">
-                        <span>Character Summoning</span>
-                        <span>Rarity System</span>
-                        <span>Resource Management</span>
-                    </div>
-                </div>
-
-                <div class="command-card upcoming">
-                    <div class="command-header">
-                        <h3>/battle</h3>
-                        <span class="command-badge planned">Planned</span>
-                    </div>
-                    <p class="command-description">Challenge other players or fight AI opponents in strategic battles.</p>
-                    <div class="command-usage">
-                        <strong>Usage:</strong> <code>/battle @user</code> or <code>/battle ai</code>
-                    </div>
-                    <div class="command-features">
-                        <span>PvP Combat</span>
-                        <span>PvE Battles</span>
-                        <span>Strategic Gameplay</span>
-                    </div>
-                </div>
-
                 <div class="command-card upcoming">
                     <div class="command-header">
                         <h3>/shop</h3>
@@ -144,17 +247,49 @@
 
                 <div class="command-card upcoming">
                     <div class="command-header">
-                        <h3>/inventory</h3>
+                        <h3>/leaderboard</h3>
                         <span class="command-badge planned">Planned</span>
                     </div>
-                    <p class="command-description">Manage your collected characters, items, and equipment.</p>
+                    <p class="command-description">View global and server leaderboards for various achievements and stats.</p>
                     <div class="command-usage">
-                        <strong>Usage:</strong> <code>/inventory [filter]</code>
+                        <strong>Usage:</strong> <code>/leaderboard [type]</code>
                     </div>
                     <div class="command-features">
-                        <span>Character Management</span>
-                        <span>Item Organization</span>
-                        <span>Equipment System</span>
+                        <span>Global Rankings</span>
+                        <span>Achievement Tracking</span>
+                        <span>Competition</span>
+                    </div>
+                </div>
+
+                <div class="command-card upcoming">
+                    <div class="command-header">
+                        <h3>/trade</h3>
+                        <span class="command-badge planned">Planned</span>
+                    </div>
+                    <p class="command-description">Trade characters and items with other players in a secure marketplace.</p>
+                    <div class="command-usage">
+                        <strong>Usage:</strong> <code>/trade @user</code>
+                    </div>
+                    <div class="command-features">
+                        <span>Player Trading</span>
+                        <span>Secure Transactions</span>
+                        <span>Market System</span>
+                    </div>
+                </div>
+
+                <div class="command-card upcoming">
+                    <div class="command-header">
+                        <h3>/guild</h3>
+                        <span class="command-badge planned">Planned</span>
+                    </div>
+                    <p class="command-description">Join or create guilds for cooperative gameplay and territory control.</p>
+                    <div class="command-usage">
+                        <strong>Usage:</strong> <code>/guild [action]</code>
+                    </div>
+                    <div class="command-features">
+                        <span>Guild System</span>
+                        <span>Co-op Gameplay</span>
+                        <span>Territory Control</span>
                     </div>
                 </div>
             </div>

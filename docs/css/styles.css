@@ -59,11 +59,11 @@ body::before {
     z-index: 2;
 }
 
-/* Navigation Header */
+/* Enhanced Navigation with Glow Effect */
 .nav-header {
-    background: rgba(10, 10, 20, 0.7);
-    backdrop-filter: blur(12px);
-    -webkit-backdrop-filter: blur(12px);
+    background: rgba(10, 10, 20, 0.8);
+    backdrop-filter: blur(15px);
+    -webkit-backdrop-filter: blur(15px);
     border-bottom: 1px solid var(--border-color);
     position: fixed;
     top: 0;
@@ -71,7 +71,13 @@ body::before {
     right: 0;
     z-index: 1000;
     padding: 15px 0;
-    transition: background 0.3s ease;
+    transition: all 0.3s ease;
+    box-shadow: 0 0 20px rgba(138, 43, 226, 0.1);
+}
+
+.nav-header:hover {
+    background: rgba(10, 10, 20, 0.9);
+    box-shadow: 0 0 30px rgba(138, 43, 226, 0.2);
 }
 
 .nav-container {
@@ -91,6 +97,13 @@ body::before {
     -webkit-text-fill-color: transparent;
     background-clip: text;
     text-decoration: none;
+    transition: all 0.3s ease;
+    cursor: pointer;
+}
+
+.nav-logo:hover {
+    transform: scale(1.05);
+    text-shadow: 0 0 15px var(--glow-color);
 }
 
 .nav-menu {
@@ -142,8 +155,7 @@ body::before {
 .login-btn:hover {
     background: linear-gradient(135deg, #4752c4 0%, #5b6eae 100%) !important;
     transform: translateY(-2px);
-    box-shadow: 0 5px 20px rgba(88, 101, 242, 0.4);
-    text-shadow: none !important;
+    box-shadow: 0 4px 20px rgba(88, 101, 242, 0.5);
 }
 
 .login-btn::after {
@@ -167,6 +179,12 @@ header {
     background-clip: text;
     margin-bottom: 20px;
     text-shadow: 0 0 30px var(--glow-color);
+    animation: logo-glow 3s ease-in-out infinite alternate;
+}
+
+@keyframes logo-glow {
+    0% { text-shadow: 0 0 30px var(--glow-color); }
+    100% { text-shadow: 0 0 40px var(--glow-color), 0 0 60px var(--glow-color); }
 }
 
 .subtitle {
@@ -174,6 +192,12 @@ header {
     color: var(--light-purple);
     margin-bottom: 30px;
     font-weight: 400;
+    transition: all 0.3s ease;
+}
+
+.subtitle:hover {
+    color: var(--bright-purple);
+    text-shadow: 0 0 10px var(--glow-color);
 }
 
 .description {
@@ -476,14 +500,29 @@ footer {
     border: 1px solid var(--border-color);
     border-radius: 15px;
     padding: 25px;
-    transition: all 0.3s ease;
+    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
     position: relative;
     overflow: hidden;
 }
 
+.command-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(138, 43, 226, 0.05), transparent);
+    transition: left 0.5s ease;
+}
+
+.command-card:hover::before {
+    left: 100%;
+}
+
 .command-card:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 10px 30px rgba(0,0,0,0.3), 0 0 20px var(--glow-color);
+    transform: translateY(-8px) scale(1.02);
+    box-shadow: 0 15px 35px rgba(0,0,0,0.3), 0 0 25px var(--glow-color);
     border-color: var(--primary-purple);
 }
 
@@ -527,6 +566,12 @@ footer {
     font-size: 0.75rem;
     font-weight: 600;
     text-transform: uppercase;
+    transition: all 0.3s ease;
+}
+
+.command-badge:hover {
+    transform: scale(1.1);
+    box-shadow: 0 2px 8px rgba(0,0,0,0.3);
 }
 
 .command-badge.core {
@@ -551,6 +596,12 @@ footer {
     border-radius: 8px;
     padding: 12px;
     margin-bottom: 15px;
+    transition: all 0.3s ease;
+}
+
+.command-usage:hover {
+    background: rgba(138, 43, 226, 0.15);
+    border-color: rgba(138, 43, 226, 0.4);
 }
 
 .command-usage code {
@@ -604,6 +655,14 @@ footer {
     border-radius: 12px;
     font-size: 0.8rem;
     border: 1px solid rgba(138, 43, 226, 0.2);
+    transition: all 0.3s ease;
+}
+
+.command-features span:hover {
+    background: rgba(138, 43, 226, 0.2);
+    color: var(--bright-purple);
+    transform: translateY(-1px);
+    box-shadow: 0 2px 6px rgba(0,0,0,0.2);
 }
 
 /* Categories Grid */
