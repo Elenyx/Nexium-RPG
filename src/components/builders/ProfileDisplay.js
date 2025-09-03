@@ -12,7 +12,8 @@ const {
     MessageFlags,
     TextDisplayBuilder,
     SectionBuilder,
-    ThumbnailBuilder
+    ThumbnailBuilder,
+    ContainerBuilder
 } = require('discord.js');
 const { COLORS, EMOJIS } = require('../../config/constants');
 
@@ -100,8 +101,20 @@ class ProfileDisplay {
                     .setEmoji({ name: '🛒' })
             );
 
+        const container = new ContainerBuilder()
+            .setAccentColor(0x0099FF)
+            .addSectionComponents(section1)
+            .addSeparatorComponents(separator => separator)
+            .addSectionComponents(section2)
+            .addSeparatorComponents(separator => separator)
+            .addSectionComponents(section3)
+            .addSeparatorComponents(separator => separator)
+            .addSectionComponents(section4)
+            .addSeparatorComponents(separator => separator)
+            .addSectionComponents(section5);
+
         return {
-            components: [section1, section2, section3, section4, section5],
+            components: [container],
             flags: MessageFlags.IsComponentsV2
         };
     }
@@ -161,8 +174,12 @@ class ProfileDisplay {
                     .setEmoji({ name: '⬅️' })
             );
 
+        const container = new ContainerBuilder()
+            .setAccentColor(0x0099FF)
+            .addSectionComponents(detailedStatsSection);
+
         return {
-            components: [detailedStatsSection],
+            components: [container],
             flags: MessageFlags.IsComponentsV2
         };
     }
