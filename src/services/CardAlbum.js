@@ -13,8 +13,8 @@ class CardAlbum {
         this.canvasWidth = 800;
         this.canvasHeight = 650;
         this.cardsPerPage = 8;
-        // Optimized card size for 8 cards (4x2 grid) on 800x650 canvas
-        this.cardWidth = 180; // Fits 4 cards per row with spacing
+        // Optimized card size for 8 cards (4x2 grid) on 800x650 canvas - larger for better quality
+        this.cardWidth = 180; // Keep same for layout, but images will be higher quality
         this.cardHeight = Math.round(this.cardWidth * 4 / 3); // ~240px for 3:4 ratio
         this.margin = 20;
         this.cardSpacing = 10;

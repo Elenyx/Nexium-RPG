@@ -148,9 +148,9 @@ class PullImageGenerator {
             throw new Error('No characters provided');
         }
 
-        // 3:4 aspect ratio cards
-        const cardWidth = 200;
-        const cardHeight = Math.round(cardWidth * 4 / 3); // ~267px for 3:4 ratio
+        // 3:4 aspect ratio cards - larger size for better quality
+        const cardWidth = 480;
+        const cardHeight = 640; // 480 * 4/3 = 640 exactly
         const padding = 20;
         const cardsPerRow = Math.min(characters.length, Math.floor((maxWidth - padding) / (cardWidth + padding)));
 
