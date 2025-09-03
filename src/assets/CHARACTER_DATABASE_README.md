@@ -1,21 +1,38 @@
 # Character Database Setup Guide
 
-## 📁 New Character Database Structure
+## 📁 New Organized Character Database Structure
 
-Your bot now uses a comprehensive character database located at:
+Your bot now uses a modular character database organized by anime series and power tiers:
+
 ```
-src/assets/CharacterDatabase.js
+src/assets/characters/
+├── index.js                    # Main export file for all characters
+└── naruto/                     # Anime series folder
+    ├── index.js               # Naruto characters export
+    ├── genin/                 # COMMON tier (genin.js)
+    ├── chunin/                # RARE tier (chunin.js)
+    ├── jonin/                 # EPIC tier (jonin.js)
+    ├── kage/                  # LEGENDARY tier (kage.js)
+    ├── ultimate/              # MYTHIC tier (ultimate.js)
+    └── dimensional/           # DIMENSIONAL tier (dimensional.js)
 ```
 
-## 🎯 Rarity System & Drop Rates
+## 🎯 Updated Rarity System & Drop Rates
 
-| Rarity | Drop Rate | Base Stats Range | Description |
-|--------|-----------|------------------|-------------|
-| **LEGENDARY** | 1% | 80-95 ATK, 70-85 DEF, 85-95 SPD, 95-110 HP | Most powerful characters |
-| **MYTHIC** | 3% | 75-90 ATK, 65-80 DEF, 80-90 SPD, 90-105 HP | Very rare characters |
-| **EPIC** | 10% | 65-80 ATK, 60-75 DEF, 70-85 SPD, 80-95 HP | Rare characters |
-| **RARE** | 25% | 55-70 ATK, 50-65 DEF, 60-75 SPD, 70-85 HP | Uncommon characters |
-| **COMMON** | 61% | 45-60 ATK, 40-55 DEF, 50-65 SPD, 60-75 HP | Common characters |
+| Rarity | Drop Rate | Base Stats Range | Naruto Rank | Description |
+|--------|-----------|------------------|-------------|-------------|
+| **DIMENSIONAL** | 0.5% | 91-96 ATK, 85-92 DEF, 88-95 SPD, 105-112 HP | Otsutsuki | God-like power |
+| **MYTHIC** | 2% | 87-94 ATK, 78-87 DEF, 85-94 SPD, 98-107 HP | Ultimate Forms | Legendary transformations |
+| **LEGENDARY** | 5% | 82-91 ATK, 75-84 DEF, 80-89 SPD, 92-101 HP | Kage Level | Village leaders |
+| **EPIC** | 15% | 72-81 ATK, 65-74 DEF, 70-79 SPD, 82-91 HP | Jonin Level | Elite ninjas |
+| **RARE** | 30% | 62-71 ATK, 55-64 DEF, 60-69 SPD, 72-81 HP | Chunin Level | Experienced ninjas |
+| **COMMON** | 47.5% | 52-61 ATK, 45-54 DEF, 50-59 SPD, 62-71 HP | Genin Level | Entry-level ninjas |
+
+## 🏷️ Character ID System
+
+Characters now use anime-specific prefixes:
+- **Naruto**: `NU001`, `NU002`, etc.
+- **Future**: `OP001` (One Piece), `DB001` (Dragon Ball), etc.
 
 ## 🖼️ Image Setup with ImageKit.io
 
@@ -29,67 +46,92 @@ src/assets/CharacterDatabase.js
 - **Format**: JPG or PNG
 - **Quality**: High quality, clear character artwork
 
-## 📝 Character Template Structure
+## 📝 Updated Character Template Structure
 
 ```javascript
 {
-    id: 'anime_character_001',           // Unique ID (lowercase with underscores)
-    name: 'Character Name',              // Full character name
-    anime: 'Anime Series',               // Source anime/manga
-    rarity: 'LEGENDARY',                 // COMMON, RARE, EPIC, MYTHIC, LEGENDARY
+    id: 'NU001',                         // Anime prefix + sequential number (NU001, OP001, DB001, etc.)
+    name: 'Naruto Uzumaki (Genin)',      // Full character name with form/variant
+    anime: 'Naruto',                     // Source anime/manga
+    rarity: 'COMMON',                    // COMMON, RARE, EPIC, LEGENDARY, MYTHIC, DIMENSIONAL
     baseStats: {
         level: 1,                        // Always 1
         exp: 0,                          // Always 0
-        attack: 85,                      // 45-95 range based on rarity
-        defense: 70,                     // 40-85 range based on rarity
-        speed: 90,                       // 50-95 range based on rarity
-        health: 100                      // 60-110 range based on rarity
+        attack: 55,                      // 52-96 range based on rarity
+        defense: 50,                     // 45-92 range based on rarity
+        speed: 60,                       // 50-95 range based on rarity
+        health: 65                       // 62-112 range based on rarity
     },
-    abilities: [                         // Exactly 3 abilities
-        'Primary Ability',
-        'Secondary Ability',
-        'Special Ability'
+    abilities: [                         // 3-4 abilities based on character
+        'Rasengan',
+        'Shadow Clone Technique',
+        'Nine-Tails Chakra'
     ],
-    description: 'Character backstory and personality (2-3 sentences)',
-    imageUrl: 'https://ik.imagekit.io/nexium/characters/character-name.jpg',
-    thumbnailUrl: 'https://ik.imagekit.io/nexium/thumbnails/character-name-thumb.jpg',
-    element: 'Fire',                     // Fire, Water, Wind, Earth, Lightning, Light, Dark, Ki, None
-    class: 'Warrior',                    // Warrior, Mage, Assassin, Tank, Support, Ninja, Pirate, etc.
-    region: 'Location Name',             // Character's origin
-    quote: 'Famous quote from the character'
+    description: 'Young ninja with dreams of becoming Hokage. Determined and never gives up.',
+    imageUrl: 'https://ik.imagekit.io/nexium/characters/naruto-uzumaki.jpg',
+    thumbnailUrl: 'https://ik.imagekit.io/nexium/thumbnails/naruto-uzumaki-thumb.jpg',
+    element: 'Wind',                     // Fire, Water, Wind, Earth, Lightning, None, etc.
+    class: 'Ninja',                      // Ninja, Pirate, Saiyan, Alchemist, Demon Slayer, etc.
+    region: 'Hidden Leaf Village',       // Character's origin location
+    quote: 'Believe it!'                 // Famous quote or catchphrase
 }
 ```
 
-## 🔧 Next Steps
+## 🔧 Updated Next Steps
 
 1. **Upload Images**: Upload character images to your ImageKit.io account
-2. **Add Characters**: Add new characters to `CharacterDatabase.js` following the template
-3. **Update Services**: Make sure your gacha and character services use the new database
-4. **Test**: Test the `/pull` command to ensure characters load properly
+2. **Add Characters**: Add new characters to appropriate tier files in `src/assets/characters/[anime]/[tier]/`
+3. **Update Services**: Update gacha and character services to use `src/assets/characters/index.js`
+4. **Test**: Test the `/pull` command to ensure characters load from new structure
 
-## 📊 Current Characters (5 examples provided)
+## 📊 Current Naruto Characters (55 total)
 
-- **Naruto Uzumaki** (LEGENDARY) - Naruto
-- **Monkey D. Luffy** (MYTHIC) - One Piece
-- **Son Goku** (EPIC) - Dragon Ball
-- **Edward Elric** (RARE) - Fullmetal Alchemist
-- **Tanjiro Kamado** (COMMON) - Demon Slayer
+### COMMON (Genin) - 5 characters
+- NU001: Naruto Uzumaki (Genin)
+- NU002: Sasuke Uchiha (Genin)
+- NU003: Sakura Haruno (Genin)
+- NU004: Kakashi Hatake (Genin days)
+- NU005: Shikamaru Nara (Genin)
+
+### RARE (Chunin) - 9 characters
+- NU006-NU014: Various chunin-level characters
+
+### EPIC (Jonin) - 11 characters
+- NU015-NU025: Elite jonin and sannin
+
+### LEGENDARY (Kage) - 14 characters
+- NU026-NU039: Village leaders and legendary figures
+
+### MYTHIC (Ultimate) - 9 characters
+- NU040-NU048: Ultimate forms and transformations
+
+### DIMENSIONAL (Otsutsuki) - 7 characters
+- NU049-NU055: God-like characters and progenitors
 
 ## ⚠️ Important Notes
 
-- Each character needs a **unique ID**
-- Image URLs must be accessible and properly formatted
-- Balance stats according to rarity tiers
-- Keep descriptions concise but informative
-- Use consistent naming conventions
+- Each character needs a **unique anime-prefixed ID** (NU001, OP001, DB001, etc.)
+- Image URLs must be accessible and properly formatted on ImageKit.io
+- Balance stats according to the updated rarity tiers (see table above)
+- Keep descriptions concise but informative (2-3 sentences)
+- Use consistent naming conventions for abilities and elements
+- Organize characters by their actual power level in the source material
 
-## 🎨 Character ID Naming Convention
+## 🎨 Updated Character ID Naming Convention
 
-Format: `[anime]_[character]_[number]`
+Format: `[AnimePrefix][SequentialNumber]`
 Examples:
-- `naruto_uzumaki_001`
-- `one_piece_luffy_001`
-- `dragon_ball_goku_001`
-- `death_note_light_001`
+- **Naruto**: `NU001`, `NU002`, `NU003`, etc.
+- **One Piece**: `OP001`, `OP002`, `OP003`, etc.
+- **Dragon Ball**: `DB001`, `DB002`, `DB003`, etc.
+- **Death Note**: `DN001`, `DN002`, `DN003`, etc.
+- **Demon Slayer**: `DS001`, `DS002`, `DS003`, etc.
+
+## 📂 File Organization Rules
+
+- Place characters in the appropriate tier folder based on their power level
+- Use the character's actual rank/title from the source material
+- Maintain sequential numbering within each anime series
+- Update the anime's index.js when adding new characters
 
 Happy character creation! 🎮
