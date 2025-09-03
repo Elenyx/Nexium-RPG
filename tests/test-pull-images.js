@@ -49,7 +49,7 @@ const sampleCharacters = [
         id: 'char_006',
         name: 'Light Yagami',
         anime: 'Death Note',
-        rarity: 'DIMENSIONAL',
+        rarity: 'DIMENSIONAL', // Note: DIMENSIONAL characters are event-only, not available in regular pulls
         imageUrl: 'https://ik.imagekit.io/nexiumrpg/light.png'
     }
 ];

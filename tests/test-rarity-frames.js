@@ -48,7 +48,7 @@ async function testCharacterCards() {
         {
             id: 'char_006',
             name: 'Light Yagami',
-            rarity: 'DIMENSIONAL',
+            rarity: 'DIMENSIONAL', // Note: DIMENSIONAL characters are event-only, not available in regular pulls
             imageUrl: 'https://ik.imagekit.io/nexiumrpg/light.png'
         }
     ];

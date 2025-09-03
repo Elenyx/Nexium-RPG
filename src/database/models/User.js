@@ -48,6 +48,16 @@ const defineUser = (sequelize) => {
             type: DataTypes.INTEGER,
             defaultValue: 0
         },
+        pityCounter: {
+            type: DataTypes.INTEGER,
+            defaultValue: 0,
+            comment: 'Number of pulls without getting a high-rarity character'
+        },
+        lastHighRarityPull: {
+            type: DataTypes.DATE,
+            allowNull: true,
+            comment: 'Timestamp of last high-rarity pull for pity calculation'
+        },
         createdAt: {
             type: DataTypes.DATE,
             defaultValue: DataTypes.NOW

@@ -34,12 +34,12 @@ module.exports = {
     },
 
     RARITIES: {
-        COMMON: { chance: 0.475, multiplier: 1 },
-        RARE: { chance: 0.300, multiplier: 2 },
-        EPIC: { chance: 0.150, multiplier: 3 },
+        COMMON: { chance: 0.477, multiplier: 1 },
+        RARE: { chance: 0.302, multiplier: 2 },
+        EPIC: { chance: 0.151, multiplier: 3 },
         LEGENDARY: { chance: 0.050, multiplier: 5 },
         MYTHIC: { chance: 0.020, multiplier: 10 },
-        DIMENSIONAL: { chance: 0.005, multiplier: 20 }
+        DIMENSIONAL: { chance: 0.000, multiplier: 20, eventOnly: true } // DIMENSIONAL characters are event-only
     },
 
     RARITY_UPGRADE_THRESHOLDS: {

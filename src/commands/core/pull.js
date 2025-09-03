@@ -1,6 +1,7 @@
 const { SlashCommandBuilder, EmbedBuilder, MessageFlags, AttachmentBuilder } = require('discord.js');
 const { models } = require('../../database/connection');
 const UserService = require('../../services/UserService');
+const GachaService = require('../../services/GachaService');
 const PullImageGenerator = require('../../services/PullImageGenerator');
 const { COLORS, EMOJIS } = require('../../config/constants');
 
@@ -59,19 +60,14 @@ module.exports = {
                 return await interaction.editReply({ embeds: [embed] });
             }
 
-            // Perform pulls
-            const pulledCharacters = [];
-            for (let i = 0; i < amount; i++) {
-                const randomCharacter = characters[Math.floor(Math.random() * characters.length)];
-                const userCharacter = await userService.addCharacterToUser(userId, randomCharacter.id);
-                pulledCharacters.push({
-                    character: randomCharacter,
-                    isNew: userCharacter.isNewlyCreated
-                });
-            }
+            // Perform pulls using GachaService
+            const gachaService = new GachaService();
+            const pullResult = await gachaService.performPull(userId, interaction.user.username, amount, totalCost);
 
-            // Deduct coins
-            await userService.updateUser(userId, { coins: user.coins - totalCost });
+            // Extract pulled characters from the result
+            const pulledCharacters = pullResult.results;
+
+            // Note: Coin deduction is handled by GachaService
 
             // Generate pull result image
             const imageGenerator = new PullImageGenerator();
@@ -115,7 +111,7 @@ module.exports = {
             // Add remaining coins info
             const updatedUser = await userService.getUserById(userId);
             embed.setFooter({
-                text: `Remaining coins: ${updatedUser.coins.toLocaleString()} | Use /collection to view your characters`
+                text: `Remaining coins: ${updatedUser.coins.toLocaleString()} | Pity Counter: ${updatedUser.pityCounter || 0}/100 | Use /collection to view your characters`
             });
 
             // Send response with or without image

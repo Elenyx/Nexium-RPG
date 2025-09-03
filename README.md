@@ -392,17 +392,19 @@ Dimensional Energy regenerates automatically at 1 point per minute (max 100). Yo
 <summary><strong>What determines character rarity in summons?</strong></summary>
 
 Summon rates are:
-- Common: 47.5%
-- Rare: 30%
-- Epic: 15%
+- Common: 47.7%
+- Rare: 30.2%
+- Epic: 15.1%
 - Legendary: 5%
 - Mythic: 2%
-- Dimensional: 0.5%
+- Dimensional: Event Only*
 
 **Two-Tier Progression System:**
 - **Basic Group**: Common → Rare → Epic (then level system up to 100)
 - **Advanced Group**: Legendary → Mythic (then level system up to 100)
 - No further rarity upgrades beyond Epic/Mythic - focus on leveling!
+
+*Dimensional characters are only obtainable through dimensional events, raid boss drops, or limited banners.
 
 </details>
 

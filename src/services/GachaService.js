@@ -12,14 +12,24 @@ class GachaService {
     constructor() {
         this.userService = new UserService();
 
-        // Gacha rates (in percentage) - Updated to match new rarity system
+        // Gacha rates (in percentage) - DIMENSIONAL removed from regular pulls
         this.rates = {
-            COMMON: 47.5,
-            RARE: 30.0,
-            EPIC: 15.0,
+            COMMON: 47.7,
+            RARE: 30.2,
+            EPIC: 15.1,
             LEGENDARY: 5.0,
-            MYTHIC: 2.0,
-            DIMENSIONAL: 0.5
+            MYTHIC: 2.0
+        };
+
+        // Pity system configuration - DIMENSIONAL removed from pity system
+        this.pityConfig = {
+            softPityStart: 50,  // After 50 pulls, start increasing rates
+            hardPity: 100,      // Guaranteed high-rarity at 100 pulls
+            highRarityThreshold: ['LEGENDARY', 'MYTHIC'], // DIMENSIONAL removed - only obtainable via events
+            pityBonus: {
+                LEGENDARY: 2.0,  // 2x rate increase for LEGENDARY
+                MYTHIC: 3.0      // 3x rate increase for MYTHIC
+            }
         };
 
         // Pull costs
@@ -72,8 +82,14 @@ class GachaService {
                 throw new Error(`Insufficient coins. Need ${cost}, have ${user.coins}`);
             }
 
-            // Get all available characters
-            const characters = await models.Character.findAll();
+            // Get all available characters (excluding DIMENSIONAL for regular pulls)
+            const characters = await models.Character.findAll({
+                where: {
+                    rarity: {
+                        [models.Sequelize.Op.ne]: 'DIMENSIONAL' // Exclude DIMENSIONAL characters
+                    }
+                }
+            });
             if (characters.length === 0) {
                 throw new Error('No characters available for pulling');
             }
@@ -116,18 +132,31 @@ class GachaService {
      * @returns {Object} Pull result
      */
     async performSinglePull(userId, characters) {
+        // Get user's current pity counter
+        const user = await this.userService.getUserById(userId);
+        let pityCounter = user.pityCounter || 0;
+
+        // Calculate pity-adjusted rates
+        const adjustedRates = this.calculatePityRates(pityCounter);
+
         // Generate random number for rarity determination
         const random = Math.random() * 100;
         let cumulativeRate = 0;
         let selectedRarity = 'COMMON';
 
-        // Determine rarity based on rates
-        for (const [rarity, rate] of Object.entries(this.rates)) {
+        // Determine rarity based on adjusted rates
+        for (const [rarity, rate] of Object.entries(adjustedRates)) {
             cumulativeRate += rate;
             if (random <= cumulativeRate) {
                 selectedRarity = rarity;
                 break;
             }
+        }
+
+        // Hard pity guarantee
+        if (pityCounter >= this.pityConfig.hardPity) {
+            const highRarityOptions = this.pityConfig.highRarityThreshold;
+            selectedRarity = highRarityOptions[Math.floor(Math.random() * highRarityOptions.length)];
         }
 
         // Filter characters by selected rarity
@@ -137,10 +166,15 @@ class GachaService {
             // Fallback to any character if no characters of selected rarity
             const fallbackChar = characters[Math.floor(Math.random() * characters.length)];
             const result = await this.userService.addCharacterToUser(userId, fallbackChar.id);
+
+            // Update pity counter
+            await this.updatePityCounter(userId, fallbackChar.rarity);
+
             return {
                 character: fallbackChar,
                 rarity: fallbackChar.rarity,
-                isNew: result.isNewlyCreated
+                isNew: result.isNewlyCreated,
+                pityCounter: pityCounter + 1
             };
         }
 
@@ -148,11 +182,81 @@ class GachaService {
         const selectedCharacter = rarityCharacters[Math.floor(Math.random() * rarityCharacters.length)];
         const result = await this.userService.addCharacterToUser(userId, selectedCharacter.id);
 
+        // Update pity counter
+        await this.updatePityCounter(userId, selectedRarity);
+
         return {
             character: selectedCharacter,
             rarity: selectedRarity,
-            isNew: result.isNewlyCreated
+            isNew: result.isNewlyCreated,
+            pityCounter: pityCounter + 1
         };
+    }
+
+    /**
+     * Calculate pity-adjusted rates based on current pity counter
+     * @param {number} pityCounter - Current pity counter
+     * @returns {Object} Adjusted rarity rates
+     */
+    calculatePityRates(pityCounter) {
+        const adjustedRates = { ...this.rates };
+
+        if (pityCounter >= this.pityConfig.softPityStart) {
+            // Apply pity bonuses for high-rarity characters
+            const pityProgress = (pityCounter - this.pityConfig.softPityStart) /
+                               (this.pityConfig.hardPity - this.pityConfig.softPityStart);
+
+            for (const [rarity, bonus] of Object.entries(this.pityConfig.pityBonus)) {
+                const baseRate = this.rates[rarity];
+                const bonusRate = baseRate * (bonus - 1) * pityProgress;
+                adjustedRates[rarity] = Math.min(baseRate + bonusRate, 50); // Cap at 50%
+            }
+
+            // Reduce lower rarity rates proportionally
+            const totalBonus = Object.entries(this.pityConfig.pityBonus)
+                .reduce((sum, [rarity, bonus]) => {
+                    const baseRate = this.rates[rarity];
+                    const pityProgress = (pityCounter - this.pityConfig.softPityStart) /
+                                       (this.pityConfig.hardPity - this.pityConfig.softPityStart);
+                    return sum + (baseRate * (bonus - 1) * pityProgress);
+                }, 0);
+
+            // Distribute the reduction among lower rarities
+            const lowerRarities = ['COMMON', 'RARE', 'EPIC'];
+            const reductionPerRarity = totalBonus / lowerRarities.length;
+
+            lowerRarities.forEach(rarity => {
+                adjustedRates[rarity] = Math.max(0, this.rates[rarity] - reductionPerRarity);
+            });
+        }
+
+        return adjustedRates;
+    }
+
+    /**
+     * Update user's pity counter based on pull result
+     * @param {string} userId - User ID
+     * @param {string} rarity - Rarity of the pulled character
+     */
+    async updatePityCounter(userId, rarity) {
+        try {
+            const user = await this.userService.getUserById(userId);
+            let newCounter = (user.pityCounter || 0) + 1;
+            let lastHighRarityPull = user.lastHighRarityPull;
+
+            // Reset pity counter if high-rarity character was pulled
+            if (this.pityConfig.highRarityThreshold.includes(rarity)) {
+                newCounter = 0;
+                lastHighRarityPull = new Date();
+            }
+
+            await this.userService.updateUser(userId, {
+                pityCounter: newCounter,
+                lastHighRarityPull: lastHighRarityPull
+            });
+        } catch (error) {
+            logger.error('Error updating pity counter:', error);
+        }
     }
 
     /**
@@ -171,7 +275,7 @@ class GachaService {
                 EPIC: 0,
                 LEGENDARY: 0,
                 MYTHIC: 0,
-                DIMENSIONAL: 0
+                DIMENSIONAL: 0 // Include for stats even though not pullable
             }
         };
 
@@ -197,8 +301,12 @@ class GachaService {
             rates: this.rates,
             costs: this.costs,
             pitySystem: {
-                description: 'No pity system currently implemented',
-                note: 'All pulls have the same rates'
+                description: 'Soft pity starts at 50 pulls, hard pity at 100 pulls. DIMENSIONAL characters are not available in regular pulls.',
+                softPityStart: this.pityConfig.softPityStart,
+                hardPity: this.pityConfig.hardPity,
+                highRarityThreshold: this.pityConfig.highRarityThreshold,
+                pityBonuses: this.pityConfig.pityBonus,
+                dimensionalNote: 'DIMENSIONAL characters can only be obtained through dimensional events, raid boss drops, or limited banners.'
             }
         };
     }

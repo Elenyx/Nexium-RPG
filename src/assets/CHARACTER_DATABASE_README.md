@@ -21,12 +21,14 @@ src/assets/characters/
 
 | Rarity | Drop Rate | Base Stats Range | Naruto Rank | Description |
 |--------|-----------|------------------|-------------|-------------|
-| **DIMENSIONAL** | 0.5% | 91-96 ATK, 85-92 DEF, 88-95 SPD, 105-112 HP | Otsutsuki | God-like power |
+| **DIMENSIONAL** | Event Only* | 91-96 ATK, 85-92 DEF, 88-95 SPD, 105-112 HP | Otsutsuki | God-like power |
 | **MYTHIC** | 2% | 87-94 ATK, 78-87 DEF, 85-94 SPD, 98-107 HP | Ultimate Forms | Legendary transformations |
 | **LEGENDARY** | 5% | 82-91 ATK, 75-84 DEF, 80-89 SPD, 92-101 HP | Kage Level | Village leaders |
-| **EPIC** | 15% | 72-81 ATK, 65-74 DEF, 70-79 SPD, 82-91 HP | Jonin Level | Elite ninjas |
-| **RARE** | 30% | 62-71 ATK, 55-64 DEF, 60-69 SPD, 72-81 HP | Chunin Level | Experienced ninjas |
-| **COMMON** | 47.5% | 52-61 ATK, 45-54 DEF, 50-59 SPD, 62-71 HP | Genin Level | Entry-level ninjas |
+| **EPIC** | 15.1% | 72-81 ATK, 65-74 DEF, 70-79 SPD, 82-91 HP | Jonin Level | Elite ninjas |
+| **RARE** | 30.2% | 62-71 ATK, 55-64 DEF, 60-69 SPD, 72-81 HP | Chunin Level | Experienced ninjas |
+| **COMMON** | 47.7% | 52-61 ATK, 45-54 DEF, 50-59 SPD, 62-71 HP | Genin Level | Entry-level ninjas |
+
+*DIMENSIONAL characters are only obtainable through dimensional events, raid boss drops, or limited banners.
 
 ## 🏷️ Character ID System
 
