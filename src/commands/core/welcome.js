@@ -4,7 +4,7 @@
  * @author Nexium Bot Development Team
  */
 
-const { SlashCommandBuilder, EmbedBuilder } = require('discord.js');
+const { SlashCommandBuilder, EmbedBuilder, AttachmentBuilder, MessageFlags } = require('discord.js');
 const DynamicBannerGenerator = require('../../services/DynamicBannerGenerator');
 
 module.exports = {
@@ -40,16 +40,20 @@ module.exports = {
             };
 
             // Generate welcome banner
-            const bannerUrl = await bannerGenerator.createWelcomeBanner(targetUser, serverStats, {
+            const bannerBuffer = await bannerGenerator.createWelcomeBanner(targetUser, serverStats, {
                 timestamp: true,
-                customMessage: customMessage
+                customMessage: customMessage,
+                returnBuffer: true
             });
+
+            // Create attachment
+            const attachment = new AttachmentBuilder(bannerBuffer, { name: `welcome-${targetUser.id}.png` });
 
             // Create embed with the banner
             const embed = new EmbedBuilder()
                 .setTitle(`🎉 Welcome ${targetUser.username}!`)
                 .setDescription(customMessage || 'Your dimensional adventure begins in Nexium!')
-                .setImage(bannerUrl)
+                .setImage(`attachment://welcome-${targetUser.id}.png`)
                 .setColor(0x7C3AED)
                 .setFooter({
                     text: `Generated for ${interaction.guild.name}`,
@@ -76,18 +80,37 @@ module.exports = {
                 }
             );
 
-            await interaction.editReply({ embeds: [embed] });
+            await interaction.editReply({ embeds: [embed], files: [attachment] });
 
         } catch (error) {
             console.error('Error in welcome command:', error);
 
-            const errorEmbed = new EmbedBuilder()
-                .setTitle('❌ Welcome Banner Error')
-                .setDescription('Sorry, I couldn\'t generate a welcome banner right now. Please try again later.')
-                .setColor(0xEF4444)
-                .setFooter({ text: 'If this persists, contact the server administrators' });
+            try {
+                const errorEmbed = new EmbedBuilder()
+                    .setTitle('❌ Welcome Banner Error')
+                    .setDescription('Sorry, I couldn\'t generate a welcome banner right now. Please try again later.')
+                    .setColor(0xEF4444)
+                    .setFooter({ text: 'If this persists, contact the server administrators' });
 
-            await interaction.editReply({ embeds: [errorEmbed] });
+                if (interaction.replied || interaction.deferred) {
+                    await interaction.editReply({ embeds: [errorEmbed] });
+                } else {
+                    await interaction.reply({ embeds: [errorEmbed], flags: MessageFlags.Ephemeral });
+                }
+            } catch (replyError) {
+                console.error('Error sending error reply:', replyError);
+                // If we can't reply at all, try to follow up or just log it
+                try {
+                    if (!interaction.replied && !interaction.deferred) {
+                        await interaction.reply({ 
+                            content: '❌ Sorry, I couldn\'t generate a welcome banner right now. Please try again later.', 
+                            flags: MessageFlags.Ephemeral 
+                        });
+                    }
+                } catch (finalError) {
+                    console.error('Final error reply failed:', finalError);
+                }
+            }
         }
     },
 };

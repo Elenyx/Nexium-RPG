@@ -5,7 +5,7 @@
  * @author Nexium Bot Development Team
  */
 
-const { Events, EmbedBuilder, MessageFlags } = require('discord.js');
+const { Events, EmbedBuilder, MessageFlags, AttachmentBuilder } = require('discord.js');
 const DynamicBannerGenerator = require('../services/DynamicBannerGenerator');
 const logger = require('../utils/logger');
 
@@ -65,13 +65,13 @@ module.exports = {
                     iconURL: member.guild.iconURL()
                 });
 
+            // Create attachment
+            const attachment = new AttachmentBuilder(bannerBuffer, { name: 'welcome-banner.png' });
+
             // Send the welcome message with the banner
             await welcomeChannel.send({
                 embeds: [welcomeEmbed],
-                files: [{
-                    attachment: bannerBuffer,
-                    name: 'welcome-banner.png'
-                }],
+                files: [attachment],
                 flags: MessageFlags.IsComponentsV2
             });
 

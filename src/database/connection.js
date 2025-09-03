@@ -1,4 +1,4 @@
-const { Sequelize } = require('sequelize');
+const { Sequelize, Op } = require('sequelize');
 const logger = require('../utils/logger');
 const initializeModels = require('./models');
 
@@ -25,6 +25,9 @@ if (process.env.DATABASE_URL) {
 
     // Initialize models with sequelize instance
     models = initializeModels(sequelize);
+    // Add Sequelize and Op to models for easy access
+    models.Sequelize = Sequelize;
+    models.Op = Op;
 } else {
     logger.warn('DATABASE_URL not found. Database features will be disabled.');
     sequelize = null;

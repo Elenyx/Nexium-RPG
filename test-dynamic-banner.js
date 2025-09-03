@@ -33,21 +33,18 @@ async function testDynamicBanner() {
 
     try {
         console.log('📝 Generating welcome banner...');
-        const bannerUrl = await generator.createWelcomeBanner(mockUser, mockServerStats, {
-            timestamp: true
+        const bannerBuffer = await generator.createWelcomeBanner(mockUser, mockServerStats, {
+            timestamp: true,
+            returnBuffer: true
         });
 
         console.log('✅ Banner generated successfully!');
-        console.log('🔗 Banner URL:', bannerUrl);
+        console.log('� Buffer size:', bannerBuffer.length, 'bytes');
 
-        // Save the banner locally if it's a data URL
-        if (bannerUrl.startsWith('data:image/png;base64,')) {
-            const base64Data = bannerUrl.replace('data:image/png;base64,', '');
-            const buffer = Buffer.from(base64Data, 'base64');
-            const outputPath = path.join(__dirname, 'test-welcome-banner.png');
-            fs.writeFileSync(outputPath, buffer);
-            console.log('💾 Banner saved locally:', outputPath);
-        }
+        // Save the banner locally
+        const outputPath = path.join(__dirname, 'test-welcome-banner.png');
+        fs.writeFileSync(outputPath, bannerBuffer);
+        console.log('💾 Banner saved locally:', outputPath);
 
         // Also test custom banner
         console.log('\n📝 Generating custom banner...');
