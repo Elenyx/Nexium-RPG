@@ -42,6 +42,31 @@ module.exports = {
         DIMENSIONAL: { chance: 0.005, multiplier: 20 }
     },
 
+    RARITY_UPGRADE_THRESHOLDS: {
+        COMMON: 1000,      // Shards needed to upgrade from COMMON to RARE
+        RARE: 2500,        // Shards needed to upgrade from RARE to EPIC
+        EPIC: 0,           // No further upgrades for COMMON-EPIC group (switch to level system)
+        LEGENDARY: 10000,  // Shards needed to upgrade from LEGENDARY to MYTHIC
+        MYTHIC: 0,         // No further upgrades for LEGENDARY-MYTHIC group (switch to level system)
+        DIMENSIONAL: 0     // Max tier, no further upgrades
+    },
+
+    RARITY_ORDER: ['COMMON', 'RARE', 'EPIC', 'LEGENDARY', 'MYTHIC', 'DIMENSIONAL'],
+
+    // Rarity upgrade groups
+    RARITY_GROUPS: {
+        BASIC: ['COMMON', 'RARE', 'EPIC'],        // Upgrade to EPIC, then level system
+        ADVANCED: ['LEGENDARY', 'MYTHIC']         // Upgrade to MYTHIC, then level system
+    },
+
+    // Level caps for different rarity groups
+    LEVEL_CAPS: {
+        BASIC_MAX_RARITY: 'EPIC',      // Max rarity for COMMON-EPIC group
+        ADVANCED_MAX_RARITY: 'MYTHIC', // Max rarity for LEGENDARY-MYTHIC group
+        BASIC_LEVEL_CAP: 100,          // Level cap after reaching EPIC
+        ADVANCED_LEVEL_CAP: 100        // Level cap after reaching MYTHIC
+    },
+
     // ImageKit.io Configuration for Character Images
     IMAGE_KIT_BASE_URL: 'https://ik.imagekit.io/nexium/',
 

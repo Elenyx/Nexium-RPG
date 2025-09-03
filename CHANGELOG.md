@@ -5,9 +5,46 @@ All notable changes to the Nexium RPG Discord Bot will be documented in this fil
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/SemVer).
 
-## [Unreleased]
+## [1.1.0] - 2025-09-04
 
 ### Added
+- **Two-Group Rarity Upgrade System**: Complete overhaul of character progression
+  - **Basic Group**: Common → Rare → Epic progression with level system (1-100)
+  - **Advanced Group**: Legendary → Mythic progression with level system (1-100)
+  - **Balanced Design**: No upgrades beyond Epic/Mythic to prevent power creep
+  - **Enhanced UI**: Clear messaging when max rarity reached, guides to level system
+  - **Updated Commands**: `/rarity-progress` and `/upgrade` reflect new system
+- **Level Cap System**: Group-specific level caps (100 levels for both groups)
+  - Characters automatically transition to level system after max rarity
+  - Consistent progression across all character rarities
+  - Better long-term character development
+
+### Changed
+- **Rarity Upgrade Thresholds**: Updated for balanced progression
+  - Common → Rare: 1,000 shards
+  - Rare → Epic: 2,500 shards
+  - Epic: 0 shards (max for basic group)
+  - Legendary → Mythic: 10,000 shards
+  - Mythic: 0 shards (max for advanced group)
+- **Upgrade Command Logic**: Enhanced to handle group-specific caps and transitions
+- **Progress Tracking**: Rarity progress shows group membership and next steps
+- **Collection Display**: Fixed level display to use custom levels correctly
+
+### Technical Details
+- **Service Layer Updates**: `RarityUpgradeService.js` with group-based logic
+- **Constants Reorganization**: New `RARITY_GROUPS` and `LEVEL_CAPS` configuration
+- **Database Compatibility**: Existing user data preserved, new fields added
+- **Backward Compatibility**: All existing characters work with new system
+
+### Balance Improvements
+- **Fair Progression**: Both groups have equal level caps (100)
+- **Resource Management**: Shards used efficiently across rarity and level systems
+- **Player Experience**: Clear guidance on upgrade paths and next steps
+- **Game Balance**: Prevents overpowered characters while maintaining progression
+
+---
+
+## [Unreleased]
 - **New Character Database Structure**: Complete reorganization of character system
   - Modular folder-based organization by anime series and power tiers
   - Naruto characters organized into 6 tiers: genin (COMMON), chunin (RARE), jonin (EPIC), kage (LEGENDARY), ultimate (MYTHIC), dimensional (DIMENSIONAL)
@@ -68,6 +105,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/SemVer
 
 ---
 
-[Unreleased]: https://github.com/Elenyx/Nexium-RPG/compare/v1.0.0...HEAD
+[Unreleased]: https://github.com/Elenyx/Nexium-RPG/compare/v1.1.0...HEAD
+[1.1.0]: https://github.com/Elenyx/Nexium-RPG/releases/tag/v1.1.0
 [1.0.0]: https://github.com/Elenyx/Nexium-RPG/releases/tag/v1.0.0</content>
 <parameter name="filePath">d:\Nexium\Nexium-RPG\CHANGELOG.md

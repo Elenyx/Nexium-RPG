@@ -40,6 +40,16 @@ const defineUserCharacter = (sequelize) => {
         customExp: {
             type: DataTypes.INTEGER,
             defaultValue: 0
+        },
+        collectedShards: {
+            type: DataTypes.INTEGER,
+            defaultValue: 0,
+            comment: 'Shards collected for rarity upgrade'
+        },
+        nextRarityThreshold: {
+            type: DataTypes.INTEGER,
+            defaultValue: 0,
+            comment: 'Shard threshold needed for next rarity upgrade'
         }
     }, {
         indexes: [

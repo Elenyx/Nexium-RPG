@@ -4,7 +4,15 @@ const dimensionalCharacters = [
     name: 'Kaguya Otsutsuki',
     anime: 'Naruto',
     rarity: 'DIMENSIONAL',
-    image: 'https://ik.imagekit.io/5pjx7qbpc/naruto/characters/kaguya.png',
+    image: 'https://ik.imagekit.io/nexiumrpg/Characters/Naruto/DIMENSIONAL/Kaguya.png',
+    imageUrls: {
+      COMMON: 'https://ik.imagekit.io/nexiumrpg/Characters/Naruto/COMMON/Kaguya.png',
+      RARE: 'https://ik.imagekit.io/nexiumrpg/Characters/Naruto/RARE/Kaguya.png',
+      EPIC: 'https://ik.imagekit.io/nexiumrpg/Characters/Naruto/EPIC/Kaguya.png',
+      LEGENDARY: 'https://ik.imagekit.io/nexiumrpg/Characters/Naruto/LEGENDARY/Kaguya.png',
+      MYTHIC: 'https://ik.imagekit.io/nexiumrpg/Characters/Naruto/MYTHIC/Kaguya.png',
+      DIMENSIONAL: 'https://ik.imagekit.io/nexiumrpg/Characters/Naruto/DIMENSIONAL/Kaguya.png'
+    },
     baseStats: {
       health: 3500,
       attack: 400,
@@ -38,7 +46,15 @@ const dimensionalCharacters = [
     name: 'Hagoromo Otsutsuki',
     anime: 'Naruto',
     rarity: 'DIMENSIONAL',
-    image: 'https://ik.imagekit.io/5pjx7qbpc/naruto/characters/hagoromo.png',
+    image: 'https://ik.imagekit.io/nexiumrpg/Characters/Naruto/DIMENSIONAL/Hagoromo.png',
+    imageUrls: {
+      COMMON: 'https://ik.imagekit.io/nexiumrpg/Characters/Naruto/COMMON/Hagoromo.png',
+      RARE: 'https://ik.imagekit.io/nexiumrpg/Characters/Naruto/RARE/Hagoromo.png',
+      EPIC: 'https://ik.imagekit.io/nexiumrpg/Characters/Naruto/EPIC/Hagoromo.png',
+      LEGENDARY: 'https://ik.imagekit.io/nexiumrpg/Characters/Naruto/LEGENDARY/Hagoromo.png',
+      MYTHIC: 'https://ik.imagekit.io/nexiumrpg/Characters/Naruto/MYTHIC/Hagoromo.png',
+      DIMENSIONAL: 'https://ik.imagekit.io/nexiumrpg/Characters/Naruto/DIMENSIONAL/Hagoromo.png'
+    },
     baseStats: {
       health: 3200,
       attack: 380,
@@ -72,7 +88,15 @@ const dimensionalCharacters = [
     name: 'Hamura Otsutsuki',
     anime: 'Naruto',
     rarity: 'DIMENSIONAL',
-    image: 'https://ik.imagekit.io/5pjx7qbpc/naruto/characters/hamura.png',
+    image: 'https://ik.imagekit.io/nexiumrpg/Characters/Naruto/DIMENSIONAL/Hamura.png',
+    imageUrls: {
+      COMMON: 'https://ik.imagekit.io/nexiumrpg/Characters/Naruto/COMMON/Hamura.png',
+      RARE: 'https://ik.imagekit.io/nexiumrpg/Characters/Naruto/RARE/Hamura.png',
+      EPIC: 'https://ik.imagekit.io/nexiumrpg/Characters/Naruto/EPIC/Hamura.png',
+      LEGENDARY: 'https://ik.imagekit.io/nexiumrpg/Characters/Naruto/LEGENDARY/Hamura.png',
+      MYTHIC: 'https://ik.imagekit.io/nexiumrpg/Characters/Naruto/MYTHIC/Hamura.png',
+      DIMENSIONAL: 'https://ik.imagekit.io/nexiumrpg/Characters/Naruto/DIMENSIONAL/Hamura.png'
+    },
     baseStats: {
       health: 3100,
       attack: 370,
@@ -106,7 +130,15 @@ const dimensionalCharacters = [
     name: 'Naruto Uzumaki (Six Paths Sage Mode)',
     anime: 'Naruto',
     rarity: 'DIMENSIONAL',
-    image: 'https://ik.imagekit.io/5pjx7qbpc/naruto/characters/naruto-six-paths.png',
+    image: 'https://ik.imagekit.io/nexiumrpg/Characters/Naruto/DIMENSIONAL/Naruto-SixPaths.png',
+    imageUrls: {
+      COMMON: 'https://ik.imagekit.io/nexiumrpg/Characters/Naruto/COMMON/Naruto-SixPaths.png',
+      RARE: 'https://ik.imagekit.io/nexiumrpg/Characters/Naruto/RARE/Naruto-SixPaths.png',
+      EPIC: 'https://ik.imagekit.io/nexiumrpg/Characters/Naruto/EPIC/Naruto-SixPaths.png',
+      LEGENDARY: 'https://ik.imagekit.io/nexiumrpg/Characters/Naruto/LEGENDARY/Naruto-SixPaths.png',
+      MYTHIC: 'https://ik.imagekit.io/nexiumrpg/Characters/Naruto/MYTHIC/Naruto-SixPaths.png',
+      DIMENSIONAL: 'https://ik.imagekit.io/nexiumrpg/Characters/Naruto/DIMENSIONAL/Naruto-SixPaths.png'
+    },
     baseStats: {
       health: 3300,
       attack: 390,
@@ -140,7 +172,15 @@ const dimensionalCharacters = [
     name: 'Sasuke Uchiha (Rinnegan + Eternal Mangekyo)',
     anime: 'Naruto',
     rarity: 'DIMENSIONAL',
-    image: 'https://ik.imagekit.io/5pjx7qbpc/naruto/characters/sasuke-rinnegan-ems.png',
+    image: 'https://ik.imagekit.io/nexiumrpg/Characters/Naruto/DIMENSIONAL/Sasuke-RinneganEMS.png',
+    imageUrls: {
+      COMMON: 'https://ik.imagekit.io/nexiumrpg/Characters/Naruto/COMMON/Sasuke-RinneganEMS.png',
+      RARE: 'https://ik.imagekit.io/nexiumrpg/Characters/Naruto/RARE/Sasuke-RinneganEMS.png',
+      EPIC: 'https://ik.imagekit.io/nexiumrpg/Characters/Naruto/EPIC/Sasuke-RinneganEMS.png',
+      LEGENDARY: 'https://ik.imagekit.io/nexiumrpg/Characters/Naruto/LEGENDARY/Sasuke-RinneganEMS.png',
+      MYTHIC: 'https://ik.imagekit.io/nexiumrpg/Characters/Naruto/MYTHIC/Sasuke-RinneganEMS.png',
+      DIMENSIONAL: 'https://ik.imagekit.io/nexiumrpg/Characters/Naruto/DIMENSIONAL/Sasuke-RinneganEMS.png'
+    },
     baseStats: {
       health: 3150,
       attack: 385,
@@ -174,7 +214,15 @@ const dimensionalCharacters = [
     name: 'Madara Uchiha (Ten Tails Jinchuriki)',
     anime: 'Naruto',
     rarity: 'DIMENSIONAL',
-    image: 'https://ik.imagekit.io/5pjx7qbpc/naruto/characters/madara-ten-tails.png',
+    image: 'https://ik.imagekit.io/nexiumrpg/Characters/Naruto/DIMENSIONAL/Madara-TenTails.png',
+    imageUrls: {
+      COMMON: 'https://ik.imagekit.io/nexiumrpg/Characters/Naruto/COMMON/Madara-TenTails.png',
+      RARE: 'https://ik.imagekit.io/nexiumrpg/Characters/Naruto/RARE/Madara-TenTails.png',
+      EPIC: 'https://ik.imagekit.io/nexiumrpg/Characters/Naruto/EPIC/Madara-TenTails.png',
+      LEGENDARY: 'https://ik.imagekit.io/nexiumrpg/Characters/Naruto/LEGENDARY/Madara-TenTails.png',
+      MYTHIC: 'https://ik.imagekit.io/nexiumrpg/Characters/Naruto/MYTHIC/Madara-TenTails.png',
+      DIMENSIONAL: 'https://ik.imagekit.io/nexiumrpg/Characters/Naruto/DIMENSIONAL/Madara-TenTails.png'
+    },
     baseStats: {
       health: 3600,
       attack: 410,
@@ -208,7 +256,15 @@ const dimensionalCharacters = [
     name: 'Obito Uchiha (Ten Tails Jinchuriki)',
     anime: 'Naruto',
     rarity: 'DIMENSIONAL',
-    image: 'https://ik.imagekit.io/5pjx7qbpc/naruto/characters/obito-ten-tails.png',
+    image: 'https://ik.imagekit.io/nexiumrpg/Characters/Naruto/DIMENSIONAL/Obito-TenTails.png',
+    imageUrls: {
+      COMMON: 'https://ik.imagekit.io/nexiumrpg/Characters/Naruto/COMMON/Obito-TenTails.png',
+      RARE: 'https://ik.imagekit.io/nexiumrpg/Characters/Naruto/RARE/Obito-TenTails.png',
+      EPIC: 'https://ik.imagekit.io/nexiumrpg/Characters/Naruto/EPIC/Obito-TenTails.png',
+      LEGENDARY: 'https://ik.imagekit.io/nexiumrpg/Characters/Naruto/LEGENDARY/Obito-TenTails.png',
+      MYTHIC: 'https://ik.imagekit.io/nexiumrpg/Characters/Naruto/MYTHIC/Obito-TenTails.png',
+      DIMENSIONAL: 'https://ik.imagekit.io/nexiumrpg/Characters/Naruto/DIMENSIONAL/Obito-TenTails.png'
+    },
     baseStats: {
       health: 3400,
       attack: 395,

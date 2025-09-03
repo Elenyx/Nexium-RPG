@@ -19,7 +19,7 @@ module.exports = {
                 },
                 {
                     name: `${EMOJIS.LEVEL} Progression`,
-                    value: '• Earn experience through commands\n• Level up to unlock new features\n• Complete daily challenges',
+                    value: '• Earn experience through commands\n• Level up characters with `/upgrade`\n• Upgrade character rarities with shards\n• Two-tier progression system (Basic/Advanced)',
                     inline: false
                 },
                 {

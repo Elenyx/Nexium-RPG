@@ -1,4 +1,5 @@
 const { models } = require('../database/connection');
+const { RARITY_UPGRADE_THRESHOLDS } = require('../config/constants');
 const logger = require('../utils/logger');
 
 class UserService {
@@ -77,6 +78,10 @@ class UserService {
         }
 
         try {
+            // Get character info to determine rarity threshold
+            const character = await models.Character.findByPk(characterId);
+            const nextRarityThreshold = character ? RARITY_UPGRADE_THRESHOLDS[character.rarity] || 0 : 0;
+
             const [userCharacter, created] = await models.UserCharacter.findOrCreate({
                 where: {
                     userId: userId,
@@ -88,7 +93,9 @@ class UserService {
                     obtainedAt: new Date(),
                     isFavorite: options.isFavorite || false,
                     customLevel: options.customLevel || 1,
-                    customExp: options.customExp || 0
+                    customExp: options.customExp || 0,
+                    collectedShards: 0,
+                    nextRarityThreshold: nextRarityThreshold
                 }
             });
 

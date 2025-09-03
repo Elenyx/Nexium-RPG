@@ -158,6 +158,54 @@ class ShardService {
 
         return totalCost;
     }
+
+    /**
+     * Add shards to a character's rarity upgrade progress
+     * @param {string} userId - User ID
+     * @param {string} characterId - Character ID
+     * @param {number} shardAmount - Amount of shards to add
+     * @returns {Object} Updated user character
+     */
+    async addShardsToRarityUpgrade(userId, characterId, shardAmount) {
+        if (!models) {
+            logger.warn('Database not available, cannot add shards to rarity upgrade');
+            return null;
+        }
+
+        try {
+            const userCharacter = await models.UserCharacter.findOne({
+                where: { userId, characterId },
+                include: [{ model: models.Character, as: 'character' }]
+            });
+
+            if (!userCharacter) {
+                throw new Error('User character not found');
+            }
+
+            // Update collected shards
+            const newCollectedShards = userCharacter.collectedShards + shardAmount;
+            await userCharacter.update({
+                collectedShards: newCollectedShards,
+                nextRarityThreshold: this.getRarityUpgradeThreshold(userCharacter.character.rarity)
+            });
+
+            logger.info(`Added ${shardAmount} shards to rarity upgrade for character ${characterId}. New total: ${newCollectedShards}`);
+            return userCharacter;
+        } catch (error) {
+            logger.error('Error in addShardsToRarityUpgrade:', error);
+            throw error;
+        }
+    }
+
+    /**
+     * Get shard threshold for rarity upgrade
+     * @param {string} rarity - Current rarity
+     * @returns {number} Shard threshold needed
+     */
+    getRarityUpgradeThreshold(rarity) {
+        const { RARITY_UPGRADE_THRESHOLDS } = require('../config/constants');
+        return RARITY_UPGRADE_THRESHOLDS[rarity] || 0;
+    }
 }
 
 module.exports = ShardService;

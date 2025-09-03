@@ -15,6 +15,7 @@ Nexium is an advanced Discord bot that creates an immersive anime multiverse exp
 ### 🎯 **Core Systems**
 - **Dimensional Travel**: Explore multiple anime worlds with unique mechanics
 - **Character Collection**: Gacha system with 6 rarity tiers and 500+ characters
+- **Two-Tier Progression**: Balanced rarity upgrade system with level caps
 - **Energy System**: Regenerating dimensional energy for actions
 - **Economy**: Multi-layered currency system with daily rewards
 - **Profile System**: Detailed progression tracking and customization
@@ -113,6 +114,8 @@ Nexium is an advanced Discord bot that creates an immersive anime multiverse exp
 |---------|-------------|-------|
 | `/summon [dimension]` | Summon characters from the multiverse | `/summon shonen` |
 | `/collection [filter]` | View your character collection | `/collection rarity:legendary` |
+| `/upgrade <character> <type>` | Upgrade characters (rarity or level) | `/upgrade NU001 rarity` |
+| `/rarity-progress <character>` | Check rarity upgrade progress | `/rarity-progress NU001` |
 | `/team setup` | Configure battle formation | `/team setup` |
 | `/trade request <user> <character>` | Initiate character trade | `/trade request @user Naruto` |
 
@@ -139,7 +142,38 @@ Nexium is an advanced Discord bot that creates an immersive anime multiverse exp
 | `/tournament create [game]` | Organize tournaments | `/tournament create "Character Guessing"` |
 | `/explore [dimension]` | Go treasure hunting | `/explore fantasy` |
 
-## 🏗️ Architecture
+## � Character Progression System
+
+### **Two-Tier Rarity System**
+Nexium features a balanced progression system designed to provide fair and engaging character development:
+
+#### **Basic Group (Common → Rare → Epic)**
+- **Upgrade Path**: Common → Rare → Epic
+- **Shard Requirements**: 1,000 → 2,500 shards
+- **Level Cap**: 100 levels after reaching Epic
+- **Focus**: Accessible progression for most players
+
+#### **Advanced Group (Legendary → Mythic)**
+- **Upgrade Path**: Legendary → Mythic
+- **Shard Requirements**: 10,000 shards
+- **Level Cap**: 100 levels after reaching Mythic
+- **Focus**: Elite progression for dedicated players
+
+### **Key Features**
+- **No Power Creep**: Maximum rarity caps prevent overpowered characters
+- **Long-Term Progression**: Level system provides 100 levels of advancement
+- **Resource Efficiency**: Shards used for both rarity upgrades and leveling
+- **Balanced Gameplay**: Both groups reach equivalent power levels
+- **Clear Guidance**: UI shows next steps and available upgrades
+
+### **Upgrade Commands**
+```bash
+/upgrade NU001 rarity    # Attempt rarity upgrade
+/upgrade NU001 level     # Level up character
+/rarity-progress NU001   # Check upgrade progress
+```
+
+## �🏗️ Architecture
 
 ### **Project Structure**
 ```
@@ -358,14 +392,41 @@ Dimensional Energy regenerates automatically at 1 point per minute (max 100). Yo
 <summary><strong>What determines character rarity in summons?</strong></summary>
 
 Summon rates are:
-- Common: 60%
-- Rare: 25% 
-- Epic: 10%
-- Legendary: 4%
-- Mythic: 0.9%
-- Dimensional: 0.1%
+- Common: 47.5%
+- Rare: 30%
+- Epic: 15%
+- Legendary: 5%
+- Mythic: 2%
+- Dimensional: 0.5%
 
-Premium summons have improved rates for higher rarities.
+**Two-Tier Progression System:**
+- **Basic Group**: Common → Rare → Epic (then level system up to 100)
+- **Advanced Group**: Legendary → Mythic (then level system up to 100)
+- No further rarity upgrades beyond Epic/Mythic - focus on leveling!
+
+</details>
+
+<details>
+<summary><strong>How does the rarity upgrade system work?</strong></summary>
+
+Nexium features a balanced two-group rarity progression system:
+
+**Basic Group (Common → Rare → Epic):**
+- Common → Rare: 1,000 shards
+- Rare → Epic: 2,500 shards
+- Epic = Maximum rarity
+- After reaching Epic: Level system (1-100 levels)
+
+**Advanced Group (Legendary → Mythic):**
+- Legendary → Mythic: 10,000 shards
+- Mythic = Maximum rarity
+- After reaching Mythic: Level system (1-100 levels)
+
+**Key Features:**
+- No upgrades beyond Epic/Mythic - prevents power creep
+- Level system provides long-term progression
+- Remaining shards can be used for leveling
+- Balanced gameplay across all character rarities
 
 </details>
 

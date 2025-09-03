@@ -68,7 +68,7 @@ class CharacterCollection {
                 if (chars.length > 0) {
                     const emoji = this.getRarityEmoji(rarity);
                     const charList = chars.map(char =>
-                        `${emoji} **${char.name}** (Lv.${char.level})`
+                        `${emoji} **${char.name}** (Lv.${char.customLevel || char.level || 1})`
                     ).join('\n');
 
                     embed.addFields({
@@ -202,7 +202,7 @@ class CharacterCollection {
                                 new TextDisplayBuilder()
                                     .setContent(`**${char.name}**`),
                                 new TextDisplayBuilder()
-                                    .setContent(`⭐ **Level ${char.level}** • *${char.anime || 'Mysterious Origins'}*`),
+                                    .setContent(`⭐ **Level ${char.customLevel || char.level || 1}** • *${char.anime || 'Mysterious Origins'}*`),
                                 new TextDisplayBuilder()
                                     .setContent(`⚔️ **${char.rarity || 'COMMON'}** rarity • Power: ${char.power || 'Unknown'}`)
                             );

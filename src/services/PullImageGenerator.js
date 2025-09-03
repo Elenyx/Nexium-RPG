@@ -1,17 +1,19 @@
 /**
  * @file PullImageGenerator.js
- * @description Generates canvas images for gacha pull results with rarity frames
+ * @description Generates canvas images for gacha pull results
  * @author Nexium Bot Development Team
  */
 
 const { createCanvas, loadImage } = require('canvas');
 const path = require('path');
 const fs = require('fs');
-const { RARITY_FRAMES, IMAGE_KIT_BASE_URL } = require('../config/constants');
+const { IMAGE_KIT_BASE_URL } = require('../config/constants');
+const CharacterImageManager = require('../components/builders/CharacterImageManager');
 
 class PullImageGenerator {
     constructor() {
         this.characterCache = new Map();
+        this.characterImageManager = new CharacterImageManager();
 
         // Register fonts if available
         this.registerFonts();
@@ -61,8 +63,8 @@ class PullImageGenerator {
     }
 
     /**
-     * Generate a single character card with complete design (art + frame + name)
-     * @param {Object} character - Character data
+     * Generate a single character card with complete design (art + name)
+     * @param {Object} character - Character data object with rarity and imageUrls
      * @param {number} width - Card width
      * @param {number} height - Card height
      * @returns {Promise<Buffer>} PNG buffer of the character card
@@ -72,8 +74,9 @@ class PullImageGenerator {
         const ctx = canvas.getContext('2d');
 
         try {
-            // Load character image (which already includes frame, name, and design)
-            const characterImage = await this.loadCharacterImage(character.imageUrl);
+            // Get the correct image URL based on current rarity
+            const imageUrl = this.characterImageManager.getCharacterImageUrlByRarity(character);
+            const characterImage = await this.loadCharacterImage(imageUrl);
 
             // Draw the complete character card image
             ctx.drawImage(characterImage, 0, 0, width, height);

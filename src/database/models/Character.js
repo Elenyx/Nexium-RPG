@@ -56,6 +56,12 @@ const defineCharacter = (sequelize) => {
             type: DataTypes.STRING,
             allowNull: false
         },
+        imageUrls: {
+            type: DataTypes.JSON,
+            allowNull: true,
+            defaultValue: {},
+            comment: 'Rarity-specific image URLs: {COMMON: "url", RARE: "url", ...}'
+        },
         imagePath: {
             type: DataTypes.STRING,
             allowNull: true

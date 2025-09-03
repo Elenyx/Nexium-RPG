@@ -28,6 +28,7 @@ const seedCharacters = async () => {
                     abilities: charData.abilities,
                     description: charData.description,
                     imageUrl: charData.imageUrl,
+                    imageUrls: charData.imageUrls || {},
                     thumbnailUrl: charData.thumbnailUrl,
                     element: charData.element,
                     class: charData.class,

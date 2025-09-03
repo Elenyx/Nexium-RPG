@@ -6,6 +6,7 @@
 const { createCanvas, loadImage } = require('canvas');
 const path = require('path');
 const fs = require('fs');
+const CharacterImageManager = require('../components/builders/CharacterImageManager');
 
 class CardAlbum {
     constructor() {
@@ -16,6 +17,7 @@ class CardAlbum {
         this.cardHeight = 200;
         this.margin = 20;
         this.cardSpacing = 10;
+        this.characterImageManager = new CharacterImageManager();
     }
 
     /**
@@ -114,9 +116,10 @@ class CardAlbum {
 
         // Load and draw character image
         try {
-            const imagePath = this.getCharacterImagePath(character);
-            if (imagePath && fs.existsSync(imagePath)) {
-                const image = await loadImage(imagePath);
+            // Use CharacterImageManager to get the correct image based on current rarity
+            const imageUrl = this.characterImageManager.getCharacterImageUrlByRarity(character);
+            if (imageUrl) {
+                const image = await loadImage(imageUrl);
                 const imageSize = 120;
                 const imageX = x + (this.cardWidth - imageSize) / 2;
                 const imageY = y + 15;
@@ -128,7 +131,7 @@ class CardAlbum {
                 ctx.drawImage(image, imageX, imageY, imageSize, imageSize);
                 ctx.restore();
             } else {
-                // Placeholder if image not found
+                // Fallback if no image URL available
                 ctx.fillStyle = '#666666';
                 this.roundedRect(ctx, x + 20, y + 15, 120, 120, 6);
                 ctx.fill();
@@ -170,14 +173,21 @@ class CardAlbum {
      */
     getRarityColor(rarity) {
         const colors = {
-            'Common': '#8B8B8B',
+            'COMMON': '#9CA3AF',
+            'RARE': '#3B82F6',
+            'EPIC': '#8B5CF6',
+            'LEGENDARY': '#F59E0B',
+            'MYTHIC': '#EF4444',
+            'DIMENSIONAL': '#7C3AED',
+            // Legacy lowercase support
+            'Common': '#9CA3AF',
             'Uncommon': '#32CD32',
-            'Rare': '#4169E1',
-            'Epic': '#9932CC',
-            'Legendary': '#FFD700',
-            'Mythic': '#FF1493'
+            'Rare': '#3B82F6',
+            'Epic': '#8B5CF6',
+            'Legendary': '#F59E0B',
+            'Mythic': '#EF4444'
         };
-        return colors[rarity] || colors['Common'];
+        return colors[rarity] || colors['COMMON'];
     }
 
     /**

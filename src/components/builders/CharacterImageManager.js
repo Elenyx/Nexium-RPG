@@ -62,6 +62,31 @@ class CharacterImageManager {
     }
 
     /**
+     * Gets optimized image URL for character based on current rarity
+     * @param {Object} character - Character object with id, rarity, and imageUrls
+     * @returns {string|null} Optimized image URL or null if not found
+     */
+    getCharacterImageUrlByRarity(character) {
+        // If character has rarity-specific imageUrls, use those
+        if (character.imageUrls && character.imageUrls[character.rarity]) {
+            return character.imageUrls[character.rarity];
+        }
+
+        // Fallback to single imageUrl if available
+        if (character.imageUrl) {
+            return character.imageUrl;
+        }
+
+        // Fallback to legacy CDN mapping
+        if (this.externalCDN.characterMap[character.id]) {
+            return `${this.externalCDN.baseUrl}${this.externalCDN.characterMap[character.id]}`;
+        }
+
+        // Final fallback to placeholder
+        return this.getPlaceholderImageUrl(character.id);
+    }
+
+    /**
      * Gets optimized image URL for character (prioritizes external CDN)
      * @param {string} characterId - Character ID
      * @returns {string|null} Optimized image URL or null if not found

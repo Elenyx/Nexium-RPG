@@ -3,6 +3,7 @@ const logger = require('../../utils/logger');
 const ProfileButtonHandlers = require('./ProfileButtonHandlers');
 const ShopButtonHandlers = require('./ShopButtonHandlers');
 const CollectionButtonHandlers = require('./CollectionButtonHandlers');
+const UpgradeButtonHandlers = require('./UpgradeButtonHandlers');
 
 class ButtonHandler {
     constructor(client) {
@@ -10,6 +11,7 @@ class ButtonHandler {
         this.profileHandlers = new ProfileButtonHandlers(client);
         this.shopHandlers = new ShopButtonHandlers(client);
         this.collectionHandlers = new CollectionButtonHandlers();
+        this.upgradeHandlers = new UpgradeButtonHandlers(client);
     }
 
     async handle(interaction) {
@@ -33,6 +35,9 @@ class ButtonHandler {
                     break;
                 case 'battle':
                     handlerResult = await this.handleBattleButton(action, interaction, params);
+                    break;
+                case 'upgrade':
+                    handlerResult = await this.handleUpgradeButton(action, interaction, params);
                     break;
                 default:
                     // Check if button handler exists in client.buttons
@@ -165,6 +170,23 @@ class ButtonHandler {
     async handleBattleButton(action, interaction, params) {
         // TODO: Implement battle button handlers
         logger.info(`Battle button not yet implemented: ${action}`);
+        return false;
+    }
+
+    /**
+     * Handles upgrade-related buttons
+     * @param {string} action - Button action
+     * @param {Object} interaction - Discord interaction
+     * @param {Array} params - Button parameters
+     * @returns {boolean} Whether the button was handled
+     */
+    async handleUpgradeButton(action, interaction, params) {
+        // Reconstruct the full customId for the upgrade handler
+        const fullCustomId = `upgrade_${action}_${params.join('_')}`;
+        if (this.upgradeHandlers.canHandle(fullCustomId)) {
+            await this.upgradeHandlers.handle(interaction);
+            return true;
+        }
         return false;
     }
 }
