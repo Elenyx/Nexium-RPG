@@ -83,7 +83,28 @@ Nexium is an anime-themed Discord RPG bot built with Discord.js v14, featuring c
    - [ ] Add character fusion/evolution system
    - [ ] Create achievement system for milestones
 
-2. **UI/UX Improvements**
+2. **Admin Tools & Management**
+   - [ ] **Economy Management Commands**
+     - [ ] `/givecoins` - Add/remove coins from user balance
+     - [ ] `/giveshards` - Add/remove upgrade shards from user balance
+     - [ ] `/takecoins` - Remove coins from user balance
+     - [ ] `/takeshards` - Remove shards from user balance
+   - [ ] **User Management Commands**
+     - [ ] `/resetuser` - Reset user's entire profile (characters, coins, shards)
+     - [ ] `/banuser` - Ban users from using bot commands
+     - [ ] `/unbanuser` - Unban users from bot commands
+   - [ ] **Character Management Commands**
+     - [ ] `/addcharacter` - Add new characters to database
+     - [ ] `/removecharacter` - Remove characters from user collections
+     - [ ] `/editcharacter` - Edit character properties in database
+   - [ ] **Monitoring Commands**
+     - [ ] `/serverstats` - View detailed server statistics
+     - [ ] `/userstats` - View detailed user statistics
+   - [ ] **Bot Configuration Commands**
+     - [ ] `/setchannel` - Set bot-only channels
+     - [ ] `/maintenance` - Enable/disable maintenance mode
+
+3. **UI/UX Improvements**
    - [ ] Add pagination to collection view
    - [ ] Implement character filtering/sorting
    - [ ] Add battle history tracking

@@ -24,7 +24,7 @@ module.exports = {
                 },
                 {
                     name: `${EMOJIS.COIN} Economy`,
-                    value: '• Collect coins through activities\n• Use coins for various purchases\n• Trade with other players',
+                    value: '• Collect coins through activities\n• Use coins for various purchases\n• Trade with other players\n• Check your **shards** in `/profile`',
                     inline: false
                 },
                 {

@@ -29,6 +29,7 @@ class ProfileDisplay {
             `**Experience:** \`${userData.exp.toLocaleString()}\``,
             `**Energy:** \`${userData.dimensionalEnergy}/${userData.maxEnergy}\``,
             `**Coins:** \`${userData.coins.toLocaleString()}\``,
+            `**${EMOJIS.SHARD} Shards:** \`${userData.shards?.toLocaleString() || '0'}\``,
             `**Current Dimension:** \`${userData.currentDimension}\``,
             `**Daily Streak:** \`${userData.dailyStreak} days\``
         ].join('\n');
@@ -77,7 +78,7 @@ class ProfileDisplay {
 
         const section4 = new SectionBuilder()
             .addTextDisplayComponents(
-                td => td.setContent(`## 💰 Economy Overview\n**Coins:** ${userData.coins.toLocaleString()}\n**Daily Streak:** ${userData.dailyStreak} days\n**Last Daily:** ${userData.lastDaily ? new Date(userData.lastDaily).toLocaleDateString() : 'Never'}`)
+                td => td.setContent(`## 💰 Economy Overview\n**Coins:** ${userData.coins.toLocaleString()}\n**${EMOJIS.SHARD} Shards:** ${userData.shards?.toLocaleString() || '0'}\n**Daily Streak:** ${userData.dailyStreak} days\n**Last Daily:** ${userData.lastDaily ? new Date(userData.lastDaily).toLocaleDateString() : 'Never'}`)
             )
             .setButtonAccessory(
                 btn => btn
@@ -130,6 +131,7 @@ class ProfileDisplay {
 
         const economyStats = [
             `**Total Coins:** ${userData.coins.toLocaleString()}`,
+            `**${EMOJIS.SHARD} Total Shards:** ${userData.shards?.toLocaleString() || '0'}`,
             `**Daily Streak:** ${userData.dailyStreak} days`,
             `**Daily Reward Multiplier:** ${Math.min(userData.dailyStreak * 0.1 + 1, 2).toFixed(1)}x`,
             `**Last Daily Claim:** ${userData.lastDaily ? new Date(userData.lastDaily).toLocaleDateString() : 'Never'}`,

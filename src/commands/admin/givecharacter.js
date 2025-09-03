@@ -1,4 +1,4 @@
-const { SlashCommandBuilder, EmbedBuilder, MessageFlags } = require('discord.js');
+const { SlashCommandBuilder, EmbedBuilder, MessageFlags, PermissionFlagsBits } = require('discord.js');
 const { models } = require('../../database/connection');
 const UserService = require('../../services/UserService');
 const { COLORS, EMOJIS } = require('../../config/constants');
@@ -21,12 +21,13 @@ module.exports = {
                 .setRequired(false)),
 
     async execute(interaction) {
-        // Check if user is admin (you can customize this check)
-        if (!interaction.user.id === 'YOUR_ADMIN_USER_ID') { // Replace with your Discord user ID
-            return await interaction.reply({
-                content: 'You do not have permission to use this command.',
-                flags: MessageFlags.Ephemeral
-            });
+        // Check if user has administrator permissions
+        if (!interaction.member.permissions.has(PermissionFlagsBits.Administrator)) {
+            const embed = new EmbedBuilder()
+                .setTitle(`${EMOJIS.ERROR} Permission Denied`)
+                .setDescription('You need Administrator permissions to use this command.')
+                .setColor(COLORS.ERROR);
+            return await interaction.reply({ embeds: [embed], flags: MessageFlags.Ephemeral });
         }
 
         const targetUser = interaction.options.getUser('user');

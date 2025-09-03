@@ -17,6 +17,7 @@ class UserService {
                 currentDimension: 'nexus_hub',
                 dailyStreak: 0,
                 lastDaily: null,
+                shards: 0,
                 createdAt: new Date()
             };
         }
