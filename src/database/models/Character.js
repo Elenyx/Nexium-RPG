@@ -17,7 +17,7 @@ const defineCharacter = (sequelize) => {
             allowNull: false
         },
         rarity: {
-            type: DataTypes.ENUM('COMMON', 'RARE', 'EPIC', 'LEGENDARY', 'MYTHIC'),
+            type: DataTypes.ENUM('COMMON', 'RARE', 'EPIC', 'LEGENDARY', 'MYTHIC', 'DIMENSIONAL'),
             allowNull: false
         },
         level: {

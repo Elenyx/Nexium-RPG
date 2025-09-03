@@ -1,6 +1,7 @@
-const { SlashCommandBuilder, EmbedBuilder, MessageFlags } = require('discord.js');
+const { SlashCommandBuilder, EmbedBuilder, MessageFlags, AttachmentBuilder } = require('discord.js');
 const { models } = require('../../database/connection');
 const UserService = require('../../services/UserService');
+const PullImageGenerator = require('../../services/PullImageGenerator');
 const { COLORS, EMOJIS } = require('../../config/constants');
 
 module.exports = {
@@ -72,6 +73,19 @@ module.exports = {
             // Deduct coins
             await userService.updateUser(userId, { coins: user.coins - totalCost });
 
+            // Generate pull result image
+            const imageGenerator = new PullImageGenerator();
+            let resultImage = null;
+
+            try {
+                const pulledCharacterData = pulledCharacters.map(pull => pull.character);
+                const imageBuffer = await imageGenerator.generatePullResultsImage(pulledCharacterData);
+                resultImage = new AttachmentBuilder(imageBuffer, { name: 'pull-results.png' });
+            } catch (error) {
+                console.warn('Failed to generate pull result image:', error);
+                // Continue without image if generation fails
+            }
+
             // Create result embed
             const embed = new EmbedBuilder()
                 .setColor(COLORS.SUCCESS)
@@ -85,7 +99,8 @@ module.exports = {
                     'RARE': '🟢',
                     'EPIC': '🟣',
                     'LEGENDARY': '🟡',
-                    'MYTHIC': '🔴'
+                    'MYTHIC': '🔴',
+                    'DIMENSIONAL': '🌌'
                 }[pull.character.rarity] || '⚪';
 
                 const newIndicator = pull.isNew ? ' 🆕' : '';
@@ -103,7 +118,14 @@ module.exports = {
                 text: `Remaining coins: ${updatedUser.coins.toLocaleString()} | Use /collection to view your characters`
             });
 
-            await interaction.editReply({ embeds: [embed] });
+            // Send response with or without image
+            const responseData = { embeds: [embed] };
+            if (resultImage) {
+                responseData.files = [resultImage];
+                embed.setImage('attachment://pull-results.png');
+            }
+
+            await interaction.editReply(responseData);
 
         } catch (error) {
             console.error('Pull command error:', error);
