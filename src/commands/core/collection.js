@@ -85,16 +85,6 @@ module.exports = {
             const endIndex = Math.min(startIndex + 8, characters.length);
             const pageCharacters = characters.slice(startIndex, endIndex);
 
-            // Create character list for current page
-            const rarityEmojis = {
-                'COMMON': '⚪',
-                'RARE': '🟢',
-                'EPIC': '🟣',
-                'LEGENDARY': '🟡',
-                'MYTHIC': '🔴',
-                'DIMENSIONAL': '🌌'
-            };
-
             // Function to generate star rating based on rarity
             const generateStars = (rarity) => {
                 const starMap = {
@@ -108,15 +98,16 @@ module.exports = {
                 return starMap[rarity] || '☆☆☆☆☆';
             };
 
+            // Create formatted character list with markup
             let characterList = '';
             pageCharacters.forEach((character, index) => {
-                const rarityEmoji = rarityEmojis[character.rarity] || '⚪';
                 const cardNumber = startIndex + index + 1;
-                const favoriteEmoji = character.isFavorite ? '🔥' : '';
+                const favoriteEmoji = character.isFavorite ? '🔥 ' : '';
                 const stars = generateStars(character.rarity);
-                const levelDisplay = `◈${character.customLevel}`;
+                const levelDisplay = `△${character.customLevel}`;
                 
-                characterList += `${favoriteEmoji} ${character.id} · ${stars} · #${cardNumber.toString().padStart(4, '0')} · ${levelDisplay} · ${character.anime} · ${character.name}\n`;
+                // Format: `ID` · ★★★★★ · #CardNumber · △Level · Anime · Character Name
+                characterList += `${favoriteEmoji}\`${character.id}\` · ${stars} · #${cardNumber} · ${levelDisplay} · ${character.anime} · ${character.name}\n`;
             });
 
             // Create components for Components V2
@@ -127,13 +118,6 @@ module.exports = {
             const headerTextDisplay = new TextDisplayBuilder()
                 .setContent(`**${EMOJIS.COLLECTION} ${targetUser.username}'s Character Collection**\n\n**${characters.length}** characters collected • Page **${page + 1}** of **${totalPages}**`);
             components.push(headerTextDisplay);
-
-            // Add media gallery for the album image
-            const mediaGallery = new MediaGalleryBuilder()
-                .addItems(mg => mg
-                    .setDescription(`${targetUser.username}'s collection album`)
-                    .setURL('attachment://collection.png'));
-            components.push(mediaGallery);
 
             // Add character list as a Container with TextDisplay component
             if (characterList.trim()) {
@@ -146,6 +130,13 @@ module.exports = {
                 
                 components.push(characterContainer);
             }
+
+            // Add media gallery for the album image
+            const mediaGallery = new MediaGalleryBuilder()
+                .addItems(mg => mg
+                    .setDescription(`${targetUser.username}'s collection album`)
+                    .setURL('attachment://collection.png'));
+            components.push(mediaGallery);
 
             // Add footer text display
             const footerTextDisplay = new TextDisplayBuilder()
