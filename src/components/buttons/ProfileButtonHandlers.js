@@ -8,7 +8,7 @@ const ComponentRegistry = require('../ComponentRegistry');
 const UserService = require('../../services/UserService');
 const CardAlbum = require('../../services/CardAlbum');
 const characters = require('../../assets/characters');
-const { SectionBuilder, TextDisplayBuilder, MessageFlags, ButtonStyle, EmbedBuilder, ActionRowBuilder, ButtonBuilder } = require('discord.js');
+const { SectionBuilder, TextDisplayBuilder, MessageFlags, ButtonStyle, ActionRowBuilder, ButtonBuilder, MediaGalleryBuilder } = require('discord.js');
 const { models } = require('../../database/connection');
 const { COLORS, EMOJIS } = require('../../config/constants');
 
@@ -32,12 +32,8 @@ class ProfileButtonHandlers {
             await interaction.deferUpdate();
 
             // TODO: Implement inventory system
-            const embed = {
-                title: '🎒 Inventory System',
-                description: 'Inventory system coming soon!\n\nThis will show your collected items, equipment, and consumables.',
-                color: 0x3B82F6,
-                footer: { text: 'Use /profile to return to your profile' }
-            };
+            const inventoryTextDisplay = new TextDisplayBuilder()
+                .setContent(`**🎒 Inventory System**\n\nInventory system coming soon!\n\nThis will show your collected items, equipment, and consumables.\n\n*Use /profile to return to your profile*`);
 
             const row = {
                 type: 1,
@@ -53,8 +49,7 @@ class ProfileButtonHandlers {
             };
 
             await interaction.editReply({
-                embeds: [embed],
-                components: [row],
+                components: [inventoryTextDisplay, row],
                 flags: 128 // MessageFlags.IsComponentsV2
             });
 
@@ -85,12 +80,13 @@ class ProfileButtonHandlers {
 
             // Check if database is available
             if (!models) {
-                const embed = new EmbedBuilder()
-                    .setColor(COLORS.ERROR)
-                    .setTitle(`${EMOJIS.ERROR} Database Unavailable`)
-                    .setDescription('The database is not configured. Please check your environment variables.');
+                const errorTextDisplay = new TextDisplayBuilder()
+                    .setContent(`**${EMOJIS.ERROR} Database Unavailable**\n\nThe database is not configured. Please check your environment variables.`);
 
-                return await interaction.editReply({ embeds: [embed] });
+                return await interaction.editReply({ 
+                    components: [errorTextDisplay], 
+                    flags: MessageFlags.IsComponentsV2 
+                });
             }
 
             // Get user's characters from database
@@ -105,13 +101,13 @@ class ProfileButtonHandlers {
             });
 
             if (userCharacters.length === 0) {
-                const embed = new EmbedBuilder()
-                    .setColor(COLORS.ERROR)
-                    .setTitle(`${EMOJIS.ERROR} Empty Collection`)
-                    .setDescription(`${targetUser.username} hasn't collected any characters yet!`)
-                    .setFooter({ text: 'Start collecting characters to build your album!' });
+                const emptyTextDisplay = new TextDisplayBuilder()
+                    .setContent(`**${EMOJIS.ERROR} Empty Collection**\n\n${targetUser.username} hasn't collected any characters yet!\n\n*Start collecting characters to build your album!*`);
 
-                return await interaction.editReply({ embeds: [embed] });
+                return await interaction.editReply({ 
+                    components: [emptyTextDisplay], 
+                    flags: MessageFlags.IsComponentsV2 
+                });
             }
 
             // Transform data for CardAlbum
@@ -129,21 +125,23 @@ class ProfileButtonHandlers {
                 username: targetUser.username
             });
 
-            // Create embed with the generated image
+            // Create components for Components V2
             const totalPages = Math.ceil(characters.length / 8);
-            const embed = new EmbedBuilder()
-                .setColor(COLORS.SUCCESS)
-                .setTitle(`${EMOJIS.COLLECTION} ${targetUser.username}'s Character Collection`)
-                .setDescription(`**${characters.length}** characters collected • Page **1** of **${totalPages}**`)
-                .setImage('attachment://collection.png')
-                .setFooter({
-                    text: `Use /collection page:2 to view next page`,
-                    iconURL: targetUser.displayAvatarURL()
-                })
-                .setTimestamp();
+            const components = [];
+
+            // Add header text display
+            const headerTextDisplay = new TextDisplayBuilder()
+                .setContent(`**${EMOJIS.COLLECTION} ${targetUser.username}'s Character Collection**\n\n**${characters.length}** characters collected • Page **1** of **${totalPages}**`);
+            components.push(headerTextDisplay);
+
+            // Add media gallery for the album image
+            const mediaGallery = new MediaGalleryBuilder()
+                .addItems(mg => mg
+                    .setDescription(`${targetUser.username}'s collection album`)
+                    .setURL('attachment://collection.png'));
+            components.push(mediaGallery);
 
             // Add navigation buttons if there are multiple pages
-            const components = [];
             if (totalPages > 1) {
                 const row = new ActionRowBuilder()
                     .addComponents(
@@ -175,23 +173,23 @@ class ProfileButtonHandlers {
             components.push(backRow);
 
             await interaction.editReply({
-                embeds: [embed],
                 files: [{
                     attachment: albumBuffer,
                     name: 'collection.png'
                 }],
-                components: components
+                components: components,
+                flags: MessageFlags.IsComponentsV2
             });
 
         } catch (error) {
             console.error('Error handling collection button:', error);
-            const errorEmbed = new EmbedBuilder()
-                .setColor(COLORS.ERROR)
-                .setTitle(`${EMOJIS.ERROR} Collection Error`)
-                .setDescription('An error occurred while generating your collection album.')
-                .setFooter({ text: 'Please try again later' });
+            const errorTextDisplay = new TextDisplayBuilder()
+                .setContent(`**${EMOJIS.ERROR} Collection Error**\n\nAn error occurred while generating your collection album.\n\n*Please try again later*`);
 
-            await interaction.editReply({ embeds: [errorEmbed] });
+            await interaction.editReply({ 
+                components: [errorTextDisplay], 
+                flags: MessageFlags.IsComponentsV2 
+            });
         }
     }
 

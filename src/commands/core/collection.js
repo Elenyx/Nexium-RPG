@@ -1,4 +1,4 @@
-const { SlashCommandBuilder, EmbedBuilder, ActionRowBuilder, ButtonBuilder, ButtonStyle, MessageFlags, TextDisplayBuilder, SectionBuilder, ContainerBuilder } = require('discord.js');
+const { SlashCommandBuilder, ActionRowBuilder, ButtonBuilder, ButtonStyle, MessageFlags, TextDisplayBuilder, SectionBuilder, ContainerBuilder, MediaGalleryBuilder } = require('discord.js');
 const { models } = require('../../database/connection');
 const CardAlbum = require('../../services/CardAlbum');
 const { COLORS, EMOJIS } = require('../../config/constants');
@@ -28,13 +28,11 @@ module.exports = {
 
             // Check if database is available
             if (!models) {
-                const embed = new EmbedBuilder()
-                    .setColor(COLORS.ERROR)
-                    .setTitle(`${EMOJIS.ERROR} Database Unavailable`)
-                    .setDescription('The database is not configured. Please check your environment variables.');
+                const errorTextDisplay = new TextDisplayBuilder()
+                    .setContent(`**${EMOJIS.ERROR} Database Unavailable**\n\nThe database is not configured. Please check your environment variables.`);
 
                 return await interaction.editReply({ 
-                    embeds: [embed], 
+                    components: [errorTextDisplay], 
                     flags: MessageFlags.IsComponentsV2 
                 });
             }
@@ -52,14 +50,11 @@ module.exports = {
             });
 
             if (userCharacters.length === 0) {
-                const embed = new EmbedBuilder()
-                    .setColor(COLORS.ERROR)
-                    .setTitle(`${EMOJIS.ERROR} Empty Collection`)
-                    .setDescription(`${targetUser.username} hasn't collected any characters yet!`)
-                    .setFooter({ text: 'Start collecting characters to build your album!' });
+                const emptyTextDisplay = new TextDisplayBuilder()
+                    .setContent(`**${EMOJIS.ERROR} Empty Collection**\n\n${targetUser.username} hasn't collected any characters yet!\n\n*Start collecting characters to build your album!*`);
 
                 return await interaction.editReply({ 
-                    embeds: [embed], 
+                    components: [emptyTextDisplay], 
                     flags: MessageFlags.IsComponentsV2 
                 });
             }
@@ -124,21 +119,21 @@ module.exports = {
                 characterList += `${favoriteEmoji} ${character.id} · ${stars} · #${cardNumber.toString().padStart(4, '0')} · ${levelDisplay} · ${character.anime} · ${character.name}\n`;
             });
 
-            // Create embed with the generated image
-            const totalPages = Math.ceil(characters.length / 8);
-            const embed = new EmbedBuilder()
-                .setColor(COLORS.SUCCESS)
-                .setTitle(`${EMOJIS.COLLECTION} ${targetUser.username}'s Character Collection`)
-                .setDescription(`**${characters.length}** characters collected • Page **${page + 1}** of **${totalPages}**`)
-                .setImage('attachment://collection.png')
-                .setFooter({
-                    text: `Use /collection page:${page + 2} to view next page`,
-                    iconURL: targetUser.displayAvatarURL()
-                })
-                .setTimestamp();
-
             // Create components for Components V2
+            const totalPages = Math.ceil(characters.length / 8);
             const components = [];
+
+            // Add header text display
+            const headerTextDisplay = new TextDisplayBuilder()
+                .setContent(`**${EMOJIS.COLLECTION} ${targetUser.username}'s Character Collection**\n\n**${characters.length}** characters collected • Page **${page + 1}** of **${totalPages}**`);
+            components.push(headerTextDisplay);
+
+            // Add media gallery for the album image
+            const mediaGallery = new MediaGalleryBuilder()
+                .addItems(mg => mg
+                    .setDescription(`${targetUser.username}'s collection album`)
+                    .setURL('attachment://collection.png'));
+            components.push(mediaGallery);
 
             // Add character list as a Container with TextDisplay component
             if (characterList.trim()) {
@@ -151,6 +146,11 @@ module.exports = {
                 
                 components.push(characterContainer);
             }
+
+            // Add footer text display
+            const footerTextDisplay = new TextDisplayBuilder()
+                .setContent(`*Use /collection page:${page + 2} to view next page*`);
+            components.push(footerTextDisplay);
 
             // Add navigation buttons if there are multiple pages
             if (totalPages > 1) {
@@ -173,7 +173,6 @@ module.exports = {
             }
 
             await interaction.editReply({
-                embeds: [embed],
                 files: [{
                     attachment: albumBuffer,
                     name: 'collection.png'
@@ -185,20 +184,17 @@ module.exports = {
         } catch (error) {
             console.error('Collection command error:', error);
 
-            const errorEmbed = new EmbedBuilder()
-                .setColor(COLORS.ERROR)
-                .setTitle(`${EMOJIS.ERROR} Collection Error`)
-                .setDescription('An error occurred while generating your collection album.')
-                .setFooter({ text: 'Please try again later' });
+            const errorTextDisplay = new TextDisplayBuilder()
+                .setContent(`**${EMOJIS.ERROR} Collection Error**\n\nAn error occurred while generating your collection album.\n\n*Please try again later*`);
 
             if (interaction.deferred) {
                 await interaction.editReply({ 
-                    embeds: [errorEmbed], 
+                    components: [errorTextDisplay], 
                     flags: MessageFlags.IsComponentsV2 
                 });
             } else {
                 await interaction.reply({
-                    embeds: [errorEmbed],
+                    components: [errorTextDisplay],
                     flags: MessageFlags.Ephemeral | MessageFlags.IsComponentsV2
                 });
             }
