@@ -15,42 +15,42 @@ const sampleCharacters = [
         name: 'Naruto Uzumaki',
         anime: 'Naruto',
         rarity: 'COMMON',
-        imageUrl: 'https://ik.imagekit.io/nexiumrpg/naruto.jpg'
+        imageUrl: 'https://ik.imagekit.io/NexiumRPG/naruto.jpg'
     },
     {
         id: 'char_002',
         name: 'Sasuke Uchiha',
         anime: 'Naruto',
         rarity: 'RARE',
-        imageUrl: 'https://ik.imagekit.io/nexiumrpg/sasuke.png'
+        imageUrl: 'https://ik.imagekit.io/NexiumRPG/sasuke.png'
     },
     {
         id: 'char_003',
         name: 'Monkey D. Luffy',
         anime: 'One Piece',
         rarity: 'EPIC',
-        imageUrl: 'https://ik.imagekit.io/nexiumrpg/luffy.png'
+        imageUrl: 'https://ik.imagekit.io/NexiumRPG/luffy.png'
     },
     {
         id: 'char_004',
         name: 'Edward Elric',
         anime: 'Fullmetal Alchemist',
         rarity: 'LEGENDARY',
-        imageUrl: 'https://ik.imagekit.io/nexiumrpg/edward.png'
+        imageUrl: 'https://ik.imagekit.io/NexiumRPG/edward.png'
     },
     {
         id: 'char_005',
         name: 'Son Goku',
         anime: 'Dragon Ball',
         rarity: 'MYTHIC',
-        imageUrl: 'https://ik.imagekit.io/nexiumrpg/goku.png'
+        imageUrl: 'https://ik.imagekit.io/NexiumRPG/goku.png'
     },
     {
         id: 'char_006',
         name: 'Light Yagami',
         anime: 'Death Note',
         rarity: 'DIMENSIONAL', // Note: DIMENSIONAL characters are event-only, not available in regular pulls
-        imageUrl: 'https://ik.imagekit.io/nexiumrpg/light.png'
+        imageUrl: 'https://ik.imagekit.io/NexiumRPG/light.png'
     }
 ];
 

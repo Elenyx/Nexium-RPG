@@ -43,7 +43,7 @@ Characters/
 Each character should have URLs following this pattern:
 
 ```
-https://ik.imagekit.io/nexiumrpg/Characters/{Anime}/{Rarity}/{CharacterName}.png
+https://ik.imagekit.io/NexiumRPG/Characters/{Anime}/{Rarity}/{CharacterName}.png
 ```
 
 ## Character Data Structure
@@ -56,14 +56,14 @@ Update your character data files to include `imageUrls` object:
   name: 'Naruto Uzumaki',
   anime: 'Naruto',
   rarity: 'COMMON', // Initial rarity
-  image: 'https://ik.imagekit.io/nexiumrpg/Characters/Naruto/COMMON/Naruto.png',
+  image: 'https://ik.imagekit.io/NexiumRPG/Characters/Naruto/COMMON/Naruto.png',
   imageUrls: {
-    COMMON: 'https://ik.imagekit.io/nexiumrpg/Characters/Naruto/COMMON/Naruto.png',
-    RARE: 'https://ik.imagekit.io/nexiumrpg/Characters/Naruto/RARE/Naruto.png',
-    EPIC: 'https://ik.imagekit.io/nexiumrpg/Characters/Naruto/EPIC/Naruto.png',
-    LEGENDARY: 'https://ik.imagekit.io/nexiumrpg/Characters/Naruto/LEGENDARY/Naruto.png',
-    MYTHIC: 'https://ik.imagekit.io/nexiumrpg/Characters/Naruto/MYTHIC/Naruto.png',
-    DIMENSIONAL: 'https://ik.imagekit.io/nexiumrpg/Characters/Naruto/DIMENSIONAL/Naruto.png'
+    COMMON: 'https://ik.imagekit.io/NexiumRPG/Characters/Naruto/COMMON/Naruto.png',
+    RARE: 'https://ik.imagekit.io/NexiumRPG/Characters/Naruto/RARE/Naruto.png',
+    EPIC: 'https://ik.imagekit.io/NexiumRPG/Characters/Naruto/EPIC/Naruto.png',
+    LEGENDARY: 'https://ik.imagekit.io/NexiumRPG/Characters/Naruto/LEGENDARY/Naruto.png',
+    MYTHIC: 'https://ik.imagekit.io/NexiumRPG/Characters/Naruto/MYTHIC/Naruto.png',
+    DIMENSIONAL: 'https://ik.imagekit.io/NexiumRPG/Characters/Naruto/DIMENSIONAL/Naruto.png'
   },
   // ... rest of character data
 }
