@@ -41,8 +41,8 @@ Characters now use anime-specific prefixes:
 
 ### Required Image URLs
 
-- **Main Image**: `https://ik.imagekit.io/nexium/characters/[character-name].jpg`
-- **Thumbnail**: `https://ik.imagekit.io/nexium/thumbnails/[character-name]-thumb.jpg`
+- **Main Image**: `https://ik.imagekit.io/NexiumRPG/characters/[character-name].jpg`
+- **Thumbnail**: `https://ik.imagekit.io/NexiumRPG/thumbnails/[character-name]-thumb.jpg`
 
 ### Image Requirements
 
@@ -73,8 +73,8 @@ Characters now use anime-specific prefixes:
         'Nine-Tails Chakra'
     ],
     description: 'Young ninja with dreams of becoming Hokage. Determined and never gives up.',
-    imageUrl: 'https://ik.imagekit.io/nexium/characters/naruto-uzumaki.jpg',
-    thumbnailUrl: 'https://ik.imagekit.io/nexium/thumbnails/naruto-uzumaki-thumb.jpg',
+    imageUrl: 'https://ik.imagekit.io/NexiumRPG/characters/naruto-uzumaki.jpg',
+    thumbnailUrl: 'https://ik.imagekit.io/NexiumRPG/thumbnails/naruto-uzumaki-thumb.jpg',
     element: 'Wind',                     // Fire, Water, Wind, Earth, Lightning, None, etc.
     class: 'Ninja',                      // Ninja, Pirate, Saiyan, Alchemist, Demon Slayer, etc.
     region: 'Hidden Leaf Village',       // Character's origin location

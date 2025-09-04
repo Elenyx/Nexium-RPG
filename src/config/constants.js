@@ -68,7 +68,7 @@ module.exports = {
     },
 
     // ImageKit.io Configuration for Character Images
-    IMAGE_KIT_BASE_URL: 'https://ik.imagekit.io/nexium/',
+    IMAGE_KIT_BASE_URL: 'https://ik.imagekit.io/NexiumRPG/',
 
     DIMENSIONS: {
         NEXUS_HUB: {
