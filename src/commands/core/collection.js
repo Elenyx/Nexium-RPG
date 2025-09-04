@@ -104,10 +104,10 @@ module.exports = {
                 const cardNumber = startIndex + index + 1;
                 const favoriteEmoji = character.isFavorite ? '🔥 ' : '';
                 const stars = generateStars(character.rarity);
-                const levelDisplay = `△${character.customLevel}`;
+                const levelDisplay = `△${character.customLevel || 1}`;
                 
                 // Format: `ID` · ★★★★★ · #CardNumber · △Level · Anime · Character Name
-                characterList += `${favoriteEmoji}\`${character.id}\` · ${stars} · #${cardNumber} · ${levelDisplay} · ${character.anime} · ${character.name}\n`;
+                characterList += `${favoriteEmoji}\`${character.id}\` · ${stars} · #${cardNumber} · ${levelDisplay} · ${character.anime || 'Unknown'} · ${character.name}\n`;
             });
 
             // Create components for Components V2

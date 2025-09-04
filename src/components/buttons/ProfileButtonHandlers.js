@@ -8,7 +8,7 @@ const ComponentRegistry = require('../ComponentRegistry');
 const UserService = require('../../services/UserService');
 const CardAlbum = require('../../services/CardAlbum');
 const characters = require('../../assets/characters');
-const { SectionBuilder, TextDisplayBuilder, MessageFlags, ButtonStyle, ActionRowBuilder, ButtonBuilder, MediaGalleryBuilder } = require('discord.js');
+const { SectionBuilder, TextDisplayBuilder, ContainerBuilder, MessageFlags, ButtonStyle, ActionRowBuilder, ButtonBuilder, MediaGalleryBuilder } = require('discord.js');
 const { models } = require('../../database/connection');
 const { COLORS, EMOJIS } = require('../../config/constants');
 
@@ -95,8 +95,9 @@ class ProfileButtonHandlers {
                 include: [{
                     model: models.Character,
                     as: 'character',
-                    attributes: ['id', 'name', 'rarity', 'imagePath']
+                    attributes: ['id', 'name', 'rarity', 'imagePath', 'imageUrl', 'imageUrls', 'anime']
                 }],
+                attributes: ['customLevel', 'isFavorite', 'collectedShards'],
                 order: [['character', 'rarity', 'DESC'], ['character', 'name', 'ASC']]
             });
 
@@ -115,14 +116,50 @@ class ProfileButtonHandlers {
                 id: uc.character.id,
                 name: uc.character.name,
                 rarity: uc.character.rarity,
-                imagePath: uc.character.imagePath
+                imagePath: uc.character.imagePath,
+                imageUrl: uc.character.imageUrl,
+                imageUrls: uc.character.imageUrls,
+                anime: uc.character.anime,
+                customLevel: uc.customLevel,
+                isFavorite: uc.isFavorite,
+                collectedShards: uc.collectedShards
             }));
 
-            // Generate the card album image (start with page 0)
+            // Generate the card album image
             const cardAlbum = new CardAlbum();
             const albumBuffer = await cardAlbum.generateAlbum(characters, 0, {
                 id: targetUser.id,
                 username: targetUser.username
+            });
+
+            // Get characters for current page
+            const startIndex = 0;
+            const endIndex = Math.min(8, characters.length);
+            const pageCharacters = characters.slice(startIndex, endIndex);
+
+            // Function to generate star rating based on rarity
+            const generateStars = (rarity) => {
+                const starMap = {
+                    'COMMON': '★☆☆☆☆',
+                    'RARE': '★★☆☆☆',
+                    'EPIC': '★★★☆☆',
+                    'LEGENDARY': '★★★★☆',
+                    'MYTHIC': '★★★★★',
+                    'DIMENSIONAL': '★★★★★'
+                };
+                return starMap[rarity] || '☆☆☆☆☆';
+            };
+
+            // Create formatted character list with markup
+            let characterList = '';
+            pageCharacters.forEach((character, index) => {
+                const cardNumber = startIndex + index + 1;
+                const favoriteEmoji = character.isFavorite ? '🔥 ' : '';
+                const stars = generateStars(character.rarity);
+                const levelDisplay = `△${character.customLevel || 1}`;
+                
+                // Format: `ID` · ★★★★★ · #CardNumber · △Level · Anime · Character Name
+                characterList += `${favoriteEmoji}\`${character.id}\` · ${stars} · #${cardNumber} · ${levelDisplay} · ${character.anime || 'Unknown'} · ${character.name}\n`;
             });
 
             // Create components for Components V2
@@ -131,8 +168,20 @@ class ProfileButtonHandlers {
 
             // Add header text display
             const headerTextDisplay = new TextDisplayBuilder()
-                .setContent(`**${EMOJIS.COLLECTION} ${targetUser.username}'s Character Collection**\n\n**${characters.length}** characters collected • Page **1** of **${totalPages}**`);
+                .setContent(`**▷ ${targetUser.username}'s Character Collection**`);
             components.push(headerTextDisplay);
+
+            // Add character list as a Container with TextDisplay component
+            if (characterList.trim()) {
+                const characterContainer = new ContainerBuilder()
+                    .setAccentColor(COLORS.SUCCESS)
+                    .addTextDisplayComponents(
+                        new TextDisplayBuilder()
+                            .setContent(`**${characters.length}** characters collected • Page **1** of **${totalPages}**\n\n**Characters on this page:**\n${characterList.trim()}`)
+                    );
+                
+                components.push(characterContainer);
+            }
 
             // Add media gallery for the album image
             const mediaGallery = new MediaGalleryBuilder()
@@ -140,6 +189,11 @@ class ProfileButtonHandlers {
                     .setDescription(`${targetUser.username}'s collection album`)
                     .setURL('attachment://collection.png'));
             components.push(mediaGallery);
+
+            // Add footer text display
+            const footerTextDisplay = new TextDisplayBuilder()
+                .setContent(`*Use /collection page:${2} to view next page*`);
+            components.push(footerTextDisplay);
 
             // Add navigation buttons if there are multiple pages
             if (totalPages > 1) {
