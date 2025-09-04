@@ -125,83 +125,31 @@ module.exports = {
                 return await interaction.editReply({ embeds: [embed] });
             }
 
-            // Perform upgrade
-            const newLevel = currentLevel + levels;
-            await models.UserCharacter.update(
-                { customLevel: newLevel },
-                { where: { userId, characterId } }
-            );
+            // Perform the upgrade
+            const upgradeResult = await rarityUpgradeService.upgradeCharacter(userId, characterId, upgradeType, levels);
 
-            // Deduct shards
-            await shardService.removeShards(userId, totalCost, `Character upgrade: ${character.name} to level ${newLevel}`);
+            if (!upgradeResult.success) {
+                const embed = new EmbedBuilder()
+                    .setColor(COLORS.ERROR)
+                    .setTitle(`${EMOJIS.ERROR} Upgrade Failed`)
+                    .setDescription(upgradeResult.error || 'An error occurred while upgrading the character.');
 
-            // Calculate stat improvements using CardLevelingService
-            const oldStats = cardLevelingService.calculateScaledStats(character, currentLevel, userCharacter);
-            const newStats = cardLevelingService.calculateScaledStats(character, newLevel, userCharacter);
-
-            // Create success embed
-            const embed = new EmbedBuilder()
-                .setColor(COLORS.SUCCESS)
-                .setTitle(`${EMOJIS.SUCCESS} Character Upgraded!`)
-                .setDescription(`Successfully upgraded **${character.name}**!`)
-                .addFields(
-                    {
-                        name: '📊 Level Progress',
-                        value: `**${currentLevel}** → **${newLevel}**`,
-                        inline: true
-                    },
-                    {
-                        name: '💎 Shards Spent',
-                        value: totalCost.toLocaleString(),
-                        inline: true
-                    },
-                    {
-                        name: '📈 Stat Improvements',
-                        value: [
-                            `⚔️ Attack: ${oldStats.attack} → ${newStats.attack} (+${newStats.attack - oldStats.attack})`,
-                            `🛡️ Defense: ${oldStats.defense} → ${newStats.defense} (+${newStats.defense - oldStats.defense})`,
-                            `💨 Speed: ${oldStats.speed} → ${newStats.speed} (+${newStats.speed - oldStats.speed})`,
-                            `❤️ Health: ${oldStats.health} → ${newStats.health} (+${newStats.health - oldStats.health})`
-                        ].join('\n'),
-                        inline: false
-                    }
-                )
-                .setFooter({
-                    text: `Remaining shards: ${(user.shards - totalCost).toLocaleString()}`
-                })
-                .setTimestamp();
-
-            // Add upgrade again button if more upgrades are possible
-            const components = [];
-            if (newLevel < maxLevel) {
-                const nextCost = shardService.getUpgradeCost(character.rarity, newLevel);
-                const canAfford = (user.shards - totalCost) >= nextCost;
-
-                const row = new ActionRowBuilder()
-                    .addComponents(
-                        new ButtonBuilder()
-                            .setCustomId(`upgrade_${characterId}_${newLevel}`)
-                            .setLabel(`Upgrade to Level ${newLevel + 1}`)
-                            .setStyle(canAfford ? ButtonStyle.Primary : ButtonStyle.Secondary)
-                            .setDisabled(!canAfford)
-                            .setEmoji('⬆️')
-                    );
-
-                if (!canAfford) {
-                    row.addComponents(
-                        new ButtonBuilder()
-                            .setCustomId('get_shards')
-                            .setLabel(`Need ${nextCost} Shards`)
-                            .setStyle(ButtonStyle.Link)
-                            .setURL('https://discord.com/channels/@me') // Placeholder
-                    );
-                }
-
-                components.push(row);
+                return await interaction.editReply({ embeds: [embed] });
             }
 
-            await interaction.editReply({ embeds: [embed], components });
+            // Display detailed feedback
+            const embed = new EmbedBuilder()
+                .setColor(COLORS.SUCCESS)
+                .setTitle(`${EMOJIS.SUCCESS} Upgrade Successful`)
+                .setDescription(`Successfully upgraded character!`)
+                .addFields(
+                    { name: 'Upgrade Type', value: `${upgradeType === 'level' ? 'Level Up' : 'Rarity Upgrade'}`, inline: true },
+                    { name: 'New Level', value: `${upgradeResult.newLevel || 'N/A'}`, inline: true },
+                    { name: 'New Rarity', value: `${upgradeResult.newRarity || 'N/A'}`, inline: true },
+                    { name: 'New Stats', value: `Attack: ${upgradeResult.newStats.attack}\nDefense: ${upgradeResult.newStats.defense}\nSpeed: ${upgradeResult.newStats.speed}\nHealth: ${upgradeResult.newStats.health}` }
+                );
 
+            return await interaction.editReply({ embeds: [embed] });
         } catch (error) {
             console.error('Upgrade command error:', error);
 

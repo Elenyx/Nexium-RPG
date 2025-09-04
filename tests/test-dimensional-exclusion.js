@@ -2,7 +2,7 @@
  * Test script to verify DIMENSIONAL characters are excluded from regular pulls
  */
 
-const { models } = require('./src/database/connection');
+const { models } = require('../src/database/connection');
 
 async function testDimensionalExclusion() {
     console.log('=== TESTING DIMENSIONAL CHARACTER EXCLUSION ===\n');

@@ -4,8 +4,8 @@
  * @description Tests the CharacterCollection builder with CharacterImageManager integration
  */
 
-const CharacterCollection = require('./src/components/builders/CharacterCollection');
-const characters = require('./src/assets/characters');
+const CharacterCollection = require('../src/components/builders/CharacterCollection');
+const characters = require('../src/assets/characters');
 
 async function testCharacterCollection() {
     console.log('🧪 Testing Character Collection with Image Integration...\n');

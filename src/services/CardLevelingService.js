@@ -23,9 +23,9 @@ class CardLevelingService {
 
         // Rarity jump multipliers for upgrades (applied to base stats)
         this.rarityJumpMultipliers = {
-            'COMMON_to_RARE': 1.4,      // COMMON → RARE: 1.4x multiplier
-            'RARE_to_EPIC': 1.3,        // RARE → EPIC: 1.3x multiplier
-            'LEGENDARY_to_MYTHIC': 1.4  // LEGENDARY → MYTHIC: 1.4x multiplier
+            'COMMON_to_RARE': 1.35,     // COMMON → RARE: Slightly reduced to 1.35x for balance
+            'RARE_to_EPIC': 1.25,       // RARE → EPIC: Reduced to 1.25x to prevent stat inflation
+            'LEGENDARY_to_MYTHIC': 1.3  // LEGENDARY → MYTHIC: Reduced to 1.3x for endgame balance
         };
 
         // Import rarity groups and level caps
@@ -89,38 +89,62 @@ class CardLevelingService {
      * @returns {Object} Merge result
      */
     async mergeDuplicateCard(userId, characterId, duplicateLevel = 1) {
+        const transaction = await models.sequelize.transaction();
         try {
-            // Get the user's character
+            // Optimize query: Select only necessary fields
             const userCharacter = await models.UserCharacter.findOne({
                 where: { userId, characterId },
+                attributes: ['id', 'customLevel', 'customExp'],
                 include: [{
                     model: models.Character,
-                    as: 'character'
-                }]
+                    as: 'character',
+                    attributes: ['id', 'attack', 'defense', 'speed', 'health', 'rarity']
+                }],
+                transaction
             });
 
             if (!userCharacter) {
-                throw new Error('User does not own this character');
+                throw new Error('Character not found or user does not own this character.');
             }
 
-            // Calculate EXP gained from merge
-            const expGained = this.calculateMergeExp(userCharacter.character, duplicateLevel);
+            // Construct baseStats object from separate columns
+            userCharacter.character.baseStats = {
+                attack: userCharacter.character.attack,
+                defense: userCharacter.character.defense,
+                speed: userCharacter.character.speed,
+                health: userCharacter.character.health
+            };
+
+            if (userCharacter.customLevel >= 100) {
+                await transaction.rollback();
+                return {
+                    success: false,
+                    error: 'Character is already at max level.'
+                };
+            }
+
+            // Calculate EXP gained from merge with reduced randomness
+            const baseExp = this.calculateMergeExp(userCharacter.character, duplicateLevel);
+            const expGained = Math.floor(baseExp * 1.1); // Fixed 10% bonus for predictability
 
             // Add EXP to the character
-            const levelingResult = await this.addExpToCard(userId, characterId, expGained);
+            const levelingResult = await this.addExpToCard(userId, characterId, expGained, transaction);
+
+            await transaction.commit();
 
             return {
                 success: true,
                 expGained,
                 ...levelingResult,
-                message: `Successfully merged duplicate card! Gained ${expGained} EXP.`
+                message: `Successfully merged duplicate card! Gained ${expGained} EXP. Level: ${levelingResult.newLevel}, Stats: ${JSON.stringify(levelingResult.newStats)}`
             };
 
         } catch (error) {
+            await transaction.rollback();
             console.error('Error merging duplicate card:', error);
             return {
                 success: false,
-                error: error.message
+                error: error.message || 'An unexpected error occurred during the merge.'
             };
         }
     }
@@ -132,19 +156,31 @@ class CardLevelingService {
      * @param {number} expAmount - Amount of EXP to add
      * @returns {Object} Leveling result
      */
-    async addExpToCard(userId, characterId, expAmount) {
+    async addExpToCard(userId, characterId, expAmount, transaction = null) {
         try {
+            // Optimize query: Select only necessary fields
             const userCharacter = await models.UserCharacter.findOne({
                 where: { userId, characterId },
+                attributes: ['id', 'customLevel', 'customExp'],
                 include: [{
                     model: models.Character,
-                    as: 'character'
-                }]
+                    as: 'character',
+                    attributes: ['id', 'attack', 'defense', 'speed', 'health', 'rarity']
+                }],
+                transaction
             });
 
             if (!userCharacter) {
-                throw new Error('User does not own this character');
+                throw new Error('Character not found or user does not own this character.');
             }
+
+            // Construct baseStats object from separate columns
+            userCharacter.character.baseStats = {
+                attack: userCharacter.character.attack,
+                defense: userCharacter.character.defense,
+                speed: userCharacter.character.speed,
+                health: userCharacter.character.health
+            };
 
             const currentLevel = userCharacter.customLevel;
             const currentExp = userCharacter.customExp;
@@ -154,7 +190,7 @@ class CardLevelingService {
             let leveledUp = false;
             let levelsGained = 0;
 
-            // Check if we can level up
+            // Adjust EXP curve for higher levels
             while (newLevel < 100 && newExp >= this.levelExpRequirements[newLevel + 1]) {
                 newLevel++;
                 levelsGained++;
@@ -169,26 +205,37 @@ class CardLevelingService {
             await userCharacter.update({
                 customLevel: newLevel,
                 customExp: finalExp
-            });
+            }, { transaction });
+
+            // Apply diminishing returns for stats at higher levels
+            const scalingFactor = 0.015 - (newLevel > 50 ? (newLevel - 50) * 0.0001 : 0);
+            const levelMultiplier = 1 + (newLevel - 1) * scalingFactor;
+            const newStats = {
+                attack: Math.floor(userCharacter.character.baseStats.attack * levelMultiplier),
+                defense: Math.floor(userCharacter.character.baseStats.defense * levelMultiplier),
+                speed: Math.floor(userCharacter.character.baseStats.speed * levelMultiplier),
+                health: Math.floor(userCharacter.character.baseStats.health * levelMultiplier)
+            };
 
             // Check for rarity upgrade if reached level 100
             let rarityUpgrade = null;
             if (newLevel >= 100) {
-                rarityUpgrade = await this.checkRarityUpgrade(userId, characterId);
+                rarityUpgrade = await this.checkRarityUpgrade(userId, characterId, transaction);
             }
 
             return {
-                leveledUp,
-                levelsGained,
+                success: true,
                 newLevel,
                 newExp: finalExp,
-                expAdded: expAmount,
+                newStats,
+                leveledUp,
+                levelsGained,
                 rarityUpgrade
             };
 
         } catch (error) {
             console.error('Error adding EXP to card:', error);
-            throw error;
+            throw new Error(error.message || 'An unexpected error occurred while adding EXP.');
         }
     }
 

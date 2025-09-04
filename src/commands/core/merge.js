@@ -79,76 +79,19 @@ module.exports = {
                 return await interaction.editReply({ embeds: [embed] });
             }
 
-            // Get updated character info
-            const updatedCharacter = await models.UserCharacter.findOne({
-                where: { userId, characterId },
-                include: [{
-                    model: models.Character,
-                    as: 'character'
-                }]
-            });
-
-            // Create success embed
+            // Display detailed feedback
             const embed = new EmbedBuilder()
                 .setColor(COLORS.SUCCESS)
-                .setTitle(`${EMOJIS.SUCCESS} Card Merged Successfully!`)
-                .setDescription(`**${updatedCharacter.character.name}** has been enhanced!`);
+                .setTitle(`${EMOJIS.SUCCESS} Merge Successful`)
+                .setDescription(`Successfully merged duplicate card!`)
+                .addFields(
+                    { name: 'EXP Gained', value: `${mergeResult.expGained}`, inline: true },
+                    { name: 'New Level', value: `${mergeResult.newLevel}`, inline: true },
+                    { name: 'Levels Gained', value: `${mergeResult.levelsGained}`, inline: true },
+                    { name: 'New Stats', value: `Attack: ${mergeResult.newStats.attack}\nDefense: ${mergeResult.newStats.defense}\nSpeed: ${mergeResult.newStats.speed}\nHealth: ${mergeResult.newStats.health}` }
+                );
 
-            // Add merge details
-            embed.addFields(
-                {
-                    name: '🔄 Merge Details',
-                    value: `**EXP Gained:** ${mergeResult.expGained}\n**Duplicate Level:** ${duplicateLevel}`,
-                    inline: true
-                }
-            );
-
-            // Add leveling information
-            if (mergeResult.leveledUp) {
-                embed.addFields({
-                    name: '⬆️ Level Up!',
-                    value: `**Level:** ${mergeResult.newLevel - mergeResult.levelsGained} → **${mergeResult.newLevel}**\n**Levels Gained:** ${mergeResult.levelsGained}`,
-                    inline: true
-                });
-            } else {
-                embed.addFields({
-                    name: '📊 Current Progress',
-                    value: `**Level:** ${mergeResult.newLevel}\n**EXP:** ${mergeResult.newExp}`,
-                    inline: true
-                });
-            }
-
-            // Add rarity upgrade information if available
-            if (mergeResult.rarityUpgrade) {
-                const upgrade = mergeResult.rarityUpgrade;
-                if (upgrade.canUpgrade) {
-                    embed.addFields({
-                        name: '⭐ Rarity Upgrade Available!',
-                        value: `**Next Rarity:** ${upgrade.nextRarity}\n**Cost:** ${upgrade.shardCost} shards\n**Your Shards:** ${upgrade.currentShards}`,
-                        inline: false
-                    });
-                } else {
-                    embed.addFields({
-                        name: '⭐ Rarity Upgrade',
-                        value: `**Next Rarity:** ${upgrade.nextRarity}\n**Cost:** ${upgrade.shardCost} shards\n**Need:** ${upgrade.shardsNeeded} more shards`,
-                        inline: false
-                    });
-                }
-            }
-
-            // Add current stats
-            const scaledStats = cardLevelingService.calculateScaledStats(updatedCharacter.character, updatedCharacter.customLevel, updatedCharacter);
-            embed.addFields({
-                name: '⚔️ Current Stats',
-                value: `**Attack:** ${scaledStats.attack}\n**Defense:** ${scaledStats.defense}\n**Speed:** ${scaledStats.speed}\n**Health:** ${scaledStats.health}`,
-                inline: true
-            });
-
-            embed.setFooter({
-                text: 'Use /upgrade to level up further or /rarity-progress to check upgrade requirements'
-            });
-
-            await interaction.editReply({ embeds: [embed] });
+            return await interaction.editReply({ embeds: [embed] });
 
         } catch (error) {
             console.error('Merge command error:', error);

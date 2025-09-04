@@ -6,8 +6,8 @@
 
 require('dotenv').config();
 const { Client, GatewayIntentBits, EmbedBuilder, MessageFlags } = require('discord.js');
-const DynamicBannerGenerator = require('./src/services/DynamicBannerGenerator');
-const logger = require('./src/utils/logger');
+const DynamicBannerGenerator = require('../src/services/DynamicBannerGenerator');
+const logger = require('../src/utils/logger');
 
 async function testAutoWelcome() {
     console.log('🧪 Testing Auto Welcome System...\n');

@@ -2,7 +2,7 @@
  * Test script to demonstrate the pity system mechanics
  */
 
-const GachaService = require('./src/services/GachaService');
+const GachaService = require('../src/services/GachaService');
 
 async function testPitySystem() {
     const gacha = new GachaService();

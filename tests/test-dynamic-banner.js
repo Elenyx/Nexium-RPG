@@ -4,7 +4,7 @@
  * @author Nexium Bot Development Team
  */
 
-const DynamicBannerGenerator = require('./src/services/DynamicBannerGenerator');
+const DynamicBannerGenerator = require('../src/services/DynamicBannerGenerator');
 const fs = require('fs');
 const path = require('path');
 

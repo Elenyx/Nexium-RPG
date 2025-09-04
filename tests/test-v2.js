@@ -1,8 +1,8 @@
 /**
  * Quick test for Components V2 character collection
  */
-const CharacterCollection = require('./src/components/builders/CharacterCollection');
-const characters = require('./src/assets/characters');
+const CharacterCollection = require('../src/components/builders/CharacterCollection');
+const characters = require('../src/assets/characters');
 
 async function testComponentsV2() {
   const mockUser = { id: '123', username: 'TestUser', displayAvatarURL: () => 'avatar.jpg' };
