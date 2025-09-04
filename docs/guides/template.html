@@ -13,134 +13,6 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="../css/styles.css">
     <link rel="stylesheet" href="../css/guides.css">
-    <style>
-        :root {
-            --bg-color: #0A0A14;
-            --primary-purple: #8A2BE2;
-            --bright-purple: #A020F0;
-            --light-purple: #C3B1E1;
-            --dark-purple: #4B0082;
-            --card-bg: rgba(26, 26, 46, 0.5);
-            --border-color: rgba(138, 43, 226, 0.2);
-            --glow-color: rgba(138, 43, 226, 0.3);
-            --text-primary: #F0F0F5;
-            --text-secondary: #A9A9D5;
-        }
-
-        body {
-            background-color: var(--bg-color);
-            color: var(--text-primary);
-        }
-
-        .article-header {
-            background: linear-gradient(135deg, rgba(138, 43, 226, 0.3), rgba(75, 0, 130, 0.4));
-            color: var(--text-primary);
-            border-bottom: 1px solid var(--border-color);
-        }
-
-        .article-title {
-            background: linear-gradient(45deg, var(--bright-purple), var(--light-purple), var(--primary-purple));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-            text-shadow: 0 0 30px var(--glow-color);
-        }
-
-        .article-subtitle {
-            color: var(--text-secondary);
-        }
-
-        .article-meta {
-            border-bottom: 1px solid var(--border-color);
-        }
-
-        .article-tag {
-            background: rgba(138, 43, 226, 0.1);
-            color: var(--light-purple);
-            border: 1px solid var(--border-color);
-        }
-
-        .article-tag.beginner { background: rgba(34, 197, 94, 0.1); color: #22c55e; border-color: rgba(34, 197, 94, 0.3); }
-        .article-tag.mechanics { background: rgba(251, 191, 36, 0.1); color: #fbbf24; border-color: rgba(251, 191, 36, 0.3); }
-        .article-tag.strategy { background: rgba(239, 68, 68, 0.1); color: #ef4444; border-color: rgba(239, 68, 68, 0.3); }
-        .article-tag.community { background: rgba(168, 85, 247, 0.1); color: #a855f7; border-color: rgba(168, 85, 247, 0.3); }
-        .article-tag.advanced { background: rgba(239, 68, 68, 0.1); color: #ef4444; border-color: rgba(239, 68, 68, 0.3); }
-        .article-tag.essential { background: rgba(34, 197, 94, 0.1); color: #22c55e; border-color: rgba(34, 197, 94, 0.3); }
-
-        .main-article {
-            color: var(--text-primary);
-        }
-
-        .main-article h2 {
-            color: var(--text-primary);
-            border-bottom: 2px solid var(--primary-purple);
-        }
-
-        .main-article h3 {
-            color: var(--text-primary);
-        }
-
-        .main-article blockquote {
-            background: var(--card-bg);
-            border-left: 4px solid var(--primary-purple);
-        }
-
-        .main-article code {
-            background: rgba(138, 43, 226, 0.1);
-            color: var(--light-purple);
-        }
-
-        .main-article pre {
-            background: rgba(10, 10, 20, 0.8);
-            border: 1px solid var(--border-color);
-        }
-
-        .toc-sticky {
-            background: var(--card-bg);
-            border: 1px solid var(--border-color);
-            backdrop-filter: blur(10px);
-        }
-
-        .toc-nav a {
-            color: var(--text-secondary);
-        }
-
-        .toc-nav a:hover, .toc-nav a.active {
-            color: var(--bright-purple);
-            border-left-color: var(--primary-purple);
-        }
-
-        .related-card {
-            background: var(--card-bg);
-            border: 1px solid var(--border-color);
-            backdrop-filter: blur(10px);
-        }
-
-        .related-card:hover {
-            box-shadow: 0 10px 25px rgba(0,0,0,0.3), 0 0 30px var(--glow-color);
-            border-color: var(--primary-purple);
-        }
-
-        .related-title {
-            color: var(--text-primary);
-        }
-
-        .related-excerpt {
-            color: var(--text-secondary);
-        }
-
-        .related-meta {
-            color: var(--text-secondary);
-        }
-
-        .related-read-more {
-            color: var(--bright-purple);
-        }
-
-        .related-read-more:hover {
-            color: var(--light-purple);
-        }
-    </style>
 </head>
 <body>
     <!-- Navigation Header -->
@@ -157,22 +29,19 @@
         </div>
     </nav>
 
-    <!-- Breadcrumb -->
-    <div class="breadcrumb">
-        <div class="container">
-            <a href="../guides.html">Guides</a> / <a href="./">{CATEGORY}</a> / <span>{TITLE}</span>
-        </div>
-    </div>
-
     <!-- Article Header -->
     <header class="article-header">
         <div class="container">
+             <div class="breadcrumb">
+                <a href="../guides.html">Guides</a> / <a href="#">{CATEGORY}</a> / <span>{TITLE}</span>
+            </div>
             <div class="article-meta">
                 <div class="article-tags">
                     {TAGS}
                 </div>
                 <div class="article-info">
                     <span class="article-date">{DATE}</span>
+                    <span>•</span>
                     <span class="article-read-time">{READ_TIME}</span>
                 </div>
             </div>
@@ -245,6 +114,9 @@
             </div>
             <div class="footer-bottom">
                 <p>&copy; 2025 Nexium RPG. All rights reserved.</p>
+                 <p style="margin-top: 5px; font-size: 0.8rem;">
+                    Not affiliated with any anime franchises. All character images and names are for representational purposes only.
+                </p>
             </div>
         </div>
     </footer>

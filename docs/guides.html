@@ -10,10 +10,25 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;900&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="css/guides.css">
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+    <!-- Navigation Header -->
+    <nav class="nav-header">
+        <div class="nav-container">
+            <a href="index.html" class="nav-logo">NEXIUM</a>
+            <ul class="nav-menu">
+                <li><a href="changelog.html">Changelog</a></li>
+                <li><a href="guides.html" class="active">Guides</a></li>
+                <li><a href="index.html#features">Features</a></li>
+                <li><a href="characters.html">Characters</a></li>
+                <li><a href="commands.html">Commands</a></li>
+            </ul>
+        </div>
+    </nav>
 
     <!-- Hero Section -->
-    <section class="hero-section">
+    <header class="page-header hero-section">
         <div class="hero-overlay"></div>
         <div class="hero-content">
             <h1 class="hero-title">Nexium RPG Guides & Tutorials</h1>
@@ -33,11 +48,11 @@
                 </div>
             </div>
         </div>
-    </section>
+    </header>
 
-    <!-- Search and Filter Section -->
-    <section class="search-section">
-        <div class="container">
+    <div class="container">
+        <!-- Search and Filter Section -->
+        <section class="search-section">
             <div class="search-container">
                 <input type="text" id="guide-search" placeholder="Search guides..." class="search-input">
                 <div class="filter-buttons">
@@ -48,15 +63,13 @@
                     <button class="filter-btn" data-filter="community">Community</button>
                 </div>
             </div>
-        </div>
-    </section>
+        </section>
 
-    <!-- Featured Guides -->
-    <section class="featured-section">
-        <div class="container">
+        <!-- Featured Guides -->
+        <section class="featured-section">
             <h2 class="section-title">Featured Guides</h2>
             <div class="featured-grid">
-                <div class="featured-card large">
+                <a href="guides/template.html" class="featured-card large" data-category="beginner">
                     <div class="featured-image">
                         <img src="https://ik.imagekit.io/NexiumRPG/guides/getting-started.jpg" alt="Getting Started with Nexium RPG" loading="lazy">
                         <div class="featured-badge">Featured</div>
@@ -72,20 +85,18 @@
                             <span class="read-time">5 min read</span>
                             <span class="publish-date">Updated Sept 2025</span>
                         </div>
-                        <a href="guides/beginner/getting-started.html" class="read-more-btn">Read Guide →</a>
+                        <span class="read-more-btn">Read Guide →</span>
                     </div>
-                </div>
+                </a>
             </div>
-        </div>
-    </section>
+        </section>
 
-    <!-- All Guides Grid -->
-    <section class="guides-section">
-        <div class="container">
+        <!-- All Guides Grid -->
+        <section class="guides-section">
             <h2 class="section-title">All Guides</h2>
             <div class="guides-grid" id="guides-grid">
                 <!-- Beginner Guides -->
-                <article class="guide-card" data-category="beginner">
+                <a href="guides/template.html" class="guide-card" data-category="beginner">
                     <div class="guide-image">
                         <img src="https://ik.imagekit.io/NexiumRPG/guides/first-pull.jpg" alt="Your First Character Pull" loading="lazy">
                     </div>
@@ -99,11 +110,11 @@
                             <span class="read-time">4 min read</span>
                             <span class="publish-date">Sept 2025</span>
                         </div>
-                        <a href="guides/beginner/first-pull.html" class="read-more-link">Read More</a>
+                        <span class="read-more-link">Read More</span>
                     </div>
-                </article>
+                </a>
 
-                <article class="guide-card" data-category="beginner">
+                <a href="guides/template.html" class="guide-card" data-category="beginner">
                     <div class="guide-image">
                         <img src="https://ik.imagekit.io/NexiumRPG/guides/collection-management.jpg" alt="Building Your Collection" loading="lazy">
                     </div>
@@ -117,12 +128,12 @@
                             <span class="read-time">6 min read</span>
                             <span class="publish-date">Sept 2025</span>
                         </div>
-                        <a href="guides/beginner/collection-management.html" class="read-more-link">Read More</a>
+                        <span class="read-more-link">Read More</span>
                     </div>
-                </article>
+                </a>
 
                 <!-- Mechanics Guides -->
-                <article class="guide-card" data-category="mechanics">
+                <a href="guides/template.html" class="guide-card" data-category="mechanics">
                     <div class="guide-image">
                         <img src="https://ik.imagekit.io/NexiumRPG/guides/gacha-system.jpg" alt="Gacha System Deep Dive" loading="lazy">
                     </div>
@@ -137,11 +148,11 @@
                             <span class="read-time">8 min read</span>
                             <span class="publish-date">Sept 2025</span>
                         </div>
-                        <a href="guides/mechanics/gacha-system.html" class="read-more-link">Read More</a>
+                        <span class="read-more-link">Read More</span>
                     </div>
-                </article>
+                </a>
 
-                <article class="guide-card" data-category="mechanics">
+                <a href="guides/template.html" class="guide-card" data-category="mechanics">
                     <div class="guide-image">
                         <img src="https://ik.imagekit.io/NexiumRPG/guides/battle-mechanics.jpg" alt="Battle Mechanics Explained" loading="lazy">
                     </div>
@@ -155,11 +166,11 @@
                             <span class="read-time">7 min read</span>
                             <span class="publish-date">Sept 2025</span>
                         </div>
-                        <a href="guides/mechanics/battle-mechanics.html" class="read-more-link">Read More</a>
+                        <span class="read-more-link">Read More</span>
                     </div>
-                </article>
+                </a>
 
-                <article class="guide-card" data-category="mechanics">
+                <a href="guides/template.html" class="guide-card" data-category="mechanics">
                     <div class="guide-image">
                         <img src="https://ik.imagekit.io/NexiumRPG/guides/character-progression.jpg" alt="Character Progression System" loading="lazy">
                     </div>
@@ -174,12 +185,12 @@
                             <span class="read-time">9 min read</span>
                             <span class="publish-date">Sept 2025</span>
                         </div>
-                        <a href="guides/mechanics/character-progression.html" class="read-more-link">Read More</a>
+                        <span class="read-more-link">Read More</span>
                     </div>
-                </article>
+                </a>
 
                 <!-- Strategy Guides -->
-                <article class="guide-card" data-category="strategy">
+                <a href="guides/template.html" class="guide-card" data-category="strategy">
                     <div class="guide-image">
                         <img src="https://ik.imagekit.io/NexiumRPG/guides/economy-management.jpg" alt="Economy & Resource Management" loading="lazy">
                     </div>
@@ -194,11 +205,11 @@
                             <span class="read-time">6 min read</span>
                             <span class="publish-date">Sept 2025</span>
                         </div>
-                        <a href="guides/strategy/economy-management.html" class="read-more-link">Read More</a>
+                        <span class="read-more-link">Read More</span>
                     </div>
-                </article>
+                </a>
 
-                <article class="guide-card" data-category="strategy">
+                <a href="guides/template.html" class="guide-card" data-category="strategy">
                     <div class="guide-image">
                         <img src="https://ik.imagekit.io/NexiumRPG/guides/team-building.jpg" alt="Team Building & Synergy" loading="lazy">
                     </div>
@@ -213,12 +224,12 @@
                             <span class="read-time">8 min read</span>
                             <span class="publish-date">Sept 2025</span>
                         </div>
-                        <a href="guides/strategy/team-building.html" class="read-more-link">Read More</a>
+                        <span class="read-more-link">Read More</span>
                     </div>
-                </article>
+                </a>
 
                 <!-- Community Guides -->
-                <article class="guide-card" data-category="community">
+                <a href="guides/template.html" class="guide-card" data-category="community">
                     <div class="guide-image">
                         <img src="https://ik.imagekit.io/NexiumRPG/guides/trading-system.jpg" alt="Trading System Guide" loading="lazy">
                     </div>
@@ -233,11 +244,11 @@
                             <span class="read-time">5 min read</span>
                             <span class="publish-date">Sept 2025</span>
                         </div>
-                        <a href="guides/community/trading-system.html" class="read-more-link">Read More</a>
+                        <span class="read-more-link">Read More</span>
                     </div>
-                </article>
+                </a>
 
-                <article class="guide-card" data-category="community">
+                <a href="guides/template.html" class="guide-card" data-category="community">
                     <div class="guide-image">
                         <img src="https://ik.imagekit.io/NexiumRPG/guides/guild-system.jpg" alt="Guild System Overview" loading="lazy">
                     </div>
@@ -252,36 +263,12 @@
                             <span class="read-time">6 min read</span>
                             <span class="publish-date">Sept 2025</span>
                         </div>
-                        <a href="guides/community/guild-system.html" class="read-more-link">Read More</a>
+                        <span class="read-more-link">Read More</span>
                     </div>
-                </article>
+                </a>
             </div>
-        </div>
-    </section>
-
-    <!-- Newsletter/Updates Section -->
-    <section class="updates-section">
-        <div class="container">
-            <div class="updates-content">
-                <h2>Stay Updated</h2>
-                <p>Get notified when new guides are published and major features are released.</p>
-                <div class="updates-features">
-                    <div class="update-feature">
-                        <span class="feature-icon">📚</span>
-                        <span>New Guides Monthly</span>
-                    </div>
-                    <div class="update-feature">
-                        <span class="feature-icon">🎯</span>
-                        <span>Feature Updates</span>
-                    </div>
-                    <div class="update-feature">
-                        <span class="feature-icon">💡</span>
-                        <span>Strategy Tips</span>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
+        </section>
+    </div>
 
     <footer>
         <div class="footer-content">
@@ -308,7 +295,7 @@
                     <h3>⚔️ Nexium</h3>
                     <ul>
                         <li><a href="#">Server Rules</a></li>
-                        <li><a href="#">Bot Commands</a></li>
+                        <li><a href="commands.html">Bot Commands</a></li>
                         <li><a href="characters.html">Character Database</a></li>
                         <li><a href="#">Rewards System</a></li>
                     </ul>
@@ -333,6 +320,8 @@
                 </div>
             </div>
         </div>
+    </footer>
     <script src="js/guides-landing.js"></script>
 </body>
 </html>
+
