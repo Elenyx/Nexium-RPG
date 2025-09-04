@@ -125,7 +125,7 @@ class CollectionButtonHandlers {
 
             // Add header text display
             const headerTextDisplay = new TextDisplayBuilder()
-                .setContent(`**${EMOJIS.COLLECTION} ${targetUser.username}'s Character Collection**\n\n**${characters.length}** characters collected • Page **${newPage + 1}** of **${totalPages}**`);
+                .setContent(`**▷ ${targetUser.username}'s Character Collection**`);
             components.push(headerTextDisplay);
 
             // Add character list as a Container with TextDisplay component
@@ -134,7 +134,7 @@ class CollectionButtonHandlers {
                     .setAccentColor(COLORS.SUCCESS)
                     .addTextDisplayComponents(
                         new TextDisplayBuilder()
-                            .setContent(`**Characters on this page:**\n${characterList.trim()}`)
+                            .setContent(`**${characters.length}** characters collected • Page **${newPage + 1}** of **${totalPages}**\n\n**Characters on this page:**\n${characterList.trim()}`)
                     );
                 
                 components.push(characterContainer);
