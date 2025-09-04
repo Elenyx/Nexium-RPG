@@ -158,6 +158,7 @@ Currently uses basic console logging. Future integration planned with:
 - Unit tests for command logic
 - Integration tests for Discord interactions
 - Mock Discord API for testing
+- Ensure test.js and test.jpg or png are available for media testing and under tests folder only. 
 
 ## Deployment
 - Environment variables for different stages
