@@ -243,16 +243,18 @@ class CardLevelingService {
      * Check if a card can upgrade to the next rarity
      * @param {string} userId - User ID
      * @param {string} characterId - Character ID
+     * @param {Object} transaction - Database transaction
      * @returns {Object|null} Rarity upgrade result or null
      */
-    async checkRarityUpgrade(userId, characterId) {
+    async checkRarityUpgrade(userId, characterId, transaction = null) {
         try {
             const userCharacter = await models.UserCharacter.findOne({
                 where: { userId, characterId },
                 include: [{
                     model: models.Character,
                     as: 'character'
-                }]
+                }],
+                transaction
             });
 
             if (!userCharacter || userCharacter.customLevel < 100) {
