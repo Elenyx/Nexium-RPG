@@ -122,13 +122,90 @@ Nexium is an anime-themed Discord RPG bot built with Discord.js v14, featuring c
      - [ ] Show top leveled characters and collection statistics
      - [ ] Display leveling progress and upgrade recommendations
 
-2. **Polish Existing Systems**
-   - [ ] Add battle animations/visual feedback
-   - [ ] Implement pity system for gacha
-   - [ ] Add character fusion/evolution system
-   - [ ] Create achievement system for milestones
+2. **🚀 Favorite System Implementation**
+   - [ ] **Create `/favorite` Command**
+     - [ ] Allow users to toggle favorite status for owned characters
+     - [ ] Support character ID input with autocomplete
+     - [ ] Add confirmation dialog for favorite/unfavorite actions
+     - [ ] Show current favorite status in response
+   - [ ] **Create `/favorites` Command**
+     - [ ] Display only favorited characters in album format
+     - [ ] Include pagination for large favorite collections
+     - [ ] Show favorite count and collection percentage
+   - [ ] **Enhance Collection Filtering**
+     - [ ] Add "favorites-only" filter option to `/collection`
+     - [ ] Quick favorite toggle buttons in collection view
+     - [ ] Favorite status indicators in character tooltips
+   - [ ] **Favorite Management Features**
+     - [ ] Maximum favorite limit (e.g., 50 characters)
+     - [ ] Favorite categories/tags system
+     - [ ] Bulk favorite operations
+     - [ ] Favorite sorting options (rarity, level, anime)
 
-3. **Admin Tools & Management**
+### **Immediate Priorities (Next 1-2 Weeks)**
+
+1. **Critical System Fixes & Integration**
+   - ✅ **Fix Upgrade Command Stat Calculation**
+     - ✅ Replaced simple 10% scaling with proper 1.5% level scaling and rarity jump multipliers
+     - ✅ Updated stat displays to match battle calculations
+     - ✅ Implemented stat improvement calculations using CardLevelingService
+   - [ ] **Add Character Stats View Command**
+     - [ ] Create `/character-stats` or `/view-character` command
+     - [ ] Display current level, scaled stats, and rarity progression info
+     - [ ] Show EXP progress and next level requirements
+   - [ ] **Enhance Collection Display**
+     - [ ] Add character levels to collection album view
+     - [ ] Show leveled stats in character tooltips/details
+     - [ ] Display rarity upgrade progress indicators
+   - [ ] **Update Card Command**
+     - [ ] Show current character level and scaled stats
+     - [ ] Display level progress and EXP information
+     - [ ] Add rarity upgrade requirements and progress
+   - [ ] **Enhance Profile System**
+     - [ ] Add character overview section to profile
+     - [ ] Show top leveled characters and collection statistics
+     - [ ] Display leveling progress and upgrade recommendations
+
+2. **🚀 Favorite System Implementation**
+   - [ ] **Create `/favorite` Command**
+     - [ ] Allow users to toggle favorite status for owned characters
+     - [ ] Support character ID input with autocomplete
+     - [ ] Add confirmation dialog for favorite/unfavorite actions
+     - [ ] Show current favorite status in response
+   - [ ] **Create `/favorites` Command**
+     - [ ] Display only favorited characters in album format
+     - [ ] Include pagination for large favorite collections
+     - [ ] Show favorite count and collection percentage
+   - [ ] **Enhance Collection Filtering**
+     - [ ] Add "favorites-only" filter option to `/collection`
+     - [ ] Quick favorite toggle buttons in collection view
+     - [ ] Favorite status indicators in character tooltips
+   - [ ] **Favorite Management Features**
+     - [ ] Maximum favorite limit (e.g., 50 characters)
+     - [ ] Favorite categories/tags system
+     - [ ] Bulk favorite operations
+     - [ ] Favorite sorting options (rarity, level, anime)
+
+3. **Additional High-Priority Features**
+   - [ ] **Character Search & Discovery**
+     - [ ] `/search` command with filters (rarity, anime, name)
+     - [ ] Character recommendation system
+     - [ ] "Characters you don't own" filter
+   - [ ] **Collection Statistics**
+     - [ ] `/collection-stats` command showing completion rates
+     - [ ] Rarity distribution charts
+     - [ ] Level progression analytics
+     - [ ] Collection value calculations
+   - [ ] **Quick Actions in Collection**
+     - [ ] One-click favorite toggle buttons
+     - [ ] Quick upgrade buttons for eligible characters
+     - [ ] Direct links to character details
+   - [ ] **Enhanced Battle Experience**
+     - [ ] Character selection from favorites
+     - [ ] Battle presets (favorite team setups)
+     - [ ] Quick rematch with same characters
+
+4. **Admin Tools & Management**
    - [ ] **Economy Management Commands**
      - [ ] `/givecoins` - Add/remove coins from user balance
      - [ ] `/giveshards` - Add/remove upgrade shards from user balance
@@ -149,7 +226,7 @@ Nexium is an anime-themed Discord RPG bot built with Discord.js v14, featuring c
      - [ ] `/setchannel` - Set bot-only channels
      - [ ] `/maintenance` - Enable/disable maintenance mode
 
-4. **UI/UX Improvements**
+5. **UI/UX Improvements**
    - [ ] Add pagination to collection view
    - [ ] Implement character filtering/sorting
    - [ ] Add battle history tracking
@@ -185,7 +262,7 @@ Nexium is an anime-themed Discord RPG bot built with Discord.js v14, featuring c
        - [ ] Seasonal theme graphics
        - [ ] Guild/party showcase banners
 
-5. **Social Features**
+6. **Social Features**
    - [ ] Add friend system for battles
    - [ ] Implement leaderboard system
    - [ ] Add trading system between users
@@ -322,11 +399,17 @@ Nexium is an anime-themed Discord RPG bot built with Discord.js v14, featuring c
    - [ ] Enhance card command with level and stat information
    - [ ] Add character overview to profile system
 
-2. **Add Pity System** - Prevent long losing streaks in gacha
-3. **Implement Battle History** - Track user battle statistics
-4. **Add Character Fusion** - Combine characters for rare variants
-5. **Create Achievement System** - Reward player milestones
-6. **🚀 Leverage Canvas + ImageKit** - Start with dynamic welcome banners and achievement badges
+2. **🚀 Implement Favorite System**
+   - [ ] Create `/favorite` command for toggling favorite status
+   - [ ] Create `/favorites` command for viewing favorite characters
+   - [ ] Add favorite filtering to collection view
+   - [ ] Implement favorite management features
+
+3. **Add Pity System** - Prevent long losing streaks in gacha
+4. **Implement Battle History** - Track user battle statistics
+5. **Add Character Fusion** - Combine characters for rare variants
+6. **Create Achievement System** - Reward player milestones
+7. **🚀 Leverage Canvas + ImageKit** - Start with dynamic welcome banners and achievement badges
 
 ### **Short-term (Next Month)**
 
@@ -352,10 +435,10 @@ Nexium is an anime-themed Discord RPG bot built with Discord.js v14, featuring c
 - Error rates and system uptime
 
 ---
-*Last Updated: September 4, 2025*
-*Next Review: September 11, 2025*
-*Major Update: Completed Advanced Group stat evolution system (LEGENDARY → MYTHIC)*
-*Previous Update: Implemented comprehensive stat evolution system with 1.5% level scaling and rarity jump multipliers*
+*Last Updated: September 5, 2025*
+*Next Review: September 12, 2025*
+*Major Update: Added comprehensive Favorite System implementation to roadmap*
+*Previous Update: Enhanced /collection command with character IDs, star ratings, and Components V2*
 
 - [ ] Rate limiting for commands
 
