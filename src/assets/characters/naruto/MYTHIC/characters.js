@@ -375,6 +375,258 @@ const mythicCharacters = [
       }
     ],
     description: 'Killer Bee in 8-tailed form. Master rapper and tailed beast host.'
+  },
+
+  {
+    id: 'NM009',
+    name: 'Naruto Uzumaki - Six-Tails Transformation',
+    anime: 'Naruto',
+    rarity: 'MYTHIC',
+    image: 'https://ik.imagekit.io/nexiumrpg/Characters/Naruto/MYTHIC/Naruto-SixTails.png',
+    imageUrls: {
+      COMMON: 'https://ik.imagekit.io/nexiumrpg/Characters/Naruto/COMMON/Naruto-SixTails.png',
+      RARE: 'https://ik.imagekit.io/nexiumrpg/Characters/Naruto/RARE/Naruto-SixTails.png',
+      EPIC: 'https://ik.imagekit.io/nexiumrpg/Characters/Naruto/EPIC/Naruto-SixTails.png',
+      LEGENDARY: 'https://ik.imagekit.io/nexiumrpg/Characters/Naruto/LEGENDARY/Naruto-SixTails.png',
+      MYTHIC: 'https://ik.imagekit.io/nexiumrpg/Characters/Naruto/MYTHIC/Naruto-SixTails.png',
+      DIMENSIONAL: 'https://ik.imagekit.io/nexiumrpg/Characters/Naruto/DIMENSIONAL/Naruto-SixTails.png'
+    },
+    baseStats: {
+      health: 2900,
+      attack: 330,
+      defense: 240,
+      speed: 270,
+      chakra: 460
+    },
+    abilities: [
+      {
+        name: 'Six-Tails Fury',
+        description: 'Destructive chakra blast with immense power',
+        type: 'attack',
+        damage: 400,
+        chakraCost: 110,
+        cooldown: 6
+      },
+      {
+        name: 'Tailed Beast Regeneration',
+        description: 'Rapid healing from tailed beast chakra',
+        type: 'passive',
+        damage: 0,
+        chakraCost: 0,
+        cooldown: 0
+      }
+    ],
+    description: 'Naruto in six-tails form. Immense chakra reserves with destructive capabilities.'
+  },
+
+  {
+    id: 'NM010',
+    name: 'Naruto Uzumaki - Toad Sage Mode',
+    anime: 'Naruto',
+    rarity: 'MYTHIC',
+    image: 'https://ik.imagekit.io/nexiumrpg/Characters/Naruto/MYTHIC/Naruto-ToadSage.png',
+    imageUrls: {
+      COMMON: 'https://ik.imagekit.io/nexiumrpg/Characters/Naruto/COMMON/Naruto-ToadSage.png',
+      RARE: 'https://ik.imagekit.io/nexiumrpg/Characters/Naruto/RARE/Naruto-ToadSage.png',
+      EPIC: 'https://ik.imagekit.io/nexiumrpg/Characters/Naruto/EPIC/Naruto-ToadSage.png',
+      LEGENDARY: 'https://ik.imagekit.io/nexiumrpg/Characters/Naruto/LEGENDARY/Naruto-ToadSage.png',
+      MYTHIC: 'https://ik.imagekit.io/nexiumrpg/Characters/Naruto/MYTHIC/Naruto-ToadSage.png',
+      DIMENSIONAL: 'https://ik.imagekit.io/nexiumrpg/Characters/Naruto/DIMENSIONAL/Naruto-ToadSage.png'
+    },
+    baseStats: {
+      health: 2750,
+      attack: 340,
+      defense: 230,
+      speed: 290,
+      chakra: 480
+    },
+    abilities: [
+      {
+        name: 'Sage Art: Rasenshuriken',
+        description: 'Sage-enhanced rasenshuriken with natural energy',
+        type: 'attack',
+        damage: 430,
+        chakraCost: 130,
+        cooldown: 7
+      },
+      {
+        name: 'Sage Sensing',
+        description: 'Enhanced perception of enemy movements and chakra',
+        type: 'passive',
+        damage: 0,
+        chakraCost: 0,
+        cooldown: 0
+      }
+    ],
+    description: 'Naruto mastering sage mode with toad training. Enhanced sensing and natural energy control.'
+  },
+
+  {
+    id: 'NM011',
+    name: 'Madara - Border Jail',
+    anime: 'Naruto',
+    rarity: 'MYTHIC',
+    image: 'https://ik.imagekit.io/nexiumrpg/Characters/Naruto/MYTHIC/Madara-BorderJail.png',
+    imageUrls: {
+      COMMON: 'https://ik.imagekit.io/nexiumrpg/Characters/Naruto/COMMON/Madara-BorderJail.png',
+      RARE: 'https://ik.imagekit.io/nexiumrpg/Characters/Naruto/RARE/Madara-BorderJail.png',
+      EPIC: 'https://ik.imagekit.io/nexiumrpg/Characters/Naruto/EPIC/Madara-BorderJail.png',
+      LEGENDARY: 'https://ik.imagekit.io/nexiumrpg/Characters/Naruto/LEGENDARY/Madara-BorderJail.png',
+      MYTHIC: 'https://ik.imagekit.io/nexiumrpg/Characters/Naruto/MYTHIC/Madara-BorderJail.png',
+      DIMENSIONAL: 'https://ik.imagekit.io/nexiumrpg/Characters/Naruto/DIMENSIONAL/Madara-BorderJail.png'
+    },
+    baseStats: {
+      health: 2900,
+      attack: 350,
+      defense: 250,
+      speed: 280,
+      chakra: 470
+    },
+    abilities: [
+      {
+        name: 'Border Jail Prison',
+        description: 'Creates dimensional barriers to trap enemies',
+        type: 'control',
+        damage: 300,
+        chakraCost: 110,
+        cooldown: 6
+      },
+      {
+        name: 'Space-Time Manipulation',
+        description: 'Advanced space-time ninjutsu mastery',
+        type: 'passive',
+        damage: 0,
+        chakraCost: 0,
+        cooldown: 0
+      }
+    ],
+    description: 'Madara\'s space-time barrier technique. Traps opponents in dimensional confinement.'
+  },
+
+  {
+    id: 'NM012',
+    name: 'Nagato - The Asura Path',
+    anime: 'Naruto',
+    rarity: 'MYTHIC',
+    image: 'https://ik.imagekit.io/nexiumrpg/Characters/Naruto/MYTHIC/Nagato-AsuraPath.png',
+    imageUrls: {
+      COMMON: 'https://ik.imagekit.io/nexiumrpg/Characters/Naruto/COMMON/Nagato-AsuraPath.png',
+      RARE: 'https://ik.imagekit.io/nexiumrpg/Characters/Naruto/RARE/Nagato-AsuraPath.png',
+      EPIC: 'https://ik.imagekit.io/nexiumrpg/Characters/Naruto/EPIC/Nagato-AsuraPath.png',
+      LEGENDARY: 'https://ik.imagekit.io/nexiumrpg/Characters/Naruto/LEGENDARY/Nagato-AsuraPath.png',
+      MYTHIC: 'https://ik.imagekit.io/nexiumrpg/Characters/Naruto/MYTHIC/Nagato-AsuraPath.png',
+      DIMENSIONAL: 'https://ik.imagekit.io/nexiumrpg/Characters/Naruto/DIMENSIONAL/Nagato-AsuraPath.png'
+    },
+    baseStats: {
+      health: 2850,
+      attack: 355,
+      defense: 255,
+      speed: 275,
+      chakra: 475
+    },
+    abilities: [
+      {
+        name: 'Mechanical Arm Strike',
+        description: 'Powerful mechanical-enhanced punch',
+        type: 'attack',
+        damage: 410,
+        chakraCost: 95,
+        cooldown: 5
+      },
+      {
+        name: 'Chakra Receiver Boost',
+        description: 'Enhanced strength through mechanical augmentation',
+        type: 'passive',
+        damage: 0,
+        chakraCost: 0,
+        cooldown: 0
+      }
+    ],
+    description: 'Nagato\'s mechanical path with chakra receivers. Enhanced strength and weaponry.'
+  },
+
+  {
+    id: 'NM013',
+    name: 'Sasuke - Mangekyo Sharingan',
+    anime: 'Naruto',
+    rarity: 'MYTHIC',
+    image: 'https://ik.imagekit.io/nexiumrpg/Characters/Naruto/MYTHIC/Sasuke-Mangekyo.png',
+    imageUrls: {
+      COMMON: 'https://ik.imagekit.io/nexiumrpg/Characters/Naruto/COMMON/Sasuke-Mangekyo.png',
+      RARE: 'https://ik.imagekit.io/nexiumrpg/Characters/Naruto/RARE/Sasuke-Mangekyo.png',
+      EPIC: 'https://ik.imagekit.io/nexiumrpg/Characters/Naruto/EPIC/Sasuke-Mangekyo.png',
+      LEGENDARY: 'https://ik.imagekit.io/nexiumrpg/Characters/Naruto/LEGENDARY/Sasuke-Mangekyo.png',
+      MYTHIC: 'https://ik.imagekit.io/nexiumrpg/Characters/Naruto/MYTHIC/Sasuke-Mangekyo.png',
+      DIMENSIONAL: 'https://ik.imagekit.io/nexiumrpg/Characters/Naruto/DIMENSIONAL/Sasuke-Mangekyo.png'
+    },
+    baseStats: {
+      health: 2800,
+      attack: 345,
+      defense: 245,
+      speed: 285,
+      chakra: 465
+    },
+    abilities: [
+      {
+        name: 'Amaterasu',
+        description: 'Black flames that burn anything',
+        type: 'attack',
+        damage: 400,
+        chakraCost: 120,
+        cooldown: 7
+      },
+      {
+        name: 'Tsukuyomi',
+        description: 'Ultimate genjutsu that traps in illusions',
+        type: 'control',
+        damage: 350,
+        chakraCost: 100,
+        cooldown: 6
+      }
+    ],
+    description: 'Sasuke\'s eternal Mangekyo Sharingan. Master of genjutsu and perception.'
+  },
+
+  {
+    id: 'NM014',
+    name: 'Susanoo Humanoid Form',
+    anime: 'Naruto',
+    rarity: 'MYTHIC',
+    image: 'https://ik.imagekit.io/nexiumrpg/Characters/Naruto/MYTHIC/Susanoo-Humanoid.png',
+    imageUrls: {
+      COMMON: 'https://ik.imagekit.io/nexiumrpg/Characters/Naruto/COMMON/Susanoo-Humanoid.png',
+      RARE: 'https://ik.imagekit.io/nexiumrpg/Characters/Naruto/RARE/Susanoo-Humanoid.png',
+      EPIC: 'https://ik.imagekit.io/nexiumrpg/Characters/Naruto/EPIC/Susanoo-Humanoid.png',
+      LEGENDARY: 'https://ik.imagekit.io/nexiumrpg/Characters/Naruto/LEGENDARY/Susanoo-Humanoid.png',
+      MYTHIC: 'https://ik.imagekit.io/nexiumrpg/Characters/Naruto/MYTHIC/Susanoo-Humanoid.png',
+      DIMENSIONAL: 'https://ik.imagekit.io/nexiumrpg/Characters/Naruto/DIMENSIONAL/Susanoo-Humanoid.png'
+    },
+    baseStats: {
+      health: 2950,
+      attack: 360,
+      defense: 260,
+      speed: 270,
+      chakra: 485
+    },
+    abilities: [
+      {
+        name: 'Humanoid Strike',
+        description: 'Powerful humanoid-form chakra attacks',
+        type: 'attack',
+        damage: 420,
+        chakraCost: 105,
+        cooldown: 6
+      },
+      {
+        name: 'Susanoo Shield',
+        description: 'Advanced defensive capabilities',
+        type: 'defense',
+        damage: 0,
+        chakraCost: 80,
+        cooldown: 4
+      }
+    ],
+    description: 'Advanced Susanoo with humanoid shape. Balanced offense and defense.'
   }
 ];
 

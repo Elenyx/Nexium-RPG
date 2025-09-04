@@ -86,7 +86,7 @@ Characters now use anime-specific prefixes:
 3. **Update Services**: Update gacha and character services to use `src/assets/characters/index.js`
 4. **Test**: Test the `/pull` command to ensure characters load from new structure
 
-## 📊 Current Naruto Characters (55 total)
+## 📊 Current Naruto Characters (73 total)
 
 ### COMMON (Genin) - 5 characters
 - NU001: Naruto Uzumaki (Genin)
@@ -98,17 +98,35 @@ Characters now use anime-specific prefixes:
 ### RARE (Chunin) - 9 characters
 - NU006-NU014: Various chunin-level characters
 
-### EPIC (Jonin) - 11 characters
+### EPIC (Jonin) - 13 characters
 - NU015-NU025: Elite jonin and sannin
+- NE013: Sasuke's Curse Mark
+- NE014: Susanoo Rib Cage
 
-### LEGENDARY (Kage) - 14 characters
+### LEGENDARY (Kage) - 17 characters
 - NU026-NU039: Village leaders and legendary figures
+- NL015: Sasuke - Heavenly Hand Power
+- NL016: Susanoo Skeletal Form
+- NL017: Kimimaro - Shikotsumyaku
 
-### MYTHIC (Ultimate) - 9 characters
+### MYTHIC (Ultimate) - 13 characters
 - NU040-NU048: Ultimate forms and transformations
+- NM011: Madara - Border Jail
+- NM012: Nagato - The Asura Path
+- NM013: Sasuke - Mangekyo Sharingan
+- NM014: Susanoo Humanoid Form
 
-### DIMENSIONAL (Otsutsuki) - 7 characters
+### DIMENSIONAL (Otsutsuki) - 16 characters
 - NU049-NU055: God-like characters and progenitors
+- ND014: Madara - Divine Genesis
+- ND015: Hagoromo's Chakra Transfer Jutsu
+- ND016: Hagoromo's Complete Body — Susanoo
+- ND017: Sasuke Senjutsu Susanoo
+- ND018: Susanoo Complete Body
+- ND019: Chibaku Tensei
+- ND020: Pain - The Almighty Push and Pull
+- ND021: Nagato - The Gedo Art of Rinne Rebirth
+- ND022: The Six Paths' Yang Power
 
 ## ⚠️ Important Notes
 

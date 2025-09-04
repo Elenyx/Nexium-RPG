@@ -459,6 +459,132 @@ const epicCharacters = [
       }
     ],
     description: 'The academy teacher and mentor. Skilled jonin with teaching expertise.'
+  },
+
+  {
+    id: 'NE012',
+    name: 'Naruto Uzumaki - Demon Cloak Form',
+    anime: 'Naruto',
+    rarity: 'EPIC',
+    image: 'https://ik.imagekit.io/nexiumrpg/Characters/Naruto/EPIC/Naruto-DemonCloak.png',
+    imageUrls: {
+      COMMON: 'https://ik.imagekit.io/nexiumrpg/Characters/Naruto/COMMON/Naruto-DemonCloak.png',
+      RARE: 'https://ik.imagekit.io/nexiumrpg/Characters/Naruto/RARE/Naruto-DemonCloak.png',
+      EPIC: 'https://ik.imagekit.io/nexiumrpg/Characters/Naruto/EPIC/Naruto-DemonCloak.png',
+      LEGENDARY: 'https://ik.imagekit.io/nexiumrpg/Characters/Naruto/LEGENDARY/Naruto-DemonCloak.png',
+      MYTHIC: 'https://ik.imagekit.io/nexiumrpg/Characters/Naruto/MYTHIC/Naruto-DemonCloak.png',
+      DIMENSIONAL: 'https://ik.imagekit.io/nexiumrpg/Characters/Naruto/DIMENSIONAL/Naruto-DemonCloak.png'
+    },
+    baseStats: {
+      health: 1800,
+      attack: 240,
+      defense: 160,
+      speed: 180,
+      chakra: 320
+    },
+    abilities: [
+      {
+        name: 'Nine-Tails Chakra Burst',
+        description: 'Powerful chakra-enhanced attack',
+        type: 'attack',
+        damage: 300,
+        chakraCost: 80,
+        cooldown: 4
+      },
+      {
+        name: 'Demon Cloak Defense',
+        description: 'Chakra cloak provides enhanced defense',
+        type: 'passive',
+        damage: 0,
+        chakraCost: 0,
+        cooldown: 0
+      }
+    ],
+    description: 'Naruto\'s early Kurama cloak form. Enhanced strength and speed from nine-tails chakra.'
+  },
+
+  {
+    id: 'NE013',
+    name: 'Sasuke\'s Curse Mark',
+    anime: 'Naruto',
+    rarity: 'EPIC',
+    image: 'https://ik.imagekit.io/nexiumrpg/Characters/Naruto/EPIC/Sasuke-CurseMark.png',
+    imageUrls: {
+      COMMON: 'https://ik.imagekit.io/nexiumrpg/Characters/Naruto/COMMON/Sasuke-CurseMark.png',
+      RARE: 'https://ik.imagekit.io/nexiumrpg/Characters/Naruto/RARE/Sasuke-CurseMark.png',
+      EPIC: 'https://ik.imagekit.io/nexiumrpg/Characters/Naruto/EPIC/Sasuke-CurseMark.png',
+      LEGENDARY: 'https://ik.imagekit.io/nexiumrpg/Characters/Naruto/LEGENDARY/Sasuke-CurseMark.png',
+      MYTHIC: 'https://ik.imagekit.io/nexiumrpg/Characters/Naruto/MYTHIC/Sasuke-CurseMark.png',
+      DIMENSIONAL: 'https://ik.imagekit.io/nexiumrpg/Characters/Naruto/DIMENSIONAL/Sasuke-CurseMark.png'
+    },
+    baseStats: {
+      health: 1700,
+      attack: 250,
+      defense: 170,
+      speed: 190,
+      chakra: 300
+    },
+    abilities: [
+      {
+        name: 'Cursed Seal Enhancement',
+        description: 'Boosts speed and power with dark chakra',
+        type: 'buff',
+        damage: 0,
+        chakraCost: 60,
+        cooldown: 3
+      },
+      {
+        name: 'Orochimaru\'s Influence',
+        description: 'Regenerates health over time',
+        type: 'passive',
+        damage: 0,
+        chakraCost: 0,
+        cooldown: 0
+      }
+    ],
+    description: 'Sasuke\'s cursed seal from Orochimaru. Enhanced speed and power with dark chakra.'
+  },
+
+  {
+    id: 'NE014',
+    name: 'Susanoo Rib Cage',
+    anime: 'Naruto',
+    rarity: 'EPIC',
+    image: 'https://ik.imagekit.io/nexiumrpg/Characters/Naruto/EPIC/Susanoo-RibCage.png',
+    imageUrls: {
+      COMMON: 'https://ik.imagekit.io/nexiumrpg/Characters/Naruto/COMMON/Susanoo-RibCage.png',
+      RARE: 'https://ik.imagekit.io/nexiumrpg/Characters/Naruto/RARE/Susanoo-RibCage.png',
+      EPIC: 'https://ik.imagekit.io/nexiumrpg/Characters/Naruto/EPIC/Susanoo-RibCage.png',
+      LEGENDARY: 'https://ik.imagekit.io/nexiumrpg/Characters/Naruto/LEGENDARY/Susanoo-RibCage.png',
+      MYTHIC: 'https://ik.imagekit.io/nexiumrpg/Characters/Naruto/MYTHIC/Susanoo-RibCage.png',
+      DIMENSIONAL: 'https://ik.imagekit.io/nexiumrpg/Characters/Naruto/DIMENSIONAL/Susanoo-RibCage.png'
+    },
+    baseStats: {
+      health: 1750,
+      attack: 255,
+      defense: 175,
+      speed: 185,
+      chakra: 310
+    },
+    abilities: [
+      {
+        name: 'Rib Cage Defense',
+        description: 'Creates defensive chakra armor',
+        type: 'defense',
+        damage: 0,
+        chakraCost: 50,
+        cooldown: 2
+      },
+      {
+        name: 'Susanoo Energy',
+        description: 'Basic Susanoo energy manipulation',
+        type: 'attack',
+        damage: 290,
+        chakraCost: 75,
+        cooldown: 4
+      }
+    ],
+    description: 'Basic Susanoo form with rib cage armor. Defensive chakra construct.'
   }
 ];
 

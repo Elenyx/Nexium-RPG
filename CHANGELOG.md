@@ -5,6 +5,42 @@ All notable changes to the Nexium RPG Discord Bot will be documented in this fil
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/SemVer).
 
+## [1.2.0] - 2025-09-04
+
+### Added
+- **18 New Naruto Characters**: Expanded character collection with powerful new additions
+  - **EPIC (2 new)**: Sasuke's Curse Mark (NE013), Susanoo Rib Cage (NE014)
+  - **LEGENDARY (3 new)**: Sasuke - Heavenly Hand Power (NL015), Susanoo Skeletal Form (NL016), Kimimaro - Shikotsumyaku (NL017)
+  - **MYTHIC (4 new)**: Madara - Border Jail (NM011), Nagato - The Asura Path (NM012), Sasuke - Mangekyo Sharingan (NM013), Susanoo Humanoid Form (NM014)
+  - **DIMENSIONAL (9 new)**: Madara - Divine Genesis (ND014), Hagoromo's Chakra Transfer Jutsu (ND015), Hagoromo's Complete Body — Susanoo (ND016), Sasuke Senjutsu Susanoo (ND017), Susanoo Complete Body (ND018), Chibaku Tensei (ND019), Pain - The Almighty Push and Pull (ND020), Nagato - The Gedo Art of Rinne Rebirth (ND021), The Six Paths' Yang Power (ND022)
+- **GitHub Pages Favicon**: Added custom favicon to all documentation pages
+  - Favicon URL: `https://ik.imagekit.io/nexiumrpg/NexiumTP.png`
+  - Applied to: index.html, characters.html, commands.html, guides.html, changelog.html
+
+### Updated
+- **Character Database**: Total Naruto characters now at 73 (was 55)
+  - COMMON: 5 characters
+  - RARE: 9 characters
+  - EPIC: 13 characters (+2)
+  - LEGENDARY: 17 characters (+3)
+  - MYTHIC: 13 characters (+4)
+  - DIMENSIONAL: 16 characters (+9)
+- **HTML Character Database**: Updated `docs/characters.html` with all new characters
+- **Bot Character Database**: Synchronized all JavaScript character files with new additions
+
+### Technical Details
+- **Character IDs**: New characters use IDs NE013-NE014, NL015-NL017, NM011-NM014, ND014-ND022
+- **Image URLs**: All new characters use ImageKit.io hosting with proper rarity fallbacks
+- **Database Synchronization**: Both HTML documentation and bot database fully synchronized
+- **No Duplicates**: Each rarity tier maintains unique characters as requested
+
+### Balance & Gameplay
+- **DIMENSIONAL Tier**: Contains the "best of the best" characters with god-like abilities
+- **Progressive Power Scaling**: New characters follow established stat and ability patterns
+- **Rarity Distribution**: Maintains balanced drop rates across all tiers
+
+---
+
 ## [1.1.0] - 2025-09-04
 
 ### Added
@@ -107,7 +143,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/SemVer
 
 ---
 
-[Unreleased]: https://github.com/Elenyx/Nexium-RPG/compare/v1.1.0...HEAD
+[Unreleased]: https://github.com/Elenyx/Nexium-RPG/compare/v1.2.0...HEAD
+[1.2.0]: https://github.com/Elenyx/Nexium-RPG/releases/tag/v1.2.0
 [1.1.0]: https://github.com/Elenyx/Nexium-RPG/releases/tag/v1.1.0
-[1.0.0]: https://github.com/Elenyx/Nexium-RPG/releases/tag/v1.0.0</content>
-<parameter name="filePath">d:\Nexium\Nexium-RPG\CHANGELOG.md
+[1.0.0]: https://github.com/Elenyx/Nexium-RPG/releases/tag/v1.0.0

@@ -585,6 +585,174 @@ const legendaryCharacters = [
       }
     ],
     description: 'The Third Hokage in his prime. Master of all five basic chakra natures.'
+  },
+
+  {
+    id: 'NL014',
+    name: 'Naruto Uzumaki - Four-Tails Transformation',
+    anime: 'Naruto',
+    rarity: 'LEGENDARY',
+    image: 'https://ik.imagekit.io/nexiumrpg/Characters/Naruto/LEGENDARY/Naruto-FourTails.png',
+    imageUrls: {
+      COMMON: 'https://ik.imagekit.io/nexiumrpg/Characters/Naruto/COMMON/Naruto-FourTails.png',
+      RARE: 'https://ik.imagekit.io/nexiumrpg/Characters/Naruto/RARE/Naruto-FourTails.png',
+      EPIC: 'https://ik.imagekit.io/nexiumrpg/Characters/Naruto/EPIC/Naruto-FourTails.png',
+      LEGENDARY: 'https://ik.imagekit.io/nexiumrpg/Characters/Naruto/LEGENDARY/Naruto-FourTails.png',
+      MYTHIC: 'https://ik.imagekit.io/nexiumrpg/Characters/Naruto/MYTHIC/Naruto-FourTails.png',
+      DIMENSIONAL: 'https://ik.imagekit.io/nexiumrpg/Characters/Naruto/DIMENSIONAL/Naruto-FourTails.png'
+    },
+    baseStats: {
+      health: 2200,
+      attack: 270,
+      defense: 190,
+      speed: 200,
+      chakra: 380
+    },
+    abilities: [
+      {
+        name: 'Four-Tails Rage',
+        description: 'Powerful chakra burst with enhanced strength',
+        type: 'attack',
+        damage: 350,
+        chakraCost: 90,
+        cooldown: 5
+      },
+      {
+        name: 'Tailed Beast Armor',
+        description: 'Chakra armor provides superior defense',
+        type: 'passive',
+        damage: 0,
+        chakraCost: 0,
+        cooldown: 0
+      }
+    ],
+    description: 'Naruto partially transformed into the four-tails. Raw power with enhanced durability.'
+  },
+
+  {
+    id: 'NL015',
+    name: 'Sasuke - Heavenly Hand Power',
+    anime: 'Naruto',
+    rarity: 'LEGENDARY',
+    image: 'https://ik.imagekit.io/nexiumrpg/Characters/Naruto/LEGENDARY/Sasuke-HeavenlyHand.png',
+    imageUrls: {
+      COMMON: 'https://ik.imagekit.io/nexiumrpg/Characters/Naruto/COMMON/Sasuke-HeavenlyHand.png',
+      RARE: 'https://ik.imagekit.io/nexiumrpg/Characters/Naruto/RARE/Sasuke-HeavenlyHand.png',
+      EPIC: 'https://ik.imagekit.io/nexiumrpg/Characters/Naruto/EPIC/Sasuke-HeavenlyHand.png',
+      LEGENDARY: 'https://ik.imagekit.io/nexiumrpg/Characters/Naruto/LEGENDARY/Sasuke-HeavenlyHand.png',
+      MYTHIC: 'https://ik.imagekit.io/nexiumrpg/Characters/Naruto/MYTHIC/Sasuke-HeavenlyHand.png',
+      DIMENSIONAL: 'https://ik.imagekit.io/nexiumrpg/Characters/Naruto/DIMENSIONAL/Sasuke-HeavenlyHand.png'
+    },
+    baseStats: {
+      health: 2100,
+      attack: 280,
+      defense: 200,
+      speed: 210,
+      chakra: 370
+    },
+    abilities: [
+      {
+        name: 'Universal Pull',
+        description: 'Pulls enemies towards you with gravitational force',
+        type: 'control',
+        damage: 200,
+        chakraCost: 70,
+        cooldown: 4
+      },
+      {
+        name: 'Chibaku Tensei',
+        description: 'Creates a small planet to trap enemies',
+        type: 'control',
+        damage: 330,
+        chakraCost: 100,
+        cooldown: 6
+      }
+    ],
+    description: 'Sasuke\'s Rinnegan technique for absorption and repulsion. Chakra manipulation mastery.'
+  },
+
+  {
+    id: 'NL016',
+    name: 'Susanoo Skeletal Form',
+    anime: 'Naruto',
+    rarity: 'LEGENDARY',
+    image: 'https://ik.imagekit.io/nexiumrpg/Characters/Naruto/LEGENDARY/Susanoo-Skeletal.png',
+    imageUrls: {
+      COMMON: 'https://ik.imagekit.io/nexiumrpg/Characters/Naruto/COMMON/Susanoo-Skeletal.png',
+      RARE: 'https://ik.imagekit.io/nexiumrpg/Characters/Naruto/RARE/Susanoo-Skeletal.png',
+      EPIC: 'https://ik.imagekit.io/nexiumrpg/Characters/Naruto/EPIC/Susanoo-Skeletal.png',
+      LEGENDARY: 'https://ik.imagekit.io/nexiumrpg/Characters/Naruto/LEGENDARY/Susanoo-Skeletal.png',
+      MYTHIC: 'https://ik.imagekit.io/nexiumrpg/Characters/Naruto/MYTHIC/Susanoo-Skeletal.png',
+      DIMENSIONAL: 'https://ik.imagekit.io/nexiumrpg/Characters/Naruto/DIMENSIONAL/Susanoo-Skeletal.png'
+    },
+    baseStats: {
+      health: 2150,
+      attack: 285,
+      defense: 205,
+      speed: 215,
+      chakra: 375
+    },
+    abilities: [
+      {
+        name: 'Skeletal Strike',
+        description: 'Powerful bone-like chakra attacks',
+        type: 'attack',
+        damage: 360,
+        chakraCost: 85,
+        cooldown: 5
+      },
+      {
+        name: 'Susanoo Armor',
+        description: 'Enhanced defensive capabilities',
+        type: 'passive',
+        damage: 0,
+        chakraCost: 0,
+        cooldown: 0
+      }
+    ],
+    description: 'Intermediate Susanoo with skeletal structure. Enhanced offensive capabilities.'
+  },
+
+  {
+    id: 'NL017',
+    name: 'Kimimaro (Sound Five) - Shikotsumyaku (Kekkei Genkai)',
+    anime: 'Naruto',
+    rarity: 'LEGENDARY',
+    image: 'https://ik.imagekit.io/nexiumrpg/Characters/Naruto/LEGENDARY/Kimimaro-Shikotsumyaku.png',
+    imageUrls: {
+      COMMON: 'https://ik.imagekit.io/nexiumrpg/Characters/Naruto/COMMON/Kimimaro-Shikotsumyaku.png',
+      RARE: 'https://ik.imagekit.io/nexiumrpg/Characters/Naruto/RARE/Kimimaro-Shikotsumyaku.png',
+      EPIC: 'https://ik.imagekit.io/nexiumrpg/Characters/Naruto/EPIC/Kimimaro-Shikotsumyaku.png',
+      LEGENDARY: 'https://ik.imagekit.io/nexiumrpg/Characters/Naruto/LEGENDARY/Kimimaro-Shikotsumyaku.png',
+      MYTHIC: 'https://ik.imagekit.io/nexiumrpg/Characters/Naruto/MYTHIC/Kimimaro-Shikotsumyaku.png',
+      DIMENSIONAL: 'https://ik.imagekit.io/nexiumrpg/Characters/Naruto/DIMENSIONAL/Kimimaro-Shikotsumyaku.png'
+    },
+    baseStats: {
+      health: 2050,
+      attack: 275,
+      defense: 195,
+      speed: 220,
+      chakra: 360
+    },
+    abilities: [
+      {
+        name: 'Bone Bullets',
+        description: 'Fires sharp bone projectiles',
+        type: 'attack',
+        damage: 340,
+        chakraCost: 75,
+        cooldown: 4
+      },
+      {
+        name: 'Bone Armor',
+        description: 'Creates defensive bone structures',
+        type: 'defense',
+        damage: 0,
+        chakraCost: 60,
+        cooldown: 3
+      }
+    ],
+    description: 'Kimimaro\'s bone manipulation bloodline. Deadly close-range combat with bone weapons.'
   }
 ];
 
