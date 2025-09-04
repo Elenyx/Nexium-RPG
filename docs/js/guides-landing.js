@@ -3,13 +3,15 @@
 document.addEventListener('DOMContentLoaded', function() {
     const searchInput = document.getElementById('guide-search');
     const filterButtons = document.querySelectorAll('.filter-btn');
-    const guideCards = document.querySelectorAll('.guide-card');
+    const guideCards = document.querySelectorAll('.guide-card, .featured-card');
 
     // Search functionality
-    searchInput.addEventListener('input', function() {
-        const searchTerm = this.value.toLowerCase().trim();
-        filterGuides(searchTerm, getActiveFilter());
-    });
+    if (searchInput) {
+        searchInput.addEventListener('input', function() {
+            const searchTerm = this.value.toLowerCase().trim();
+            filterGuides(searchTerm, getActiveFilter());
+        });
+    }
 
     // Filter functionality
     filterButtons.forEach(button => {
@@ -19,7 +21,8 @@ document.addEventListener('DOMContentLoaded', function() {
             this.classList.add('active');
 
             const filter = this.dataset.filter;
-            filterGuides(searchInput.value.toLowerCase().trim(), filter);
+            const searchTerm = searchInput ? searchInput.value.toLowerCase().trim() : '';
+            filterGuides(searchTerm, filter);
         });
     });
 
@@ -30,28 +33,32 @@ document.addEventListener('DOMContentLoaded', function() {
 
     function filterGuides(searchTerm, categoryFilter) {
         guideCards.forEach(card => {
-            const title = card.querySelector('h3').textContent.toLowerCase();
-            const description = card.querySelector('p').textContent.toLowerCase();
-            const tags = Array.from(card.querySelectorAll('.tag')).map(tag =>
-                tag.textContent.toLowerCase()
-            );
+            const title = card.querySelector('h3');
+            const description = card.querySelector('p');
+            const tags = card.querySelectorAll('.tag');
             const cardCategory = card.dataset.category;
+
+            if (!title || !description) return;
+
+            const titleText = title.textContent.toLowerCase();
+            const descText = description.textContent.toLowerCase();
+            const tagTexts = Array.from(tags).map(tag => tag.textContent.toLowerCase());
 
             // Check search term match
             const matchesSearch = !searchTerm ||
-                title.includes(searchTerm) ||
-                description.includes(searchTerm) ||
-                tags.some(tag => tag.includes(searchTerm));
+                titleText.includes(searchTerm) ||
+                descText.includes(searchTerm) ||
+                tagTexts.some(tag => tag.includes(searchTerm));
 
             // Check category filter
             const matchesCategory = categoryFilter === 'all' || cardCategory === categoryFilter;
 
             // Show/hide card
             if (matchesSearch && matchesCategory) {
+                card.classList.remove('hidden');
                 card.style.display = 'block';
-                // Add fade-in animation
-                card.style.animation = 'fadeIn 0.3s ease-in-out';
             } else {
+                card.classList.add('hidden');
                 card.style.display = 'none';
             }
         });
@@ -61,14 +68,48 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     function updateResultsCount() {
-        const visibleCards = document.querySelectorAll('.guide-card[style*="display: block"], .guide-card:not([style*="display"])');
-        const totalCards = guideCards.length;
-
-        // You could add a results counter here if desired
-        console.log(`Showing ${visibleCards.length} of ${totalCards} guides`);
+        const visibleCards = document.querySelectorAll('.guide-card:not(.hidden)');
+        const searchInput = document.getElementById('guide-search');
+        
+        if (searchInput && visibleCards.length === 0 && searchInput.value.trim() !== '') {
+            showNoResults();
+        } else {
+            hideNoResults();
+        }
     }
 
-    // Smooth scroll for anchor links
+    function showNoResults() {
+        let noResultsDiv = document.querySelector('.no-results');
+        if (!noResultsDiv) {
+            noResultsDiv = document.createElement('div');
+            noResultsDiv.className = 'no-results';
+            noResultsDiv.innerHTML = `
+                <div style="text-align: center; padding: 3rem; color: var(--text-secondary);">
+                    <h3 style="color: var(--text-primary); margin-bottom: 1rem;">No guides found</h3>
+                    <p>Try adjusting your search terms or browse all guides.</p>
+                </div>
+            `;
+            const guidesGrid = document.getElementById('guides-grid');
+            if (guidesGrid) {
+                guidesGrid.appendChild(noResultsDiv);
+            }
+        }
+        noResultsDiv.style.display = 'block';
+    }
+
+    function hideNoResults() {
+        const noResultsDiv = document.querySelector('.no-results');
+        if (noResultsDiv) {
+            noResultsDiv.style.display = 'none';
+        }
+    }
+
+    // Initialize on page load
+    if (filterButtons.length > 0) {
+        filterGuides('', 'all');
+    }
+
+    // Add smooth scrolling for anchor links
     document.querySelectorAll('a[href^="#"]').forEach(anchor => {
         anchor.addEventListener('click', function (e) {
             e.preventDefault();
@@ -83,49 +124,18 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 
     // Add loading animation for images
-    const images = document.querySelectorAll('img[loading="lazy"]');
+    const images = document.querySelectorAll('.guide-image img, .featured-image img');
     images.forEach(img => {
         img.addEventListener('load', function() {
-            this.classList.add('loaded');
+            this.style.opacity = '1';
         });
+        
+        // Set initial opacity
+        if (img.complete) {
+            img.style.opacity = '1';
+        } else {
+            img.style.opacity = '0';
+            img.style.transition = 'opacity 0.3s ease';
+        }
     });
-
-    // Initialize with all guides visible
-    filterGuides('', 'all');
 });
-
-// Add CSS animations
-const style = document.createElement('style');
-style.textContent = `
-    @keyframes fadeIn {
-        from {
-            opacity: 0;
-            transform: translateY(10px);
-        }
-        to {
-            opacity: 1;
-            transform: translateY(0);
-        }
-    }
-
-    .guide-card {
-        animation-fill-mode: both;
-    }
-
-    img.loaded {
-        animation: fadeIn 0.5s ease-in-out;
-    }
-
-    .filter-btn.active {
-        background: #7C3AED;
-        color: white;
-        border-color: #7C3AED;
-    }
-
-    .search-input:focus {
-        outline: none;
-        border-color: #7C3AED;
-        box-shadow: 0 0 0 3px rgba(124, 58, 237, 0.1);
-    }
-`;
-document.head.appendChild(style);
