@@ -351,3 +351,12 @@ Expert players mastering systems
 - Feature adoption rates
 - Support ticket reduction
 - Community engagement levels
+
+
+---
+
+Documentation:
+Expand comments and documentation to explain the rationale behind key design decisions, such as the 1.5% scaling factor.
+
+User Experience:
+Provide detailed feedback to users about how merges, leveling, and upgrades affect their characters' stats.
