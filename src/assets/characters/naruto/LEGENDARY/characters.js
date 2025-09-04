@@ -588,48 +588,6 @@ const legendaryCharacters = [
   },
 
   {
-    id: 'NL014',
-    name: 'Naruto Uzumaki - Four-Tails Transformation',
-    anime: 'Naruto',
-    rarity: 'LEGENDARY',
-    image: 'https://ik.imagekit.io/nexiumrpg/Characters/Naruto/LEGENDARY/Naruto-FourTails.png',
-    imageUrls: {
-      COMMON: 'https://ik.imagekit.io/nexiumrpg/Characters/Naruto/COMMON/Naruto-FourTails.png',
-      RARE: 'https://ik.imagekit.io/nexiumrpg/Characters/Naruto/RARE/Naruto-FourTails.png',
-      EPIC: 'https://ik.imagekit.io/nexiumrpg/Characters/Naruto/EPIC/Naruto-FourTails.png',
-      LEGENDARY: 'https://ik.imagekit.io/nexiumrpg/Characters/Naruto/LEGENDARY/Naruto-FourTails.png',
-      MYTHIC: 'https://ik.imagekit.io/nexiumrpg/Characters/Naruto/MYTHIC/Naruto-FourTails.png',
-      DIMENSIONAL: 'https://ik.imagekit.io/nexiumrpg/Characters/Naruto/DIMENSIONAL/Naruto-FourTails.png'
-    },
-    baseStats: {
-      health: 2200,
-      attack: 270,
-      defense: 190,
-      speed: 200,
-      chakra: 380
-    },
-    abilities: [
-      {
-        name: 'Four-Tails Rage',
-        description: 'Powerful chakra burst with enhanced strength',
-        type: 'attack',
-        damage: 350,
-        chakraCost: 90,
-        cooldown: 5
-      },
-      {
-        name: 'Tailed Beast Armor',
-        description: 'Chakra armor provides superior defense',
-        type: 'passive',
-        damage: 0,
-        chakraCost: 0,
-        cooldown: 0
-      }
-    ],
-    description: 'Naruto partially transformed into the four-tails. Raw power with enhanced durability.'
-  },
-
-  {
     id: 'NL015',
     name: 'Sasuke - Heavenly Hand Power',
     anime: 'Naruto',
@@ -753,6 +711,48 @@ const legendaryCharacters = [
       }
     ],
     description: 'Kimimaro\'s bone manipulation bloodline. Deadly close-range combat with bone weapons.'
+  },
+
+  {
+    id: 'NL018',
+    name: 'Naruto Uzumaki - Four-Tails Transformation',
+    anime: 'Naruto',
+    rarity: 'LEGENDARY',
+    image: 'https://ik.imagekit.io/nexiumrpg/Characters/Naruto/LEGENDARY/Naruto-FourTails.png',
+    imageUrls: {
+      COMMON: 'https://ik.imagekit.io/nexiumrpg/Characters/Naruto/COMMON/Naruto-FourTails.png',
+      RARE: 'https://ik.imagekit.io/nexiumrpg/Characters/Naruto/RARE/Naruto-FourTails.png',
+      EPIC: 'https://ik.imagekit.io/nexiumrpg/Characters/Naruto/EPIC/Naruto-FourTails.png',
+      LEGENDARY: 'https://ik.imagekit.io/nexiumrpg/Characters/Naruto/LEGENDARY/Naruto-FourTails.png',
+      MYTHIC: 'https://ik.imagekit.io/nexiumrpg/Characters/Naruto/MYTHIC/Naruto-FourTails.png',
+      DIMENSIONAL: 'https://ik.imagekit.io/nexiumrpg/Characters/Naruto/DIMENSIONAL/Naruto-FourTails.png'
+    },
+    baseStats: {
+      health: 2200,
+      attack: 270,
+      defense: 190,
+      speed: 200,
+      chakra: 380
+    },
+    abilities: [
+      {
+        name: 'Four-Tails Rage',
+        description: 'Powerful chakra burst with enhanced strength',
+        type: 'attack',
+        damage: 350,
+        chakraCost: 90,
+        cooldown: 5
+      },
+      {
+        name: 'Tailed Beast Armor',
+        description: 'Chakra armor provides superior defense',
+        type: 'passive',
+        damage: 0,
+        chakraCost: 0,
+        cooldown: 0
+      }
+    ],
+    description: 'Naruto partially transformed into the four-tails. Raw power with enhanced durability.'
   }
 ];
 

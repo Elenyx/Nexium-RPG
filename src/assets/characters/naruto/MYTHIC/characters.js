@@ -378,48 +378,6 @@ const mythicCharacters = [
   },
 
   {
-    id: 'NM009',
-    name: 'Naruto Uzumaki - Six-Tails Transformation',
-    anime: 'Naruto',
-    rarity: 'MYTHIC',
-    image: 'https://ik.imagekit.io/nexiumrpg/Characters/Naruto/MYTHIC/Naruto-SixTails.png',
-    imageUrls: {
-      COMMON: 'https://ik.imagekit.io/nexiumrpg/Characters/Naruto/COMMON/Naruto-SixTails.png',
-      RARE: 'https://ik.imagekit.io/nexiumrpg/Characters/Naruto/RARE/Naruto-SixTails.png',
-      EPIC: 'https://ik.imagekit.io/nexiumrpg/Characters/Naruto/EPIC/Naruto-SixTails.png',
-      LEGENDARY: 'https://ik.imagekit.io/nexiumrpg/Characters/Naruto/LEGENDARY/Naruto-SixTails.png',
-      MYTHIC: 'https://ik.imagekit.io/nexiumrpg/Characters/Naruto/MYTHIC/Naruto-SixTails.png',
-      DIMENSIONAL: 'https://ik.imagekit.io/nexiumrpg/Characters/Naruto/DIMENSIONAL/Naruto-SixTails.png'
-    },
-    baseStats: {
-      health: 2900,
-      attack: 330,
-      defense: 240,
-      speed: 270,
-      chakra: 460
-    },
-    abilities: [
-      {
-        name: 'Six-Tails Fury',
-        description: 'Destructive chakra blast with immense power',
-        type: 'attack',
-        damage: 400,
-        chakraCost: 110,
-        cooldown: 6
-      },
-      {
-        name: 'Tailed Beast Regeneration',
-        description: 'Rapid healing from tailed beast chakra',
-        type: 'passive',
-        damage: 0,
-        chakraCost: 0,
-        cooldown: 0
-      }
-    ],
-    description: 'Naruto in six-tails form. Immense chakra reserves with destructive capabilities.'
-  },
-
-  {
     id: 'NM010',
     name: 'Naruto Uzumaki - Toad Sage Mode',
     anime: 'Naruto',
@@ -627,6 +585,48 @@ const mythicCharacters = [
       }
     ],
     description: 'Advanced Susanoo with humanoid shape. Balanced offense and defense.'
+  },
+
+  {
+    id: 'NM015',
+    name: 'Naruto Uzumaki - Six-Tails Transformation',
+    anime: 'Naruto',
+    rarity: 'MYTHIC',
+    image: 'https://ik.imagekit.io/nexiumrpg/Characters/Naruto/MYTHIC/Naruto-SixTails.png',
+    imageUrls: {
+      COMMON: 'https://ik.imagekit.io/nexiumrpg/Characters/Naruto/COMMON/Naruto-SixTails.png',
+      RARE: 'https://ik.imagekit.io/nexiumrpg/Characters/Naruto/RARE/Naruto-SixTails.png',
+      EPIC: 'https://ik.imagekit.io/nexiumrpg/Characters/Naruto/EPIC/Naruto-SixTails.png',
+      LEGENDARY: 'https://ik.imagekit.io/nexiumrpg/Characters/Naruto/LEGENDARY/Naruto-SixTails.png',
+      MYTHIC: 'https://ik.imagekit.io/nexiumrpg/Characters/Naruto/MYTHIC/Naruto-SixTails.png',
+      DIMENSIONAL: 'https://ik.imagekit.io/nexiumrpg/Characters/Naruto/DIMENSIONAL/Naruto-SixTails.png'
+    },
+    baseStats: {
+      health: 2900,
+      attack: 330,
+      defense: 240,
+      speed: 270,
+      chakra: 460
+    },
+    abilities: [
+      {
+        name: 'Six-Tails Fury',
+        description: 'Destructive chakra blast with immense power',
+        type: 'attack',
+        damage: 400,
+        chakraCost: 110,
+        cooldown: 6
+      },
+      {
+        name: 'Tailed Beast Regeneration',
+        description: 'Rapid healing from tailed beast chakra',
+        type: 'passive',
+        damage: 0,
+        chakraCost: 0,
+        cooldown: 0
+      }
+    ],
+    description: 'Naruto in six-tails form. Immense chakra reserves with destructive capabilities.'
   }
 ];
 

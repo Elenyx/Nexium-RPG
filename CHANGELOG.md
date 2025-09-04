@@ -18,18 +18,22 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/SemVer
   - Applied to: index.html, characters.html, commands.html, guides.html, changelog.html
 
 ### Updated
-- **Character Database**: Total Naruto characters now at 73 (was 55)
-  - COMMON: 5 characters
+- **Character Database**: Total Naruto characters now at 85 (was 55)
+  - COMMON: 7 characters
   - RARE: 9 characters
-  - EPIC: 13 characters (+2)
-  - LEGENDARY: 17 characters (+3)
-  - MYTHIC: 13 characters (+4)
-  - DIMENSIONAL: 16 characters (+9)
+  - EPIC: 14 characters (+2)
+  - LEGENDARY: 18 characters (+3)
+  - MYTHIC: 15 characters (+4)
+  - DIMENSIONAL: 22 characters (+9)
+- **Duplicate ID Fix**: Resolved duplicate character IDs (NL014, NM009) by assigning unique IDs
+  - NL014 (duplicate) → NL018: "Naruto Uzumaki - Four-Tails Transformation"
+  - NM009 (duplicate) → NM015: "Naruto Uzumaki - Six-Tails Transformation"
 - **HTML Character Database**: Updated `docs/characters.html` with all new characters
 - **Bot Character Database**: Synchronized all JavaScript character files with new additions
 
 ### Technical Details
-- **Character IDs**: New characters use IDs NE013-NE014, NL015-NL017, NM011-NM014, ND014-ND022
+- **Character IDs**: New characters use IDs NE013-NE014, NL015-NL018, NM011-NM015, ND014-ND022
+- **Duplicate ID Resolution**: Fixed duplicate IDs NL014 and NM009 by reassigning to NL018 and NM015
 - **Image URLs**: All new characters use ImageKit.io hosting with proper rarity fallbacks
 - **Database Synchronization**: Both HTML documentation and bot database fully synchronized
 - **No Duplicates**: Each rarity tier maintains unique characters as requested
