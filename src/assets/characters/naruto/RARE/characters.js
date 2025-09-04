@@ -213,48 +213,6 @@ const rareCharacters = [
 
   {
     id: 'NR006',
-    name: 'Konohamaru Sarutobi',
-    anime: 'Naruto',
-    rarity: 'RARE',
-    image: 'https://ik.imagekit.io/NexiumRPG/Characters/Naruto/RARE/Konohamaru02.png',
-    imageUrls: {
-      COMMON: 'https://ik.imagekit.io/NexiumRPG/Characters/Naruto/COMMON/Konohamaru02.png',
-      RARE: 'https://ik.imagekit.io/NexiumRPG/Characters/Naruto/RARE/Konohamaru02.png',
-      EPIC: 'https://ik.imagekit.io/NexiumRPG/Characters/Naruto/EPIC/Konohamaru02.png',
-      LEGENDARY: 'https://ik.imagekit.io/NexiumRPG/Characters/Naruto/LEGENDARY/Konohamaru02.png',
-      MYTHIC: 'https://ik.imagekit.io/NexiumRPG/Characters/Naruto/MYTHIC/Konohamaru02.png',
-      DIMENSIONAL: 'https://ik.imagekit.io/NexiumRPG/Characters/Naruto/DIMENSIONAL/Konohamaru02.png'
-    },
-    baseStats: {
-      health: 1150,
-      attack: 145,
-      defense: 105,
-      speed: 155,
-      chakra: 170
-    },
-    abilities: [
-      {
-        name: 'Rasengan Barrage',
-        description: 'Rapid-fire rasengan attacks',
-        type: 'attack',
-        damage: 190,
-        chakraCost: 55,
-        cooldown: 3
-      },
-      {
-        name: 'Shadow Clone Assault',
-        description: 'Creates multiple clones for coordinated attacks',
-        type: 'support',
-        damage: 0,
-        chakraCost: 45,
-        cooldown: 3
-      }
-    ],
-    description: 'Naruto\'s apprentice in early Shippuden. Shows great potential with developing jutsu.'
-  },
-
-  {
-    id: 'NR007',
     name: 'Anko Mitarashi',
     anime: 'Naruto',
     rarity: 'RARE',
@@ -296,7 +254,7 @@ const rareCharacters = [
   },
 
   {
-    id: 'NR008',
+    id: 'NR007',
     name: 'Kurenai Yuhi',
     anime: 'Naruto',
     rarity: 'RARE',
@@ -338,7 +296,7 @@ const rareCharacters = [
   },
 
   {
-    id: 'NR009',
+    id: 'NR008',
     name: 'Asuma Sarutobi',
     anime: 'Naruto',
     rarity: 'RARE',

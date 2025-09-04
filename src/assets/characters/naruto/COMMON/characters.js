@@ -164,7 +164,7 @@ const commonCharacters = [
         cooldown: 1
       }
     ],
-    description: 'Naruto\'s enthusiastic apprentice. Academy student with potential to become Hokage.'
+    description: 'Naruto\'s enthusiastic apprentice. Chunin with potential to become Hokage.'
   },
 
   {
@@ -206,7 +206,7 @@ const commonCharacters = [
         cooldown: 3
       }
     ],
-    description: 'One of the academy students. Specializes in wood release techniques.'
+    description: 'Chunin specializing in wood release techniques.'
   },
 
   {
@@ -248,7 +248,7 @@ const commonCharacters = [
         cooldown: 0
       }
     ],
-    description: 'The intelligent member of the academy trio. Focuses on strategy and analysis.'
+    description: 'The intelligent chunin. Focuses on strategy and analysis.'
   },
 
   {
