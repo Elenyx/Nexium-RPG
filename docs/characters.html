@@ -10,6 +10,56 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="css/styles.css">
     <link rel="stylesheet" href="css/characters.css">
+    <style>
+        /* Add hover effect for character cards */
+        .character-card {
+            background: rgba(26, 26, 46, 0.5);
+            border: 1px solid rgba(138, 43, 226, 0.2);
+            border-radius: 15px;
+            padding: 20px;
+            text-align: center;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .character-card:hover {
+            border-color: #8A2BE2;
+            box-shadow: 0 0 15px rgba(138, 43, 226, 0.3);
+        }
+
+        .character-image {
+            width: 100%;
+            height: 200px;
+            background: linear-gradient(45deg, #4B0082, #8A2BE2);
+            border-radius: 12px;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            z-index: 1;
+            transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275), background 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .character-card:hover .character-image {
+            transform: scale(1.5) translateY(-35px);
+            background: transparent;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.5);
+            z-index: 10;
+        }
+
+        .character-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 12px;
+            transition: object-fit 0.3s ease-in-out;
+        }
+
+        .character-card:hover .character-image img {
+            object-fit: contain;
+        }
+    </style>
 </head>
 <body>
     <!-- Navigation Header -->
@@ -35,7 +85,7 @@
         <section class="character-showcase">
             <div class="character-card">
                 <div class="character-image">
-                    <img src="https://ik.imagekit.io/nexiumrpg/Characters/Naruto/COMMON/Naruto.png" alt="Naruto Uzumaki" loading="lazy">
+                    <img src="https://ik.imagekit.io/NexiumRPG/Characters/Naruto/COMMON/Naruto.png" alt="Naruto Uzumaki" loading="lazy">
                 </div>
                 <div class="character-name">Naruto Uzumaki</div>
                 <div class="character-rarity common">COMMON • Naruto</div>
@@ -57,7 +107,7 @@
             </div>
             <div class="character-card">
                 <div class="character-image">
-                    <img src="https://ik.imagekit.io/nexiumrpg/Characters/Naruto/COMMON/Sasuke.png" alt="Sasuke Uchiha" loading="lazy">
+                    <img src="https://ik.imagekit.io/NexiumRPG/Characters/Naruto/COMMON/Sasuke.png" alt="Sasuke Uchiha" loading="lazy">
                 </div>
                 <div class="character-name">Sasuke Uchiha</div>
                 <div class="character-rarity common">COMMON • Naruto</div>
@@ -79,7 +129,7 @@
             </div>
             <div class="character-card">
                 <div class="character-image">
-                    <img src="https://ik.imagekit.io/nexiumrpg/Characters/Naruto/COMMON/Sakura.png" alt="Sakura Haruno" loading="lazy">
+                    <img src="https://ik.imagekit.io/NexiumRPG/Characters/Naruto/COMMON/Sakura.png" alt="Sakura Haruno" loading="lazy">
                 </div>
                 <div class="character-name">Sakura Haruno</div>
                 <div class="character-rarity common">COMMON • Naruto</div>
@@ -101,7 +151,7 @@
             </div>
             <div class="character-card">
                 <div class="character-image">
-                    <img src="https://ik.imagekit.io/nexiumrpg/Characters/Naruto/COMMON/Konohamaru.png" alt="Konohamaru" loading="lazy">
+                    <img src="https://ik.imagekit.io/NexiumRPG/Characters/Naruto/COMMON/Konohamaru.png" alt="Konohamaru" loading="lazy">
                 </div>
                 <div class="character-name">Konohamaru</div>
                 <div class="character-rarity common">COMMON • Naruto</div>
@@ -123,7 +173,7 @@
             </div>
             <div class="character-card">
                 <div class="character-image">
-                    <img src="https://ik.imagekit.io/nexiumrpg/Characters/Naruto/COMMON/Moegi.png" alt="Moegi" loading="lazy">
+                    <img src="https://ik.imagekit.io/NexiumRPG/Characters/Naruto/COMMON/Moegi.png" alt="Moegi" loading="lazy">
                 </div>
                 <div class="character-name">Moegi</div>
                 <div class="character-rarity common">COMMON • Naruto</div>
@@ -145,7 +195,7 @@
             </div>
             <div class="character-card">
                 <div class="character-image">
-                    <img src="https://ik.imagekit.io/nexiumrpg/Characters/Naruto/COMMON/Udon.png" alt="Udon" loading="lazy">
+                    <img src="https://ik.imagekit.io/NexiumRPG/Characters/Naruto/COMMON/Udon.png" alt="Udon" loading="lazy">
                 </div>
                 <div class="character-name">Udon</div>
                 <div class="character-rarity common">COMMON • Naruto</div>
@@ -167,7 +217,7 @@
             </div>
             <div class="character-card">
                 <div class="character-image">
-                    <img src="https://ik.imagekit.io/nexiumrpg/Characters/Naruto/COMMON/Mizuki.png" alt="Mizuki" loading="lazy">
+                    <img src="https://ik.imagekit.io/NexiumRPG/Characters/Naruto/COMMON/Mizuki.png" alt="Mizuki" loading="lazy">
                 </div>
                 <div class="character-name">Mizuki</div>
                 <div class="character-rarity common">COMMON • Naruto</div>
@@ -189,7 +239,7 @@
             </div>
             <div class="character-card">
                 <div class="character-image">
-                    <img src="https://ik.imagekit.io/nexiumrpg/Characters/Naruto/RARE/Shikamaru.png" alt="Shikamaru Nara" loading="lazy">
+                    <img src="https://ik.imagekit.io/NexiumRPG/Characters/Naruto/RARE/Shikamaru.png" alt="Shikamaru Nara" loading="lazy">
                 </div>
                 <div class="character-name">Shikamaru Nara</div>
                 <div class="character-rarity rare">RARE • Naruto</div>
@@ -211,7 +261,7 @@
             </div>
             <div class="character-card">
                 <div class="character-image">
-                    <img src="https://ik.imagekit.io/nexiumrpg/Characters/Naruto/RARE/Choji.png" alt="Choji Akimichi" loading="lazy">
+                    <img src="https://ik.imagekit.io/NexiumRPG/Characters/Naruto/RARE/Choji.png" alt="Choji Akimichi" loading="lazy">
                 </div>
                 <div class="character-name">Choji Akimichi</div>
                 <div class="character-rarity rare">RARE • Naruto</div>
@@ -233,7 +283,7 @@
             </div>
             <div class="character-card">
                 <div class="character-image">
-                    <img src="https://ik.imagekit.io/nexiumrpg/Characters/Naruto/RARE/Kiba.png" alt="Kiba Inuzuka" loading="lazy">
+                    <img src="https://ik.imagekit.io/NexiumRPG/Characters/Naruto/RARE/Kiba.png" alt="Kiba Inuzuka" loading="lazy">
                 </div>
                 <div class="character-name">Kiba Inuzuka</div>
                 <div class="character-rarity rare">RARE • Naruto</div>
@@ -255,7 +305,7 @@
             </div>
             <div class="character-card">
                 <div class="character-image">
-                    <img src="https://ik.imagekit.io/nexiumrpg/Characters/Naruto/RARE/Ino.png" alt="Ino Yamanaka" loading="lazy">
+                    <img src="https://ik.imagekit.io/NexiumRPG/Characters/Naruto/RARE/Ino.png" alt="Ino Yamanaka" loading="lazy">
                 </div>
                 <div class="character-name">Ino Yamanaka</div>
                 <div class="character-rarity rare">RARE • Naruto</div>
@@ -277,7 +327,7 @@
             </div>
             <div class="character-card">
                 <div class="character-image">
-                    <img src="https://ik.imagekit.io/nexiumrpg/Characters/Naruto/RARE/Tenten.png" alt="Tenten" loading="lazy">
+                    <img src="https://ik.imagekit.io/NexiumRPG/Characters/Naruto/RARE/Tenten.png" alt="Tenten" loading="lazy">
                 </div>
                 <div class="character-name">Tenten</div>
                 <div class="character-rarity rare">RARE • Naruto</div>
@@ -299,7 +349,7 @@
             </div>
             <div class="character-card">
                 <div class="character-image">
-                    <img src="https://ik.imagekit.io/nexiumrpg/Characters/Naruto/RARE/Konohamaru02.png" alt="Konohamaru Sarutobi" loading="lazy">
+                    <img src="https://ik.imagekit.io/NexiumRPG/Characters/Naruto/RARE/Konohamaru02.png" alt="Konohamaru Sarutobi" loading="lazy">
                 </div>
                 <div class="character-name">Konohamaru Sarutobi</div>
                 <div class="character-rarity rare">RARE • Naruto</div>
@@ -321,7 +371,7 @@
             </div>
             <div class="character-card">
                 <div class="character-image">
-                    <img src="https://ik.imagekit.io/nexiumrpg/Characters/Naruto/RARE/Anko.png" alt="Anko Mitarashi" loading="lazy">
+                    <img src="https://ik.imagekit.io/NexiumRPG/Characters/Naruto/RARE/Anko.png" alt="Anko Mitarashi" loading="lazy">
                 </div>
                 <div class="character-name">Anko Mitarashi</div>
                 <div class="character-rarity rare">RARE • Naruto</div>
@@ -343,7 +393,7 @@
             </div>
             <div class="character-card">
                 <div class="character-image">
-                    <img src="https://ik.imagekit.io/nexiumrpg/Characters/Naruto/RARE/Kurenai.png" alt="Kurenai Yuhi" loading="lazy">
+                    <img src="https://ik.imagekit.io/NexiumRPG/Characters/Naruto/RARE/Kurenai.png" alt="Kurenai Yuhi" loading="lazy">
                 </div>
                 <div class="character-name">Kurenai Yuhi</div>
                 <div class="character-rarity rare">RARE • Naruto</div>
@@ -362,7 +412,7 @@
             </div>
             <div class="character-card">
                 <div class="character-image">
-                    <img src="https://ik.imagekit.io/nexiumrpg/Characters/Naruto/RARE/Asuma.png" alt="Asuma Sarutobi" loading="lazy">
+                    <img src="https://ik.imagekit.io/NexiumRPG/Characters/Naruto/RARE/Asuma.png" alt="Asuma Sarutobi" loading="lazy">
                 </div>
                 <div class="character-name">Asuma Sarutobi</div>
                 <div class="character-rarity rare">RARE • Naruto</div>
@@ -384,7 +434,7 @@
             </div>
             <div class="character-card">
                 <div class="character-image">
-                    <img src="https://ik.imagekit.io/nexiumrpg/Characters/Naruto/EPIC/Kakashi.png" alt="Kakashi Hatake" loading="lazy">
+                    <img src="https://ik.imagekit.io/NexiumRPG/Characters/Naruto/EPIC/Kakashi.png" alt="Kakashi Hatake" loading="lazy">
                 </div>
                 <div class="character-name">Kakashi Hatake</div>
                 <div class="character-rarity epic">EPIC • Naruto</div>
@@ -406,7 +456,7 @@
             </div>
             <div class="character-card">
                 <div class="character-image">
-                    <img src="https://ik.imagekit.io/nexiumrpg/Characters/Naruto/EPIC/MightGuy.png" alt="Might Guy" loading="lazy">
+                    <img src="https://ik.imagekit.io/NexiumRPG/Characters/Naruto/EPIC/MightGuy.png" alt="Might Guy" loading="lazy">
                 </div>
                 <div class="character-name">Might Guy</div>
                 <div class="character-rarity epic">EPIC • Naruto</div>
@@ -428,7 +478,7 @@
             </div>
             <div class="character-card">
                 <div class="character-image">
-                    <img src="https://ik.imagekit.io/nexiumrpg/Characters/Naruto/EPIC/Shikamaru02.png" alt="Shikamaru Nara" loading="lazy">
+                    <img src="https://ik.imagekit.io/NexiumRPG/Characters/Naruto/EPIC/Shikamaru02.png" alt="Shikamaru Nara" loading="lazy">
                 </div>
                 <div class="character-name">Shikamaru Nara</div>
                 <div class="character-rarity epic">EPIC • Naruto</div>
@@ -450,7 +500,7 @@
             </div>
             <div class="character-card">
                 <div class="character-image">
-                    <img src="https://ik.imagekit.io/nexiumrpg/Characters/Naruto/EPIC/Neji.png" alt="Neji Hyuga" loading="lazy">
+                    <img src="https://ik.imagekit.io/NexiumRPG/Characters/Naruto/EPIC/Neji.png" alt="Neji Hyuga" loading="lazy">
                 </div>
                 <div class="character-name">Neji Hyuga</div>
                 <div class="character-rarity epic">EPIC • Naruto</div>
@@ -472,7 +522,7 @@
             </div>
             <div class="character-card">
                 <div class="character-image">
-                    <img src="https://ik.imagekit.io/nexiumrpg/Characters/Naruto/EPIC/RockLee.png" alt="Rock Lee" loading="lazy">
+                    <img src="https://ik.imagekit.io/NexiumRPG/Characters/Naruto/EPIC/RockLee.png" alt="Rock Lee" loading="lazy">
                 </div>
                 <div class="character-name">Rock Lee</div>
                 <div class="character-rarity epic">EPIC • Naruto</div>
@@ -494,7 +544,7 @@
             </div>
             <div class="character-card">
                 <div class="character-image">
-                    <img src="https://ik.imagekit.io/nexiumrpg/Characters/Naruto/EPIC/Temari.png" alt="Temari" loading="lazy">
+                    <img src="https://ik.imagekit.io/NexiumRPG/Characters/Naruto/EPIC/Temari.png" alt="Temari" loading="lazy">
                 </div>
                 <div class="character-name">Temari</div>
                 <div class="character-rarity epic">EPIC • Naruto</div>
@@ -516,7 +566,7 @@
             </div>
             <div class="character-card">
                 <div class="character-image">
-                    <img src="https://ik.imagekit.io/nexiumrpg/Characters/Naruto/EPIC/Kankuro.png" alt="Kankuro" loading="lazy">
+                    <img src="https://ik.imagekit.io/NexiumRPG/Characters/Naruto/EPIC/Kankuro.png" alt="Kankuro" loading="lazy">
                 </div>
                 <div class="character-name">Kankuro</div>
                 <div class="character-rarity epic">EPIC • Naruto</div>
@@ -538,7 +588,7 @@
             </div>
             <div class="character-card">
                 <div class="character-image">
-                    <img src="https://ik.imagekit.io/nexiumrpg/Characters/Naruto/EPIC/Choji02.png" alt="Choji Akimichi" loading="lazy">
+                    <img src="https://ik.imagekit.io/NexiumRPG/Characters/Naruto/EPIC/Choji02.png" alt="Choji Akimichi" loading="lazy">
                 </div>
                 <div class="character-name">Choji Akimichi</div>
                 <div class="character-rarity epic">EPIC • Naruto</div>
@@ -560,7 +610,7 @@
             </div>
             <div class="character-card">
                 <div class="character-image">
-                    <img src="https://ik.imagekit.io/nexiumrpg/Characters/Naruto/EPIC/Shino.png" alt="Shino Aburame" loading="lazy">
+                    <img src="https://ik.imagekit.io/NexiumRPG/Characters/Naruto/EPIC/Shino.png" alt="Shino Aburame" loading="lazy">
                 </div>
                 <div class="character-name">Shino Aburame</div>
                 <div class="character-rarity epic">EPIC • Naruto</div>
@@ -582,7 +632,7 @@
             </div>
             <div class="character-card">
                 <div class="character-image">
-                    <img src="https://ik.imagekit.io/nexiumrpg/Characters/Naruto/EPIC/Hinata.png" alt="Hinata Hyuga" loading="lazy">
+                    <img src="https://ik.imagekit.io/NexiumRPG/Characters/Naruto/EPIC/Hinata.png" alt="Hinata Hyuga" loading="lazy">
                 </div>
                 <div class="character-name">Hinata Hyuga</div>
                 <div class="character-rarity epic">EPIC • Naruto</div>
@@ -604,7 +654,7 @@
             </div>
             <div class="character-card">
                 <div class="character-image">
-                    <img src="https://ik.imagekit.io/nexiumrpg/Characters/Naruto/EPIC/Iruka.png" alt="Iruka Umino" loading="lazy">
+                    <img src="https://ik.imagekit.io/NexiumRPG/Characters/Naruto/EPIC/Iruka.png" alt="Iruka Umino" loading="lazy">
                 </div>
                 <div class="character-name">Iruka Umino</div>
                 <div class="character-rarity epic">EPIC • Naruto</div>
@@ -626,7 +676,7 @@
             </div>
             <div class="character-card">
                 <div class="character-image">
-                    <img src="https://ik.imagekit.io/nexiumrpg/Characters/Naruto/EPIC/Naruto-DemonCloak.png" alt="Naruto Uzumaki - Demon Cloak Form" loading="lazy">
+                    <img src="https://ik.imagekit.io/NexiumRPG/Characters/Naruto/EPIC/Naruto-DemonCloak.png" alt="Naruto Uzumaki - Demon Cloak Form" loading="lazy">
                 </div>
                 <div class="character-name">Naruto Uzumaki - Demon Cloak Form</div>
                 <div class="character-rarity epic">EPIC • Naruto</div>
@@ -648,7 +698,7 @@
             </div>
             <div class="character-card">
                 <div class="character-image">
-                    <img src="https://ik.imagekit.io/nexiumrpg/Characters/Naruto/EPIC/Sasuke-CurseMark.png" alt="Sasuke's Curse Mark" loading="lazy">
+                    <img src="https://ik.imagekit.io/NexiumRPG/Characters/Naruto/EPIC/Sasuke-CurseMark.png" alt="Sasuke's Curse Mark" loading="lazy">
                 </div>
                 <div class="character-name">Sasuke's Curse Mark</div>
                 <div class="character-rarity epic">EPIC • Naruto</div>
@@ -670,7 +720,7 @@
             </div>
             <div class="character-card">
                 <div class="character-image">
-                    <img src="https://ik.imagekit.io/nexiumrpg/Characters/Naruto/EPIC/Susanoo-RibCage.png" alt="Susanoo Rib Cage" loading="lazy">
+                    <img src="https://ik.imagekit.io/NexiumRPG/Characters/Naruto/EPIC/Susanoo-RibCage.png" alt="Susanoo Rib Cage" loading="lazy">
                 </div>
                 <div class="character-name">Susanoo Rib Cage</div>
                 <div class="character-rarity epic">EPIC • Naruto</div>
@@ -692,7 +742,7 @@
             </div>
             <div class="character-card">
                 <div class="character-image">
-                    <img src="https://ik.imagekit.io/nexiumrpg/Characters/Naruto/LEGENDARY/Jiraiya.png" alt="Jiraiya" loading="lazy">
+                    <img src="https://ik.imagekit.io/NexiumRPG/Characters/Naruto/LEGENDARY/Jiraiya.png" alt="Jiraiya" loading="lazy">
                 </div>
                 <div class="character-name">Jiraiya</div>
                 <div class="character-rarity legendary">LEGENDARY • Naruto</div>
@@ -714,7 +764,7 @@
             </div>
             <div class="character-card">
                 <div class="character-image">
-                    <img src="https://ik.imagekit.io/nexiumrpg/Characters/Naruto/LEGENDARY/Tsunade.png" alt="Tsunade Senju" loading="lazy">
+                    <img src="https://ik.imagekit.io/NexiumRPG/Characters/Naruto/LEGENDARY/Tsunade.png" alt="Tsunade Senju" loading="lazy">
                 </div>
                 <div class="character-name">Tsunade Senju</div>
                 <div class="character-rarity legendary">LEGENDARY • Naruto</div>
@@ -736,7 +786,7 @@
             </div>
             <div class="character-card">
                 <div class="character-image">
-                    <img src="https://ik.imagekit.io/nexiumrpg/Characters/Naruto/LEGENDARY/Orochimaru.png" alt="Orochimaru" loading="lazy">
+                    <img src="https://ik.imagekit.io/NexiumRPG/Characters/Naruto/LEGENDARY/Orochimaru.png" alt="Orochimaru" loading="lazy">
                 </div>
                 <div class="character-name">Orochimaru</div>
                 <div class="character-rarity legendary">LEGENDARY • Naruto</div>
@@ -758,7 +808,7 @@
             </div>
             <div class="character-card">
                 <div class="character-image">
-                    <img src="https://ik.imagekit.io/nexiumrpg/Characters/Naruto/LEGENDARY/Gaara.png" alt="Gaara" loading="lazy">
+                    <img src="https://ik.imagekit.io/NexiumRPG/Characters/Naruto/LEGENDARY/Gaara.png" alt="Gaara" loading="lazy">
                 </div>
                 <div class="character-name">Gaara</div>
                 <div class="character-rarity legendary">LEGENDARY • Naruto</div>
@@ -780,7 +830,7 @@
             </div>
             <div class="character-card">
                 <div class="character-image">
-                    <img src="https://ik.imagekit.io/nexiumrpg/Characters/Naruto/LEGENDARY/FourthRaikage.png" alt="Fourth Raikage" loading="lazy">
+                    <img src="https://ik.imagekit.io/NexiumRPG/Characters/Naruto/LEGENDARY/FourthRaikage.png" alt="Fourth Raikage" loading="lazy">
                 </div>
                 <div class="character-name">Fourth Raikage</div>
                 <div class="character-rarity legendary">LEGENDARY • Naruto</div>
@@ -802,7 +852,7 @@
             </div>
             <div class="character-card">
                 <div class="character-image">
-                    <img src="https://ik.imagekit.io/nexiumrpg/Characters/Naruto/LEGENDARY/ThirdRaikage.png" alt="Third Raikage" loading="lazy">
+                    <img src="https://ik.imagekit.io/NexiumRPG/Characters/Naruto/LEGENDARY/ThirdRaikage.png" alt="Third Raikage" loading="lazy">
                 </div>
                 <div class="character-name">Third Raikage</div>
                 <div class="character-rarity legendary">LEGENDARY • Naruto</div>
@@ -824,7 +874,7 @@
             </div>
             <div class="character-card">
                 <div class="character-image">
-                    <img src="https://ik.imagekit.io/nexiumrpg/Characters/Naruto/LEGENDARY/Onoki.png" alt="Onoki" loading="lazy">
+                    <img src="https://ik.imagekit.io/NexiumRPG/Characters/Naruto/LEGENDARY/Onoki.png" alt="Onoki" loading="lazy">
                 </div>
                 <div class="character-name">Onoki</div>
                 <div class="character-rarity legendary">LEGENDARY • Naruto</div>
@@ -846,7 +896,7 @@
             </div>
             <div class="character-card">
                 <div class="character-image">
-                    <img src="https://ik.imagekit.io/nexiumrpg/Characters/Naruto/LEGENDARY/Mei.png" alt="Mei Terumi" loading="lazy">
+                    <img src="https://ik.imagekit.io/NexiumRPG/Characters/Naruto/LEGENDARY/Mei.png" alt="Mei Terumi" loading="lazy">
                 </div>
                 <div class="character-name">Mei Terumi</div>
                 <div class="character-rarity legendary">LEGENDARY • Naruto</div>
@@ -868,7 +918,7 @@
             </div>
             <div class="character-card">
                 <div class="character-image">
-                    <img src="https://ik.imagekit.io/nexiumrpg/Characters/Naruto/LEGENDARY/Kisame.png" alt="Kisame Hoshigaki" loading="lazy">
+                    <img src="https://ik.imagekit.io/NexiumRPG/Characters/Naruto/LEGENDARY/Kisame.png" alt="Kisame Hoshigaki" loading="lazy">
                 </div>
                 <div class="character-name">Kisame Hoshigaki</div>
                 <div class="character-rarity legendary">LEGENDARY • Naruto</div>
@@ -890,7 +940,7 @@
             </div>
             <div class="character-card">
                 <div class="character-image">
-                    <img src="https://ik.imagekit.io/nexiumrpg/Characters/Naruto/LEGENDARY/Deidara.png" alt="Deidara" loading="lazy">
+                    <img src="https://ik.imagekit.io/NexiumRPG/Characters/Naruto/LEGENDARY/Deidara.png" alt="Deidara" loading="lazy">
                 </div>
                 <div class="character-name">Deidara</div>
                 <div class="character-rarity legendary">LEGENDARY • Naruto</div>
@@ -912,7 +962,7 @@
             </div>
             <div class="character-card">
                 <div class="character-image">
-                    <img src="https://ik.imagekit.io/nexiumrpg/Characters/Naruto/LEGENDARY/Sasori.png" alt="Sasori" loading="lazy">
+                    <img src="https://ik.imagekit.io/NexiumRPG/Characters/Naruto/LEGENDARY/Sasori.png" alt="Sasori" loading="lazy">
                 </div>
                 <div class="character-name">Sasori</div>
                 <div class="character-rarity legendary">LEGENDARY • Naruto</div>
@@ -934,7 +984,7 @@
             </div>
             <div class="character-card">
                 <div class="character-image">
-                    <img src="https://ik.imagekit.io/nexiumrpg/Characters/Naruto/LEGENDARY/Konan.png" alt="Konan" loading="lazy">
+                    <img src="https://ik.imagekit.io/NexiumRPG/Characters/Naruto/LEGENDARY/Konan.png" alt="Konan" loading="lazy">
                 </div>
                 <div class="character-name">Konan</div>
                 <div class="character-rarity legendary">LEGENDARY • Naruto</div>
@@ -956,7 +1006,7 @@
             </div>
             <div class="character-card">
                 <div class="character-image">
-                    <img src="https://ik.imagekit.io/nexiumrpg/Characters/Naruto/LEGENDARY/Zabuza.png" alt="Zabuza Momochi" loading="lazy">
+                    <img src="https://ik.imagekit.io/NexiumRPG/Characters/Naruto/LEGENDARY/Zabuza.png" alt="Zabuza Momochi" loading="lazy">
                 </div>
                 <div class="character-name">Zabuza Momochi</div>
                 <div class="character-rarity legendary">LEGENDARY • Naruto</div>
@@ -978,7 +1028,7 @@
             </div>
             <div class="character-card">
                 <div class="character-image">
-                    <img src="https://ik.imagekit.io/nexiumrpg/Characters/Naruto/LEGENDARY/Hiruzen.png" alt="Hiruzen Sarutobi" loading="lazy">
+                    <img src="https://ik.imagekit.io/NexiumRPG/Characters/Naruto/LEGENDARY/Hiruzen.png" alt="Hiruzen Sarutobi" loading="lazy">
                 </div>
                 <div class="character-name">Hiruzen Sarutobi</div>
                 <div class="character-rarity legendary">LEGENDARY • Naruto</div>
@@ -1000,7 +1050,7 @@
             </div>
             <div class="character-card">
                 <div class="character-image">
-                    <img src="https://ik.imagekit.io/nexiumrpg/Characters/Naruto/LEGENDARY/Naruto-FourTails.png" alt="Naruto Uzumaki - Four-Tails Transformation" loading="lazy">
+                    <img src="https://ik.imagekit.io/NexiumRPG/Characters/Naruto/LEGENDARY/Naruto-FourTails.png" alt="Naruto Uzumaki - Four-Tails Transformation" loading="lazy">
                 </div>
                 <div class="character-name">Naruto Uzumaki - Four-Tails Transformation</div>
                 <div class="character-rarity legendary">LEGENDARY • Naruto</div>
@@ -1022,7 +1072,7 @@
             </div>
             <div class="character-card">
                 <div class="character-image">
-                    <img src="https://ik.imagekit.io/nexiumrpg/Characters/Naruto/LEGENDARY/Sasuke-HeavenlyHand.png" alt="Sasuke - Heavenly Hand Power" loading="lazy">
+                    <img src="https://ik.imagekit.io/NexiumRPG/Characters/Naruto/LEGENDARY/Sasuke-HeavenlyHand.png" alt="Sasuke - Heavenly Hand Power" loading="lazy">
                 </div>
                 <div class="character-name">Sasuke - Heavenly Hand Power</div>
                 <div class="character-rarity legendary">LEGENDARY • Naruto</div>
@@ -1044,7 +1094,7 @@
             </div>
             <div class="character-card">
                 <div class="character-image">
-                    <img src="https://ik.imagekit.io/nexiumrpg/Characters/Naruto/LEGENDARY/Susanoo-Skeletal.png" alt="Susanoo Skeletal Form" loading="lazy">
+                    <img src="https://ik.imagekit.io/NexiumRPG/Characters/Naruto/LEGENDARY/Susanoo-Skeletal.png" alt="Susanoo Skeletal Form" loading="lazy">
                 </div>
                 <div class="character-name">Susanoo Skeletal Form</div>
                 <div class="character-rarity legendary">LEGENDARY • Naruto</div>
@@ -1066,7 +1116,7 @@
             </div>
             <div class="character-card">
                 <div class="character-image">
-                    <img src="https://ik.imagekit.io/nexiumrpg/Characters/Naruto/LEGENDARY/Kimimaro-Shikotsumyaku.png" alt="Kimimaro (Sound Five) - Shikotsumyaku (Kekkei Genkai)" loading="lazy">
+                    <img src="https://ik.imagekit.io/NexiumRPG/Characters/Naruto/LEGENDARY/Kimimaro-Shikotsumyaku.png" alt="Kimimaro (Sound Five) - Shikotsumyaku (Kekkei Genkai)" loading="lazy">
                 </div>
                 <div class="character-name">Kimimaro (Sound Five) - Shikotsumyaku (Kekkei Genkai)</div>
                 <div class="character-rarity legendary">LEGENDARY • Naruto</div>
@@ -1088,7 +1138,7 @@
             </div>
             <div class="character-card">
                 <div class="character-image">
-                    <img src="https://ik.imagekit.io/nexiumrpg/Characters/Naruto/MYTHIC/Naruto-KCM.png" alt="Naruto Uzumaki (Kurama Chakra Mode)" loading="lazy">
+                    <img src="https://ik.imagekit.io/NexiumRPG/Characters/Naruto/MYTHIC/Naruto-KCM.png" alt="Naruto Uzumaki (Kurama Chakra Mode)" loading="lazy">
                 </div>
                 <div class="character-name">Naruto Uzumaki (Kurama Chakra Mode)</div>
                 <div class="character-rarity mythic">MYTHIC • Naruto</div>
@@ -1110,7 +1160,7 @@
             </div>
             <div class="character-card">
                 <div class="character-image">
-                    <img src="https://ik.imagekit.io/nexiumrpg/Characters/Naruto/MYTHIC/Sasuke-EMS.png" alt="Sasuke Uchiha (Eternal Mangekyo Sharingan)" loading="lazy">
+                    <img src="https://ik.imagekit.io/NexiumRPG/Characters/Naruto/MYTHIC/Sasuke-EMS.png" alt="Sasuke Uchiha (Eternal Mangekyo Sharingan)" loading="lazy">
                 </div>
                 <div class="character-name">Sasuke Uchiha (Eternal Mangekyo Sharingan)</div>
                 <div class="character-rarity mythic">MYTHIC • Naruto</div>
@@ -1132,7 +1182,7 @@
             </div>
             <div class="character-card">
                 <div class="character-image">
-                    <img src="https://ik.imagekit.io/nexiumrpg/Characters/Naruto/MYTHIC/Guy-8thGate.png" alt="Might Guy (8th Gate)" loading="lazy">
+                    <img src="https://ik.imagekit.io/NexiumRPG/Characters/Naruto/MYTHIC/Guy-8thGate.png" alt="Might Guy (8th Gate)" loading="lazy">
                 </div>
                 <div class="character-name">Might Guy (8th Gate)</div>
                 <div class="character-rarity mythic">MYTHIC • Naruto</div>
@@ -1154,7 +1204,7 @@
             </div>
             <div class="character-card">
                 <div class="character-image">
-                    <img src="https://ik.imagekit.io/nexiumrpg/Characters/Naruto/MYTHIC/Kakashi-DMS.png" alt="Kakashi Hatake (Double Mangekyo Sharingan)" loading="lazy">
+                    <img src="https://ik.imagekit.io/NexiumRPG/Characters/Naruto/MYTHIC/Kakashi-DMS.png" alt="Kakashi Hatake (Double Mangekyo Sharingan)" loading="lazy">
                 </div>
                 <div class="character-name">Kakashi Hatake (Double Mangekyo Sharingan)</div>
                 <div class="character-rarity mythic">MYTHIC • Naruto</div>
@@ -1176,7 +1226,7 @@
             </div>
             <div class="character-card">
                 <div class="character-image">
-                    <img src="https://ik.imagekit.io/nexiumrpg/Characters/Naruto/MYTHIC/Minato-Edo.png" alt="Minato Namikaze (Edo Tensei)" loading="lazy">
+                    <img src="https://ik.imagekit.io/NexiumRPG/Characters/Naruto/MYTHIC/Minato-Edo.png" alt="Minato Namikaze (Edo Tensei)" loading="lazy">
                 </div>
                 <div class="character-name">Minato Namikaze (Edo Tensei)</div>
                 <div class="character-rarity mythic">MYTHIC • Naruto</div>
@@ -1198,7 +1248,7 @@
             </div>
             <div class="character-card">
                 <div class="character-image">
-                    <img src="https://ik.imagekit.io/nexiumrpg/Characters/Naruto/MYTHIC/Hashirama.png" alt="Hashirama Senju" loading="lazy">
+                    <img src="https://ik.imagekit.io/NexiumRPG/Characters/Naruto/MYTHIC/Hashirama.png" alt="Hashirama Senju" loading="lazy">
                 </div>
                 <div class="character-name">Hashirama Senju</div>
                 <div class="character-rarity mythic">MYTHIC • Naruto</div>
@@ -1220,7 +1270,7 @@
             </div>
             <div class="character-card">
                 <div class="character-image">
-                    <img src="https://ik.imagekit.io/nexiumrpg/Characters/Naruto/MYTHIC/Itachi-Edo.png" alt="Itachi Uchiha (Edo Tensei)" loading="lazy">
+                    <img src="https://ik.imagekit.io/NexiumRPG/Characters/Naruto/MYTHIC/Itachi-Edo.png" alt="Itachi Uchiha (Edo Tensei)" loading="lazy">
                 </div>
                 <div class="character-name">Itachi Uchiha (Edo Tensei)</div>
                 <div class="character-rarity mythic">MYTHIC • Naruto</div>
@@ -1242,7 +1292,7 @@
             </div>
             <div class="character-card">
                 <div class="character-image">
-                    <img src="https://ik.imagekit.io/nexiumrpg/Characters/Naruto/MYTHIC/Nagato-Pain.png" alt="Nagato (Pain)" loading="lazy">
+                    <img src="https://ik.imagekit.io/NexiumRPG/Characters/Naruto/MYTHIC/Nagato-Pain.png" alt="Nagato (Pain)" loading="lazy">
                 </div>
                 <div class="character-name">Nagato (Pain)</div>
                 <div class="character-rarity mythic">MYTHIC • Naruto</div>
@@ -1264,7 +1314,7 @@
             </div>
             <div class="character-card">
                 <div class="character-image">
-                    <img src="https://ik.imagekit.io/nexiumrpg/Characters/Naruto/MYTHIC/KillerBee-8Tails.png" alt="Killer Bee (8-Tailed Form)" loading="lazy">
+                    <img src="https://ik.imagekit.io/NexiumRPG/Characters/Naruto/MYTHIC/KillerBee-8Tails.png" alt="Killer Bee (8-Tailed Form)" loading="lazy">
                 </div>
                 <div class="character-name">Killer Bee (8-Tailed Form)</div>
                 <div class="character-rarity mythic">MYTHIC • Naruto</div>
@@ -1286,7 +1336,7 @@
             </div>
             <div class="character-card">
                 <div class="character-image">
-                    <img src="https://ik.imagekit.io/nexiumrpg/Characters/Naruto/MYTHIC/Naruto-SixTails.png" alt="Naruto Uzumaki - Six-Tails Transformation" loading="lazy">
+                    <img src="https://ik.imagekit.io/NexiumRPG/Characters/Naruto/MYTHIC/Naruto-SixTails.png" alt="Naruto Uzumaki - Six-Tails Transformation" loading="lazy">
                 </div>
                 <div class="character-name">Naruto Uzumaki - Six-Tails Transformation</div>
                 <div class="character-rarity mythic">MYTHIC • Naruto</div>
@@ -1308,7 +1358,7 @@
             </div>
             <div class="character-card">
                 <div class="character-image">
-                    <img src="https://ik.imagekit.io/nexiumrpg/Characters/Naruto/MYTHIC/Naruto-ToadSage.png" alt="Naruto Uzumaki - Toad Sage Mode" loading="lazy">
+                    <img src="https://ik.imagekit.io/NexiumRPG/Characters/Naruto/MYTHIC/Naruto-ToadSage.png" alt="Naruto Uzumaki - Toad Sage Mode" loading="lazy">
                 </div>
                 <div class="character-name">Naruto Uzumaki - Toad Sage Mode</div>
                 <div class="character-rarity mythic">MYTHIC • Naruto</div>
@@ -1330,7 +1380,7 @@
             </div>
             <div class="character-card">
                 <div class="character-image">
-                    <img src="https://ik.imagekit.io/nexiumrpg/Characters/Naruto/MYTHIC/Madara-BorderJail.png" alt="Madara - Border Jail" loading="lazy">
+                    <img src="https://ik.imagekit.io/NexiumRPG/Characters/Naruto/MYTHIC/Madara-BorderJail.png" alt="Madara - Border Jail" loading="lazy">
                 </div>
                 <div class="character-name">Madara - Border Jail</div>
                 <div class="character-rarity mythic">MYTHIC • Naruto</div>
@@ -1352,7 +1402,7 @@
             </div>
             <div class="character-card">
                 <div class="character-image">
-                    <img src="https://ik.imagekit.io/nexiumrpg/Characters/Naruto/MYTHIC/Nagato-AsuraPath.png" alt="Nagato - The Asura Path" loading="lazy">
+                    <img src="https://ik.imagekit.io/NexiumRPG/Characters/Naruto/MYTHIC/Nagato-AsuraPath.png" alt="Nagato - The Asura Path" loading="lazy">
                 </div>
                 <div class="character-name">Nagato - The Asura Path</div>
                 <div class="character-rarity mythic">MYTHIC • Naruto</div>
@@ -1374,7 +1424,7 @@
             </div>
             <div class="character-card">
                 <div class="character-image">
-                    <img src="https://ik.imagekit.io/nexiumrpg/Characters/Naruto/MYTHIC/Sasuke-Mangekyo.png" alt="Sasuke - Mangekyo Sharingan" loading="lazy">
+                    <img src="https://ik.imagekit.io/NexiumRPG/Characters/Naruto/MYTHIC/Sasuke-Mangekyo.png" alt="Sasuke - Mangekyo Sharingan" loading="lazy">
                 </div>
                 <div class="character-name">Sasuke - Mangekyo Sharingan</div>
                 <div class="character-rarity mythic">MYTHIC • Naruto</div>
@@ -1396,7 +1446,7 @@
             </div>
             <div class="character-card">
                 <div class="character-image">
-                    <img src="https://ik.imagekit.io/nexiumrpg/Characters/Naruto/MYTHIC/Susanoo-Humanoid.png" alt="Susanoo Humanoid Form" loading="lazy">
+                    <img src="https://ik.imagekit.io/NexiumRPG/Characters/Naruto/MYTHIC/Susanoo-Humanoid.png" alt="Susanoo Humanoid Form" loading="lazy">
                 </div>
                 <div class="character-name">Susanoo Humanoid Form</div>
                 <div class="character-rarity mythic">MYTHIC • Naruto</div>
@@ -1418,7 +1468,7 @@
             </div>
             <div class="character-card">
                 <div class="character-image">
-                    <img src="https://ik.imagekit.io/nexiumrpg/Characters/Naruto/DIMENSIONAL/Kaguya.png" alt="Kaguya Otsutsuki" loading="lazy">
+                    <img src="https://ik.imagekit.io/NexiumRPG/Characters/Naruto/DIMENSIONAL/Kaguya.png" alt="Kaguya Otsutsuki" loading="lazy">
                 </div>
                 <div class="character-name">Kaguya Otsutsuki</div>
                 <div class="character-rarity dimensional">DIMENSIONAL • Naruto</div>
@@ -1440,7 +1490,7 @@
             </div>
             <div class="character-card">
                 <div class="character-image">
-                    <img src="https://ik.imagekit.io/nexiumrpg/Characters/Naruto/DIMENSIONAL/Hagoromo.png" alt="Hagoromo Otsutsuki" loading="lazy">
+                    <img src="https://ik.imagekit.io/NexiumRPG/Characters/Naruto/DIMENSIONAL/Hagoromo.png" alt="Hagoromo Otsutsuki" loading="lazy">
                 </div>
                 <div class="character-name">Hagoromo Otsutsuki</div>
                 <div class="character-rarity dimensional">DIMENSIONAL • Naruto</div>
@@ -1462,7 +1512,7 @@
             </div>
             <div class="character-card">
                 <div class="character-image">
-                    <img src="https://ik.imagekit.io/nexiumrpg/Characters/Naruto/DIMENSIONAL/Hamura.png" alt="Hamura Otsutsuki" loading="lazy">
+                    <img src="https://ik.imagekit.io/NexiumRPG/Characters/Naruto/DIMENSIONAL/Hamura.png" alt="Hamura Otsutsuki" loading="lazy">
                 </div>
                 <div class="character-name">Hamura Otsutsuki</div>
                 <div class="character-rarity dimensional">DIMENSIONAL • Naruto</div>
@@ -1484,7 +1534,7 @@
             </div>
             <div class="character-card">
                 <div class="character-image">
-                    <img src="https://ik.imagekit.io/nexiumrpg/Characters/Naruto/DIMENSIONAL/Naruto-SixPaths.png" alt="Naruto Uzumaki (Six Paths Sage Mode)" loading="lazy">
+                    <img src="https://ik.imagekit.io/NexiumRPG/Characters/Naruto/DIMENSIONAL/Naruto-SixPaths.png" alt="Naruto Uzumaki (Six Paths Sage Mode)" loading="lazy">
                 </div>
                 <div class="character-name">Naruto Uzumaki (Six Paths Sage Mode)</div>
                 <div class="character-rarity dimensional">DIMENSIONAL • Naruto</div>
@@ -1506,7 +1556,7 @@
             </div>
             <div class="character-card">
                 <div class="character-image">
-                    <img src="https://ik.imagekit.io/nexiumrpg/Characters/Naruto/DIMENSIONAL/Sasuke-RinneganEMS.png" alt="Sasuke Uchiha (Rinnegan + Eternal Mangekyo)" loading="lazy">
+                    <img src="https://ik.imagekit.io/NexiumRPG/Characters/Naruto/DIMENSIONAL/Sasuke-RinneganEMS.png" alt="Sasuke Uchiha (Rinnegan + Eternal Mangekyo)" loading="lazy">
                 </div>
                 <div class="character-name">Sasuke Uchiha (Rinnegan + Eternal Mangekyo)</div>
                 <div class="character-rarity dimensional">DIMENSIONAL • Naruto</div>
@@ -1528,7 +1578,7 @@
             </div>
             <div class="character-card">
                 <div class="character-image">
-                    <img src="https://ik.imagekit.io/nexiumrpg/Characters/Naruto/DIMENSIONAL/Madara-TenTails.png" alt="Madara Uchiha (Ten Tails Jinchuriki)" loading="lazy">
+                    <img src="https://ik.imagekit.io/NexiumRPG/Characters/Naruto/DIMENSIONAL/Madara-TenTails.png" alt="Madara Uchiha (Ten Tails Jinchuriki)" loading="lazy">
                 </div>
                 <div class="character-name">Madara Uchiha (Ten Tails Jinchuriki)</div>
                 <div class="character-rarity dimensional">DIMENSIONAL • Naruto</div>
@@ -1550,7 +1600,7 @@
             </div>
             <div class="character-card">
                 <div class="character-image">
-                    <img src="https://ik.imagekit.io/nexiumrpg/Characters/Naruto/DIMENSIONAL/Obito-TenTails.png" alt="Obito Uchiha (Ten Tails Jinchuriki)" loading="lazy">
+                    <img src="https://ik.imagekit.io/NexiumRPG/Characters/Naruto/DIMENSIONAL/Obito-TenTails.png" alt="Obito Uchiha (Ten Tails Jinchuriki)" loading="lazy">
                 </div>
                 <div class="character-name">Obito Uchiha (Ten Tails Jinchuriki)</div>
                 <div class="character-rarity dimensional">DIMENSIONAL • Naruto</div>
@@ -1572,7 +1622,7 @@
             </div>
             <div class="character-card">
                 <div class="character-image">
-                    <img src="https://ik.imagekit.io/nexiumrpg/Characters/Naruto/DIMENSIONAL/Naruto-NineTailsSage.png" alt="Naruto Uzumaki - Nine Tails Sage Mode" loading="lazy">
+                    <img src="https://ik.imagekit.io/NexiumRPG/Characters/Naruto/DIMENSIONAL/Naruto-NineTailsSage.png" alt="Naruto Uzumaki - Nine Tails Sage Mode" loading="lazy">
                 </div>
                 <div class="character-name">Naruto Uzumaki - Nine Tails Sage Mode</div>
                 <div class="character-rarity dimensional">DIMENSIONAL • Naruto</div>
@@ -1594,7 +1644,7 @@
             </div>
             <div class="character-card">
                 <div class="character-image">
-                    <img src="https://ik.imagekit.io/nexiumrpg/Characters/Naruto/DIMENSIONAL/Naruto-TailedBeast.png" alt="Naruto Uzumaki - Tailed Beast Mode" loading="lazy">
+                    <img src="https://ik.imagekit.io/NexiumRPG/Characters/Naruto/DIMENSIONAL/Naruto-TailedBeast.png" alt="Naruto Uzumaki - Tailed Beast Mode" loading="lazy">
                 </div>
                 <div class="character-name">Naruto Uzumaki - Tailed Beast Mode</div>
                 <div class="character-rarity dimensional">DIMENSIONAL • Naruto</div>
@@ -1616,7 +1666,7 @@
             </div>
             <div class="character-card">
                 <div class="character-image">
-                    <img src="https://ik.imagekit.io/nexiumrpg/Characters/Naruto/DIMENSIONAL/Naruto-SageMastered.png" alt="Naruto Uzumaki - Sage Mode (Mastered)" loading="lazy">
+                    <img src="https://ik.imagekit.io/NexiumRPG/Characters/Naruto/DIMENSIONAL/Naruto-SageMastered.png" alt="Naruto Uzumaki - Sage Mode (Mastered)" loading="lazy">
                 </div>
                 <div class="character-name">Naruto Uzumaki - Sage Mode (Mastered)</div>
                 <div class="character-rarity dimensional">DIMENSIONAL • Naruto</div>
@@ -1638,7 +1688,7 @@
             </div>
             <div class="character-card">
                 <div class="character-image">
-                    <img src="https://ik.imagekit.io/nexiumrpg/Characters/Naruto/DIMENSIONAL/Naruto-KuramaSage.png" alt="Naruto Uzumaki - Kurama Sage Mode" loading="lazy">
+                    <img src="https://ik.imagekit.io/NexiumRPG/Characters/Naruto/DIMENSIONAL/Naruto-KuramaSage.png" alt="Naruto Uzumaki - Kurama Sage Mode" loading="lazy">
                 </div>
                 <div class="character-name">Naruto Uzumaki - Kurama Sage Mode</div>
                 <div class="character-rarity dimensional">DIMENSIONAL • Naruto</div>
@@ -1660,7 +1710,7 @@
             </div>
             <div class="character-card">
                 <div class="character-image">
-                    <img src="https://ik.imagekit.io/nexiumrpg/Characters/Naruto/DIMENSIONAL/Naruto-Ashura.png" alt="Naruto Uzumaki - Ashura Mode" loading="lazy">
+                    <img src="https://ik.imagekit.io/NexiumRPG/Characters/Naruto/DIMENSIONAL/Naruto-Ashura.png" alt="Naruto Uzumaki - Ashura Mode" loading="lazy">
                 </div>
                 <div class="character-name">Naruto Uzumaki - Ashura Mode</div>
                 <div class="character-rarity dimensional">DIMENSIONAL • Naruto</div>
@@ -1682,7 +1732,7 @@
             </div>
             <div class="character-card">
                 <div class="character-image">
-                    <img src="https://ik.imagekit.io/nexiumrpg/Characters/Naruto/DIMENSIONAL/Naruto-Baryon.png" alt="Naruto Uzumaki - Baryon Mode" loading="lazy">
+                    <img src="https://ik.imagekit.io/NexiumRPG/Characters/Naruto/DIMENSIONAL/Naruto-Baryon.png" alt="Naruto Uzumaki - Baryon Mode" loading="lazy">
                 </div>
                 <div class="character-name">Naruto Uzumaki - Baryon Mode</div>
                 <div class="character-rarity dimensional">DIMENSIONAL • Naruto</div>
@@ -1704,7 +1754,7 @@
             </div>
             <div class="character-card">
                 <div class="character-image">
-                    <img src="https://ik.imagekit.io/nexiumrpg/Characters/Naruto/DIMENSIONAL/Madara-DivineGenesis.png" alt="Madara - Divine Genesis: World of Trees" loading="lazy">
+                    <img src="https://ik.imagekit.io/NexiumRPG/Characters/Naruto/DIMENSIONAL/Madara-DivineGenesis.png" alt="Madara - Divine Genesis: World of Trees" loading="lazy">
                 </div>
                 <div class="character-name">Madara - Divine Genesis: World of Trees</div>
                 <div class="character-rarity dimensional">DIMENSIONAL • Naruto</div>
@@ -1726,7 +1776,7 @@
             </div>
             <div class="character-card">
                 <div class="character-image">
-                    <img src="https://ik.imagekit.io/nexiumrpg/Characters/Naruto/DIMENSIONAL/Hagoromo-ChakraTransfer.png" alt="Hagoromo's Chakra Transfer Jutsu" loading="lazy">
+                    <img src="https://ik.imagekit.io/NexiumRPG/Characters/Naruto/DIMENSIONAL/Hagoromo-ChakraTransfer.png" alt="Hagoromo's Chakra Transfer Jutsu" loading="lazy">
                 </div>
                 <div class="character-name">Hagoromo's Chakra Transfer Jutsu</div>
                 <div class="character-rarity dimensional">DIMENSIONAL • Naruto</div>
@@ -1748,7 +1798,7 @@
             </div>
             <div class="character-card">
                 <div class="character-image">
-                    <img src="https://ik.imagekit.io/nexiumrpg/Characters/Naruto/DIMENSIONAL/Hagoromo-CompleteSusanoo.png" alt="Hagoromo's Complete Body — Susanoo" loading="lazy">
+                    <img src="https://ik.imagekit.io/NexiumRPG/Characters/Naruto/DIMENSIONAL/Hagoromo-CompleteSusanoo.png" alt="Hagoromo's Complete Body — Susanoo" loading="lazy">
                 </div>
                 <div class="character-name">Hagoromo's Complete Body — Susanoo</div>
                 <div class="character-rarity dimensional">DIMENSIONAL • Naruto</div>
@@ -1770,7 +1820,7 @@
             </div>
             <div class="character-card">
                 <div class="character-image">
-                    <img src="https://ik.imagekit.io/nexiumrpg/Characters/Naruto/DIMENSIONAL/Sasuke-SenjutsuSusanoo.png" alt="Sasuke Senjutsu Susanoo" loading="lazy">
+                    <img src="https://ik.imagekit.io/NexiumRPG/Characters/Naruto/DIMENSIONAL/Sasuke-SenjutsuSusanoo.png" alt="Sasuke Senjutsu Susanoo" loading="lazy">
                 </div>
                 <div class="character-name">Sasuke Senjutsu Susanoo</div>
                 <div class="character-rarity dimensional">DIMENSIONAL • Naruto</div>
@@ -1792,7 +1842,7 @@
             </div>
             <div class="character-card">
                 <div class="character-image">
-                    <img src="https://ik.imagekit.io/nexiumrpg/Characters/Naruto/DIMENSIONAL/Susanoo-CompleteBody.png" alt="Susanoo Complete Body (perfect Susanoo)" loading="lazy">
+                    <img src="https://ik.imagekit.io/NexiumRPG/Characters/Naruto/DIMENSIONAL/Susanoo-CompleteBody.png" alt="Susanoo Complete Body (perfect Susanoo)" loading="lazy">
                 </div>
                 <div class="character-name">Susanoo Complete Body (perfect Susanoo)</div>
                 <div class="character-rarity dimensional">DIMENSIONAL • Naruto</div>
@@ -1814,7 +1864,7 @@
             </div>
             <div class="character-card">
                 <div class="character-image">
-                    <img src="https://ik.imagekit.io/nexiumrpg/Characters/Naruto/DIMENSIONAL/ChibakuTensei.png" alt="hibaku Tensei" loading="lazy">
+                    <img src="https://ik.imagekit.io/NexiumRPG/Characters/Naruto/DIMENSIONAL/ChibakuTensei.png" alt="hibaku Tensei" loading="lazy">
                 </div>
                 <div class="character-name">hibaku Tensei</div>
                 <div class="character-rarity dimensional">DIMENSIONAL • Naruto</div>
@@ -1836,7 +1886,7 @@
             </div>
             <div class="character-card">
                 <div class="character-image">
-                    <img src="https://ik.imagekit.io/nexiumrpg/Characters/Naruto/DIMENSIONAL/Pain-AlmightyPushPull.png" alt="Pain - The Almighty Push and Pull" loading="lazy">
+                    <img src="https://ik.imagekit.io/NexiumRPG/Characters/Naruto/DIMENSIONAL/Pain-AlmightyPushPull.png" alt="Pain - The Almighty Push and Pull" loading="lazy">
                 </div>
                 <div class="character-name">Pain - The Almighty Push and Pull</div>
                 <div class="character-rarity dimensional">DIMENSIONAL • Naruto</div>
@@ -1858,7 +1908,7 @@
             </div>
             <div class="character-card">
                 <div class="character-image">
-                    <img src="https://ik.imagekit.io/nexiumrpg/Characters/Naruto/DIMENSIONAL/Nagato-GedoRinneRebirth.png" alt="Nagato - The Gedo Art of Rinne Rebirth" loading="lazy">
+                    <img src="https://ik.imagekit.io/NexiumRPG/Characters/Naruto/DIMENSIONAL/Nagato-GedoRinneRebirth.png" alt="Nagato - The Gedo Art of Rinne Rebirth" loading="lazy">
                 </div>
                 <div class="character-name">Nagato - The Gedo Art of Rinne Rebirth</div>
                 <div class="character-rarity dimensional">DIMENSIONAL • Naruto</div>
@@ -1880,7 +1930,7 @@
             </div>
             <div class="character-card">
                 <div class="character-image">
-                    <img src="https://ik.imagekit.io/nexiumrpg/Characters/Naruto/DIMENSIONAL/SixPaths-YangPower.png" alt="The Six Paths' Yang Power" loading="lazy">
+                    <img src="https://ik.imagekit.io/NexiumRPG/Characters/Naruto/DIMENSIONAL/SixPaths-YangPower.png" alt="The Six Paths' Yang Power" loading="lazy">
                 </div>
                 <div class="character-name">The Six Paths' Yang Power</div>
                 <div class="character-rarity dimensional">DIMENSIONAL • Naruto</div>
