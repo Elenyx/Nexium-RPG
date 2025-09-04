@@ -98,7 +98,45 @@ Nexium is an anime-themed Discord RPG bot built with Discord.js v14, featuring c
 
 ## 🎯 **Recommended Adjustments & Future Roadmap**
 
-### **Immediate Priorities (Next 1-2 Weeks)**
+### **🎯 NEXT: Favorite System Implementation**
+
+**Database Ready**: `isFavorite` field already exists in UserCharacter model ✅
+
+**How Users Will Favorite Cards:**
+
+1. **Via `/card` Command**: Users can view character details and see current favorite status
+2. **Via `/favorite` Command**: Direct toggle command with character ID
+3. **Via Collection View**: Quick favorite toggle buttons in collection display
+4. **Via Battle Selection**: Favorite characters highlighted in battle menus
+
+**Implementation Steps:**
+
+- [ ] **Create `/favorite` Command**
+  - [ ] Command structure: `/favorite character_id:`
+  - [ ] Toggle favorite status (add/remove favorite)
+  - [ ] Show confirmation with current status
+  - [ ] Handle max favorite limit (50 characters)
+  - [ ] Error handling for unowned characters
+- [ ] **Create `/favorites` Command**
+  - [ ] Display favorited characters in album format
+  - [ ] Show favorite count and collection percentage
+  - [ ] Include pagination for large collections
+  - [ ] Quick unfavorite buttons
+- [ ] **Enhance `/collection` Command**
+  - [ ] Add "favorites-only" filter option
+  - [ ] Show favorite indicators (💎) in character cards
+  - [ ] Quick favorite toggle buttons
+  - [ ] Favorite count in collection summary
+- [ ] **Update Battle System**
+  - [ ] Highlight favorited characters in selection
+  - [ ] "Favorite Team" preset option
+  - [ ] Favorite status in battle results
+- [ ] **Favorite Management Features**
+  - [ ] Maximum favorite limit enforcement
+  - [ ] Favorite statistics in profile
+  - [ ] Bulk favorite operations (future enhancement)
+
+### **System Integration & Enhancement Priorities**
 
 1. **Critical System Fixes & Integration**
    - ✅ **Fix Upgrade Command Stat Calculation**
@@ -488,6 +526,7 @@ Nexium is an anime-themed Discord RPG bot built with Discord.js v14, featuring c
 - Keep user experience and performance in mind
 
 ---
-*Last Updated: September 4, 2025*
-*Next Review: September 11, 2025*
-*Recent Update: Added enhanced `/card` command features to roadmap*
+*Last Updated: September 5, 2025*
+*Next Review: September 12, 2025*
+*Recent Update: Added comprehensive Favorite System implementation to roadmap*
+*Previous Update: Enhanced /card command with character stats view*
