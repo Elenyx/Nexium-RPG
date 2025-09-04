@@ -88,14 +88,14 @@ const epicCharacters = [
     name: 'Shikamaru Nara',
     anime: 'Naruto',
     rarity: 'EPIC',
-    image: 'https://ik.imagekit.io/nexiumrpg/Characters/Naruto/EPIC/Shikamaru03.png',
+    image: 'https://ik.imagekit.io/nexiumrpg/Characters/Naruto/EPIC/Shikamaru02.png',
     imageUrls: {
-      COMMON: 'https://ik.imagekit.io/nexiumrpg/Characters/Naruto/COMMON/Shikamaru03.png',
-      RARE: 'https://ik.imagekit.io/nexiumrpg/Characters/Naruto/RARE/Shikamaru03.png',
-      EPIC: 'https://ik.imagekit.io/nexiumrpg/Characters/Naruto/EPIC/Shikamaru03.png',
-      LEGENDARY: 'https://ik.imagekit.io/nexiumrpg/Characters/Naruto/LEGENDARY/Shikamaru03.png',
-      MYTHIC: 'https://ik.imagekit.io/nexiumrpg/Characters/Naruto/MYTHIC/Shikamaru03.png',
-      DIMENSIONAL: 'https://ik.imagekit.io/nexiumrpg/Characters/Naruto/DIMENSIONAL/Shikamaru03.png'
+      COMMON: 'https://ik.imagekit.io/nexiumrpg/Characters/Naruto/COMMON/Shikamaru02.png',
+      RARE: 'https://ik.imagekit.io/nexiumrpg/Characters/Naruto/RARE/Shikamaru02.png',
+      EPIC: 'https://ik.imagekit.io/nexiumrpg/Characters/Naruto/EPIC/Shikamaru02.png',
+      LEGENDARY: 'https://ik.imagekit.io/nexiumrpg/Characters/Naruto/LEGENDARY/Shikamaru02.png',
+      MYTHIC: 'https://ik.imagekit.io/nexiumrpg/Characters/Naruto/MYTHIC/Shikamaru02.png',
+      DIMENSIONAL: 'https://ik.imagekit.io/nexiumrpg/Characters/Naruto/DIMENSIONAL/Shikamaru02.png'
     },
     baseStats: {
       health: 1500,
