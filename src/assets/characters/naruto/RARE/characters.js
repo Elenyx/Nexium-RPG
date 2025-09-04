@@ -61,7 +61,7 @@ const rareCharacters = [
       health: 1800,
       attack: 140,
       defense: 160,
-      speed: 90,
+      speed: 105,
       chakra: 200
     },
     abilities: [
@@ -188,7 +188,7 @@ const rareCharacters = [
       attack: 160,
       defense: 115,
       speed: 130,
-      chakra: 180
+      chakra: 200
     },
     abilities: [
       {
@@ -270,7 +270,7 @@ const rareCharacters = [
     baseStats: {
       health: 1280,
       attack: 135,
-      defense: 118,
+      defense: 128,
       speed: 145,
       chakra: 230
     },
