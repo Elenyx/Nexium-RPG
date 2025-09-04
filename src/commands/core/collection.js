@@ -138,11 +138,6 @@ module.exports = {
                     .setURL('attachment://collection.png'));
             components.push(mediaGallery);
 
-            // Add footer text display
-            const footerTextDisplay = new TextDisplayBuilder()
-                .setContent(`*Use /collection page:${page + 2} to view next page*`);
-            components.push(footerTextDisplay);
-
             // Add navigation buttons if there are multiple pages
             if (totalPages > 1) {
                 const buttonRow = new ActionRowBuilder()
