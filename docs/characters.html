@@ -31,27 +31,21 @@
     </header>
 
     <div class="container">
-        <!-- Search and Filter Controls -->
-        <section class="search-filter-section">
-            <div class="search-filter-container">
-                <div class="search-bar">
-                    <input type="text" id="character-search" placeholder="Search by name or ID (e.g., NC001, Naruto)..." class="search-input">
-                    <button class="search-button">🔍</button>
-                </div>
-                <div class="filter-dropdown">
-                    <label for="rarity-filter">Filter by Rarity:</label>
-                    <select id="rarity-filter" class="rarity-select">
-                        <option value="all">All Rarities</option>
-                        <option value="common">COMMON</option>
-                        <option value="rare">RARE</option>
-                        <option value="epic">EPIC</option>
-                        <option value="legendary">LEGENDARY</option>
-                        <option value="mythic">MYTHIC</option>
-                        <option value="dimensional">DIMENSIONAL</option>
-                    </select>
-                </div>
+        <!-- Filters Section -->
+        <div class="filters-container">
+            <input type="text" id="search-bar" class="search-bar" placeholder="Search by name or ID (e.g., 'Naruto' or 'NC001')...">
+            <div class="rarity-filter">
+                <select id="rarity-select">
+                    <option value="all">All Rarities</option>
+                    <option value="COMMON">Common</option>
+                    <option value="RARE">Rare</option>
+                    <option value="EPIC">Epic</option>
+                    <option value="LEGENDARY">Legendary</option>
+                    <option value="MYTHIC">Mythic</option>
+                    <option value="DIMENSIONAL">Dimensional</option>
+                </select>
             </div>
-        </section>
+        </div>
 
         <!-- Character Showcase -->
         <section class="character-showcase">
@@ -1903,6 +1897,8 @@
                 </div>
                 <div class="character-description">Hagoromo's life-force power. Grants immortality and chakra manipulation mastery.</div>
             </div>
+            
+            <div id="no-results">No characters found matching your criteria.</div>
         </section>
 
         <!-- Rarity Legend -->
@@ -1990,82 +1986,42 @@
     </footer>
 
     <script>
-        // Search and Filter Functionality
-        document.addEventListener('DOMContentLoaded', function() {
-            const searchInput = document.getElementById('character-search');
-            const rarityFilter = document.getElementById('rarity-filter');
+        document.addEventListener('DOMContentLoaded', () => {
+            const searchBar = document.getElementById('search-bar');
+            const raritySelect = document.getElementById('rarity-select');
             const characterCards = document.querySelectorAll('.character-card');
+            const noResultsMessage = document.getElementById('no-results');
 
-            // Function to filter characters
-            function filterCharacters() {
-                const searchTerm = searchInput.value.toLowerCase();
-                const selectedRarity = rarityFilter.value;
+            function filterCards() {
+                const searchTerm = searchBar.value.toLowerCase();
+                const selectedRarity = raritySelect.value;
+                let visibleCount = 0;
 
                 characterCards.forEach(card => {
-                    const name = card.dataset.name ? card.dataset.name.toLowerCase() : card.querySelector('.character-name').textContent.toLowerCase();
-                    const id = card.dataset.id ? card.dataset.id.toLowerCase() : '';
-                    const rarity = card.dataset.rarity || card.querySelector('.character-rarity').classList[1] || 'common';
+                    const name = card.dataset.name.toLowerCase();
+                    const id = card.dataset.id.toLowerCase();
+                    const rarity = card.dataset.rarity;
 
-                    // Check if card matches search term (name or ID)
-                    const matchesSearch = searchTerm === '' || 
-                                        name.includes(searchTerm) || 
-                                        id.includes(searchTerm);
-
-                    // Check if card matches rarity filter
+                    const matchesSearch = name.includes(searchTerm) || id.includes(searchTerm);
                     const matchesRarity = selectedRarity === 'all' || rarity === selectedRarity;
 
-                    // Show/hide card based on filters
                     if (matchesSearch && matchesRarity) {
                         card.style.display = 'block';
-                        // Reset animation for visible cards
-                        card.style.opacity = '0';
-                        card.style.transform = 'translateY(30px)';
+                        visibleCount++;
                     } else {
                         card.style.display = 'none';
                     }
                 });
 
-                // Re-run intersection observer for visible cards
-                updateIntersectionObserver();
+                if (visibleCount === 0) {
+                    noResultsMessage.style.display = 'block';
+                } else {
+                    noResultsMessage.style.display = 'none';
+                }
             }
 
-            // Function to update intersection observer
-            function updateIntersectionObserver() {
-                const visibleCards = document.querySelectorAll('.character-card[style*="display: block"]');
-                
-                const observer = new IntersectionObserver((entries) => {
-                    entries.forEach(entry => {
-                        if (entry.isIntersecting) {
-                            entry.target.style.opacity = '1';
-                            entry.target.style.transform = 'translateY(0)';
-                            observer.unobserve(entry.target);
-                        }
-                    });
-                }, {
-                    threshold: 0.1
-                });
-
-                visibleCards.forEach(card => {
-                    if (card.style.display !== 'none') {
-                        card.style.transition = 'opacity 0.6s ease-out, transform 0.6s ease-out';
-                        observer.observe(card);
-                    }
-                });
-            }
-
-            // Event listeners
-            searchInput.addEventListener('input', filterCharacters);
-            rarityFilter.addEventListener('change', filterCharacters);
-
-            // Initial setup - hide all cards and prepare for animation
-            characterCards.forEach(card => {
-                card.style.opacity = '0';
-                card.style.transform = 'translateY(30px)';
-                card.style.transition = 'opacity 0.6s ease-out, transform 0.6s ease-out';
-            });
-
-            // Initial filter to show all cards
-            filterCharacters();
+            searchBar.addEventListener('input', filterCards);
+            raritySelect.addEventListener('change', filterCards);
         });
     </script>
 </body>
