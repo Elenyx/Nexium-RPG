@@ -4,15 +4,22 @@
 
 Nexium is an anime-themed Discord RPG bot built with Discord.js v14, featuring character collection, battles, territories, and faction systems using Components V2 for modern Discord UI interactions.
 
-## 📊 Current Status (UPDATED: September 3, 2025)
+## 📊 Current Status (UPDATED: September 4, 2025)
 
 - ✅ **Foundation Complete**: Bot initialization, command loading, database connection
 - ✅ **Database System**: PostgreSQL with User, Character, UserCharacter models
 - ✅ **Core Commands**: `/help`, `/profile`, `/ping`, `/collection`, `/pull`, `/battle`, `/upgrade`, `/quest`
 - ✅ **RPG Systems**: Gacha, Battle, Upgrade, Quest, Shard Economy
+- ✅ **Card Leveling System**: Complete with rarity-multiplied scaling and Basic/Advance group restrictions
+- ✅ **Stat Evolution System**: Implemented with 1.5% level scaling and rarity jump multipliers
+  - ✅ Basic Group: 1.4x COMMON→RARE, 1.3x RARE→EPIC
+  - ✅ Advanced Group: 1.4x LEGENDARY→MYTHIC
+- ✅ **Merging Mechanics**: Automatic duplicate handling with EXP calculation
+- ✅ **Rarity Progression**: Respects Basic/Advance group restrictions with proper stat evolution
 - ✅ **Ready Event**: Enhanced with state managers and background services
 - ✅ **Energy Service**: Complete energy regeneration with database persistence
 - ✅ **Sample Data**: 7 anime characters seeded with proper rarities
+- ⚠️ **System Integration**: Battle system properly integrated, UI displays need updates for leveled stats
 
 ## 🚀 Recently Completed Features
 
@@ -56,6 +63,16 @@ Nexium is an anime-themed Discord RPG bot built with Discord.js v14, featuring c
   - ✅ Energy cost mechanics
   - ✅ Quest progression tracking
 
+- ✅ **Card Leveling & Merging System**
+  - ✅ Character leveling (1-100) with rarity-multiplied stat scaling
+  - ✅ Automatic duplicate merging with EXP calculation
+  - ✅ Basic/Advance group system with progression restrictions
+  - ✅ Rarity upgrade system with shard costs
+  - ✅ Stat evolution with 1.5% per level scaling and rarity jump multipliers
+  - ✅ Basic Group: COMMON → RARE → EPIC progression with proper stat jumps
+  - ✅ Advanced Group: LEGENDARY → MYTHIC progression with proper stat jumps
+  - ✅ Battle system integration with proper leveled stats
+
 - ✅ **Currency System**
   - ✅ Coin system for gacha pulls
   - ✅ Shard system for upgrades
@@ -83,13 +100,35 @@ Nexium is an anime-themed Discord RPG bot built with Discord.js v14, featuring c
 
 ### **Immediate Priorities (Next 1-2 Weeks)**
 
-1. **Polish Existing Systems**
+1. **Critical System Fixes & Integration**
+   - ✅ **Fix Upgrade Command Stat Calculation**
+     - ✅ Replaced simple 10% scaling with proper 1.5% level scaling and rarity jump multipliers
+     - ✅ Updated stat displays to match battle calculations
+     - ✅ Implemented stat improvement calculations using CardLevelingService
+   - [ ] **Add Character Stats View Command**
+     - [ ] Create `/character-stats` or `/view-character` command
+     - [ ] Display current level, scaled stats, and rarity progression info
+     - [ ] Show EXP progress and next level requirements
+   - [ ] **Enhance Collection Display**
+     - [ ] Add character levels to collection album view
+     - [ ] Show leveled stats in character tooltips/details
+     - [ ] Display rarity upgrade progress indicators
+   - [ ] **Update Card Command**
+     - [ ] Show current character level and scaled stats
+     - [ ] Display level progress and EXP information
+     - [ ] Add rarity upgrade requirements and progress
+   - [ ] **Enhance Profile System**
+     - [ ] Add character overview section to profile
+     - [ ] Show top leveled characters and collection statistics
+     - [ ] Display leveling progress and upgrade recommendations
+
+2. **Polish Existing Systems**
    - [ ] Add battle animations/visual feedback
    - [ ] Implement pity system for gacha
    - [ ] Add character fusion/evolution system
    - [ ] Create achievement system for milestones
 
-2. **Admin Tools & Management**
+3. **Admin Tools & Management**
    - [ ] **Economy Management Commands**
      - [ ] `/givecoins` - Add/remove coins from user balance
      - [ ] `/giveshards` - Add/remove upgrade shards from user balance
@@ -110,11 +149,21 @@ Nexium is an anime-themed Discord RPG bot built with Discord.js v14, featuring c
      - [ ] `/setchannel` - Set bot-only channels
      - [ ] `/maintenance` - Enable/disable maintenance mode
 
-3. **UI/UX Improvements**
+4. **UI/UX Improvements**
    - [ ] Add pagination to collection view
    - [ ] Implement character filtering/sorting
    - [ ] Add battle history tracking
    - [ ] Create interactive character cards
+   - [ ] **Enhanced `/card` Command Features**
+     - [ ] Add anime series information display
+     - [ ] Show character base stats (Attack, Defense, Speed, Health)
+     - [ ] Display character abilities/special moves
+     - [ ] Add ownership status indicator (✅ Owned / ❌ Not owned)
+     - [ ] Show favorite status and custom level (if owned)
+     - [ ] Display obtained date and collection statistics
+     - [ ] Add character lore/story information
+     - [ ] Implement character comparison feature
+     - [ ] Add shareable character links
    - [ ] **Dynamic Content Generation System**
      - [ ] **Canvas-Powered Visual Enhancements**
        - [ ] Dynamic welcome banners with user avatars
@@ -136,7 +185,7 @@ Nexium is an anime-themed Discord RPG bot built with Discord.js v14, featuring c
        - [ ] Seasonal theme graphics
        - [ ] Guild/party showcase banners
 
-3. **Social Features**
+5. **Social Features**
    - [ ] Add friend system for battles
    - [ ] Implement leaderboard system
    - [ ] Add trading system between users
@@ -144,19 +193,19 @@ Nexium is an anime-themed Discord RPG bot built with Discord.js v14, featuring c
 
 ### **Short-term Goals (1-3 Months)**
 
-4. **Advanced Battle Mechanics**
+1. **Advanced Battle Mechanics**
    - [ ] Add different battle types (Ranked, Tournament, Story)
    - [ ] Implement team battles (3v3)
    - [ ] Add special abilities and skills
    - [ ] Create battle pass system
 
-5. **Economy Expansion**
+2. **Economy Expansion**
    - [ ] Add premium currency (gems/crystals)
    - [ ] Implement marketplace for character trading
    - [ ] Add daily/weekly challenges
    - [ ] Create seasonal events
 
-6. **Content Expansion**
+3. **Content Expansion**
    - [ ] Add more anime series and characters
    - [ ] Implement character story/lore system
    - [ ] Add dimension/world system
@@ -164,14 +213,14 @@ Nexium is an anime-themed Discord RPG bot built with Discord.js v14, featuring c
 
 ### **Long-term Vision (3-6 Months)**
 
-7. **Advanced Features**
+1. **Advanced Features**
    - [ ] Real-time multiplayer battles
    - [ ] Cross-server tournaments
    - [ ] Character customization (skins, titles)
    - [ ] Guild wars and alliances
    - [ ] Mobile companion app
 
-8. **Monetization & Scaling**
+2. **Monetization & Scaling**
    - [ ] Premium subscription system
    - [ ] Cosmetic shop
    - [ ] Server boosting rewards
@@ -266,11 +315,18 @@ Nexium is an anime-themed Discord RPG bot built with Discord.js v14, featuring c
 
 ### **Immediate (This Week)**
 
-1. **Add Pity System** - Prevent long losing streaks in gacha
-2. **Implement Battle History** - Track user battle statistics
-3. **Add Character Fusion** - Combine characters for rare variants
-4. **Create Achievement System** - Reward player milestones
-5. **🚀 Leverage Canvas + ImageKit** - Start with dynamic welcome banners and achievement badges
+1. **Critical System Integration Fixes**
+   - ✅ Fix upgrade command stat calculation (1.5% level scaling + rarity jumps implemented)
+   - [ ] Add `/character-stats` command for individual character details
+   - [ ] Update collection display to show character levels
+   - [ ] Enhance card command with level and stat information
+   - [ ] Add character overview to profile system
+
+2. **Add Pity System** - Prevent long losing streaks in gacha
+3. **Implement Battle History** - Track user battle statistics
+4. **Add Character Fusion** - Combine characters for rare variants
+5. **Create Achievement System** - Reward player milestones
+6. **🚀 Leverage Canvas + ImageKit** - Start with dynamic welcome banners and achievement badges
 
 ### **Short-term (Next Month)**
 
@@ -298,8 +354,8 @@ Nexium is an anime-themed Discord RPG bot built with Discord.js v14, featuring c
 ---
 *Last Updated: September 4, 2025*
 *Next Review: September 11, 2025*
-*Major Update: Added Canvas + ImageKit dynamic content generation roadmap*
-*Previous Update: Complete RPG system implemented with gacha, battles, upgrades, and quests*
+*Major Update: Completed Advanced Group stat evolution system (LEGENDARY → MYTHIC)*
+*Previous Update: Implemented comprehensive stat evolution system with 1.5% level scaling and rarity jump multipliers*
 
 - [ ] Rate limiting for commands
 
@@ -349,6 +405,6 @@ Nexium is an anime-themed Discord RPG bot built with Discord.js v14, featuring c
 - Keep user experience and performance in mind
 
 ---
-*Last Updated: September 2, 2025*
-*Next Review: September 9, 2025*</content>
-<parameter name="filePath">d:\Nexium\Nexium-RPG\ROADMAP.md
+*Last Updated: September 4, 2025*
+*Next Review: September 11, 2025*
+*Recent Update: Added enhanced `/card` command features to roadmap*

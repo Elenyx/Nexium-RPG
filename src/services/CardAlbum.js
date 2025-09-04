@@ -35,19 +35,13 @@ class CardAlbum {
         // Fill background with gradient
         this.drawGradientBackground(ctx);
 
-        // Add header
-        this.drawHeader(ctx, user, page, characters.length);
-
         // Calculate pagination
         const startIndex = page * this.cardsPerPage;
         const endIndex = Math.min(startIndex + this.cardsPerPage, characters.length);
         const pageCharacters = characters.slice(startIndex, endIndex);
 
-        // Draw character cards
+        // Draw character cards (centered)
         await this.drawCharacterCards(ctx, pageCharacters, startIndex);
-
-        // Add pagination info
-        this.drawPaginationInfo(ctx, page, Math.ceil(characters.length / this.cardsPerPage));
 
         return canvas.toBuffer('image/png');
     }
@@ -64,37 +58,27 @@ class CardAlbum {
     }
 
     /**
-     * Draw the album header
-     */
-    drawHeader(ctx, user, page, totalCharacters) {
-        ctx.fillStyle = '#ffffff';
-        ctx.font = 'bold 24px Arial';
-        ctx.textAlign = 'center';
-
-        const headerText = user ? `${user.username}'s Collection` : 'Character Collection';
-        ctx.fillText(headerText, this.canvasWidth / 2, 40);
-
-        // Subtitle with collection stats
-        ctx.font = '16px Arial';
-        ctx.fillStyle = '#cccccc';
-        const subtitle = `${totalCharacters} characters • Page ${page + 1}`;
-        ctx.fillText(subtitle, this.canvasWidth / 2, 65);
-    }
-
-    /**
      * Draw character cards on the canvas
      */
     async drawCharacterCards(ctx, characters, startIndex) {
         const cardsPerRow = 4;
-        const rows = 2;
+        const rows = Math.ceil(characters.length / cardsPerRow);
+
+        // Calculate total grid dimensions
+        const totalGridWidth = cardsPerRow * this.cardWidth + (cardsPerRow - 1) * this.cardSpacing;
+        const totalGridHeight = rows * this.cardHeight + (rows - 1) * this.cardSpacing;
+
+        // Center the grid on canvas
+        const startX = (this.canvasWidth - totalGridWidth) / 2;
+        const startY = (this.canvasHeight - totalGridHeight) / 2;
 
         for (let i = 0; i < characters.length; i++) {
             const character = characters[i];
             const row = Math.floor(i / cardsPerRow);
             const col = i % cardsPerRow;
 
-            const x = this.margin + col * (this.cardWidth + this.cardSpacing);
-            const y = 100 + row * (this.cardHeight + this.cardSpacing);
+            const x = startX + col * (this.cardWidth + this.cardSpacing);
+            const y = startY + row * (this.cardHeight + this.cardSpacing);
 
             await this.drawCharacterCard(ctx, character, x, y, startIndex + i + 1);
         }
@@ -172,17 +156,6 @@ class CardAlbum {
             'Mythic': '#EF4444'
         };
         return colors[rarity] || colors['COMMON'];
-    }
-
-    /**
-     * Draw pagination information
-     */
-    drawPaginationInfo(ctx, currentPage, totalPages) {
-        ctx.fillStyle = '#888888';
-        ctx.font = '12px Arial';
-        ctx.textAlign = 'center';
-        const text = `Page ${currentPage + 1} of ${totalPages}`;
-        ctx.fillText(text, this.canvasWidth / 2, this.canvasHeight - 20);
     }
 
     /**

@@ -26,10 +26,17 @@ module.exports = {
 
         } catch (error) {
             console.error('Profile command error:', error);
-            await interaction.reply({
+
+            const errorMessage = {
                 content: 'An error occurred while fetching the profile.',
                 flags: MessageFlags.Ephemeral
-            });
+            };
+
+            if (interaction.replied || interaction.deferred) {
+                await interaction.followUp(errorMessage);
+            } else {
+                await interaction.reply(errorMessage);
+            }
         }
     }
 };

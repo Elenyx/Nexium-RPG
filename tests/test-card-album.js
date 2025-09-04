@@ -4,7 +4,7 @@
  * @description Tests the CardAlbum service with sample data
  */
 
-const CardAlbum = require('./src/services/CardAlbum');
+const CardAlbum = require('../src/services/CardAlbum');
 const fs = require('fs');
 const path = require('path');
 

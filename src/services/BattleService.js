@@ -1,16 +1,107 @@
-/**
- * @file BattleService.js
- * @description Combat system for character battles
- * @author Nexium Bot Development Team
- */
-
 const { models } = require('../database/connection');
 const UserService = require('./UserService');
-const logger = require('../utils/logger');
+const CardLevelingService = require('./CardLevelingService');
+const { COLORS, EMOJIS } = require('../config/constants');
 
+/**
+ * BattleService handles combat between user characters
+ */
 class BattleService {
     constructor() {
         this.userService = new UserService();
+        this.cardLevelingService = new CardLevelingService();
+    }
+
+    /**
+     * Start a battle between two user characters
+     * @param {string} userId - User ID
+     * @param {string} char1Id - First character ID
+     * @param {string} char2Id - Second character ID
+     * @returns {Object} Battle result
+     */
+    async startBattle(userId, char1Id, char2Id) {
+        try {
+            // Validate input
+            if (!userId || !char1Id || !char2Id) {
+                throw new Error('Missing required parameters');
+            }
+
+            // Get user data
+            const user = await this.userService.getOrCreateUser(userId);
+
+            // Get user's characters
+            const userCharacters = await this.userService.getUserCharacters(userId);
+            const char1Data = userCharacters.find(uc => uc.character.id === char1Id);
+            const char2Data = userCharacters.find(uc => uc.character.id === char2Id);
+
+            if (!char1Data || !char2Data) {
+                throw new Error('One or both characters not found in user collection');
+            }
+
+            // Apply custom levels to stats
+            const char1 = this.applyCustomLevel(char1Data.character, char1Data.customLevel, char1Data);
+            const char2 = this.applyCustomLevel(char2Data.character, char2Data.customLevel, char2Data);
+
+            // Simulate battle
+            const battleResult = this.simulateBattle(char1, char2);
+
+            // Calculate rewards
+            const rewards = this.calculateRewards(battleResult, user);
+
+            // Apply rewards
+            await this.applyRewards(userId, rewards);
+
+            return {
+                battle: battleResult,
+                participants: {
+                    char1: {
+                        name: char1.name,
+                        customLevel: char1Data.customLevel,
+                        finalStats: {
+                            attack: char1.attack,
+                            defense: char1.defense,
+                            speed: char1.speed,
+                            health: char1.health
+                        }
+                    },
+                    char2: {
+                        name: char2.name,
+                        customLevel: char2Data.customLevel,
+                        finalStats: {
+                            attack: char2.attack,
+                            defense: char2.defense,
+                            speed: char2.speed,
+                            health: char2.health
+                        }
+                    }
+                },
+                rewards
+            };
+
+        } catch (error) {
+            console.error('Battle error:', error);
+            throw error;
+        }
+    }
+
+    /**
+     * Apply custom level bonuses to character stats
+     * @param {Object} character - Character data
+     * @param {number} customLevel - Custom level
+     * @param {Object} userCharacter - UserCharacter data for custom stats
+     * @returns {Object} Character with level bonuses
+     */
+    applyCustomLevel(character, customLevel, userCharacter = null) {
+        // Use CardLevelingService for accurate stat calculations
+        const scaledStats = this.cardLevelingService.calculateScaledStats(character, customLevel, userCharacter);
+
+        return {
+            ...character.toJSON(),
+            attack: scaledStats.attack,
+            defense: scaledStats.defense,
+            speed: scaledStats.speed,
+            health: scaledStats.health
+        };
     }
 
     /**
@@ -116,8 +207,8 @@ class BattleService {
             }
 
             // Apply custom levels to stats
-            const char1 = this.applyCustomLevel(char1Data.character, char1Data.customLevel);
-            const char2 = this.applyCustomLevel(char2Data.character, char2Data.customLevel);
+            const char1 = this.applyCustomLevel(char1Data.character, char1Data.customLevel, char1Data);
+            const char2 = this.applyCustomLevel(char2Data.character, char2Data.customLevel, char2Data);
 
             // Simulate battle
             const battleResult = this.simulateBattle(char1, char2);
@@ -169,15 +260,15 @@ class BattleService {
      * @returns {Object} Character with level bonuses
      */
     applyCustomLevel(character, customLevel) {
-        const levelBonus = customLevel - 1; // Level 1 = no bonus
-        const statMultiplier = 1 + (levelBonus * 0.1); // 10% per level
+        // Use CardLevelingService for accurate stat calculations
+        const scaledStats = this.cardLevelingService.calculateScaledStats(character, customLevel);
 
         return {
             ...character.toJSON(),
-            attack: Math.floor(character.attack * statMultiplier),
-            defense: Math.floor(character.defense * statMultiplier),
-            speed: Math.floor(character.speed * statMultiplier),
-            health: Math.floor(character.health * statMultiplier)
+            attack: scaledStats.attack,
+            defense: scaledStats.defense,
+            speed: scaledStats.speed,
+            health: scaledStats.health
         };
     }
 

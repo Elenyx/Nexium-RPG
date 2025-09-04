@@ -6,11 +6,13 @@
 
 const { models } = require('../database/connection');
 const UserService = require('./UserService');
+const CardLevelingService = require('./CardLevelingService');
 const logger = require('../utils/logger');
 
 class GachaService {
     constructor() {
         this.userService = new UserService();
+        this.cardLevelingService = new CardLevelingService();
 
         // Gacha rates (in percentage) - DIMENSIONAL removed from regular pulls
         this.rates = {
@@ -167,6 +169,16 @@ class GachaService {
             const fallbackChar = characters[Math.floor(Math.random() * characters.length)];
             const result = await this.userService.addCharacterToUser(userId, fallbackChar.id);
 
+            // Handle merging if it's a duplicate
+            let mergeResult = null;
+            if (!result.isNewlyCreated) {
+                mergeResult = await this.cardLevelingService.mergeDuplicateCard(
+                    userId,
+                    fallbackChar.id,
+                    1
+                );
+            }
+
             // Update pity counter
             await this.updatePityCounter(userId, fallbackChar.rarity);
 
@@ -174,6 +186,8 @@ class GachaService {
                 character: fallbackChar,
                 rarity: fallbackChar.rarity,
                 isNew: result.isNewlyCreated,
+                isDuplicate: !result.isNewlyCreated,
+                mergeResult: mergeResult,
                 pityCounter: pityCounter + 1
             };
         }
@@ -182,6 +196,17 @@ class GachaService {
         const selectedCharacter = rarityCharacters[Math.floor(Math.random() * rarityCharacters.length)];
         const result = await this.userService.addCharacterToUser(userId, selectedCharacter.id);
 
+        // Handle merging if it's a duplicate
+        let mergeResult = null;
+        if (!result.isNewlyCreated) {
+            // This is a duplicate - merge it for EXP
+            mergeResult = await this.cardLevelingService.mergeDuplicateCard(
+                userId,
+                selectedCharacter.id,
+                1 // Default level for pulled duplicates
+            );
+        }
+
         // Update pity counter
         await this.updatePityCounter(userId, selectedRarity);
 
@@ -189,6 +214,8 @@ class GachaService {
             character: selectedCharacter,
             rarity: selectedRarity,
             isNew: result.isNewlyCreated,
+            isDuplicate: !result.isNewlyCreated,
+            mergeResult: mergeResult,
             pityCounter: pityCounter + 1
         };
     }

@@ -100,10 +100,27 @@ module.exports = {
                 }[pull.character.rarity] || '⚪';
 
                 const newIndicator = pull.isNew ? ' 🆕' : '';
+                const duplicateIndicator = pull.isDuplicate ? ' 🔄' : '';
+
+                let value = `**Anime:** ${pull.character.anime}\n**Rarity:** ${pull.character.rarity}`;
+
+                // Add merge information if it's a duplicate
+                if (pull.isDuplicate && pull.mergeResult) {
+                    const merge = pull.mergeResult;
+                    value += `\n**Merged!** +${merge.expGained} EXP`;
+
+                    if (merge.leveledUp) {
+                        value += `\n**Leveled up!** ${merge.newLevel - merge.levelsGained} → ${merge.newLevel}`;
+                    }
+
+                    if (merge.rarityUpgrade && merge.rarityUpgrade.canUpgrade) {
+                        value += `\n**⭐ Rarity upgrade available!**`;
+                    }
+                }
 
                 embed.addFields({
-                    name: `${rarityEmoji} ${pull.character.name}${newIndicator}`,
-                    value: `**Anime:** ${pull.character.anime}\n**Rarity:** ${pull.character.rarity}`,
+                    name: `${rarityEmoji} ${pull.character.name}${newIndicator}${duplicateIndicator}`,
+                    value: value,
                     inline: amount <= 3
                 });
             });

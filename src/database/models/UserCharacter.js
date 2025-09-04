@@ -50,6 +50,27 @@ const defineUserCharacter = (sequelize) => {
             type: DataTypes.INTEGER,
             defaultValue: 0,
             comment: 'Shard threshold needed for next rarity upgrade'
+        },
+        // Custom base stats for rarity upgrades (null means use original character stats)
+        customAttack: {
+            type: DataTypes.INTEGER,
+            allowNull: true,
+            comment: 'Custom attack stat after rarity upgrades'
+        },
+        customDefense: {
+            type: DataTypes.INTEGER,
+            allowNull: true,
+            comment: 'Custom defense stat after rarity upgrades'
+        },
+        customSpeed: {
+            type: DataTypes.INTEGER,
+            allowNull: true,
+            comment: 'Custom speed stat after rarity upgrades'
+        },
+        customHealth: {
+            type: DataTypes.INTEGER,
+            allowNull: true,
+            comment: 'Custom health stat after rarity upgrades'
         }
     }, {
         indexes: [

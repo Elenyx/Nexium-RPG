@@ -3,6 +3,7 @@ const { models } = require('../../database/connection');
 const UserService = require('../../services/UserService');
 const ShardService = require('../../services/ShardService');
 const RarityUpgradeService = require('../../services/RarityUpgradeService');
+const CardLevelingService = require('../../services/CardLevelingService');
 const { COLORS, EMOJIS, RARITY_UPGRADE_THRESHOLDS, LEVEL_CAPS } = require('../../config/constants');
 
 module.exports = {
@@ -29,12 +30,28 @@ module.exports = {
                 .setMaxValue(10)),
 
     async execute(interaction) {
-        const characterId = interaction.options.getString('character_id');
-        const upgradeType = interaction.options.getString('type') || 'level';
-        const levels = interaction.options.getInteger('levels') || 1;
-        const userId = interaction.user.id;
+            const characterId = interaction.options.getString('character_id');
+            const upgradeType = interaction.options.getString('type') || 'level';
+            const levels = interaction.options.getInteger('levels') || 1;
+            const userId = interaction.user.id;
 
-        try {
+            // Validate upgrade type
+            if (!['level', 'rarity'].includes(upgradeType)) {
+                const embed = new EmbedBuilder()
+                    .setColor(COLORS.ERROR)
+                    .setTitle(`${EMOJIS.ERROR} Invalid Upgrade Type`)
+                    .setDescription('Upgrade type must be either "level" or "rarity".');
+                return await interaction.editReply({ embeds: [embed] });
+            }
+
+            // Validate levels for level upgrades
+            if (upgradeType === 'level' && (levels < 1 || levels > 10)) {
+                const embed = new EmbedBuilder()
+                    .setColor(COLORS.ERROR)
+                    .setTitle(`${EMOJIS.ERROR} Invalid Level Amount`)
+                    .setDescription('Level upgrades must be between 1 and 10 levels.');
+                return await interaction.editReply({ embeds: [embed] });
+            }        try {
             await interaction.deferReply();
 
             // Check if database is available
@@ -66,6 +83,16 @@ module.exports = {
             }
 
             const character = userCharacter.character;
+            const currentLevel = userCharacter.customLevel;
+
+            // Check if character is already at max level
+            if (currentLevel >= 100) {
+                const embed = new EmbedBuilder()
+                    .setColor(COLORS.WARNING)
+                    .setTitle(`${EMOJIS.WARNING} Max Level Reached`)
+                    .setDescription(`${character.name} is already at max level (100)!\n\nUse \`/upgrade-rarity\` to upgrade to the next rarity tier.`);
+                return await interaction.editReply({ embeds: [embed] });
+            }
 
             if (upgradeType === 'rarity') {
                 // Handle rarity upgrade
@@ -88,8 +115,8 @@ module.exports = {
                 return await interaction.editReply({ embeds: [embed] });
             }
 
-            // Check if upgrade would exceed max level (50 for now)
-            const maxLevel = 50;
+            // Check if upgrade would exceed max level (100)
+            const maxLevel = 100;
             if (currentLevel + levels > maxLevel) {
                 const embed = new EmbedBuilder()
                     .setColor(COLORS.WARNING)
@@ -108,20 +135,9 @@ module.exports = {
             // Deduct shards
             await shardService.removeShards(userId, totalCost, `Character upgrade: ${character.name} to level ${newLevel}`);
 
-            // Calculate stat improvements
-            const oldStats = {
-                attack: Math.floor(character.attack * (1 + (currentLevel - 1) * 0.1)),
-                defense: Math.floor(character.defense * (1 + (currentLevel - 1) * 0.1)),
-                speed: Math.floor(character.speed * (1 + (currentLevel - 1) * 0.1)),
-                health: Math.floor(character.health * (1 + (currentLevel - 1) * 0.1))
-            };
-
-            const newStats = {
-                attack: Math.floor(character.attack * (1 + (newLevel - 1) * 0.1)),
-                defense: Math.floor(character.defense * (1 + (newLevel - 1) * 0.1)),
-                speed: Math.floor(character.speed * (1 + (newLevel - 1) * 0.1)),
-                health: Math.floor(character.health * (1 + (newLevel - 1) * 0.1))
-            };
+            // Calculate stat improvements using CardLevelingService
+            const oldStats = cardLevelingService.calculateScaledStats(character, currentLevel, userCharacter);
+            const newStats = cardLevelingService.calculateScaledStats(character, newLevel, userCharacter);
 
             // Create success embed
             const embed = new EmbedBuilder()
@@ -310,111 +326,137 @@ module.exports = {
 
     async handleLevelUpgrade(interaction, user, userCharacter, character, levels, shardService, rarityUpgradeService) {
         const currentLevel = userCharacter.customLevel;
+        const currentExp = userCharacter.customExp;
 
-        // Get level cap based on character's rarity group
-        const maxLevel = rarityUpgradeService.getLevelCapForRarity(character.rarity);
+        // Calculate EXP to add based on levels requested
+        // Each level requires progressively more EXP, so we'll add enough EXP for the requested levels
+        const cardLevelingService = new CardLevelingService();
+        let totalExpNeeded = 0;
 
-        // Calculate upgrade cost
-        const totalCost = shardService.getTotalUpgradeCost(character.rarity, currentLevel, currentLevel + levels);
-
-        // Perform upgrade
-        const newLevel = currentLevel + levels;
-        await models.UserCharacter.update(
-            { customLevel: newLevel },
-            { where: { userId: user.id, characterId: character.id } }
-        );
-
-        // Deduct shards
-        await shardService.removeShards(user.id, totalCost, `Character upgrade: ${character.name} to level ${newLevel}`);
-
-        // Add some shards to rarity upgrade progress (10% of upgrade cost)
-        const shardsForRarity = Math.floor(totalCost * 0.1);
-        if (shardsForRarity > 0) {
-            await rarityUpgradeService.addShardsToRarityUpgrade(user.id, character.id, shardsForRarity);
+        for (let i = 0; i < levels; i++) {
+            const targetLevel = currentLevel + i + 1;
+            if (targetLevel <= 100) {
+                totalExpNeeded += cardLevelingService.levelExpRequirements[targetLevel] - cardLevelingService.levelExpRequirements[targetLevel - 1];
+            }
         }
 
-        // Calculate stat improvements
-        const oldStats = {
-            attack: Math.floor(character.attack * (1 + (currentLevel - 1) * 0.1)),
-            defense: Math.floor(character.defense * (1 + (currentLevel - 1) * 0.1)),
-            speed: Math.floor(character.speed * (1 + (currentLevel - 1) * 0.1)),
-            health: Math.floor(character.health * (1 + (currentLevel - 1) * 0.1))
-        };
+        // Calculate shard cost (1 shard = 10 EXP)
+        const shardCost = Math.ceil(totalExpNeeded / 10);
 
-        const newStats = {
-            attack: Math.floor(character.attack * (1 + (newLevel - 1) * 0.1)),
-            defense: Math.floor(character.defense * (1 + (newLevel - 1) * 0.1)),
-            speed: Math.floor(character.speed * (1 + (newLevel - 1) * 0.1)),
-            health: Math.floor(character.health * (1 + (newLevel - 1) * 0.1))
-        };
+        // Check if user has enough shards
+        if (user.shards < shardCost) {
+            const embed = new EmbedBuilder()
+                .setColor(COLORS.ERROR)
+                .setTitle(`${EMOJIS.ERROR} Insufficient Shards`)
+                .setDescription(`You need **${shardCost.toLocaleString()}** ${EMOJIS.SHARD || '💎'} shards to gain **${totalExpNeeded.toLocaleString()}** EXP.\nYou have **${user.shards.toLocaleString()}** shards.`)
+                .addFields({
+                    name: '💡 How to get shards',
+                    value: '• Complete Main Story Quests\n• Daily quests and challenges\n• Special events\n• Merge duplicate cards'
+                });
+            return await interaction.editReply({ embeds: [embed] });
+        }
+
+        // Check if character is already at max level
+        if (currentLevel >= 100) {
+            const embed = new EmbedBuilder()
+                .setColor(COLORS.WARNING)
+                .setTitle(`${EMOJIS.WARNING} Max Level Reached`)
+                .setDescription(`${character.name} is already at max level (100)!\n\nUse \`/upgrade-rarity\` to upgrade to the next rarity tier.`);
+            return await interaction.editReply({ embeds: [embed] });
+        }
+
+        // Add EXP to the character
+        const levelingResult = await cardLevelingService.addExpToCard(user.id, character.id, totalExpNeeded);
+
+        // Deduct shards
+        await shardService.removeShards(user.id, shardCost, `EXP boost: ${character.name} +${totalExpNeeded} EXP`);
+
+        // Get updated character info
+        const updatedUserCharacter = await models.UserCharacter.findOne({
+            where: { userId: user.id, characterId: character.id },
+            include: [{
+                model: models.Character,
+                as: 'character'
+            }]
+        });
+
+        // Calculate stat improvements
+        const oldStats = cardLevelingService.calculateScaledStats(character, currentLevel);
+        const newStats = cardLevelingService.calculateScaledStats(character, levelingResult.newLevel);
 
         // Create success embed
         const embed = new EmbedBuilder()
             .setColor(COLORS.SUCCESS)
-            .setTitle(`${EMOJIS.SUCCESS} Character Upgraded!`)
-            .setDescription(`Successfully upgraded **${character.name}**!`)
+            .setTitle(`${EMOJIS.SUCCESS} Character Enhanced!`)
+            .setDescription(`Successfully boosted **${character.name}** with EXP!`)
             .addFields(
                 {
                     name: '📊 Level Progress',
-                    value: `**${currentLevel}** → **${newLevel}**`,
+                    value: levelingResult.leveledUp
+                        ? `**${currentLevel}** → **${levelingResult.newLevel}** (+${levelingResult.levelsGained} levels)`
+                        : `**${levelingResult.newLevel}** (no level up yet)`,
+                    inline: true
+                },
+                {
+                    name: '✨ EXP Gained',
+                    value: `**+${totalExpNeeded.toLocaleString()}** EXP\n**${levelingResult.newExp.toLocaleString()}** total EXP`,
                     inline: true
                 },
                 {
                     name: '💎 Shards Spent',
-                    value: totalCost.toLocaleString(),
+                    value: shardCost.toLocaleString(),
                     inline: true
-                },
-                {
-                    name: '📈 Stat Improvements',
-                    value: [
-                        `⚔️ Attack: ${oldStats.attack} → ${newStats.attack} (+${newStats.attack - oldStats.attack})`,
-                        `🛡️ Defense: ${oldStats.defense} → ${newStats.defense} (+${newStats.defense - oldStats.defense})`,
-                        `💨 Speed: ${oldStats.speed} → ${newStats.speed} (+${newStats.speed - oldStats.speed})`,
-                        `❤️ Health: ${oldStats.health} → ${newStats.health} (+${oldStats.health - newStats.health})`
-                    ].join('\n'),
-                    inline: false
                 }
-            )
-            .setFooter({
-                text: `Remaining shards: ${(user.shards - totalCost).toLocaleString()}`
-            })
-            .setTimestamp();
+            );
+
+        // Add stat improvements if leveled up
+        if (levelingResult.leveledUp) {
+            embed.addFields({
+                name: '📈 Stat Improvements',
+                value: [
+                    `⚔️ Attack: ${oldStats.attack} → ${newStats.attack} (+${newStats.attack - oldStats.attack})`,
+                    `🛡️ Defense: ${oldStats.defense} → ${newStats.defense} (+${newStats.defense - oldStats.defense})`,
+                    `💨 Speed: ${oldStats.speed} → ${newStats.speed} (+${newStats.speed - oldStats.speed})`,
+                    `❤️ Health: ${oldStats.health} → ${newStats.health} (+${newStats.health - oldStats.health})`
+                ].join('\n'),
+                inline: false
+            });
+        }
+
+        // Add rarity upgrade info if available
+        if (levelingResult.rarityUpgrade) {
+            const upgrade = levelingResult.rarityUpgrade;
+            if (upgrade.canUpgrade) {
+                embed.addFields({
+                    name: '⭐ Rarity Upgrade Available!',
+                    value: `**Next Rarity:** ${upgrade.nextRarity}\n**Cost:** ${upgrade.shardCost} shards\nUse \`/upgrade-rarity\` to upgrade!`,
+                    inline: false
+                });
+            }
+        }
+
+        embed.setFooter({
+            text: `Remaining shards: ${(user.shards - shardCost).toLocaleString()} | Use /merge to get more EXP from duplicates`
+        });
 
         // Add upgrade again button if more upgrades are possible
         const components = [];
-        if (newLevel < maxLevel) {
-            const nextCost = shardService.getUpgradeCost(character.rarity, newLevel);
-            const canAfford = (user.shards - totalCost) >= nextCost;
+        if (levelingResult.newLevel < 100) {
+            const nextExpNeeded = cardLevelingService.levelExpRequirements[levelingResult.newLevel + 1] - levelingResult.newExp;
+            const nextShardCost = Math.ceil(nextExpNeeded / 10);
+            const canAfford = (user.shards - shardCost) >= nextShardCost;
 
             const row = new ActionRowBuilder()
                 .addComponents(
                     new ButtonBuilder()
-                        .setCustomId(`upgrade_${character.id}_${newLevel}`)
-                        .setLabel(`Upgrade to Level ${newLevel + 1}`)
+                        .setCustomId(`exp_boost_${character.id}_${levelingResult.newLevel}`)
+                        .setLabel(`Boost EXP (${nextShardCost} shards)`)
                         .setStyle(canAfford ? ButtonStyle.Primary : ButtonStyle.Secondary)
                         .setDisabled(!canAfford)
-                        .setEmoji('⬆️')
+                        .setEmoji('✨')
                 );
-
-            if (!canAfford) {
-                row.addComponents(
-                    new ButtonBuilder()
-                        .setCustomId('get_shards')
-                        .setLabel(`Need ${nextCost} Shards`)
-                        .setStyle(ButtonStyle.Link)
-                        .setURL('https://discord.com/channels/@me') // Placeholder
-                );
-            }
 
             components.push(row);
-        } else {
-            // Reached level cap
-            const group = rarityUpgradeService.getRarityGroup(character.rarity);
-            embed.addFields({
-                name: '🏆 Level Cap Reached!',
-                value: `**${character.name}** has reached the maximum level (${maxLevel}) for the ${group} group!\n\nThis character is now at peak performance.`,
-                inline: false
-            });
         }
 
         await interaction.editReply({ embeds: [embed], components });
