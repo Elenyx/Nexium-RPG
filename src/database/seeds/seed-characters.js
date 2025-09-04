@@ -12,30 +12,27 @@ const seedCharacters = async () => {
         console.log('🌱 Seeding characters...');
 
         for (const charData of characters.all) {
-            const [character, created] = await models.Character.findOrCreate({
-                where: { id: charData.id },
-                defaults: {
-                    id: charData.id,
-                    name: charData.name,
-                    anime: charData.anime,
-                    rarity: charData.rarity,
-                    level: charData.baseStats.level || 1,
-                    exp: charData.baseStats.exp || 0,
-                    attack: charData.baseStats.attack,
-                    defense: charData.baseStats.defense,
-                    speed: charData.baseStats.speed,
-                    health: charData.baseStats.health,
-                    abilities: charData.abilities,
-                    description: charData.description,
-                    imageUrl: charData.image,
-                    imageUrls: charData.imageUrls || {}
-                }
+            const [character, created] = await models.Character.upsert({
+                id: charData.id,
+                name: charData.name,
+                anime: charData.anime,
+                rarity: charData.rarity,
+                level: charData.baseStats.level || 1,
+                exp: charData.baseStats.exp || 0,
+                attack: charData.baseStats.attack,
+                defense: charData.baseStats.defense,
+                speed: charData.baseStats.speed,
+                health: charData.baseStats.health,
+                abilities: charData.abilities,
+                description: charData.description,
+                imageUrl: charData.image,
+                imageUrls: charData.imageUrls || {}
             });
 
             if (created) {
                 console.log(`✅ Created character: ${character.name} (${character.rarity})`);
             } else {
-                console.log(`⏭️  Character already exists: ${character.name}`);
+                console.log(`⏭️  Updated character: ${character.name} (${character.rarity})`);
             }
         }
 

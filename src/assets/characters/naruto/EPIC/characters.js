@@ -46,7 +46,7 @@ const epicCharacters = [
     name: 'Might Guy',
     anime: 'Naruto',
     rarity: 'EPIC',
-    image: 'https://ik.imagekit.io/nexiumrpg/Characters/Naruto/EPIC/Guy.png',
+    image: 'https://ik.imagekit.io/nexiumrpg/Characters/Naruto/EPIC/MightGuy.png',
     imageUrls: {
       COMMON: 'https://ik.imagekit.io/nexiumrpg/Characters/Naruto/COMMON/MightGuy.png',
       RARE: 'https://ik.imagekit.io/nexiumrpg/Characters/Naruto/RARE/MightGuy.png',
@@ -298,7 +298,7 @@ const epicCharacters = [
     name: 'Choji Akimichi',
     anime: 'Naruto',
     rarity: 'EPIC',
-    image: 'https://ik.imagekit.io/nexiumrpg/Characters/Naruto/EPIC/Choji.png',
+    image: 'https://ik.imagekit.io/nexiumrpg/Characters/Naruto/EPIC/Choji02.png',
     imageUrls: {
       COMMON: 'https://ik.imagekit.io/nexiumrpg/Characters/Naruto/COMMON/Choji02.png',
       RARE: 'https://ik.imagekit.io/nexiumrpg/Characters/Naruto/RARE/Choji02.png',
