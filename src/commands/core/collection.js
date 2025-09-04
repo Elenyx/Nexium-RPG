@@ -1,4 +1,4 @@
-const { SlashCommandBuilder, EmbedBuilder, ActionRowBuilder, ButtonBuilder, ButtonStyle, MessageFlags } = require('discord.js');
+const { SlashCommandBuilder, EmbedBuilder, ActionRowBuilder, ButtonBuilder, ButtonStyle, MessageFlags, TextDisplayBuilder, SectionBuilder, ContainerBuilder } = require('discord.js');
 const { models } = require('../../database/connection');
 const CardAlbum = require('../../services/CardAlbum');
 const { COLORS, EMOJIS } = require('../../config/constants');
@@ -33,7 +33,10 @@ module.exports = {
                     .setTitle(`${EMOJIS.ERROR} Database Unavailable`)
                     .setDescription('The database is not configured. Please check your environment variables.');
 
-                return await interaction.editReply({ embeds: [embed] });
+                return await interaction.editReply({ 
+                    embeds: [embed], 
+                    flags: MessageFlags.IsComponentsV2 
+                });
             }
 
             // Get user's characters from database
@@ -42,8 +45,9 @@ module.exports = {
                 include: [{
                     model: models.Character,
                     as: 'character',
-                    attributes: ['id', 'name', 'rarity', 'imagePath', 'imageUrl', 'imageUrls']
+                    attributes: ['id', 'name', 'rarity', 'imagePath', 'imageUrl', 'imageUrls', 'anime']
                 }],
+                attributes: ['customLevel', 'isFavorite', 'collectedShards'],
                 order: [['character', 'rarity', 'DESC'], ['character', 'name', 'ASC']]
             });
 
@@ -54,7 +58,10 @@ module.exports = {
                     .setDescription(`${targetUser.username} hasn't collected any characters yet!`)
                     .setFooter({ text: 'Start collecting characters to build your album!' });
 
-                return await interaction.editReply({ embeds: [embed] });
+                return await interaction.editReply({ 
+                    embeds: [embed], 
+                    flags: MessageFlags.IsComponentsV2 
+                });
             }
 
             // Transform data for CardAlbum
@@ -64,7 +71,11 @@ module.exports = {
                 rarity: uc.character.rarity,
                 imagePath: uc.character.imagePath,
                 imageUrl: uc.character.imageUrl,
-                imageUrls: uc.character.imageUrls
+                imageUrls: uc.character.imageUrls,
+                anime: uc.character.anime,
+                customLevel: uc.customLevel,
+                isFavorite: uc.isFavorite,
+                collectedShards: uc.collectedShards
             }));
 
             // Generate the card album image
@@ -89,11 +100,28 @@ module.exports = {
                 'DIMENSIONAL': '🌌'
             };
 
+            // Function to generate star rating based on rarity
+            const generateStars = (rarity) => {
+                const starMap = {
+                    'COMMON': '★☆☆☆☆',
+                    'RARE': '★★☆☆☆',
+                    'EPIC': '★★★☆☆',
+                    'LEGENDARY': '★★★★☆',
+                    'MYTHIC': '★★★★★',
+                    'DIMENSIONAL': '★★★★★'
+                };
+                return starMap[rarity] || '☆☆☆☆☆';
+            };
+
             let characterList = '';
             pageCharacters.forEach((character, index) => {
                 const rarityEmoji = rarityEmojis[character.rarity] || '⚪';
                 const cardNumber = startIndex + index + 1;
-                characterList += `${cardNumber}. ${rarityEmoji} **${character.name}** (${character.rarity})\n`;
+                const favoriteEmoji = character.isFavorite ? '🔥' : '';
+                const stars = generateStars(character.rarity);
+                const levelDisplay = `◈${character.customLevel}`;
+                
+                characterList += `${favoriteEmoji} ${character.id} · ${stars} · #${cardNumber.toString().padStart(4, '0')} · ${levelDisplay} · ${character.anime} · ${character.name}\n`;
             });
 
             // Create embed with the generated image
@@ -101,7 +129,7 @@ module.exports = {
             const embed = new EmbedBuilder()
                 .setColor(COLORS.SUCCESS)
                 .setTitle(`${EMOJIS.COLLECTION} ${targetUser.username}'s Character Collection`)
-                .setDescription(`**${characters.length}** characters collected • Page **${page + 1}** of **${totalPages}**\n\n${characterList}`)
+                .setDescription(`**${characters.length}** characters collected • Page **${page + 1}** of **${totalPages}**`)
                 .setImage('attachment://collection.png')
                 .setFooter({
                     text: `Use /collection page:${page + 2} to view next page`,
@@ -109,10 +137,24 @@ module.exports = {
                 })
                 .setTimestamp();
 
-            // Add navigation buttons if there are multiple pages
+            // Create components for Components V2
             const components = [];
+
+            // Add character list as a Container with TextDisplay component
+            if (characterList.trim()) {
+                const characterContainer = new ContainerBuilder()
+                    .setAccentColor(COLORS.SUCCESS)
+                    .addTextDisplayComponents(
+                        new TextDisplayBuilder()
+                            .setContent(`**Characters on this page:**\n${characterList.trim()}`)
+                    );
+                
+                components.push(characterContainer);
+            }
+
+            // Add navigation buttons if there are multiple pages
             if (totalPages > 1) {
-                const row = new ActionRowBuilder()
+                const buttonRow = new ActionRowBuilder()
                     .addComponents(
                         new ButtonBuilder()
                             .setCustomId(`collection_prev_${targetUser.id}_${page}`)
@@ -127,7 +169,7 @@ module.exports = {
                             .setEmoji('➡️')
                             .setDisabled(page === totalPages - 1)
                     );
-                components.push(row);
+                components.push(buttonRow);
             }
 
             await interaction.editReply({
@@ -136,7 +178,8 @@ module.exports = {
                     attachment: albumBuffer,
                     name: 'collection.png'
                 }],
-                components: components
+                components: components,
+                flags: MessageFlags.IsComponentsV2
             });
 
         } catch (error) {
@@ -149,11 +192,14 @@ module.exports = {
                 .setFooter({ text: 'Please try again later' });
 
             if (interaction.deferred) {
-                await interaction.editReply({ embeds: [errorEmbed] });
+                await interaction.editReply({ 
+                    embeds: [errorEmbed], 
+                    flags: MessageFlags.IsComponentsV2 
+                });
             } else {
                 await interaction.reply({
                     embeds: [errorEmbed],
-                    flags: MessageFlags.Ephemeral
+                    flags: MessageFlags.Ephemeral | MessageFlags.IsComponentsV2
                 });
             }
         }
