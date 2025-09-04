@@ -33,16 +33,19 @@ src/assets/characters/
 ## 🏷️ Character ID System
 
 Characters now use anime-specific prefixes:
+
 - **Naruto**: `NU001`, `NU002`, etc.
 - **Future**: `OP001` (One Piece), `DB001` (Dragon Ball), etc.
 
 ## 🖼️ Image Setup with ImageKit.io
 
-### Required Image URLs:
+### Required Image URLs
+
 - **Main Image**: `https://ik.imagekit.io/nexium/characters/[character-name].jpg`
 - **Thumbnail**: `https://ik.imagekit.io/nexium/thumbnails/[character-name]-thumb.jpg`
 
-### Image Requirements:
+### Image Requirements
+
 - **Main Image**: 400x560 pixels (card format)
 - **Thumbnail**: 200x280 pixels (smaller preview)
 - **Format**: JPG or PNG
@@ -89,6 +92,7 @@ Characters now use anime-specific prefixes:
 ## 📊 Current Naruto Characters (73 total)
 
 ### COMMON (Genin) - 5 characters
+
 - NU001: Naruto Uzumaki (Genin)
 - NU002: Sasuke Uchiha (Genin)
 - NU003: Sakura Haruno (Genin)
@@ -96,20 +100,24 @@ Characters now use anime-specific prefixes:
 - NU005: Shikamaru Nara (Genin)
 
 ### RARE (Chunin) - 9 characters
+
 - NU006-NU014: Various chunin-level characters
 
 ### EPIC (Jonin) - 13 characters
+
 - NU015-NU025: Elite jonin and sannin
 - NE013: Sasuke's Curse Mark
 - NE014: Susanoo Rib Cage
 
 ### LEGENDARY (Kage) - 17 characters
+
 - NU026-NU039: Village leaders and legendary figures
 - NL015: Sasuke - Heavenly Hand Power
 - NL016: Susanoo Skeletal Form
 - NL017: Kimimaro - Shikotsumyaku
 
 ### MYTHIC (Ultimate) - 13 characters
+
 - NU040-NU048: Ultimate forms and transformations
 - NM011: Madara - Border Jail
 - NM012: Nagato - The Asura Path
@@ -117,6 +125,7 @@ Characters now use anime-specific prefixes:
 - NM014: Susanoo Humanoid Form
 
 ### DIMENSIONAL (Otsutsuki) - 16 characters
+
 - NU049-NU055: God-like characters and progenitors
 - ND014: Madara - Divine Genesis
 - ND015: Hagoromo's Chakra Transfer Jutsu
@@ -141,6 +150,7 @@ Characters now use anime-specific prefixes:
 
 Format: `[AnimePrefix][SequentialNumber]`
 Examples:
+
 - **Naruto**: `NU001`, `NU002`, `NU003`, etc.
 - **One Piece**: `OP001`, `OP002`, `OP003`, etc.
 - **Dragon Ball**: `DB001`, `DB002`, `DB003`, etc.

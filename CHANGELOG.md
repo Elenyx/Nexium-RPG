@@ -8,6 +8,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/SemVer
 ## [1.2.0] - 2025-09-04
 
 ### Added
+
 - **18 New Naruto Characters**: Expanded character collection with powerful new additions
   - **EPIC (2 new)**: Sasuke's Curse Mark (NE013), Susanoo Rib Cage (NE014)
   - **LEGENDARY (3 new)**: Sasuke - Heavenly Hand Power (NL015), Susanoo Skeletal Form (NL016), Kimimaro - Shikotsumyaku (NL017)
@@ -18,6 +19,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/SemVer
   - Applied to: index.html, characters.html, commands.html, guides.html, changelog.html
 
 ### Updated
+
 - **Character Database**: Total Naruto characters now at 85 (was 55)
   - COMMON: 7 characters
   - RARE: 9 characters
@@ -32,6 +34,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/SemVer
 - **Bot Character Database**: Synchronized all JavaScript character files with new additions
 
 ### Technical Details
+
 - **Character IDs**: New characters use IDs NE013-NE014, NL015-NL018, NM011-NM015, ND014-ND022
 - **Duplicate ID Resolution**: Fixed duplicate IDs NL014 and NM009 by reassigning to NL018 and NM015
 - **Image URLs**: All new characters use ImageKit.io hosting with proper rarity fallbacks
@@ -39,6 +42,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/SemVer
 - **No Duplicates**: Each rarity tier maintains unique characters as requested
 
 ### Balance & Gameplay
+
 - **DIMENSIONAL Tier**: Contains the "best of the best" characters with god-like abilities
 - **Progressive Power Scaling**: New characters follow established stat and ability patterns
 - **Rarity Distribution**: Maintains balanced drop rates across all tiers
@@ -48,6 +52,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/SemVer
 ## [1.1.0] - 2025-09-04
 
 ### Added
+
 - **Two-Group Rarity Upgrade System**: Complete overhaul of character progression
   - **Basic Group**: Common → Rare → Epic progression with level system (1-100)
   - **Advanced Group**: Legendary → Mythic progression with level system (1-100)
@@ -60,6 +65,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/SemVer
   - Better long-term character development
 
 ### Changed
+
 - **Rarity Upgrade Thresholds**: Updated for balanced progression
   - Common → Rare: 1,000 shards
   - Rare → Epic: 2,500 shards
@@ -71,12 +77,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/SemVer
 - **Collection Display**: Fixed level display to use custom levels correctly
 
 ### Technical Details
+
 - **Service Layer Updates**: `RarityUpgradeService.js` with group-based logic
 - **Constants Reorganization**: New `RARITY_GROUPS` and `LEVEL_CAPS` configuration
 - **Database Compatibility**: Existing user data preserved, new fields added
 - **Backward Compatibility**: All existing characters work with new system
 
 ### Balance Improvements
+
 - **Fair Progression**: Both groups have equal level caps (100)
 - **Resource Management**: Shards used efficiently across rarity and level systems
 - **Player Experience**: Clear guidance on upgrade paths and next steps
@@ -85,6 +93,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/SemVer
 ---
 
 ## [Unreleased]
+
 - **New Character Database Structure**: Complete reorganization of character system
   - Modular folder-based organization by anime series and power tiers
   - Naruto characters organized into 6 tiers: genin (COMMON), chunin (RARE), jonin (EPIC), kage (LEGENDARY), ultimate (MYTHIC), dimensional (DIMENSIONAL)
@@ -108,18 +117,21 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/SemVer
 *DIMENSIONAL characters are only obtainable through dimensional events, raid boss drops, or limited banners.
 
 ### Changed
+
 - **Character Database Architecture**: Migrated from monolithic `CharacterDatabase.js` to modular structure
 - **Image Management**: Switched from local image storage to ImageKit.io external hosting
 - **Documentation**: Updated `CHARACTER_DATABASE_README.md` with new structure and guidelines
 - **File Organization**: Clean separation of concerns with dedicated folders for each tier
 
 ### Removed
+
 - **Obsolete Files**: Removed `CharacterDatabase.js` (1237 lines), `CharacterDatabaseTemplate.js`
 - **Sample Data**: Removed deprecated `SampleCharacters_deprecated.js`
 - **Local Images**: Removed local character images (edward.png, goku.png, light.png, luffy.png, naruto.jpg, sasuke.png, tanjiro.png)
 - **Unused Folders**: Cleaned up `sample/` and `images/` directories
 
 ### Technical Details
+
 - **File Structure**: `src/assets/characters/[anime]/[tier]/[tier].js`
 - **ID System**: Anime prefixes (NU for Naruto, extensible for other series)
 - **Export System**: Hierarchical exports from tier → anime → main index
@@ -127,6 +139,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/SemVer
 - **Maintainability**: Clear organization makes adding new characters straightforward
 
 ### Performance Improvements
+
 - **Reduced Bundle Size**: Removed 391 lines of obsolete code
 - **Faster Loading**: Modular imports instead of single large file
 - **Better Organization**: Logical grouping by power level and series
@@ -136,12 +149,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/SemVer
 ## [1.0.0] - 2025-09-03
 
 ### Added
+
 - Initial Discord.js v14 bot setup with Components V2
 - Basic slash command system
 - Environment configuration with dotenv
 - Project structure and documentation
 
 ### Dependencies
+
 - discord.js: ^14.22.1
 - dotenv: ^17.2.1
 

@@ -410,6 +410,16 @@ footer {
     color: #333;
 }
 
+.badge.content {
+    background: linear-gradient(45deg, #667eea, #764ba2);
+    color: white;
+}
+
+.badge.characters {
+    background: linear-gradient(45deg, #f093fb, #f5576c);
+    color: white;
+}
+
 .update-card ul {
     list-style: none;
     padding: 0;

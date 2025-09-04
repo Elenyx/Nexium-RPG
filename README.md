@@ -13,6 +13,7 @@ Nexium is an advanced Discord bot that creates an immersive anime multiverse exp
 ## ✨ Features
 
 ### 🎯 **Core Systems**
+
 - **Dimensional Travel**: Explore multiple anime worlds with unique mechanics
 - **Character Collection**: Gacha system with 6 rarity tiers and 500+ characters
 - **Two-Tier Progression**: Balanced rarity upgrade system with level caps
@@ -21,6 +22,7 @@ Nexium is an advanced Discord bot that creates an immersive anime multiverse exp
 - **Profile System**: Detailed progression tracking and customization
 
 ### ⚔️ **Combat & PvP**
+
 - **Turn-based Battles**: Strategic combat with elemental advantages  
 - **Team Formation**: Create synergistic squads from your collection
 - **PvE Dungeons**: Dimension-specific challenges and boss raids
@@ -28,6 +30,7 @@ Nexium is an advanced Discord bot that creates an immersive anime multiverse exp
 - **Battle Analytics**: Detailed statistics and match history
 
 ### 🏰 **Territory & Factions**
+
 - **Land Ownership**: Claim and upgrade territories across dimensions
 - **Faction System**: Create or join player organizations
 - **Alliance Wars**: Large-scale collaborative battles
@@ -35,6 +38,7 @@ Nexium is an advanced Discord bot that creates an immersive anime multiverse exp
 - **Diplomatic Relations**: Complex faction interactions
 
 ### 🎮 **Mini-Games & Events**
+
 - **Puzzle Games**: Dimensional riddles and character guessing
 - **Trivia Battles**: Anime knowledge competitions
 - **Treasure Hunting**: Collaborative exploration events
@@ -42,6 +46,7 @@ Nexium is an advanced Discord bot that creates an immersive anime multiverse exp
 - **Achievement System**: 100+ unlockable achievements
 
 ### 🛠️ **Advanced Features**
+
 - **Crafting System**: Create weapons and equipment
 - **Trading System**: Player-to-player character exchanges
 - **Analytics Dashboard**: Comprehensive statistics tracking
@@ -51,6 +56,7 @@ Nexium is an advanced Discord bot that creates an immersive anime multiverse exp
 ## 🚀 Quick Start
 
 ### Prerequisites
+
 - [Node.js](https://nodejs.org/) (v18.0.0 or higher)
 - [PostgreSQL](https://www.postgresql.org/) (v15.0 or higher)
 - [Redis](https://redis.io/) (v6.0 or higher)
@@ -59,22 +65,26 @@ Nexium is an advanced Discord bot that creates an immersive anime multiverse exp
 ### Installation
 
 1. **Clone the repository**
+
    ```bash
    git clone https://github.com/yourusername/nexium-bot.git
    cd nexium-bot
    ```
 
 2. **Install dependencies**
+
    ```bash
    npm install
    ```
 
 3. **Environment setup**
+
    ```bash
    cp .env.example .env
    ```
-   
+
    Edit `.env` with your configuration:
+
    ```env
    DISCORD_TOKEN=your_discord_bot_token
    DISCORD_CLIENT_ID=your_bot_client_id
@@ -85,16 +95,19 @@ Nexium is an advanced Discord bot that creates an immersive anime multiverse exp
    ```
 
 4. **Database setup**
+
    ```bash
    npm run db:migrate
    ```
 
 5. **Deploy slash commands**
+
    ```bash
    npm run deploy
    ```
 
 6. **Start the bot**
+
    ```bash
    npm run dev
    ```
@@ -102,6 +115,7 @@ Nexium is an advanced Discord bot that creates an immersive anime multiverse exp
 ## 📖 Commands Guide
 
 ### 🌟 **Essential Commands**
+
 | Command | Description | Usage |
 |---------|-------------|-------|
 | `/profile [user]` | View detailed user profile | `/profile @user` |
@@ -110,6 +124,7 @@ Nexium is an advanced Discord bot that creates an immersive anime multiverse exp
 | `/dimension info` | View current dimension details | `/dimension info` |
 
 ### ✨ **Character Commands**
+
 | Command | Description | Usage |
 |---------|-------------|-------|
 | `/summon [dimension]` | Summon characters from the multiverse | `/summon shonen` |
@@ -120,6 +135,7 @@ Nexium is an advanced Discord bot that creates an immersive anime multiverse exp
 | `/trade request <user> <character>` | Initiate character trade | `/trade request @user Naruto` |
 
 ### ⚔️ **Battle Commands**
+
 | Command | Description | Usage |
 |---------|-------------|-------|
 | `/battle challenge <user>` | Challenge another player | `/battle challenge @user` |
@@ -128,6 +144,7 @@ Nexium is an advanced Discord bot that creates an immersive anime multiverse exp
 | `/leaderboard [type]` | Check rankings | `/leaderboard pvp` |
 
 ### 🏰 **Territory & Faction Commands**
+
 | Command | Description | Usage |
 |---------|-------------|-------|
 | `/territory claim <location>` | Claim dimensional territory | `/territory claim nexus-01` |
@@ -136,6 +153,7 @@ Nexium is an advanced Discord bot that creates an immersive anime multiverse exp
 | `/war declare <target>` | Declare faction war | `/war declare "Rival Faction"` |
 
 ### 🎮 **Mini-Game Commands**
+
 | Command | Description | Usage |
 |---------|-------------|-------|
 | `/game [type]` | Launch mini-games | `/game trivia` |
@@ -145,21 +163,25 @@ Nexium is an advanced Discord bot that creates an immersive anime multiverse exp
 ## � Character Progression System
 
 ### **Two-Tier Rarity System**
+
 Nexium features a balanced progression system designed to provide fair and engaging character development:
 
 #### **Basic Group (Common → Rare → Epic)**
+
 - **Upgrade Path**: Common → Rare → Epic
 - **Shard Requirements**: 1,000 → 2,500 shards
 - **Level Cap**: 100 levels after reaching Epic
 - **Focus**: Accessible progression for most players
 
 #### **Advanced Group (Legendary → Mythic)**
+
 - **Upgrade Path**: Legendary → Mythic
 - **Shard Requirements**: 10,000 shards
 - **Level Cap**: 100 levels after reaching Mythic
 - **Focus**: Elite progression for dedicated players
 
 ### **Key Features**
+
 - **No Power Creep**: Maximum rarity caps prevent overpowered characters
 - **Long-Term Progression**: Level system provides 100 levels of advancement
 - **Resource Efficiency**: Shards used for both rarity upgrades and leveling
@@ -167,6 +189,7 @@ Nexium features a balanced progression system designed to provide fair and engag
 - **Clear Guidance**: UI shows next steps and available upgrades
 
 ### **Upgrade Commands**
+
 ```bash
 /upgrade NU001 rarity    # Attempt rarity upgrade
 /upgrade NU001 level     # Level up character
@@ -176,6 +199,7 @@ Nexium features a balanced progression system designed to provide fair and engag
 ## �🏗️ Architecture
 
 ### **Project Structure**
+
 ```
 nexium-bot/
 ├── src/
@@ -194,6 +218,7 @@ nexium-bot/
 ```
 
 ### **Core Technologies**
+
 - **Discord.js v14**: Modern Discord bot framework with Components V2
 - **PostgreSQL**: Flexible document database for complex game data
 - **Redis**: High-performance caching and session management
@@ -201,6 +226,7 @@ nexium-bot/
 - **Mongoose**: MongoDB object modeling with validation
 
 ### **Design Patterns**
+
 - **Command Pattern**: Modular slash command architecture
 - **Service Layer**: Separation of business logic from presentation
 - **Event-Driven**: Reactive programming with Discord events
@@ -210,6 +236,7 @@ nexium-bot/
 ## 🔧 Development
 
 ### **Available Scripts**
+
 ```bash
 npm run dev          # Start with hot reload
 npm run start        # Production start
@@ -223,24 +250,28 @@ npm run format       # Code formatting
 ### **Adding New Features**
 
 #### **Creating a New Command**
+
 1. Create command file in appropriate category folder
 2. Follow the command template structure
 3. Add to command handler automatically loads it
 4. Test with `/deploy` script
 
 #### **Adding Components V2 Elements**
+
 1. Create component in `src/components/[type]/`
 2. Define customId and execute function
 3. Component handler automatically registers it
 4. Use in commands or other components
 
 #### **Database Models**
+
 1. Define schema in `src/models/`
 2. Add indexes for performance
 3. Include validation and virtuals
 4. Update migration scripts
 
 ### **Testing**
+
 ```bash
 # Unit tests
 npm run test:unit
@@ -260,6 +291,7 @@ npm test -- --grep "gacha system"
 ### **Production Setup**
 
 #### **Environment Variables**
+
 ```env
 NODE_ENV=production
 DISCORD_TOKEN=your_production_token
@@ -269,6 +301,7 @@ LOG_LEVEL=warn
 ```
 
 #### **GitHub Pages CDN**
+
 ```bash
 # Images are automatically hosted via GitHub Pages
 # URL: https://elenyx.github.io/Nexium-RPG/characters/
@@ -280,6 +313,7 @@ LOG_LEVEL=warn
 ```
 
 #### **Process Management**
+
 ```bash
 # Using PM2
 npm install -g pm2
@@ -290,10 +324,10 @@ pm2 startup
 
 ### **Scaling Considerations**
 
-
 ## 📊 Performance & Analytics
 
 ### **Metrics Tracking**
+
 - **User Engagement**: Daily/monthly active users, retention rates
 - **Feature Usage**: Command popularity, system adoption
 - **Performance**: Response times, error rates, uptime
@@ -301,6 +335,7 @@ pm2 startup
 - **Battle Analytics**: Win rates, character performance
 
 ### **Monitoring Tools**
+
 - **Application Logs**: Structured logging with Winston
 - **Database Monitoring**: MongoDB Atlas or self-hosted metrics
 - **Discord API**: Rate limiting and quota management
@@ -312,6 +347,7 @@ pm2 startup
 We welcome contributions! Please see our [Contributing Guide](CONTRIBUTING.md) for details.
 
 ### **Development Workflow**
+
 1. Fork the repository
 2. Create feature branch (`git checkout -b feature/amazing-feature`)
 3. Commit changes (`git commit -m 'Add amazing feature'`)
@@ -319,7 +355,6 @@ We welcome contributions! Please see our [Contributing Guide](CONTRIBUTING.md) f
 5. Open Pull Request
 
 ### **Code Standards**
-
 
 ## 📚 Documentation
 
@@ -332,12 +367,14 @@ We welcome contributions! Please see our [Contributing Guide](CONTRIBUTING.md) f
 ## 🛡️ Security & Privacy
 
 ### **Data Protection**
+
 - **User Privacy**: Minimal data collection, GDPR compliant
 - **Secure Storage**: Encrypted sensitive data at rest
 - **API Security**: Rate limiting and input validation
 - **Access Control**: Role-based permissions system
 
 ### **Security Measures**
+
 - **Input Sanitization**: SQL injection and XSS prevention
 - **Authentication**: Secure Discord OAuth integration
 - **Audit Logging**: Comprehensive action tracking
@@ -346,30 +383,35 @@ We welcome contributions! Please see our [Contributing Guide](CONTRIBUTING.md) f
 ## 🎯 Roadmap
 
 ### **Phase 1: Foundation** ✅
+
 - [x] Core bot infrastructure
 - [x] Basic character collection
 - [x] Profile and economy systems
 - [x] Components V2 integration
 
 ### **Phase 2: Combat Systems** 🚧
+
 - [ ] Battle engine implementation
 - [ ] PvE dungeon system
 - [ ] Team formation mechanics
 - [ ] Basic PvP functionality
 
 ### **Phase 3: Territory & Factions** 📋
+
 - [ ] Land ownership system
 - [ ] Faction creation and management
 - [ ] Alliance mechanics
 - [ ] Territory warfare
 
 ### **Phase 4: Advanced Features** 📋
+
 - [ ] Crafting and enhancement
 - [ ] Treasure hunting events
 - [ ] Cross-dimensional campaigns
 - [ ] Advanced analytics dashboard
 
 ### **Phase 5: Community Features** 📋
+
 - [ ] Tournament system
 - [ ] Seasonal events
 - [ ] User-generated content
@@ -381,6 +423,7 @@ We welcome contributions! Please see our [Contributing Guide](CONTRIBUTING.md) f
 <summary><strong>How do I get more Dimensional Energy?</strong></summary>
 
 Dimensional Energy regenerates automatically at 1 point per minute (max 100). You can also:
+
 - Claim daily rewards (`/daily`)
 - Complete achievements
 - Participate in server events
@@ -392,6 +435,7 @@ Dimensional Energy regenerates automatically at 1 point per minute (max 100). Yo
 <summary><strong>What determines character rarity in summons?</strong></summary>
 
 Summon rates are:
+
 - Common: 47.7%
 - Rare: 30.2%
 - Epic: 15.1%
@@ -400,6 +444,7 @@ Summon rates are:
 - Dimensional: Event Only*
 
 **Two-Tier Progression System:**
+
 - **Basic Group**: Common → Rare → Epic (then level system up to 100)
 - **Advanced Group**: Legendary → Mythic (then level system up to 100)
 - No further rarity upgrades beyond Epic/Mythic - focus on leveling!
@@ -414,17 +459,20 @@ Summon rates are:
 Nexium features a balanced two-group rarity progression system:
 
 **Basic Group (Common → Rare → Epic):**
+
 - Common → Rare: 1,000 shards
 - Rare → Epic: 2,500 shards
 - Epic = Maximum rarity
 - After reaching Epic: Level system (1-100 levels)
 
 **Advanced Group (Legendary → Mythic):**
+
 - Legendary → Mythic: 10,000 shards
 - Mythic = Maximum rarity
 - After reaching Mythic: Level system (1-100 levels)
 
 **Key Features:**
+
 - No upgrades beyond Epic/Mythic - prevents power creep
 - Level system provides long-term progression
 - Remaining shards can be used for leveling
@@ -436,6 +484,7 @@ Nexium features a balanced two-group rarity progression system:
 <summary><strong>Can I trade characters with other players?</strong></summary>
 
 Yes! Use `/trade request @user character_name` to initiate trades. Both players must confirm the exchange. Some limitations apply:
+
 - Cannot trade locked characters
 - Daily trade limits exist
 - Faction restrictions may apply
@@ -446,6 +495,7 @@ Yes! Use `/trade request @user character_name` to initiate trades. Both players 
 <summary><strong>How do faction wars work?</strong></summary>
 
 Faction wars are server-wide events where factions compete for territory control:
+
 - Declare war with `/war declare`
 - Members participate in battles
 - Victory grants territory and rewards
@@ -456,12 +506,14 @@ Faction wars are server-wide events where factions compete for territory control
 ## 🆘 Support
 
 ### **Getting Help**
+
 - **Discord Server**: [Join our community](https://discord.gg/nexium-bot)
 - **GitHub Issues**: [Report bugs or request features](https://github.com/yourusername/nexium-bot/issues)
 - **Documentation**: [Comprehensive guides](docs/)
-- **Email Support**: support@nexium-bot.com
+- **Email Support**: <support@nexium-bot.com>
 
 ### **Status & Updates**
+
 - **Status Page**: [Bot uptime and incidents](https://status.nexium-bot.com)
 - **Changelog**: [Release notes and updates](CHANGELOG.md)
 - **Twitter**: [@NexiumBot](https://twitter.com/nexiumbot) - Latest news

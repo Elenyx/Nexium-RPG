@@ -30,12 +30,14 @@ src/
 ### 1. Image Storage
 
 Character images should be stored in `src/assets/images/characters/` with the following naming convention:
+
 - Filename: `{characterId}.{extension}`
 - Supported formats: `.png`, `.jpg`, `.jpeg`, `.gif`, `.webp`
 
 ### 2. Character Data Structure
 
 Each character object should include:
+
 ```javascript
 {
     id: 'char_001',           // Unique character ID
@@ -48,6 +50,7 @@ Each character object should include:
 ### 3. Automatic Image Loading
 
 The system automatically:
+
 1. Searches for images by character ID
 2. Falls back to external URLs if local images aren't found
 3. Creates Discord attachments for local images
@@ -56,6 +59,7 @@ The system automatically:
 ## Usage Examples
 
 ### Basic Collection Display
+
 ```javascript
 const CharacterCollection = require('./src/components/builders/CharacterCollection');
 
@@ -78,6 +82,7 @@ const classicCollection = await CharacterCollection.createAdaptiveCollection(
 ```
 
 ### Character Detail View
+
 ```javascript
 // Individual character display with image
 const detail = await CharacterCollection.createCharacterDetailEmbed(
@@ -87,6 +92,7 @@ const detail = await CharacterCollection.createCharacterDetailEmbed(
 ```
 
 ### Manual Image Management
+
 ```javascript
 const CharacterImageManager = require('./src/components/builders/CharacterImageManager');
 const imageManager = new CharacterImageManager();
@@ -107,6 +113,7 @@ const availableImages = imageManager.getAvailableCharacterImages();
 ## Testing
 
 Run the test script to verify everything works:
+
 ```bash
 node tests/test-character-collection.js
 ```

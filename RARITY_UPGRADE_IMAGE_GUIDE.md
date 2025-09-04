@@ -1,6 +1,7 @@
 # Character Image Structure for Rarity Upgrades
 
 ## Overview
+
 For the rarity upgrade system to work properly with pre-designed character cards, you need to create separate image files for each rarity level of each character.
 
 ## ImageKit Folder Structure
@@ -40,6 +41,7 @@ Characters/
 ## Image URL Pattern
 
 Each character should have URLs following this pattern:
+
 ```
 https://ik.imagekit.io/nexiumrpg/Characters/{Anime}/{Rarity}/{CharacterName}.png
 ```
@@ -70,6 +72,7 @@ Update your character data files to include `imageUrls` object:
 ## Design Guidelines
 
 ### Card Design Elements
+
 Each rarity level should have distinct visual elements:
 
 - **COMMON**: Basic design, gray/silver accents
@@ -80,6 +83,7 @@ Each rarity level should have distinct visual elements:
 - **DIMENSIONAL**: Orange/teal accents, ultimate effects
 
 ### Required Elements on Each Card
+
 - Character artwork
 - Character name (text)
 - Rarity label (text)
@@ -95,6 +99,7 @@ Each rarity level should have distinct visual elements:
 ## Fallback System
 
 If a rarity-specific image is missing, the system will:
+
 1. Try to use the rarity-specific URL from `imageUrls`
 2. Fall back to the single `imageUrl`
 3. Use a colored placeholder if all else fails

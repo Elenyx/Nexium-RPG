@@ -131,6 +131,7 @@ nexium-discord-bot/
 ## 🔧 Core Files Implementation
 
 ### src/index.js
+
 ```javascript
 require('dotenv').config();
 const { NexiumBot } = require('./bot');
@@ -146,6 +147,7 @@ bot.start();
 ```
 
 ### src/bot.js
+
 ```javascript
 const { Client, GatewayIntentBits, Collection, Partials } = require('discord.js');
 const { connectDatabase } = require('./database/connection');
@@ -207,6 +209,7 @@ module.exports = { NexiumBot };
 ```
 
 ### src/database/connection.js
+
 ```javascript
 const { Sequelize } = require('sequelize');
 const logger = require('../utils/logger');
@@ -243,6 +246,7 @@ module.exports = { sequelize, connectDatabase };
 ```
 
 ### src/database/models/User.js
+
 ```javascript
 const { DataTypes } = require('sequelize');
 const { sequelize } = require('../connection');
@@ -298,6 +302,7 @@ module.exports = User;
 ```
 
 ### src/commands/core/profile.js
+
 ```javascript
 const { SlashCommandBuilder, EmbedBuilder, ActionRowBuilder, ButtonBuilder, ButtonStyle } = require('discord.js');
 const UserService = require('../../services/UserService');
@@ -398,6 +403,7 @@ module.exports = {
 ```
 
 ### src/components/buttons/ButtonHandler.js
+
 ```javascript
 const { Collection } = require('discord.js');
 const logger = require('../../utils/logger');
@@ -444,6 +450,7 @@ module.exports = ButtonHandler;
 ```
 
 ### src/components/modals/ModalHandler.js
+
 ```javascript
 const logger = require('../../utils/logger');
 
@@ -487,6 +494,7 @@ module.exports = ModalHandler;
 ```
 
 ### src/events/interactionCreate.js
+
 ```javascript
 const { Events } = require('discord.js');
 const ButtonHandler = require('../components/buttons/ButtonHandler');
@@ -558,6 +566,7 @@ module.exports = {
 ```
 
 ### .env.example
+
 ```env
 # Discord Configuration
 DISCORD_TOKEN=your_discord_bot_token
@@ -587,6 +596,7 @@ LOG_LEVEL=info
 ```
 
 ### railway.json
+
 ```json
 {
   "$schema": "https://railway.app/railway.schema.json",
@@ -609,6 +619,7 @@ LOG_LEVEL=info
 ```
 
 ### Dockerfile
+
 ```dockerfile
 FROM node:20-alpine
 
@@ -633,6 +644,7 @@ CMD ["node", "src/index.js"]
 ```
 
 ### src/config/constants.js
+
 ```javascript
 module.exports = {
     COLORS: {
@@ -698,23 +710,27 @@ module.exports = {
 ### Railway Deployment
 
 1. **Create Railway Project**
+
    ```bash
    railway login
    railway init
    ```
 
 2. **Add PostgreSQL Database**
+
    ```bash
    railway add postgresql
    ```
 
 3. **Set Environment Variables**
+
    ```bash
    railway variables set DISCORD_TOKEN=your_token
    railway variables set NODE_ENV=production
    ```
 
 4. **Deploy**
+
    ```bash
    railway up
    ```
@@ -722,22 +738,26 @@ module.exports = {
 ### Local Development
 
 1. **Install Dependencies**
+
    ```bash
    npm install
    ```
 
 2. **Setup Database**
+
    ```bash
    npm run migrate
    npm run seed
    ```
 
 3. **Deploy Commands**
+
    ```bash
    npm run deploy-commands
    ```
 
 4. **Start Bot**
+
    ```bash
    npm run dev
    ```
@@ -745,6 +765,7 @@ module.exports = {
 ## 📝 Implementation Notes
 
 ### Components V2 Features
+
 - **Dynamic Buttons**: Context-aware buttons with custom IDs
 - **Modal Forms**: Complex user input with validation
 - **Select Menus**: Multi-type selection support (user, role, channel, string)
@@ -752,18 +773,21 @@ module.exports = {
 - **Component Routing**: Organized handler structure
 
 ### Database Design
+
 - **Sequelize ORM**: Type-safe database operations
 - **Migration System**: Version-controlled schema changes
 - **Connection Pooling**: Optimized for Railway's PostgreSQL
 - **Transaction Support**: Data integrity for complex operations
 
 ### Performance Optimizations
+
 - **Command Caching**: Reduced Discord API calls
 - **Database Indexing**: Fast queries on frequently accessed data
 - **Lazy Loading**: Components loaded on-demand
 - **Rate Limiting**: Protection against spam
 
 ### Security Features
+
 - **Input Validation**: All user inputs sanitized
 - **Permission Checks**: Role-based access control
 - **Error Boundaries**: Graceful error handling
@@ -776,6 +800,7 @@ This structure provides a solid foundation for your Nexium Discord Bot with full
 # 🚀 Nexium Bot - Development Timeline & Implementation Guide
 
 ## 📅 Development Overview
+
 **Total Timeline**: 32 weeks (8 months)  
 **Current Status**: Project Structure Complete ✅  
 **Next Phase**: Phase 1 - Foundation & Core Systems
@@ -783,9 +808,11 @@ This structure provides a solid foundation for your Nexium Discord Bot with full
 ---
 
 ## 🎯 WEEK 1-2: Initial Setup & Deployment
+
 **Goal**: Get bot live and responding to basic commands
 
 ### Priority Tasks
+
 - [ ] **Day 1-2**: Environment Setup
   - Create Railway account and project
   - Set up PostgreSQL database
@@ -794,6 +821,7 @@ This structure provides a solid foundation for your Nexium Discord Bot with full
   - Verify bot comes online
 
 - [ ] **Day 3-4**: Database Schema Implementation
+
   ```sql
   -- Create core tables
   CREATE TABLE users (...)
@@ -821,6 +849,7 @@ This structure provides a solid foundation for your Nexium Discord Bot with full
   - First production deployment
 
 ### Deliverables
+
 ✅ Live bot on Railway  
 ✅ 4 working commands  
 ✅ Energy system functional  
@@ -829,10 +858,13 @@ This structure provides a solid foundation for your Nexium Discord Bot with full
 ---
 
 ## 📊 WEEK 3-4: User Experience & Economy
+
 **Goal**: Create engaging daily loop and basic economy
 
 ### Implementation Priority
+
 1. **Enhanced Daily System**
+
    ```javascript
    // Features to implement:
    - Streak bonuses (7, 30, 100 days)
@@ -860,12 +892,14 @@ This structure provides a solid foundation for your Nexium Discord Bot with full
    - Travel costs (energy/coins)
 
 ### Week 3 Checklist
+
 - [ ] Streak system with bonuses
 - [ ] Shop with 5-10 basic items
 - [ ] XP and leveling mechanics
 - [ ] Achievement system foundation
 
 ### Week 4 Checklist
+
 - [ ] Dimension travel system
 - [ ] User statistics tracking
 - [ ] Leaderboard system
@@ -874,9 +908,11 @@ This structure provides a solid foundation for your Nexium Discord Bot with full
 ---
 
 ## 🎴 WEEK 5-8: Character Collection System
+
 **Goal**: Implement gacha mechanics and character management
 
 ### Phase 2.1 (Week 5-6): Gacha Foundation
+
 ```javascript
 // Core Gacha Features
 {
@@ -891,6 +927,7 @@ This structure provides a solid foundation for your Nexium Discord Bot with full
 ```
 
 **Implementation Tasks**:
+
 - [ ] Character database schema
 - [ ] Gacha probability system
 - [ ] `/summon single` command
@@ -899,7 +936,9 @@ This structure provides a solid foundation for your Nexium Discord Bot with full
 - [ ] Character inventory system
 
 ### Phase 2.2 (Week 7-8): Collection Management
+
 **Features to Build**:
+
 1. **Character Display**
    - Character cards with stats
    - Rarity indicators and animations
@@ -913,12 +952,13 @@ This structure provides a solid foundation for your Nexium Discord Bot with full
    - `/character favorite` - Quick access marking
 
 3. **Trading System Foundation**
-   - `/trade request @user` 
+   - `/trade request @user`
    - Trade confirmation with Components V2
    - Trade history logging
    - Anti-scam measures
 
 ### Milestone Metrics
+
 - 50+ unique characters in database
 - 3 functioning gacha types
 - Complete trading system
@@ -927,11 +967,13 @@ This structure provides a solid foundation for your Nexium Discord Bot with full
 ---
 
 ## ⚔️ WEEK 9-12: Combat System
+
 **Goal**: Engaging battle mechanics with strategy
 
 ### Combat Development Phases
 
 #### Week 9-10: Battle Engine Core
+
 ```javascript
 // Battle System Architecture
 class BattleEngine {
@@ -944,6 +986,7 @@ class BattleEngine {
 ```
 
 **Priority Implementation**:
+
 1. Turn-based combat loop
 2. Basic attack/defend/skill options
 3. HP/MP management
@@ -951,6 +994,7 @@ class BattleEngine {
 5. Reward distribution
 
 #### Week 11: PvE Content
+
 - [ ] Dungeon system with stages
 - [ ] Enemy AI patterns
 - [ ] Boss mechanics
@@ -958,6 +1002,7 @@ class BattleEngine {
 - [ ] Energy cost per battle
 
 #### Week 12: PvP Foundation
+
 - [ ] Challenge system
 - [ ] Matchmaking logic
 - [ ] ELO/ranking system
@@ -965,6 +1010,7 @@ class BattleEngine {
 - [ ] Spectator mode
 
 ### Combat UI/UX
+
 - Battle embeds with health bars
 - Turn indicators
 - Skill animations (emoji/text)
@@ -974,11 +1020,13 @@ class BattleEngine {
 ---
 
 ## 🏰 WEEK 13-16: Territory & Faction Systems
+
 **Goal**: Guild mechanics and territory control
 
 ### Development Breakdown
 
 #### Week 13-14: Faction Foundation
+
 1. **Guild Creation**
    - `/faction create [name]`
    - Member management
@@ -993,6 +1041,7 @@ class BattleEngine {
    - Faction shop
 
 #### Week 15-16: Territory System
+
 1. **Land Mechanics**
    - Territory grid system
    - Claiming mechanics
@@ -1008,23 +1057,27 @@ class BattleEngine {
 ---
 
 ## 🎮 WEEK 17-20: Mini-Games & Engagement
+
 **Goal**: Variety content for daily engagement
 
 ### Mini-Game Rollout Schedule
 
 #### Week 17-18: Core Games
+
 - [ ] **Trivia Battle**: Anime knowledge quiz
 - [ ] **Character Guess**: "Who's that character?"
 - [ ] **Memory Match**: Card matching with rewards
 - [ ] **Dice Roll**: Gambling system
 
 #### Week 19-20: Advanced Games
+
 - [ ] **Dimensional Puzzle**: Complex riddles
 - [ ] **Racing**: Character-based races
 - [ ] **Tournament System**: Automated brackets
 - [ ] **Seasonal Events**: Time-limited games
 
 ### Integration Points
+
 - Games cost energy to play
 - Rewards tied to main progression
 - Daily game bonuses
@@ -1033,11 +1086,13 @@ class BattleEngine {
 ---
 
 ## 🛠️ WEEK 21-24: Advanced Features
+
 **Goal**: Crafting, exploration, and depth
 
 ### Feature Implementation
 
 #### Week 21-22: Crafting System
+
 ```javascript
 // Crafting Schema
 {
@@ -1055,6 +1110,7 @@ class BattleEngine {
 - Enhancement/upgrade paths
 
 #### Week 23-24: Exploration
+
 - Dimensional rifts (timed events)
 - Treasure hunting mechanics
 - Expedition teams
@@ -1064,11 +1120,13 @@ class BattleEngine {
 ---
 
 ## 🌈 WEEK 25-28: Events & Polish
+
 **Goal**: Dynamic content and engagement systems
 
 ### Event System Development
 
 #### Week 25-26: Event Framework
+
 - Event scheduler system
 - Reward distribution
 - Event currency
@@ -1076,6 +1134,7 @@ class BattleEngine {
 - Event leaderboards
 
 #### Week 27-28: Content Types
+
 1. **Seasonal Events**
    - Summer beach episode
    - Halloween dimensions
@@ -1091,11 +1150,13 @@ class BattleEngine {
 ---
 
 ## 🏆 WEEK 29-32: Competitive & Final Polish
+
 **Goal**: End-game content and polish
 
 ### Final Phase Implementation
 
 #### Week 29-30: Competitive Systems
+
 - Ranked seasons
 - Tournament automation
 - Guild wars
@@ -1103,6 +1164,7 @@ class BattleEngine {
 - Championship system
 
 #### Week 31-32: Polish & Launch
+
 - Performance optimization
 - Bug fixes
 - Balance adjustments
@@ -1127,31 +1189,37 @@ class BattleEngine {
 ### Development Checkpoints
 
 **Month 1 Complete**:
+
 - ✅ Core systems operational
 - ✅ Basic economy functional
 - ✅ Users can progress
 
 **Month 2 Complete**:
+
 - ✅ Gacha system live
 - ✅ Collection mechanics working
 - ✅ Trading enabled
 
 **Month 3 Complete**:
+
 - ✅ Combat system functional
 - ✅ PvE and PvP available
 - ✅ Competitive elements
 
 **Month 4 Complete**:
+
 - ✅ Faction system active
 - ✅ Territory wars possible
 - ✅ Social features robust
 
 **Month 5-6 Complete**:
+
 - ✅ Mini-games providing variety
 - ✅ Crafting adds depth
 - ✅ Exploration content
 
 **Month 7-8 Complete**:
+
 - ✅ Event system dynamic
 - ✅ Competitive scene thriving
 - ✅ Bot fully featured
@@ -1163,21 +1231,25 @@ class BattleEngine {
 ### Recommended Schedule
 
 **Monday-Tuesday**: Feature Development
+
 - Code new features
 - Implement database changes
 - Create new commands
 
 **Wednesday-Thursday**: Testing & Integration
+
 - Test new features
 - Fix bugs
 - Integrate with existing systems
 
 **Friday**: Deployment
+
 - Deploy to production
 - Monitor for issues
 - Gather user feedback
 
 **Weekend**: Planning & Community
+
 - Plan next week
 - Engage with community
 - Document progress
@@ -1218,36 +1290,42 @@ class BattleEngine {
 ### Day-by-Day Plan
 
 **Day 1 (Today)**:
+
 1. Set up Railway project
 2. Deploy basic bot
 3. Verify database connection
 4. Test deployment pipeline
 
 **Day 2**:
+
 1. Implement user model
 2. Create `/profile` command
 3. Add `/daily` command
 4. Test user creation flow
 
 **Day 3**:
+
 1. Implement energy system
 2. Add energy regeneration
 3. Create energy display
 4. Test energy consumption
 
 **Day 4**:
+
 1. Add coin economy
 2. Implement transactions
 3. Create `/balance` command
 4. Add transaction history
 
 **Day 5**:
+
 1. Implement XP/Level system
 2. Create level up mechanics
 3. Add level rewards
 4. Test progression
 
 **Day 6-7**:
+
 1. Polish and bug fixes
 2. Add error handling
 3. Implement logging
@@ -1270,12 +1348,14 @@ class BattleEngine {
 ## 📊 Resource Allocation
 
 ### Time Investment per Phase
+
 - **Phase 1-2** (Foundation): 30% of effort - Critical for stability
 - **Phase 3-4** (Combat): 25% of effort - Core gameplay
 - **Phase 5-6** (Social): 20% of effort - Community building
 - **Phase 7-8** (Polish): 25% of effort - Long-term success
 
 ### Team Recommendations (If Scaling)
+
 - **Weeks 1-8**: Solo development viable
 - **Weeks 9-16**: Consider adding artist for assets
 - **Weeks 17-24**: Community moderator helpful
@@ -1286,6 +1366,7 @@ class BattleEngine {
 ## ✅ Success Criteria
 
 Your bot is successful when:
+
 1. Users log in daily without reminders
 2. Community creates content (guides, fan art)
 3. Players form lasting friendships

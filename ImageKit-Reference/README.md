@@ -37,43 +37,51 @@ ImageKit-Reference/
 ## URL Pattern
 
 Each image should follow this URL pattern:
+
 ```
 https://ik.imagekit.io/nexiumrpg/Characters/{Anime}/{Rarity}/{CharacterName}.png
 ```
 
-### Examples:
+### Examples
+
 - `https://ik.imagekit.io/nexiumrpg/Characters/Naruto/COMMON/Naruto.png`
 - `https://ik.imagekit.io/nexiumrpg/Characters/Naruto/RARE/Naruto.png`
 - `https://ik.imagekit.io/nexiumrpg/Characters/Naruto/EPIC/Naruto.png`
 
 ## Design Guidelines
 
-### COMMON Cards:
+### COMMON Cards
+
 - Basic design with gray/silver accents
 - Simple frame
 - "COMMON" text label
 
-### RARE Cards:
+### RARE Cards
+
 - Blue accents and effects
 - Slightly enhanced frame
 - "RARE" text label
 
-### EPIC Cards:
+### EPIC Cards
+
 - Purple accents and effects
 - More elaborate frame design
 - "EPIC" text label
 
-### LEGENDARY Cards:
+### LEGENDARY Cards
+
 - Gold accents and effects
 - Premium frame with special effects
 - "LEGENDARY" text label
 
-### MYTHIC Cards:
+### MYTHIC Cards
+
 - Red/pink accents and effects
 - Advanced frame with animations
 - "MYTHIC" text label
 
-### DIMENSIONAL Cards:
+### DIMENSIONAL Cards
+
 - Orange/teal accents and effects
 - Ultimate frame design with special effects
 - "DIMENSIONAL" text label
@@ -93,7 +101,8 @@ https://ik.imagekit.io/nexiumrpg/Characters/{Anime}/{Rarity}/{CharacterName}.png
 - Use PNG format for transparency support
 - Keep filenames consistent across rarities
 
-### Examples:
+### Examples
+
 - `Naruto.png` (not `naruto.png` or `NARUTO.PNG`)
 - `Sasuke-Uchiha.png` (for names with spaces)
 - `Kurama-Chakra-Mode.png` (for complex names)
@@ -109,6 +118,7 @@ https://ik.imagekit.io/nexiumrpg/Characters/{Anime}/{Rarity}/{CharacterName}.png
 ## Testing
 
 After uploading, test with:
+
 ```
 /rarity-progress [character_id]
 /upgrade character_id:[character_id] type:rarity

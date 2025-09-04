@@ -206,7 +206,6 @@ applyTo: '**/*.js'
   });
   ```
 
-
 ---
 
 ### Summary Table
@@ -391,7 +390,7 @@ await result2.deferUpdate();
 ## 1.  Ephemeral UX Deep-Dive
 
 **Is `ephemeral` deprecated?** Yes—it’s officially deprecated.
-Use **`flags: MessageFlags.Ephemeral`** instead of `{ ephemeral: true }` in `InteractionReplyOptions` 
+Use **`flags: MessageFlags.Ephemeral`** instead of `{ ephemeral: true }` in `InteractionReplyOptions`
 You’ll get a runtime warning if you're still using `ephemeral: true`—and note it’s likely to disappear in Discord.js v15 .
 
 Also: **Ephemeral messages cannot be deleted** via API once sent, but you *can* edit them.
@@ -493,20 +492,4 @@ module.exports = {
 * **Modal flows**: send a modal, gather input, reply ephemerally. Can’t delete earlier ephemeral messages.
 * **Audio triggers**: slash command -> join voice -> play clip -> reply.
 
-# Reference:
-
-[1]: https://discordjs.guide/creating-your-bot/slash-commands?utm_source=chatgpt.com "Creating slash commands - discord.js Guide"
-[2]: https://medium.com/%40LeagueOfVillains/building-a-discord-bot-with-node-day-4-slash-commands-d908017a52e4?utm_source=chatgpt.com "Building a Discord Bot with Node — Slash Commands - Medium"
-[3]: https://discordjs.guide/interactive-components/interactions?utm_source=chatgpt.com "Component interactions - discord.js Guide"
-[4]: https://discordjs.guide/popular-topics/collectors?utm_source=chatgpt.com "Collectors - discord.js Guide"
-[5]: https://stackoverflow.com/questions/71338561/interaction-collector-discord-js-collects-all-interactions-that-are-executed-aft?utm_source=chatgpt.com "interaction collector discord.js collects all interactions that are ..."
-[6]: https://stackoverflow.com/questions/76000220/discordjs-createmessagecomponentcollector-collecting-interaction-from-other-me?utm_source=chatgpt.com "Discordjs \"createMessageComponentCollector\" collecting ..."
-[7]: https://www.answeroverflow.com/m/1354111797816328224?utm_source=chatgpt.com "Series of component interactions - discord.js - Imagine an app"
-[8]: https://discordjs.guide/popular-topics/display-components?utm_source=chatgpt.com "Display Components - discord.js Guide"
-[9]: https://discordjs.guide/popular-topics/display-components "Display Components | discord.js Guide"
-[10]: https://discord.js.org/docs/packages/discord.js/stable/InteractionReplyOptions%3AInterface?utm_source=chatgpt.com "InteractionReplyOptions (discord.js - 14.22.1)"
-[11]: https://www.answeroverflow.com/m/1380461769788620920?utm_source=chatgpt.com "Why does it say (node:3668) Warning: Supplying \"ephemeral\" for ..."
-[12]: https://www.answeroverflow.com/m/1035041999562223637?utm_source=chatgpt.com "Show modal and remove previous ephemeral - discord.js"
-[13]: https://github.com/discord/discord-api-docs/issues/6007?utm_source=chatgpt.com "Ephemeral Messages from Bots cannot be edited but ... - GitHub"
-[14]: https://discordjs.guide/voice/using-voice.html?utm_source=chatgpt.com "Using Voice - discord.js Guide"
-[15]: https://discordjs.guide/voice/receiving-audio.html?utm_source=chatgpt.com "Receiving Audio - discord.js Guide"
+# Reference

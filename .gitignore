@@ -13,6 +13,9 @@ pnpm-debug.log*
 .env.production.local
 .env.backup
 
+# Markdown linting configuration (optional - can be committed if team-shared)
+.markdownlint.json
+
 # Logs
 logs/
 *.log
