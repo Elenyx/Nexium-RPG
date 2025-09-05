@@ -320,10 +320,205 @@ Nexium is an anime-themed Discord RPG bot built with Discord.js v14, featuring c
    - [ ] Add daily/weekly challenges
    - [ ] Create seasonal events
 
+## 🌌 **Dimensional Systems - Major Feature Expansion**
+
+### **🎯 Dimensional Travel & Exploration System**
+
+**Core Concept**: Dynamic "Hub and Rift" system for scalable dimensional travel without overwhelming players with 30+ persistent worlds.
+
+#### **🏠 The Nexus Hub**
+- [ ] **Central Hub Development**: Solidify `Nexus Hub` as social and utility area
+- [ ] **Hub Features**: Social spaces, collection management, core feature access
+- [ ] **Hub Services**: Rest areas, merchant NPCs, dimensional portals
+
+#### **🌌 Dimensional Rifts (Scalable Solution)**
+- [ ] **Rift System Architecture**: Temporary, rotating dimensional access
+- [ ] **Rift Scheduler**: Automated opening/closing system with rotating schedule
+- [ ] **Rift Pool**: Curated selection of 5-10 anime dimensions in rotation
+- [ ] **Rift Commands**: `/rifts` command showing active rifts, rewards, and timers
+- [ ] **Rift Mechanics**: Energy-based travel with immediate landing (no speed elements)
+
+#### **🗺️ Exploration System**
+- [ ] **Mini-Game Exploration**: Energy-based exploration in rifts and permanent dimensions
+- [ ] **Resource Discovery**: Find "Dimensional Fragments" and exclusive resources
+- [ ] **Lore Uncovering**: Discover dimension-specific stories and secrets
+- [ ] **Rare Character Hunting**: Dimension-exclusive characters and variants
+
+#### **💎 New Currency - Dimensional Fragments**
+- [ ] **Fragment System**: Exclusive currency from dimensional exploration
+- [ ] **Fragment Uses**: Craft dimension-specific items, unlock new dimensions
+- [ ] **Fragment Sources**: Exploration rewards, battle victories, quest completion
+- [ ] **Fragment Trading**: Limited marketplace for dimensional goods
+
+#### **👑 World Bosses**
+- [ ] **Boss Implementation**: Unique world bosses per dimension
+- [ ] **Server Collaboration**: Multi-player boss battles requiring coordination
+- [ ] **Exclusive Rewards**: Dimension-specific loot and achievements
+- [ ] **Boss Mechanics**: Unique abilities and environmental interactions
+
+### **⚔️ Dimensional Battles System**
+
+**Core Concept**: Enhanced battle mechanics with dimensional modifiers and cross-dimensional strategy.
+
+#### **🌟 Dimensional Anomalies**
+- [ ] **Anomaly System**: Random battle modifiers in dimensional locations
+- [ ] **Anomaly Types**:
+  - Zero Gravity: Speed stats doubled
+  - Chakra Disruption: Abilities cost 20% more energy
+  - Elemental Surge: Specific element deals 50% more damage
+  - Reality Shift: Random stat boosts/nerfs
+- [ ] **Anomaly Integration**: Automatic application during dimensional battles
+
+#### **🌍 Cross-Dimensional PvP**
+- [ ] **Global Ladder**: Ranked PvP across all dimensions
+- [ ] **Cross-Server Battles**: Compete against players from different servers
+- [ ] **Dimensional Advantages**: Home dimension bonuses in battles
+- [ ] **Tournament System**: Seasonal competitive events
+
+#### **🤝 Team Synergy System**
+- [ ] **Anime Series Synergy**: Characters from same series or themes (e.g., "Swordsmen," "Mages") get stat boosts
+- [ ] **Thematic Synergies**: Similar themes (Swordsmen, Mages) receive bonuses
+- [ ] **Cross-Dimensional Combos**: Multi-dimension team bonuses
+- [ ] **Synergy Indicators**: Visual indicators in team selection
+
+### **🎪 Cross-Dimensional Events**
+
+**Core Concept**: Large-scale events spanning multiple dimensions with collaborative gameplay.
+
+#### **🎭 Themed Events**
+- [ ] **Isekai Festival**: Characters from "other world" anime in single dimension
+- [ ] **Event Storylines**: Unique narratives with special quests
+- [ ] **Exclusive Gacha**: Limited-time character banners
+- [ ] **Event Cosmetics**: Temporary dimensional frames and effects
+
+#### **❓ "What If?" Scenarios**
+- [ ] **Alternate Timelines**: "What if Naruto joined Akatsuki?"
+- [ ] **Variant Characters**: Alternative versions with different abilities
+- [ ] **Scenario-Specific Mechanics**: Unique battle modifiers per scenario
+- [ ] **Collectible Variants**: Limited-time alternate character designs
+
+#### **🌐 Global Events**
+- [ ] **World-Ending Threats**: Server-wide dimensional tear events
+- [ ] **Wave Defense**: Progressive enemy waves across dimensions
+- [ ] **Collaborative Goals**: Server-wide objectives and rewards
+- [ ] **Event Leaderboards**: Participation and contribution tracking
+
+### **🎨 Dimensional Cosmetics System**
+
+**Core Concept**: Character card frames as dimensional cosmetics with canvas integration.
+
+#### **🖼️ Frame System**
+- [ ] **Canvas Integration**: Dynamic frame generation using existing Canvas package
+- [ ] **Frame Types**: Dimension-specific borders and backgrounds
+- [ ] **Frame Unlocking**: Earned through dimensional exploration and achievements
+- [ ] **`/skin` Command**: `/skin <character_id> <frame_id>` for frame application
+
+#### **🎨 Cosmetic Features**
+- [ ] **Frame Collection**: Unlock and collect dimensional frames
+- [ ] **Visual Customization**: Apply frames to character cards
+- [ ] **Achievement Integration**: Special frames for dimensional milestones
+- [ ] **Trading System**: Limited frame trading between players
+
+### **📅 Updated Development Phases**
+
+#### **Phase 5: The Multiverse Unfurls (Weeks 25-32)**
+
+**Goal**: Implement scalable dimensional travel system with hub and rift mechanics.
+
+- **Week 25-26: Foundation Setup**
+  - [ ] Solidify Nexus Hub as central social/utility area
+  - [ ] Implement `/dimension travel` command for permanent dimensions
+  - [ ] Create DimensionService.js for state management
+  - [ ] Set up dimensional database schemas
+
+- **Week 27-28: Rift System Implementation**
+  - [ ] Build rift scheduler with rotating dimension pool
+  - [ ] Create `/rifts` command for active rift information
+  - [ ] Implement rift opening/closing mechanics
+  - [ ] Add rift-specific UI and notifications
+
+- **Week 29-30: Exploration & Resources**
+  - [ ] Develop exploration mini-game system
+  - [ ] Implement Dimensional Fragments currency
+  - [ ] Add resource discovery mechanics
+  - [ ] Create dimension-specific loot tables
+
+- **Week 31-32: Enhanced Battles & Events**
+  - [ ] Implement Dimensional Anomalies in battles
+  - [ ] Add first world boss mechanics
+  - [ ] Launch initial cross-dimensional event
+  - [ ] Test rift rotation and exploration systems
+
+#### **Phase 6: Dimensional Mastery (Weeks 33-40)**
+
+**Goal**: Advanced dimensional features and cross-dimensional gameplay.
+
+- **Week 33-34: Advanced Battle Systems**
+  - [ ] Implement Cross-Dimensional PvP ladder
+  - [ ] Add Team Synergy mechanics
+  - [ ] Create dimensional advantage system
+  - [ ] Test competitive balance
+
+- **Week 35-36: Event Ecosystem**
+  - [ ] Develop "What If?" scenario system
+  - [ ] Create themed event framework
+  - [ ] Implement global event coordination
+  - [ ] Add event reward distribution
+
+- **Week 37-38: Cosmetic Integration**
+  - [ ] Build dimensional frame system with Canvas
+  - [ ] Implement `/skin` command functionality
+  - [ ] Create frame collection and trading
+  - [ ] Add visual customization options
+
+- **Week 39-40: Optimization & Polish**
+  - [ ] Performance optimization for dimensional systems
+  - [ ] UI/UX improvements for dimensional features
+  - [ ] Comprehensive testing and bug fixes
+  - [ ] Player feedback integration
+
+### **🛠️ Technical Implementation Notes**
+
+#### **Database Schema Extensions**
+- [ ] `dimensions` table: Properties, mechanics, unlock requirements
+- [ ] `dimensional_rifts` table: Active rifts, timers, rewards
+- [ ] `user_dimensions` table: Progress tracking, unlocks, fragments
+- [ ] `dimensional_frames` table: Cosmetic frames, ownership, application
+
+#### **Service Layer Additions**
+- [ ] **DimensionService**: Travel, rift management, exploration
+- [ ] **EventService**: Cross-dimensional event coordination
+- [ ] **CosmeticService**: Frame management, canvas integration
+- [ ] **SynergyService**: Team synergy calculations
+
+#### **Performance Considerations**
+- [ ] Rift rotation caching in Redis
+- [ ] Dimensional data preloading
+- [ ] Event state synchronization
+- [ ] Canvas frame generation optimization
+
+### **📊 Success Metrics for Dimensional Features**
+
+- **Travel Adoption**: Percentage of players using dimensional travel
+- **Rift Participation**: Average time spent in rift exploration
+- **Event Engagement**: Participation rates in cross-dimensional events
+- **Frame Usage**: Adoption of dimensional cosmetic frames
+- **Synergy Impact**: Battle win rate improvements with synergies
+- **Fragment Economy**: Trading volume and fragment circulation
+
+### **💰 Monetization Integration**
+
+- **Premium Dimensions**: Exclusive dimensions for subscribers
+- **Frame Marketplace**: Cosmetic trading with premium frames
+- **Event Boosters**: Enhanced rewards for premium players
+- **Fragment Multipliers**: Increased fragment gains for subscribers
+- **Exclusive Variants**: Premium-only dimensional character variants
+
+---
+
 3. **Content Expansion**
    - [ ] Add more anime series and characters
    - [ ] Implement character story/lore system
-   - [ ] Add dimension/world system
    - [ ] Create territory conquest mechanics
 
 ### **Long-term Vision (3-6 Months)**
