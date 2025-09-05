@@ -24,3 +24,10 @@ jobs:
         env:
           DATABASE_URL: ${{ secrets.STAGING_DATABASE_URL }}
         run: node ./src/database/migrations/add-gems-and-inventory-migration.js
+
+      - name: Register slash commands
+        env:
+          DISCORD_TOKEN: ${{ secrets.STAGING_BOT_TOKEN }}
+          CLIENT_ID: ${{ secrets.STAGING_CLIENT_ID }}
+          GUILD_ID: ${{ secrets.STAGING_GUILD_ID }}
+        run: node ./src/scripts/deploy-commands.js
