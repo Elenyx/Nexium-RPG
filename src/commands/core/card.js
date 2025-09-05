@@ -48,7 +48,7 @@ module.exports = {
                     // It's a local file path, read from filesystem
                     const fs = require('fs');
                     const path = require('path');
-                    const fullPath = path.join(__dirname, '../../', framedCardUrl);
+                    const fullPath = path.join(__dirname, '../../../', framedCardUrl);
                     cardBuffer = fs.readFileSync(fullPath);
                 }
             } catch (error) {
@@ -57,7 +57,7 @@ module.exports = {
                     console.warn('ImageKit account suspended, using local fallback image');
                     const fs = require('fs');
                     const path = require('path');
-                    const fallbackPath = path.join(__dirname, '../../tests/test-fallback-card.png');
+                    const fallbackPath = path.join(__dirname, '../../../tests/test-fallback-card.png');
                     cardBuffer = fs.readFileSync(fallbackPath);
                 } else {
                     throw error; // Re-throw other errors
