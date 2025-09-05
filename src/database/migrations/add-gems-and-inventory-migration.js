@@ -3,10 +3,13 @@ const { sequelize } = require('../connection');
 
 async function addGemsAndInventory() {
     try {
-    console.log('Adding gems column to Users table (if not exists)...');
+        console.log('Adding gems column to Users table...');
 
-    // Use raw query with IF NOT EXISTS to make this migration idempotent
-    await sequelize.query(`ALTER TABLE "public"."Users" ADD COLUMN IF NOT EXISTS "gems" INTEGER NOT NULL DEFAULT 0;`);
+        await sequelize.getQueryInterface().addColumn('Users', 'gems', {
+            type: sequelize.Sequelize.INTEGER,
+            defaultValue: 0,
+            allowNull: false
+        });
 
         console.log('Creating Inventories table...');
 
@@ -21,7 +24,7 @@ async function addGemsAndInventory() {
                 allowNull: false
             },
             data: {
-                type: sequelize.Sequelize.JSON,
+                type: 'JSONB',
                 defaultValue: {}
             },
             createdAt: {
