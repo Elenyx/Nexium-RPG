@@ -6,6 +6,7 @@ const { ActionRowBuilder, ButtonBuilder, ButtonStyle, MessageFlags, TextDisplayB
 const { models } = require('../../database/connection');
 const CardAlbum = require('../../services/CardAlbum');
 const { COLORS, EMOJIS } = require('../../config/constants');
+const CharacterCardRenderer = require('../../services/CharacterCardRenderer');
 
 class CollectionButtonHandlers {
     constructor() {
