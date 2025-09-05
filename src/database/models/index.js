@@ -42,7 +42,8 @@ const initializeModels = (sequelize) => {
     return {
         User,
         Character,
-        UserCharacter
+        UserCharacter,
+        Inventory
     };
 };
 
