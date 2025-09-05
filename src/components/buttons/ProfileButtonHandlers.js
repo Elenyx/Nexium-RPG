@@ -307,12 +307,9 @@ class ProfileButtonHandlers {
                     td => td.setContent(`# 🎁 Daily Reward Claimed!\nYou've successfully claimed your daily reward!`),
                     td => td.setContent(`**💰 Reward Earned:** ${reward.toLocaleString()} coins\n**🔥 Daily Streak:** ${profile.dailyStreak} days\n**💰 New Balance:** ${profile.coins.toLocaleString()} coins`),
                     td => td.setContent(`*Come back tomorrow for more rewards!*`)
-                );
-
-            // Use an explicit ActionRowBuilder + ButtonBuilder instead of setButtonAccessory
-            const backRow = new ActionRowBuilder()
-                .addComponents(
-                    new ButtonBuilder()
+                )
+                .setButtonAccessory(
+                    button => button
                         .setCustomId(`profile_back_${userId}`)
                         .setLabel('Back to Profile')
                         .setStyle(ButtonStyle.Secondary)
@@ -320,7 +317,7 @@ class ProfileButtonHandlers {
                 );
 
             await interaction.editReply({
-                components: [successSection, backRow],
+                components: [successSection],
                 flags: MessageFlags.IsComponentsV2
             });
 
