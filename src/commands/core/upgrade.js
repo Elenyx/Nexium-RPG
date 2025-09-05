@@ -401,7 +401,7 @@ module.exports = {
                         .setLabel(`Boost EXP (${nextShardCost} shards)`)
                         .setStyle(canAfford ? ButtonStyle.Primary : ButtonStyle.Secondary)
                         .setDisabled(!canAfford)
-                        .setEmoji('✨')
+                        .setEmoji({ name: '✨' })
                 );
 
             components.push(row);

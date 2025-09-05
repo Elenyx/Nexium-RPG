@@ -185,13 +185,13 @@ class ProfileButtonHandlers {
                             .setCustomId(`collection_prev_${targetUser.id}_0_profile`)
                             .setLabel('Previous')
                             .setStyle(ButtonStyle.Secondary)
-                            .setEmoji('⬅️')
+                            .setEmoji({ name: '⬅️' })
                             .setDisabled(true), // First page, so disabled
                         new ButtonBuilder()
                             .setCustomId(`collection_next_${targetUser.id}_0_profile`)
                             .setLabel('Next')
                             .setStyle(ButtonStyle.Secondary)
-                            .setEmoji('➡️')
+                            .setEmoji({ name: '➡️' })
                             .setDisabled(totalPages === 1)
                     );
                 components.push(row);
@@ -204,7 +204,7 @@ class ProfileButtonHandlers {
                         .setCustomId(`profile_back_${userId}`)
                         .setLabel('Back to Profile')
                         .setStyle(ButtonStyle.Secondary)
-                        .setEmoji('⬅️')
+                        .setEmoji({ name: '⬅️' })
                 );
             components.push(backRow);
 
@@ -313,7 +313,7 @@ class ProfileButtonHandlers {
                         .setCustomId(`profile_back_${userId}`)
                         .setLabel('Back to Profile')
                         .setStyle(ButtonStyle.Secondary)
-                        .setEmoji('⬅️')
+                        .setEmoji({ name: '⬅️' })
                 );
 
             await interaction.editReply({

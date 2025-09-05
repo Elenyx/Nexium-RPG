@@ -147,12 +147,12 @@ module.exports = {
                         .setCustomId(`start_quest_${questType}_${Date.now()}`)
                         .setLabel('Start Quest')
                         .setStyle(ButtonStyle.Success)
-                        .setEmoji('🎮'),
+                        .setEmoji({ name: '🎮' }),
                     new ButtonBuilder()
                         .setCustomId('cancel_quest')
                         .setLabel('Cancel')
                         .setStyle(ButtonStyle.Secondary)
-                        .setEmoji('❌')
+                        .setEmoji({ name: '❌' })
                 );
 
             await interaction.editReply({ embeds: [startEmbed], components: [row] });

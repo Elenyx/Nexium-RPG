@@ -218,7 +218,7 @@ class UpgradeButtonHandlers {
                         .setLabel(`Upgrade to Level ${newLevel + 1}`)
                         .setStyle(canAfford ? ButtonStyle.Primary : ButtonStyle.Secondary)
                         .setDisabled(!canAfford)
-                        .setEmoji('⬆️')
+                        .setEmoji({ name: '⬆️' })
                 );
 
             if (!canAfford) {

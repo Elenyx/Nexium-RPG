@@ -111,7 +111,7 @@ module.exports = {
                         .setCustomId('collection_view_battle')
                         .setLabel('View Collection')
                         .setStyle(ButtonStyle.Secondary)
-                        .setEmoji('📚')
+                        .setEmoji({ name: '📚' })
                 );
 
             components.push(row);

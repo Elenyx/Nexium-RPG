@@ -55,7 +55,7 @@ module.exports = {
                     .setCustomId('help_commands')
                     .setLabel('Command List')
                     .setStyle(ButtonStyle.Secondary)
-                    .setEmoji('📋')
+                    .setEmoji({ name: '📋' })
             );
 
         await interaction.reply({

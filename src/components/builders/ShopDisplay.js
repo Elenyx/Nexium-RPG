@@ -69,17 +69,17 @@ class ShopDisplay {
                     .setCustomId(`shop_featured_${targetUser.id}`)
                     .setLabel('Featured Items')
                     .setStyle(ButtonStyle.Primary)
-                    .setEmoji('⭐'),
+                    .setEmoji({ name: '⭐' }),
                 new ButtonBuilder()
                     .setCustomId(`shop_daily_${targetUser.id}`)
                     .setLabel('Daily Deals')
                     .setStyle(ButtonStyle.Success)
-                    .setEmoji('🎯'),
+                    .setEmoji({ name: '🎯' }),
                 new ButtonBuilder()
                     .setCustomId(`shop_back_${targetUser.id}`)
                     .setLabel('Back to Profile')
                     .setStyle(ButtonStyle.Secondary)
-                    .setEmoji('⬅️')
+                    .setEmoji({ name: '⬅️' })
             );
 
         return {
@@ -160,7 +160,7 @@ class ShopDisplay {
                         .setCustomId(`shop_cat_prev_${categoryId}_${targetUser.id}_${page}`)
                         .setLabel('Previous')
                         .setStyle(ButtonStyle.Secondary)
-                        .setEmoji('⬅️')
+                        .setEmoji({ name: '⬅️' })
                         .setDisabled(page === 1),
                     new ButtonBuilder()
                         .setCustomId(`shop_cat_page_${categoryId}_${targetUser.id}_${page}`)
@@ -171,7 +171,7 @@ class ShopDisplay {
                         .setCustomId(`shop_cat_next_${categoryId}_${targetUser.id}_${page}`)
                         .setLabel('Next')
                         .setStyle(ButtonStyle.Secondary)
-                        .setEmoji('➡️')
+                        .setEmoji({ name: '➡️' })
                         .setDisabled(page === totalPages)
                 );
             components.push(navRow);
@@ -184,13 +184,13 @@ class ShopDisplay {
                     .setCustomId(`shop_purchase_${categoryId}_${targetUser.id}`)
                     .setLabel('Purchase Item')
                     .setStyle(ButtonStyle.Success)
-                    .setEmoji('🛒')
+                    .setEmoji({ name: '🛒' })
                     .setDisabled(pageItems.length === 0),
                 new ButtonBuilder()
                     .setCustomId(`shop_back_cat_${targetUser.id}`)
                     .setLabel('Back to Categories')
                     .setStyle(ButtonStyle.Secondary)
-                    .setEmoji('⬅️')
+                    .setEmoji({ name: '⬅️' })
             );
         components.push(actionRow);
 
@@ -245,13 +245,13 @@ class ShopDisplay {
                     .setCustomId(`shop_confirm_${item.id}_${userId}`)
                     .setLabel('Confirm Purchase')
                     .setStyle(ButtonStyle.Success)
-                    .setEmoji('✅')
+                    .setEmoji({ name: '✅' })
                     .setDisabled(!canAfford),
                 new ButtonBuilder()
                     .setCustomId(`shop_cancel_${userId}`)
                     .setLabel('Cancel')
                     .setStyle(ButtonStyle.Secondary)
-                    .setEmoji('❌')
+                    .setEmoji({ name: '❌' })
             );
 
         return {
@@ -299,12 +299,12 @@ class ShopDisplay {
                     .setCustomId(`shop_continue_${targetUser.id}`)
                     .setLabel('Continue Shopping')
                     .setStyle(ButtonStyle.Primary)
-                    .setEmoji('🛒'),
+                    .setEmoji({ name: '🛒' }),
                 new ButtonBuilder()
                     .setCustomId(`shop_back_profile_${targetUser.id}`)
                     .setLabel('Back to Profile')
                     .setStyle(ButtonStyle.Secondary)
-                    .setEmoji('⬅️')
+                    .setEmoji({ name: '⬅️' })
             );
 
         return {
