@@ -114,6 +114,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/SemVer
   - Used small emojis for visual categorization without clutter
   - Clean separators between inventory sections
   - Professional, minimal design with proper visual hierarchy
+- **Help Command Overhaul**: Complete redesign with organized command categories
+  - Added comprehensive command list with descriptions
+  - Implemented interactive "Command List" button for detailed view
+  - Added "Back to Help" navigation button
+  - Organized commands into logical categories (Core, Collection, Combat, etc.)
+  - Updated footer to highlight inventory improvements
 
 ### Technical Details
 
