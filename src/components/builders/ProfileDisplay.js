@@ -51,6 +51,9 @@ class ProfileDisplay {
      * @returns {Object} Message options with embed and components
      */
     static createProfileEmbed(userData, targetUser) {
+        // Format dimension name before using in template
+        const formattedDimension = this.formatDimensionName(userData.currentDimension);
+        
         const profileStats = [
             `**Level:** \`${userData.level}\``,
             `**Experience:** \`${userData.exp.toLocaleString()}\``,
@@ -58,7 +61,7 @@ class ProfileDisplay {
             `**Coins:** \`${userData.coins.toLocaleString()}\``,
             `**${EMOJIS.SHARD} Shards:** \`${userData.shards?.toLocaleString() || '0'}\``,
             `**Collection:** \`${userData.collectionCount || 0} cards\``,
-            `**Current Dimension:** \`${this.formatDimensionName(userData.currentDimension)}\``,
+            `**Current Dimension:** \`${formattedDimension}\``,
             `**Daily Streak:** \`${userData.dailyStreak} days\``
         ].join('\n');
 
@@ -153,6 +156,9 @@ class ProfileDisplay {
      * @returns {Object} Message options with detailed stats
      */
     static createDetailedStatsEmbed(userData, targetUser) {
+        // Format dimension name before using in template
+        const formattedDimension = this.formatDimensionName(userData.currentDimension);
+        
         const progressStats = [
             `**Level:** ${userData.level}`,
             `**Experience:** ${userData.exp.toLocaleString()}`,
@@ -178,7 +184,7 @@ class ProfileDisplay {
         ].join('\n');
 
         const activityStats = [
-            `**Current Dimension:** ${this.formatDimensionName(userData.currentDimension)}`,
+            `**Current Dimension:** ${formattedDimension}`,
             `**Total Dimensions Visited:** ${userData.dimensionsVisited || 1}`,
             `**Account Created:** ${new Date(userData.createdAt || Date.now()).toLocaleDateString()}`,
             `**Days Active:** ${Math.floor((Date.now() - (userData.createdAt || Date.now())) / (1000 * 60 * 60 * 24))}`,
