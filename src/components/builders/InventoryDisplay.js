@@ -1,5 +1,4 @@
-const { ContainerBuilder, SectionBuilder, TextDisplayBuilder, ButtonBuilder, ButtonStyle, MessageFlags, SeparatorBuilder } = require('discord.js');
-const { EMOJIS } = require('../../config/constants');
+const { ContainerBuilder, TextDisplayBuilder, MessageFlags, SeparatorBuilder } = require('discord.js');
 
 class InventoryDisplay {
     static createInventoryView(inventoryData, targetUser) {
@@ -21,76 +20,33 @@ class InventoryDisplay {
         const accessoryList = accessories.map(a => `• ${a.name}${a.equipped ? ' (equipped)' : ''}`).join('\n') || 'No accessories';
         const frameList = frames.map(f => `• ${f.name}${f.equipped ? ' (equipped)' : ''}`).join('\n') || 'No frames';
 
-        // Create sections with content and individual actions
-        const inventorySection = new SectionBuilder()
-            .addTextDisplayComponents(
-                new TextDisplayBuilder().setContent(`# ${EMOJIS.INVENTORY || '🎒'} Inventory — ${username}\n\n**Gems:** ${gems}`)
-            )
-            .setButtonAccessory(
-                new ButtonBuilder()
-                    .setCustomId(`inventory_refresh_${targetUser?.id || 'unknown'}`)
-                    .setLabel('Refresh')
-                    .setStyle(ButtonStyle.Secondary)
-            );
-
-        const shardsSection = new SectionBuilder()
-            .addTextDisplayComponents(
-                new TextDisplayBuilder().setContent(`## 🔹 Shards\n${shardList}`)
-            )
-            .setButtonAccessory(
-                new ButtonBuilder()
-                    .setCustomId(`inventory_manage_shards_${targetUser?.id || 'unknown'}`)
-                    .setLabel('Manage Shards')
-                    .setStyle(ButtonStyle.Secondary)
-            );
-
-        const itemsSection = new SectionBuilder()
-            .addTextDisplayComponents(
-                new TextDisplayBuilder().setContent(`## 🧰 Items\n${itemList}`)
-            )
-            .setButtonAccessory(
-                new ButtonBuilder()
-                    .setCustomId(`inventory_use_${targetUser?.id || 'unknown'}`)
-                    .setLabel('Use Item')
-                    .setStyle(ButtonStyle.Primary)
-            );
-
-        const accessoriesSection = new SectionBuilder()
-            .addTextDisplayComponents(
-                new TextDisplayBuilder().setContent(`## 💍 Accessories\n${accessoryList}`)
-            )
-            .setButtonAccessory(
-                new ButtonBuilder()
-                    .setCustomId(`inventory_equip_${targetUser?.id || 'unknown'}`)
-                    .setLabel('Equip')
-                    .setStyle(ButtonStyle.Secondary)
-            );
-
-        const framesSection = new SectionBuilder()
-            .addTextDisplayComponents(
-                new TextDisplayBuilder().setContent(`## 🖼️ Frames\n${frameList}`)
-            )
-            .setButtonAccessory(
-                new ButtonBuilder()
-                    .setCustomId(`inventory_sell_${targetUser?.id || 'unknown'}`)
-                    .setLabel('Sell')
-                    .setStyle(ButtonStyle.Danger)
-            );
-
+        // Create clean inventory display without buttons
         const container = new ContainerBuilder()
             .setAccentColor(0x00AAFF)
-            .addSectionComponents(inventorySection)
+            .addTextDisplayComponents(
+                new TextDisplayBuilder().setContent(`# Inventory — ${username}\n\n**Gems:** ${gems}`)
+            )
             .addSeparatorComponents(separator => separator)
-            .addSectionComponents(shardsSection)
+            .addTextDisplayComponents(
+                new TextDisplayBuilder().setContent(`## Shards\n${shardList}`)
+            )
             .addSeparatorComponents(separator => separator)
-            .addSectionComponents(itemsSection)
+            .addTextDisplayComponents(
+                new TextDisplayBuilder().setContent(`## Items\n${itemList}`)
+            )
             .addSeparatorComponents(separator => separator)
-            .addSectionComponents(accessoriesSection)
+            .addTextDisplayComponents(
+                new TextDisplayBuilder().setContent(`## Accessories\n${accessoryList}`)
+            )
             .addSeparatorComponents(separator => separator)
-            .addSectionComponents(framesSection);
+            .addTextDisplayComponents(
+                new TextDisplayBuilder().setContent(`## Frames\n${frameList}`)
+            );
 
         return { components: [container], flags: MessageFlags.IsComponentsV2 };
     }
 }
+
+module.exports = InventoryDisplay;
 
 module.exports = InventoryDisplay;

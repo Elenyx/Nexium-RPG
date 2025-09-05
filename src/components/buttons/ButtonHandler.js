@@ -542,67 +542,12 @@ class ButtonHandler {
      */
     async handleInventoryButton(action, interaction, params) {
         try {
-            await interaction.deferUpdate();
-
-            const { EmbedBuilder, MessageFlags } = require('discord.js');
-            const { COLORS, EMOJIS } = require('../../config/constants');
-
-            let responseMessage = '';
-
-            switch (action) {
-                case 'use':
-                    responseMessage = 'Item usage feature coming soon!';
-                    break;
-                case 'equip':
-                    responseMessage = 'Equipment feature coming soon!';
-                    break;
-                case 'sell':
-                    responseMessage = 'Item selling feature coming soon!';
-                    break;
-                case 'manage':
-                    if (params[0] === 'shards') {
-                        responseMessage = 'Shard management feature coming soon!';
-                    } else {
-                        responseMessage = 'Management feature coming soon!';
-                    }
-                    break;
-                case 'refresh':
-                    // Refresh the inventory view
-                    const InventoryService = require('../../services/InventoryService');
-                    const InventoryDisplay = require('../builders/InventoryDisplay');
-                    const invService = new InventoryService();
-                    const inventory = await invService.getOrCreateInventory(interaction.user.id);
-                    const display = InventoryDisplay.createInventoryView(inventory.data || {}, interaction.user);
-                    await interaction.editReply(display);
-                    return true;
-                default:
-                    responseMessage = 'Unknown inventory action.';
-            }
-
-            const embed = new EmbedBuilder()
-                .setColor(COLORS.INFO)
-                .setTitle(`${EMOJIS.INVENTORY} Inventory Action`)
-                .setDescription(responseMessage)
-                .setFooter({
-                    text: 'Feature under development',
-                    iconURL: interaction.user.displayAvatarURL()
-                })
-                .setTimestamp();
-
-            await interaction.editReply({
-                embeds: [embed],
-                components: []
-            });
-
-            return true;
+            // Inventory buttons have been removed for clean display
+            // Future inventory actions will be implemented separately
+            logger.warn(`Inventory button interaction attempted but buttons are disabled: ${action}`);
+            return false;
         } catch (error) {
             logger.error(`Inventory button handling error: ${error}`);
-            if (!interaction.replied && !interaction.deferred) {
-                await interaction.reply({
-                    content: 'An error occurred while processing this inventory action.',
-                    flags: MessageFlags.Ephemeral
-                });
-            }
             return false;
         }
     }
