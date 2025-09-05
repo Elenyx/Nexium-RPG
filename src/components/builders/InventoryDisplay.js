@@ -17,8 +17,7 @@ class InventoryDisplay {
         const section = new SectionBuilder()
             .addTextDisplayComponents(
                 td => td.setContent(`# ${EMOJIS.INVENTORY || '🎒'} Inventory — ${targetUser.username}\n\n**Gems:** ${gems}\n\n## 🔹 Shards\n${shardList}`),
-                td => td.setContent(`## 🧰 Items\n${itemList}`),
-                td => td.setContent(`## 💍 Accessories\n${accessoryList}`),
+                td => td.setContent(`## 🧰 Items\n${itemList}\n\n## 💍 Accessories\n${accessoryList}`),
                 td => td.setContent(`## 🖼️ Frames\n${frameList}`)
             );
 
