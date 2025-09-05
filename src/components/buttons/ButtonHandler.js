@@ -39,6 +39,9 @@ class ButtonHandler {
                 case 'upgrade':
                     handlerResult = await this.handleUpgradeButton(action, interaction, params);
                     break;
+                case 'inventory':
+                    handlerResult = await this.handleInventoryButton(action, interaction, params);
+                    break;
                 default:
                     // Handle special cases
                     if (interaction.customId === 'collection_view_battle') {
@@ -527,6 +530,64 @@ class ButtonHandler {
                 embeds: [],
                 components: []
             });
+        }
+    }
+
+    /**
+     * Handles inventory-related buttons
+     * @param {string} action - Button action
+     * @param {Object} interaction - Discord interaction
+     * @param {Array} params - Button parameters
+     * @returns {boolean} Whether the button was handled
+     */
+    async handleInventoryButton(action, interaction, params) {
+        try {
+            await interaction.deferUpdate();
+
+            const { EmbedBuilder, MessageFlags } = require('discord.js');
+            const { COLORS, EMOJIS } = require('../../config/constants');
+
+            let responseMessage = '';
+
+            switch (action) {
+                case 'use':
+                    responseMessage = 'Item usage feature coming soon!';
+                    break;
+                case 'equip':
+                    responseMessage = 'Equipment feature coming soon!';
+                    break;
+                case 'sell':
+                    responseMessage = 'Item selling feature coming soon!';
+                    break;
+                default:
+                    responseMessage = 'Unknown inventory action.';
+            }
+
+            const embed = new EmbedBuilder()
+                .setColor(COLORS.INFO)
+                .setTitle(`${EMOJIS.INVENTORY} Inventory Action`)
+                .setDescription(responseMessage)
+                .setFooter({
+                    text: 'Feature under development',
+                    iconURL: interaction.user.displayAvatarURL()
+                })
+                .setTimestamp();
+
+            await interaction.editReply({
+                embeds: [embed],
+                components: []
+            });
+
+            return true;
+        } catch (error) {
+            logger.error(`Inventory button handling error: ${error}`);
+            if (!interaction.replied && !interaction.deferred) {
+                await interaction.reply({
+                    content: 'An error occurred while processing this inventory action.',
+                    flags: MessageFlags.Ephemeral
+                });
+            }
+            return false;
         }
     }
 }

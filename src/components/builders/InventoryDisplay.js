@@ -3,37 +3,46 @@ const { EMOJIS } = require('../../config/constants');
 
 class InventoryDisplay {
     static createInventoryView(inventoryData, targetUser) {
-        const shards = inventoryData.shards || [];
-        const items = inventoryData.items || [];
-        const accessories = inventoryData.accessories || [];
-        const frames = inventoryData.frames || [];
-        const gems = inventoryData.gems || 0;
+        // Ensure inventoryData is an object
+        const data = inventoryData || {};
+        
+        // Ensure arrays are actually arrays
+        const shards = Array.isArray(data.shards) ? data.shards : [];
+        const items = Array.isArray(data.items) ? data.items : [];
+        const accessories = Array.isArray(data.accessories) ? data.accessories : [];
+        const frames = Array.isArray(data.frames) ? data.frames : [];
+        const gems = typeof data.gems === 'number' ? data.gems : 0;
+
+        // Ensure targetUser exists and has username
+        const username = targetUser?.username || 'Unknown User';
 
         const shardList = shards.map(s => `• ${s.name}: ${s.qty}`).join('\n') || 'No shards';
         const itemList = items.map(i => `• ${i.name} x${i.qty}`).join('\n') || 'No items';
         const accessoryList = accessories.map(a => `• ${a.name}${a.equipped ? ' (equipped)' : ''}`).join('\n') || 'No accessories';
         const frameList = frames.map(f => `• ${f.name}${f.equipped ? ' (equipped)' : ''}`).join('\n') || 'No frames';
 
+        // Create text display components safely
+        const textDisplays = [
+            new TextDisplayBuilder().setContent(`# ${EMOJIS.INVENTORY || '🎒'} Inventory — ${username}\n\n**Gems:** ${gems}\n\n## 🔹 Shards\n${shardList}`),
+            new TextDisplayBuilder().setContent(`## 🧰 Items\n${itemList}\n\n## 💍 Accessories\n${accessoryList}`),
+            new TextDisplayBuilder().setContent(`## 🖼️ Frames\n${frameList}`)
+        ];
+
         const section = new SectionBuilder()
-            .addTextDisplayComponents(
-                td => td.setContent(`# ${EMOJIS.INVENTORY || '🎒'} Inventory — ${targetUser.username}\n\n**Gems:** ${gems}\n\n## 🔹 Shards\n${shardList}`),
-                td => td.setContent(`## 🧰 Items\n${itemList}`),
-                td => td.setContent(`## 💍 Accessories\n${accessoryList}`),
-                td => td.setContent(`## 🖼️ Frames\n${frameList}`)
-            );
+            .addTextDisplayComponents(...textDisplays);
 
         const actionRow = new ActionRowBuilder()
             .addComponents(
                 new ButtonBuilder()
-                    .setCustomId(`inventory_use_${targetUser.id}`)
+                    .setCustomId(`inventory_use_${targetUser?.id || 'unknown'}`)
                     .setLabel('Use Item')
                     .setStyle(ButtonStyle.Primary),
                 new ButtonBuilder()
-                    .setCustomId(`inventory_equip_${targetUser.id}`)
+                    .setCustomId(`inventory_equip_${targetUser?.id || 'unknown'}`)
                     .setLabel('Equip')
                     .setStyle(ButtonStyle.Secondary),
                 new ButtonBuilder()
-                    .setCustomId(`inventory_sell_${targetUser.id}`)
+                    .setCustomId(`inventory_sell_${targetUser?.id || 'unknown'}`)
                     .setLabel('Sell')
                     .setStyle(ButtonStyle.Danger)
             );

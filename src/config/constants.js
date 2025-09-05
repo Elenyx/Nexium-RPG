@@ -30,7 +30,8 @@ module.exports = {
         SHARD: '💎',
         GACHA: '🎲',
         QUEST: '📜',
-        UPGRADE: '⬆️'
+        UPGRADE: '⬆️',
+        INVENTORY: '🎒'
     },
 
     RARITIES: {
