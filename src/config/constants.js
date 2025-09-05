@@ -138,7 +138,7 @@ module.exports = {
             id: 'common',
             name: 'Common Frame',
             description: 'Standard frame for common rarity characters',
-            imageUrl: 'https://ik.imagekit.io/NexiumRPG/frames/common_frame.png',
+            imageUrl: 'https://ik.imagekit.io/NexiumRPG/frames/COMMON.png',
             obtainable: 'rarity' // Automatically applied based on rarity
         },
 
@@ -146,7 +146,7 @@ module.exports = {
             id: 'rare',
             name: 'Rare Frame',
             description: 'Enhanced frame for rare rarity characters',
-            imageUrl: 'https://ik.imagekit.io/NexiumRPG/frames/rare_frame.png',
+            imageUrl: 'https://ik.imagekit.io/NexiumRPG/frames/RARE.png',
             obtainable: 'rarity' // Automatically applied based on rarity
         },
 
@@ -154,7 +154,7 @@ module.exports = {
             id: 'epic',
             name: 'Epic Frame',
             description: 'Premium frame for epic rarity characters',
-            imageUrl: 'https://ik.imagekit.io/NexiumRPG/frames/epic_frame.png',
+            imageUrl: 'https://ik.imagekit.io/NexiumRPG/frames/EPIC.png',
             obtainable: 'rarity' // Automatically applied based on rarity
         },
 
@@ -162,7 +162,7 @@ module.exports = {
             id: 'legendary',
             name: 'Legendary Frame',
             description: 'Luxurious frame for legendary rarity characters',
-            imageUrl: 'https://ik.imagekit.io/NexiumRPG/frames/legendary_frame.png',
+            imageUrl: 'https://ik.imagekit.io/NexiumRPG/frames/LEGENDARY.png',
             obtainable: 'rarity' // Automatically applied based on rarity
         },
 
@@ -170,7 +170,7 @@ module.exports = {
             id: 'mythic',
             name: 'Mythic Frame',
             description: 'Mythical frame for mythic rarity characters',
-            imageUrl: 'https://ik.imagekit.io/NexiumRPG/frames/mythic_frame.png',
+            imageUrl: 'https://ik.imagekit.io/NexiumRPG/frames/MYTHIC.png',
             obtainable: 'rarity' // Automatically applied based on rarity
         },
 
@@ -178,7 +178,7 @@ module.exports = {
             id: 'dimensional',
             name: 'Dimensional Frame',
             description: 'Transcendent frame for dimensional rarity characters',
-            imageUrl: 'https://ik.imagekit.io/NexiumRPG/frames/dimensional_frame.png',
+            imageUrl: 'https://ik.imagekit.io/NexiumRPG/frames/DIMENSIONAL.png',
             obtainable: 'rarity' // Automatically applied based on rarity
         },
 
@@ -187,7 +187,7 @@ module.exports = {
             id: 'golden_anniversary',
             name: 'Golden Anniversary Frame',
             description: 'Special golden frame celebrating milestones',
-            imageUrl: 'https://ik.imagekit.io/NexiumRPG/frames/golden_anniversary.png',
+            imageUrl: 'https://ik.imagekit.io/NexiumRPG/frames/GOLDEN_ANNIVERSARY.png',
             obtainable: 'event' // Special event frame
         },
 
@@ -195,7 +195,7 @@ module.exports = {
             id: 'christmas_festive',
             name: 'Festive Christmas Frame',
             description: 'Holiday-themed frame with festive decorations',
-            imageUrl: 'https://ik.imagekit.io/NexiumRPG/frames/christmas_festive.png',
+            imageUrl: 'https://ik.imagekit.io/NexiumRPG/frames/CHRISTMAS_FESTIVE.png',
             obtainable: 'seasonal' // Seasonal event frame
         },
 

@@ -4,20 +4,13 @@
  * @author Nexium Bot Development Team
  */
 
-const { createCanvas, loadImage } = require('canvas');
+const { createCanvas, loadImage, registerFont } = require('canvas');
 const path = require('path');
 const fs = require('fs');
-const { IMAGE_KIT_BASE_URL } = require('../config/constants');
-const CharacterImageManager = require('../components/builders/CharacterImageManager');
-const CharacterCardRenderer = require('./CharacterCardRenderer');
 
 class PullImageGenerator {
     constructor() {
         this.characterCache = new Map();
-        this.characterImageManager = new CharacterImageManager();
-        this.characterCardRenderer = new CharacterCardRenderer();
-
-        // Register fonts if available
         this.registerFonts();
     }
 
@@ -26,7 +19,6 @@ class PullImageGenerator {
      */
     registerFonts() {
         try {
-            // Try to register some common fonts
             const fontPath = path.join(__dirname, '..', '..', 'assets', 'fonts');
             if (fs.existsSync(fontPath)) {
                 const fontFiles = fs.readdirSync(fontPath).filter(file => file.endsWith('.ttf') || file.endsWith('.otf'));
@@ -41,13 +33,14 @@ class PullImageGenerator {
     }
 
     /**
-     * Load and cache character images
-     * @param {string} imageUrl - Character image URL
-     * @returns {Promise<Image>} Canvas Image object
+     * Load and cache character images.
+     * @param {string} imageUrl - The full ImageKit URL (already transformed).
+     * @returns {Promise<import('canvas').Image|null>} Canvas Image object or null on failure.
      */
     async loadCharacterImage(imageUrl) {
         if (!imageUrl) {
-            throw new Error('No image URL provided');
+            console.warn('Load character image called with no URL.');
+            return null;
         }
 
         if (this.characterCache.has(imageUrl)) {
@@ -59,107 +52,26 @@ class PullImageGenerator {
             this.characterCache.set(imageUrl, image);
             return image;
         } catch (error) {
-            console.warn(`Failed to load character image: ${imageUrl}`, error.message);
-            throw new Error(`Character image not available: ${imageUrl}`);
+            console.warn(`Failed to load character image from URL: ${imageUrl}`, error.message);
+            return null; // Return null instead of throwing
         }
     }
-
+    
     /**
-     * Generate a single character card with complete design (art + name + rarity frame)
-     * @param {Object} character - Character data object
-     * @param {number} width - Card width (default: 450)
-     * @param {number} height - Card height (default: 600)
-     * @returns {Promise<Buffer>} PNG buffer of the character card
-     */
-    async generateCharacterCard(character, width = 450, height = 600) {
-        try {
-            // Use CharacterCardRenderer to generate card with automatic rarity frame
-            const cardBuffer = await this.characterCardRenderer.renderCharacterCard(character.id);
-            return cardBuffer;
-
-        } catch (error) {
-            console.error('Error generating character card with renderer:', error);
-
-            // Fallback to original method if renderer fails
-            try {
-                const imageUrl = this.characterImageManager.getCharacterImageUrlByRarity(character);
-                const characterImage = await this.loadCharacterImage(imageUrl);
-
-                const canvas = createCanvas(width, height);
-                const ctx = canvas.getContext('2d');
-                ctx.drawImage(characterImage, 0, 0, width, height);
-
-                return canvas.toBuffer('image/png');
-            } catch (fallbackError) {
-                console.error('Fallback method also failed:', fallbackError);
-                return this.generateFallbackCard(character, width, height);
-            }
-        }
-    }
-
-    /**
-     * Generate a fallback card when images are not available
-     * @param {Object} character - Character data
-     * @param {number} width - Card width
-     * @param {number} height - Card height
-     * @returns {Buffer} PNG buffer of the fallback card
-     */
-    generateFallbackCard(character, width = 450, height = 600) {
-        const canvas = createCanvas(width, height);
-        const ctx = canvas.getContext('2d');
-
-        // Background color based on rarity
-        const rarityColors = {
-            'COMMON': '#9CA3AF',
-            'RARE': '#3B82F6',
-            'EPIC': '#8B5CF6',
-            'LEGENDARY': '#F59E0B',
-            'MYTHIC': '#EF4444',
-            'DIMENSIONAL': '#7C3AED'
-        };
-
-        ctx.fillStyle = rarityColors[character.rarity] || '#9CA3AF';
-        ctx.fillRect(0, 0, width, height);
-
-        // Border
-        ctx.strokeStyle = '#FFFFFF';
-        ctx.lineWidth = 4;
-        ctx.strokeRect(2, 2, width - 4, height - 4);
-
-        // Character name
-        ctx.fillStyle = 'white';
-        ctx.strokeStyle = 'black';
-        ctx.lineWidth = 2;
-        ctx.font = 'bold 18px Arial';
-        ctx.textAlign = 'center';
-        ctx.strokeText(character.name, width / 2, height / 2);
-        ctx.fillText(character.name, width / 2, height / 2);
-
-        // Rarity text
-        ctx.font = 'bold 14px Arial';
-        ctx.strokeText(character.rarity, width / 2, height / 2 + 25);
-        ctx.fillText(character.rarity, width / 2, height / 2 + 25);
-
-        return canvas.toBuffer('image/png');
-    }
-
-    /**
-     * Generate a multi-character pull result image
-     * @param {Array} characters - Array of character objects
-     * @param {number} maxWidth - Maximum width of the result image
-     * @returns {Promise<Buffer>} PNG buffer of the pull results
+     * Generate a multi-character pull result image using framed URLs.
+     * @param {Array} characters - Array of character objects, each with a pre-generated framed `image` URL.
+     * @param {number} maxWidth - Maximum width of the result image.
+     * @returns {Promise<Buffer>} PNG buffer of the pull results.
      */
     async generatePullResultsImage(characters, maxWidth = 1024) {
         if (!characters || characters.length === 0) {
-            throw new Error('No characters provided');
+            throw new Error('No characters provided to generate pull image.');
         }
 
-        // 3:4 aspect ratio cards - smaller size for grid layout
         const cardWidth = 225;
-        const cardHeight = 300; // 225 * 4/3 = 300 exactly
+        const cardHeight = 300;
         const padding = 20;
         const cardsPerRow = Math.min(characters.length, Math.floor((maxWidth - padding) / (cardWidth + padding)));
-
         const rows = Math.ceil(characters.length / cardsPerRow);
         const imageWidth = Math.min(maxWidth, cardsPerRow * (cardWidth + padding) + padding);
         const imageHeight = rows * (cardHeight + padding) + padding;
@@ -167,43 +79,74 @@ class PullImageGenerator {
         const canvas = createCanvas(imageWidth, imageHeight);
         const ctx = canvas.getContext('2d');
 
-        // Background
         ctx.fillStyle = '#1a1a1a';
         ctx.fillRect(0, 0, imageWidth, imageHeight);
 
-        // Generate and place each character card
-        for (let i = 0; i < characters.length; i++) {
+        const promises = characters.map(async (character, i) => {
             const row = Math.floor(i / cardsPerRow);
             const col = i % cardsPerRow;
-
             const x = padding + col * (cardWidth + padding);
             const y = padding + row * (cardHeight + padding);
 
-            try {
-                const cardBuffer = await this.generateCharacterCard(characters[i], cardWidth, cardHeight);
-                const cardImage = await loadImage(cardBuffer);
-                ctx.drawImage(cardImage, x, y, cardWidth, cardHeight);
-            } catch (error) {
-                console.error(`Failed to generate card for ${characters[i].name}:`, error);
-                // Draw fallback
-                ctx.fillStyle = '#666666';
-                ctx.fillRect(x, y, cardWidth, cardHeight);
-                ctx.fillStyle = 'white';
-                ctx.font = '12px Arial';
-                ctx.textAlign = 'center';
-                ctx.fillText('Error', x + cardWidth / 2, y + cardHeight / 2);
-            }
-        }
+            // The character object should already have the transformed URL in its 'image' property
+            const framedUrl = character.image;
+            const cardImage = await this.loadCharacterImage(framedUrl);
 
+            if (cardImage) {
+                ctx.drawImage(cardImage, x, y, cardWidth, cardHeight);
+            } else {
+                // Draw a fallback card if the image failed to load
+                const fallbackBuffer = this.generateFallbackCard(character, cardWidth, cardHeight);
+                const fallbackImage = await loadImage(fallbackBuffer);
+                ctx.drawImage(fallbackImage, x, y, cardWidth, cardHeight);
+            }
+        });
+
+        await Promise.all(promises);
         return canvas.toBuffer('image/png');
     }
 
     /**
-     * Clear the image caches to free memory
+     * Generate a fallback card when an image is not available.
+     * @param {Object} character - Character data.
+     * @param {number} width - Card width.
+     * @param {number} height - Card height.
+     * @returns {Buffer} PNG buffer of the fallback card.
      */
+    generateFallbackCard(character, width, height) {
+        const canvas = createCanvas(width, height);
+        const ctx = canvas.getContext('2d');
+        const rarityColors = {
+            'COMMON': '#9CA3AF', 'RARE': '#3B82F6', 'EPIC': '#8B5CF6',
+            'LEGENDARY': '#F59E0B', 'MYTHIC': '#EF4444', 'DIMENSIONAL': '#7C3AED'
+        };
+        ctx.fillStyle = rarityColors[character.rarity] || '#9CA3AF';
+        ctx.fillRect(0, 0, width, height);
+        ctx.fillStyle = 'white';
+        ctx.strokeStyle = 'black';
+        ctx.lineWidth = 2;
+        ctx.font = 'bold 16px Arial';
+        ctx.textAlign = 'center';
+        const nameLines = character.name.split(' ');
+        if (nameLines.length > 2) {
+            ctx.strokeText(nameLines.slice(0, 2).join(' '), width / 2, height / 2 - 10);
+            ctx.fillText(nameLines.slice(0, 2).join(' '), width / 2, height / 2 - 10);
+            ctx.strokeText(nameLines.slice(2).join(' '), width / 2, height / 2 + 10);
+            ctx.fillText(nameLines.slice(2).join(' '), width / 2, height / 2 + 10);
+        } else {
+            ctx.strokeText(character.name, width / 2, height / 2);
+            ctx.fillText(character.name, width / 2, height / 2);
+        }
+        ctx.font = 'bold 12px Arial';
+        ctx.strokeText(character.rarity, width / 2, height / 2 + 25);
+        ctx.fillText(character.rarity, width / 2, height / 2 + 25);
+        return canvas.toBuffer('image/png');
+    }
+
     clearCache() {
         this.characterCache.clear();
     }
 }
 
 module.exports = PullImageGenerator;
+
