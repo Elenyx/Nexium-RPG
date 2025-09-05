@@ -108,20 +108,10 @@ module.exports = {
             const row = new ActionRowBuilder()
                 .addComponents(
                     new ButtonBuilder()
-                        .setCustomId(`rematch_${char1Id}_${char2Id}`)
-                        .setLabel('Rematch')
-                        .setStyle(ButtonStyle.Primary)
-                        .setEmoji('🔄'),
-                    new ButtonBuilder()
-                        .setCustomId(`swap_battle_${char1Id}_${char2Id}`)
-                        .setLabel('Swap & Battle')
-                        .setStyle(ButtonStyle.Secondary)
-                        .setEmoji('🔀'),
-                    new ButtonBuilder()
-                        .setCustomId('view_collection_battle')
+                        .setCustomId('collection_view_battle')
                         .setLabel('View Collection')
-                        .setStyle(ButtonStyle.Link)
-                        .setURL(`discord://-/channels/${interaction.guild.id}/@me`) // This would need to be handled differently
+                        .setStyle(ButtonStyle.Secondary)
+                        .setEmoji('📚')
                 );
 
             components.push(row);
