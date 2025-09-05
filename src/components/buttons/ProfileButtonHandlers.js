@@ -293,12 +293,11 @@ class ProfileButtonHandlers {
 
             if (!canClaim) {
                 const timeLeft = Math.ceil((24 * 60 * 60 * 1000 - (now - lastDaily)) / (60 * 60 * 1000));
-                const infoSection = new SectionBuilder()
-                    .addTextDisplayComponents(
-                        td => td.setContent(`⏰ You can claim your daily reward again in ${timeLeft} hours!`)
-                    );
+                // Use a simple TextDisplayBuilder for warnings to avoid accessory validation issues
+                const infoText = new TextDisplayBuilder()
+                    .setContent(`⏰ You can claim your daily reward again in ${timeLeft} hours!`);
                 await interaction.editReply({
-                    components: [infoSection],
+                    components: [infoText],
                     flags: MessageFlags.IsComponentsV2
                 });
                 return;
@@ -317,17 +316,20 @@ class ProfileButtonHandlers {
                     td => td.setContent(`# 🎁 Daily Reward Claimed!\nYou've successfully claimed your daily reward!`),
                     td => td.setContent(`**💰 Reward Earned:** ${reward.toLocaleString()} coins\n**🔥 Daily Streak:** ${profile.dailyStreak} days\n**💰 New Balance:** ${profile.coins.toLocaleString()} coins`),
                     td => td.setContent(`*Come back tomorrow for more rewards!*`)
-                )
-                .setButtonAccessory(
-                    btn => btn
+                );
+
+            // Use an explicit ActionRowBuilder + ButtonBuilder instead of setButtonAccessory
+            const backRow = new ActionRowBuilder()
+                .addComponents(
+                    new ButtonBuilder()
                         .setCustomId(`profile_back_${userId}`)
                         .setLabel('Back to Profile')
                         .setStyle(ButtonStyle.Secondary)
-                        .setEmoji({ name: '⬅️' })
+                        .setEmoji('⬅️')
                 );
 
             await interaction.editReply({
-                components: [successSection],
+                components: [successSection, backRow],
                 flags: MessageFlags.IsComponentsV2
             });
 
