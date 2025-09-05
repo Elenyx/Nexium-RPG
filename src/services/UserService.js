@@ -18,6 +18,7 @@ class UserService {
                 dailyStreak: 0,
                 lastDaily: null,
                 shards: 0,
+                collectionCount: 0,
                 createdAt: new Date()
             };
         }
@@ -30,8 +31,23 @@ class UserService {
                     username: username
                 });
                 logger.info(`Created new user: ${username} (${userId})`);
+                
+                // Return user with collection count for new users
+                return {
+                    ...user.toJSON(),
+                    collectionCount: 0
+                };
             }
-            return user;
+            
+            // Get collection count
+            const collectionCount = await models.UserCharacter.count({
+                where: { userId: userId }
+            });
+            
+            return {
+                ...user.toJSON(),
+                collectionCount: collectionCount
+            };
         } catch (error) {
             logger.error('Error in getOrCreateUser:', error);
             throw error;

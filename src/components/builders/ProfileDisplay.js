@@ -23,13 +23,26 @@ class ProfileDisplay {
      * @param {string} dimensionName - The raw dimension name (e.g., "nexus_hub")
      * @returns {string} Formatted dimension name (e.g., "Nexus Hub")
      */
-    static formatDimensionName(dimensionName) {
-        if (!dimensionName) return 'Unknown Dimension';
+    /**
+     * Calculates the time until next daily claim
+     * @param {Date|string} lastDaily - The last daily claim date
+     * @returns {string} Formatted countdown string
+     */
+    static getDailyCountdown(lastDaily) {
+        if (!lastDaily) return 'Available now! 🎉';
         
-        return dimensionName
-            .split('_')
-            .map(word => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase())
-            .join(' ');
+        const lastClaim = new Date(lastDaily);
+        const nextClaim = new Date(lastClaim.getTime() + 24 * 60 * 60 * 1000); // 24 hours later
+        const now = new Date();
+        
+        if (now >= nextClaim) return 'Available now! 🎉';
+        
+        const diffMs = nextClaim - now;
+        const hours = Math.floor(diffMs / (1000 * 60 * 60));
+        const minutes = Math.floor((diffMs % (1000 * 60 * 60)) / (1000 * 60));
+        const seconds = Math.floor((diffMs % (1000 * 60)) / 1000);
+        
+        return `${hours}h ${minutes}m ${seconds}s`;
     }
     /**
      * Creates a profile embed with interactive buttons
@@ -44,6 +57,7 @@ class ProfileDisplay {
             `**Energy:** \`${userData.dimensionalEnergy}/${userData.maxEnergy}\``,
             `**Coins:** \`${userData.coins.toLocaleString()}\``,
             `**${EMOJIS.SHARD} Shards:** \`${userData.shards?.toLocaleString() || '0'}\``,
+            `**Collection:** \`${userData.collectionCount || 0} cards\``,
             `**Current Dimension:** \`${this.formatDimensionName(userData.currentDimension)}\``,
             `**Daily Streak:** \`${userData.dailyStreak} days\``
         ].join('\n');
@@ -92,7 +106,7 @@ class ProfileDisplay {
 
         const section4 = new SectionBuilder()
             .addTextDisplayComponents(
-                td => td.setContent(`## 💰 Economy Overview\n**Coins:** ${userData.coins.toLocaleString()}\n**Daily Streak:** ${userData.dailyStreak} days\n**Last Daily:** ${userData.lastDaily ? new Date(userData.lastDaily).toLocaleDateString() : 'Never'}`)
+                td => td.setContent(`## 💰 Economy Overview\n**Coins:** ${userData.coins.toLocaleString()}\n**Daily Streak:** ${userData.dailyStreak} days\n**Next Daily:** ${this.getDailyCountdown(userData.lastDaily)}\n**Last Daily:** ${userData.lastDaily ? new Date(userData.lastDaily).toLocaleDateString() : 'Never'}`)
             )
             .setButtonAccessory(
                 btn => btn
