@@ -11,9 +11,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/SemVer
 
 - **18 New Naruto Characters**: Expanded character collection with powerful new additions
   - **EPIC (2 new)**: Sasuke's Curse Mark (NE013), Susanoo Rib Cage (NE014)
-  - **LEGENDARY (3 new)**: Sasuke - Heavenly Hand Power (NL015), Susanoo Skeletal Form (NL016), Kimimaro - Shikotsumyaku (NL017)
-  - **MYTHIC (4 new)**: Madara - Border Jail (NM011), Nagato - The Asura Path (NM012), Sasuke - Mangekyo Sharingan (NM013), Susanoo Humanoid Form (NM014)
-  - **DIMENSIONAL (9 new)**: Madara - Divine Genesis (ND014), Hagoromo's Chakra Transfer Jutsu (ND015), Hagoromo's Complete Body — Susanoo (ND016), Sasuke Senjutsu Susanoo (ND017), Susanoo Complete Body (ND018), Chibaku Tensei (ND019), Pain - The Almighty Push and Pull (ND020), Nagato - The Gedo Art of Rinne Rebirth (ND021), The Six Paths' Yang Power (ND022)
+  - **LEGENDARY (3 new)**: Sasuke - Heavenly Hand Power (NL015), Susanoo Skeletal Form (NL016),
+    Kimimaro - Shikotsumyaku (NL017)
+  - **MYTHIC (4 new)**: Madara - Border Jail (NM011), Nagato - The Asura Path (NM012),
+    Sasuke - Mangekyo Sharingan (NM013), Susanoo Humanoid Form (NM014)
+  - **DIMENSIONAL (9 new)**: Madara - Divine Genesis (ND014), Hagoromo's Chakra Transfer Jutsu (ND015),
+    Hagoromo's Complete Body — Susanoo (ND016), Sasuke Senjutsu Susanoo (ND017),
+    Susanoo Complete Body (ND018), Chibaku Tensei (ND019), Pain - The Almighty Push and Pull (ND020),
+    Nagato - The Gedo Art of Rinne Rebirth (ND021), The Six Paths' Yang Power (ND022)
 - **GitHub Pages Favicon**: Added custom favicon to all documentation pages
   - Favicon URL: `https://ik.imagekit.io/nexiumrpg/NexiumTP.png`
   - Applied to: index.html, characters.html, commands.html, guides.html, changelog.html
@@ -94,9 +99,33 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/SemVer
 
 ## [Unreleased]
 
+### Fixed
+
+- **Inventory Command Components V2 Error**: Resolved CombinedError validation issues
+  - Fixed SectionBuilder requiring button/thumbnail accessories
+  - Cleaned up inventory display structure for Components V2 compliance
+  - Removed button clutter for cleaner user experience
+
+### Improved
+
+- **Inventory Display Design**: Complete visual overhaul for better readability
+  - Replaced ugly ## headings with clean **bold text** formatting
+  - Added subtle markdown markup for item names and equipped status
+  - Used small emojis for visual categorization without clutter
+  - Clean separators between inventory sections
+  - Professional, minimal design with proper visual hierarchy
+
+### Technical Details
+
+- **Components V2 Compliance**: Fixed validation errors in SectionBuilder
+- **Clean Code Structure**: Simplified from 97 lines to 51 lines
+- **Visual Improvements**: Better markdown formatting and typography
+- **User Experience**: Removed button clutter, focused on content display
+
 - **New Character Database Structure**: Complete reorganization of character system
   - Modular folder-based organization by anime series and power tiers
-  - Naruto characters organized into 6 tiers: genin (COMMON), chunin (RARE), jonin (EPIC), kage (LEGENDARY), ultimate (MYTHIC), dimensional (DIMENSIONAL)
+  - Naruto characters organized into 6 tiers: genin (COMMON), chunin (RARE),
+    jonin (EPIC), kage (LEGENDARY), ultimate (MYTHIC), dimensional (DIMENSIONAL)
   - Anime-specific ID prefixes (NU001-NU055 for Naruto)
   - Centralized export system with `src/assets/characters/index.js`
 - **55 Naruto Characters**: Comprehensive character collection across all rarity tiers
@@ -130,7 +159,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/SemVer
 - **Local Images**: Removed local character images (edward.png, goku.png, light.png, luffy.png, naruto.jpg, sasuke.png, tanjiro.png)
 - **Unused Folders**: Cleaned up `sample/` and `images/` directories
 
-### Technical Details
+### Database Technical Details
 
 - **File Structure**: `src/assets/characters/[anime]/[tier]/[tier].js`
 - **ID System**: Anime prefixes (NU for Naruto, extensible for other series)
