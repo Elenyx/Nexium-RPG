@@ -4,7 +4,7 @@ const commonCharacters = [
     name: 'Naruto Uzumaki',
     anime: 'Naruto',
     rarity: 'COMMON',
-    image: 'https://ik.imagekit.io/NexiumRPG/Characters/Naruto/COMMON/Naruto.png',
+    image: 'https://ik.imagekit.io/NexiumRPG/Characters/Naruto/COMMON/NC001.png',
     baseStats: {
       health: 1200,
       attack: 150,
@@ -38,7 +38,7 @@ const commonCharacters = [
     name: 'Sasuke Uchiha',
     anime: 'Naruto',
     rarity: 'COMMON',
-    image: 'https://ik.imagekit.io/NexiumRPG/Characters/Naruto/COMMON/Sasuke.png',
+    image: 'https://ik.imagekit.io/NexiumRPG/Characters/Naruto/COMMON/NC002.png',
     baseStats: {
       health: 1100,
       attack: 180,
@@ -72,7 +72,7 @@ const commonCharacters = [
     name: 'Sakura Haruno',
     anime: 'Naruto',
     rarity: 'COMMON',
-    image: 'https://ik.imagekit.io/NexiumRPG/Characters/Naruto/COMMON/Sakura.png',
+    image: 'https://ik.imagekit.io/NexiumRPG/Characters/Naruto/COMMON/NC003.png',
     baseStats: {
       health: 1300,
       attack: 120,
@@ -106,7 +106,7 @@ const commonCharacters = [
     name: 'Konohamaru',
     anime: 'Naruto',
     rarity: 'COMMON',
-    image: 'https://ik.imagekit.io/NexiumRPG/Characters/Naruto/COMMON/Konohamaru.png',
+    image: 'https://ik.imagekit.io/NexiumRPG/Characters/Naruto/COMMON/NC004.png',
     baseStats: {
       health: 1000,
       attack: 100,
@@ -140,7 +140,7 @@ const commonCharacters = [
     name: 'Moegi',
     anime: 'Naruto',
     rarity: 'COMMON',
-    image: 'https://ik.imagekit.io/NexiumRPG/Characters/Naruto/COMMON/Moegi.png',
+    image: 'https://ik.imagekit.io/NexiumRPG/Characters/Naruto/COMMON/NC005.png',
     baseStats: {
       health: 1050,
       attack: 95,
@@ -174,7 +174,7 @@ const commonCharacters = [
     name: 'Udon',
     anime: 'Naruto',
     rarity: 'COMMON',
-    image: 'https://ik.imagekit.io/NexiumRPG/Characters/Naruto/COMMON/Udon.png',
+    image: 'https://ik.imagekit.io/NexiumRPG/Characters/Naruto/COMMON/NC006.png',
     baseStats: {
       health: 1150,
       attack: 85,
@@ -208,7 +208,7 @@ const commonCharacters = [
     name: 'Mizuki',
     anime: 'Naruto',
     rarity: 'COMMON',
-    image: 'https://ik.imagekit.io/NexiumRPG/Characters/Naruto/COMMON/Mizuki.png',
+    image: 'https://ik.imagekit.io/NexiumRPG/Characters/Naruto/COMMON/NC007.png',
     baseStats: {
       health: 1250,
       attack: 140,

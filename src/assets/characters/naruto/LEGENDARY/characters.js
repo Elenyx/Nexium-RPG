@@ -4,7 +4,7 @@ const legendaryCharacters = [
     name: 'Jiraiya',
     anime: 'Naruto',
     rarity: 'LEGENDARY',
-    image: 'https://ik.imagekit.io/NexiumRPG/Characters/Naruto/LEGENDARY/Jiraiya.png',
+    image: 'https://ik.imagekit.io/NexiumRPG/Characters/Naruto/LEGENDARY/NL001.png',
     baseStats: {
       health: 2000,
       attack: 250,
@@ -38,7 +38,7 @@ const legendaryCharacters = [
     name: 'Tsunade Senju',
     anime: 'Naruto',
     rarity: 'LEGENDARY',
-    image: 'https://ik.imagekit.io/NexiumRPG/Characters/Naruto/LEGENDARY/Tsunade.png',
+    image: 'https://ik.imagekit.io/NexiumRPG/Characters/Naruto/LEGENDARY/NL002.png',
     baseStats: {
       health: 2200,
       attack: 240,
@@ -72,7 +72,7 @@ const legendaryCharacters = [
     name: 'Orochimaru',
     anime: 'Naruto',
     rarity: 'LEGENDARY',
-    image: 'https://ik.imagekit.io/NexiumRPG/Characters/Naruto/LEGENDARY/Orochimaru.png',
+    image: 'https://ik.imagekit.io/NexiumRPG/Characters/Naruto/LEGENDARY/NL003.png',
     baseStats: {
       health: 1800,
       attack: 230,
@@ -106,7 +106,7 @@ const legendaryCharacters = [
     name: 'Gaara',
     anime: 'Naruto',
     rarity: 'LEGENDARY',
-    image: 'https://ik.imagekit.io/NexiumRPG/Characters/Naruto/LEGENDARY/Gaara.png',
+    image: 'https://ik.imagekit.io/NexiumRPG/Characters/Naruto/LEGENDARY/NL004.png',
     baseStats: {
       health: 2100,
       attack: 260,
@@ -140,7 +140,7 @@ const legendaryCharacters = [
     name: 'Fourth Raikage',
     anime: 'Naruto',
     rarity: 'LEGENDARY',
-    image: 'https://ik.imagekit.io/NexiumRPG/Characters/Naruto/LEGENDARY/FourthRaikage.png',
+    image: 'https://ik.imagekit.io/NexiumRPG/Characters/Naruto/LEGENDARY/NL005.png',
     baseStats: {
       health: 2300,
       attack: 280,
@@ -174,7 +174,7 @@ const legendaryCharacters = [
     name: 'Third Raikage',
     anime: 'Naruto',
     rarity: 'LEGENDARY',
-    image: 'https://ik.imagekit.io/NexiumRPG/Characters/Naruto/LEGENDARY/ThirdRaikage.png',
+    image: 'https://ik.imagekit.io/NexiumRPG/Characters/Naruto/LEGENDARY/NL006.png',
     baseStats: {
       health: 2500,
       attack: 270,
@@ -208,7 +208,7 @@ const legendaryCharacters = [
     name: 'Onoki',
     anime: 'Naruto',
     rarity: 'LEGENDARY',
-    image: 'https://ik.imagekit.io/NexiumRPG/Characters/Naruto/LEGENDARY/Onoki.png',
+    image: 'https://ik.imagekit.io/NexiumRPG/Characters/Naruto/LEGENDARY/NL007.png',
     baseStats: {
       health: 1900,
       attack: 220,
@@ -242,7 +242,7 @@ const legendaryCharacters = [
     name: 'Mei Terumi',
     anime: 'Naruto',
     rarity: 'LEGENDARY',
-    image: 'https://ik.imagekit.io/NexiumRPG/Characters/Naruto/LEGENDARY/Mei.png',
+    image: 'https://ik.imagekit.io/NexiumRPG/Characters/Naruto/LEGENDARY/NL008.png',
     baseStats: {
       health: 1950,
       attack: 235,
@@ -276,7 +276,7 @@ const legendaryCharacters = [
     name: 'Kisame Hoshigaki',
     anime: 'Naruto',
     rarity: 'LEGENDARY',
-    image: 'https://ik.imagekit.io/NexiumRPG/Characters/Naruto/LEGENDARY/Kisame.png',
+    image: 'https://ik.imagekit.io/NexiumRPG/Characters/Naruto/LEGENDARY/NL009.png',
     baseStats: {
       health: 2400,
       attack: 245,
@@ -310,7 +310,7 @@ const legendaryCharacters = [
     name: 'Deidara',
     anime: 'Naruto',
     rarity: 'LEGENDARY',
-    image: 'https://ik.imagekit.io/NexiumRPG/Characters/Naruto/LEGENDARY/Deidara.png',
+    image: 'https://ik.imagekit.io/NexiumRPG/Characters/Naruto/LEGENDARY/NL010.png',
     baseStats: {
       health: 1750,
       attack: 255,
@@ -344,7 +344,7 @@ const legendaryCharacters = [
     name: 'Sasori',
     anime: 'Naruto',
     rarity: 'LEGENDARY',
-    image: 'https://ik.imagekit.io/NexiumRPG/Characters/Naruto/LEGENDARY/Sasori.png',
+    image: 'https://ik.imagekit.io/NexiumRPG/Characters/Naruto/LEGENDARY/NL011.png',
     baseStats: {
       health: 1850,
       attack: 240,
@@ -378,7 +378,7 @@ const legendaryCharacters = [
     name: 'Konan',
     anime: 'Naruto',
     rarity: 'LEGENDARY',
-    image: 'https://ik.imagekit.io/NexiumRPG/Characters/Naruto/LEGENDARY/Konan.png',
+    image: 'https://ik.imagekit.io/NexiumRPG/Characters/Naruto/LEGENDARY/NL012.png',
     baseStats: {
       health: 1800,
       attack: 225,
@@ -412,7 +412,7 @@ const legendaryCharacters = [
     name: 'Zabuza Momochi',
     anime: 'Naruto',
     rarity: 'LEGENDARY',
-    image: 'https://ik.imagekit.io/NexiumRPG/Characters/Naruto/LEGENDARY/Zabuza.png',
+    image: 'https://ik.imagekit.io/NexiumRPG/Characters/Naruto/LEGENDARY/NL013.png',
     baseStats: {
       health: 2150,
       attack: 265,
@@ -446,7 +446,7 @@ const legendaryCharacters = [
     name: 'Hiruzen Sarutobi',
     anime: 'Naruto',
     rarity: 'LEGENDARY',
-    image: 'https://ik.imagekit.io/NexiumRPG/Characters/Naruto/LEGENDARY/Hiruzen.png',
+    image: 'https://ik.imagekit.io/NexiumRPG/Characters/Naruto/LEGENDARY/NL014.png',
     baseStats: {
       health: 2050,
       attack: 235,
@@ -480,7 +480,7 @@ const legendaryCharacters = [
     name: 'Sasuke - Heavenly Hand Power',
     anime: 'Naruto',
     rarity: 'LEGENDARY',
-    image: 'https://ik.imagekit.io/NexiumRPG/Characters/Naruto/LEGENDARY/Sasuke-HeavenlyHand.png',
+    image: 'https://ik.imagekit.io/NexiumRPG/Characters/Naruto/LEGENDARY/NL015.png',
     baseStats: {
       health: 2100,
       attack: 280,
@@ -514,7 +514,7 @@ const legendaryCharacters = [
     name: 'Susanoo Skeletal Form',
     anime: 'Naruto',
     rarity: 'LEGENDARY',
-    image: 'https://ik.imagekit.io/NexiumRPG/Characters/Naruto/LEGENDARY/Susanoo-Skeletal.png',
+    image: 'https://ik.imagekit.io/NexiumRPG/Characters/Naruto/LEGENDARY/NL016.png',
     baseStats: {
       health: 2150,
       attack: 285,
@@ -548,7 +548,7 @@ const legendaryCharacters = [
     name: 'Kimimaro (Sound Five) - Shikotsumyaku (Kekkei Genkai)',
     anime: 'Naruto',
     rarity: 'LEGENDARY',
-    image: 'https://ik.imagekit.io/NexiumRPG/Characters/Naruto/LEGENDARY/Kimimaro-Shikotsumyaku.png',
+    image: 'https://ik.imagekit.io/NexiumRPG/Characters/Naruto/LEGENDARY/NL017.png',
     baseStats: {
       health: 2050,
       attack: 275,
@@ -582,7 +582,7 @@ const legendaryCharacters = [
     name: 'Naruto Uzumaki - Four-Tails Transformation',
     anime: 'Naruto',
     rarity: 'LEGENDARY',
-    image: 'https://ik.imagekit.io/NexiumRPG/Characters/Naruto/LEGENDARY/Naruto-FourTails.png',
+    image: 'https://ik.imagekit.io/NexiumRPG/Characters/Naruto/LEGENDARY/NL018.png',
     baseStats: {
       health: 2200,
       attack: 270,
