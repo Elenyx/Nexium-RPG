@@ -18,22 +18,27 @@ module.exports = {
                     inline: false
                 },
                 {
-                    name: `${EMOJIS.LEVEL} Progression`,
-                    value: '• Earn experience through commands\n• Level up characters with `/upgrade`\n• Upgrade character rarities with shards\n• Two-tier progression system (Basic/Advanced)',
+                    name: `${EMOJIS.COIN} Collection & Inventory`,
+                    value: '• `/pull` - Pull for random characters (100 coins)\n• `/inventory` - View your shards, items, and accessories\n• `/collection` - Browse your character collection as a card album\n• `/card <id>` - View detailed character card information',
                     inline: false
                 },
                 {
-                    name: `${EMOJIS.COIN} Economy`,
-                    value: '• Collect coins through activities\n• Use coins for various purchases\n• Trade with other players\n• Check your **shards** in `/profile`',
+                    name: `${EMOJIS.LEVEL} Character Management`,
+                    value: '• `/merge <id>` - Merge duplicate cards to level up characters\n• `/upgrade <id>` - Upgrade characters using shards\n• `/upgrade-rarity <id>` - Upgrade character rarity with shards\n• `/rarity-progress` - View your rarity upgrade progress',
                     inline: false
                 },
                 {
-                    name: `${EMOJIS.DIMENSION} Dimensions`,
-                    value: '• Travel between different anime worlds\n• Each dimension has unique features\n• Unlock new dimensions as you progress',
+                    name: `${EMOJIS.DIMENSION} Combat & Quests`,
+                    value: '• `/battle <char1> <char2>` - Battle between your characters\n• `/quest` - Complete quests to earn shards and rewards',
+                    inline: false
+                },
+                {
+                    name: `${EMOJIS.SETTINGS} Server Management`,
+                    value: '• `/welcome` - Set up welcome messages for new members\n• `/setwelcome` - Configure welcome channel and message',
                     inline: false
                 }
             )
-            .setFooter({ text: 'Nexium Bot v1.0.0' })
+            .setFooter({ text: 'Nexium Bot v1.0.0 - Use /inventory for a clean view of your items!' })
             .setTimestamp();
 
         const row = new ActionRowBuilder()

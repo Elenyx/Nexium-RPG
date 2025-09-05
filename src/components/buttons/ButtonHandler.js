@@ -46,8 +46,10 @@ class ButtonHandler {
                     // Handle special cases
                     if (interaction.customId === 'collection_view_battle') {
                         handlerResult = await this.handleViewCollectionFromBattle(interaction);
-                    } else if (interaction.customId === 'battle_back_from_collection') {
-                        handlerResult = await this.handleBackToBattleFromCollection(interaction);
+                    } else if (interaction.customId === 'help_commands') {
+                        handlerResult = await this.handleHelpCommands(interaction);
+                    } else if (interaction.customId === 'help_back') {
+                        handlerResult = await this.handleHelpBack(interaction);
                     } else {
                         // Check if button handler exists in client.buttons
                         const handler = this.client.buttons.get(`${category}_${action}`);
@@ -548,6 +550,152 @@ class ButtonHandler {
             return false;
         } catch (error) {
             logger.error(`Inventory button handling error: ${error}`);
+            return false;
+        }
+    }
+
+    /**
+     * Handles the help commands button
+     * @param {Object} interaction - Discord interaction
+     * @returns {boolean} Whether the button was handled
+     */
+    async handleHelpCommands(interaction) {
+        try {
+            const { EmbedBuilder, ActionRowBuilder, ButtonBuilder, ButtonStyle } = require('discord.js');
+            const { COLORS, EMOJIS } = require('../../config/constants');
+
+            const embed = new EmbedBuilder()
+                .setTitle(`${EMOJIS.DIMENSION} Complete Command List`)
+                .setDescription('Here are all available commands organized by category:')
+                .setColor(COLORS.PRIMARY)
+                .addFields(
+                    {
+                        name: '🎯 **Core Commands**',
+                        value: '• `/help` - Show help and command information\n• `/ping` - Check bot latency\n• `/profile` - View your dimensional profile',
+                        inline: false
+                    },
+                    {
+                        name: '🎴 **Collection Commands**',
+                        value: '• `/pull [amount]` - Pull for random characters (100 coins each)\n• `/inventory` - View your shards, items, and accessories\n• `/collection [page]` - Browse your character collection\n• `/card <character_id>` - View detailed character information',
+                        inline: false
+                    },
+                    {
+                        name: '⚔️ **Combat Commands**',
+                        value: '• `/battle <char1> <char2>` - Battle between your characters\n• `/quest [type]` - Complete quests for rewards',
+                        inline: false
+                    },
+                    {
+                        name: '⬆️ **Upgrade Commands**',
+                        value: '• `/merge <character_id>` - Merge duplicates to level up\n• `/upgrade <character_id>` - Upgrade characters with shards\n• `/upgrade-rarity <character_id>` - Upgrade character rarity\n• `/rarity-progress` - View rarity upgrade progress',
+                        inline: false
+                    },
+                    {
+                        name: '⚙️ **Server Management**',
+                        value: '• `/welcome` - Set up welcome messages\n• `/setwelcome` - Configure welcome channel and message',
+                        inline: false
+                    }
+                )
+                .setFooter({ text: 'Nexium Bot v1.0.0 - Use /inventory for a clean view of your items!' })
+                .setTimestamp();
+
+            const row = new ActionRowBuilder()
+                .addComponents(
+                    new ButtonBuilder()
+                        .setLabel('Back to Help')
+                        .setCustomId('help_back')
+                        .setStyle(ButtonStyle.Secondary)
+                        .setEmoji('⬅️'),
+                    new ButtonBuilder()
+                        .setLabel('Support Server')
+                        .setStyle(ButtonStyle.Link)
+                        .setURL('https://discord.gg/nexium'),
+                    new ButtonBuilder()
+                        .setLabel('GitHub')
+                        .setStyle(ButtonStyle.Link)
+                        .setURL('https://github.com/Elenyx/Nexium-RPG')
+                );
+
+            await interaction.update({
+                embeds: [embed],
+                components: [row]
+            });
+
+            return true;
+        } catch (error) {
+            logger.error(`Help commands button handling error: ${error}`);
+            return false;
+        }
+    }
+
+    /**
+     * Handles the help back button
+     * @param {Object} interaction - Discord interaction
+     * @returns {boolean} Whether the button was handled
+     */
+    async handleHelpBack(interaction) {
+        try {
+            const { EmbedBuilder, ActionRowBuilder, ButtonBuilder, ButtonStyle } = require('discord.js');
+            const { COLORS, EMOJIS } = require('../../config/constants');
+
+            const embed = new EmbedBuilder()
+                .setTitle(`${EMOJIS.DIMENSION} Nexium Bot Help`)
+                .setDescription('Welcome to the Dimensional Nexus! Here\'s how to get started:')
+                .setColor(COLORS.PRIMARY)
+                .addFields(
+                    {
+                        name: `${EMOJIS.ENERGY} Getting Started`,
+                        value: '• `/profile` - View your dimensional profile\n• `/ping` - Check bot latency\n• `/help` - Show this help message',
+                        inline: false
+                    },
+                    {
+                        name: `${EMOJIS.COIN} Collection & Inventory`,
+                        value: '• `/pull` - Pull for random characters (100 coins)\n• `/inventory` - View your shards, items, and accessories\n• `/collection` - Browse your character collection as a card album\n• `/card <id>` - View detailed character card information',
+                        inline: false
+                    },
+                    {
+                        name: `${EMOJIS.LEVEL} Character Management`,
+                        value: '• `/merge <id>` - Merge duplicate cards to level up characters\n• `/upgrade <id>` - Upgrade characters using shards\n• `/upgrade-rarity <id>` - Upgrade character rarity with shards\n• `/rarity-progress` - View your rarity upgrade progress',
+                        inline: false
+                    },
+                    {
+                        name: `${EMOJIS.DIMENSION} Combat & Quests`,
+                        value: '• `/battle <char1> <char2>` - Battle between your characters\n• `/quest` - Complete quests to earn shards and rewards',
+                        inline: false
+                    },
+                    {
+                        name: `${EMOJIS.SETTINGS} Server Management`,
+                        value: '• `/welcome` - Set up welcome messages for new members\n• `/setwelcome` - Configure welcome channel and message',
+                        inline: false
+                    }
+                )
+                .setFooter({ text: 'Nexium Bot v1.0.0 - Use /inventory for a clean view of your items!' })
+                .setTimestamp();
+
+            const row = new ActionRowBuilder()
+                .addComponents(
+                    new ButtonBuilder()
+                        .setLabel('Support Server')
+                        .setStyle(ButtonStyle.Link)
+                        .setURL('https://discord.gg/nexium'), // Placeholder URL
+                    new ButtonBuilder()
+                        .setLabel('GitHub')
+                        .setStyle(ButtonStyle.Link)
+                        .setURL('https://github.com/Elenyx/Nexium-RPG'),
+                    new ButtonBuilder()
+                        .setCustomId('help_commands')
+                        .setLabel('Command List')
+                        .setStyle(ButtonStyle.Secondary)
+                        .setEmoji('📋')
+                );
+
+            await interaction.update({
+                embeds: [embed],
+                components: [row]
+            });
+
+            return true;
+        } catch (error) {
+            logger.error(`Help back button handling error: ${error}`);
             return false;
         }
     }
