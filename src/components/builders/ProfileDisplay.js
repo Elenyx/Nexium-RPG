@@ -1,5 +1,5 @@
 /**
- * @file Profile Display Component Builde            `**Current Dimension:** \`${this.formatDimensionName(userData.currentDimension)}\``,
+ * @file Profile Display Component Builder
  * @description Creates interactive profile displays using Discord Components V2
  * @author Nexium Bot Development Team
  */
