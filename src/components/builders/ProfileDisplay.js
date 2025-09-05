@@ -28,6 +28,20 @@ class ProfileDisplay {
      * @param {Date|string} lastDaily - The last daily claim date
      * @returns {string} Formatted countdown string
      */
+    /**
+     * Formats dimension names from underscore or slug format to readable Title Case
+     * @param {string} dimensionName
+     * @returns {string}
+     */
+    static formatDimensionName(dimensionName) {
+        if (!dimensionName || typeof dimensionName !== 'string') return 'Unknown';
+        // Replace common separators with spaces, split into words, then Title Case each
+        return dimensionName
+            .replace(/[-_]+/g, ' ')
+            .split(/\s+/)
+            .map(w => w.charAt(0).toUpperCase() + w.slice(1).toLowerCase())
+            .join(' ');
+    }
     static getDailyCountdown(lastDaily) {
         if (!lastDaily) return 'Available now! 🎉';
         
