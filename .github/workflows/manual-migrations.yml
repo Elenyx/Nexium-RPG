@@ -1,0 +1,43 @@
+name: Manual migrations (protected)
+
+on:
+  workflow_dispatch:
+    inputs:
+      environment:
+        description: 'Target environment for migrations (requires matching GitHub Environment with protections)'
+        required: true
+        default: 'staging'
+        type: choice
+        options:
+          - staging
+          - production
+
+jobs:
+  run-migrations:
+    # Use the chosen environment to leverage GitHub Environment protection (required reviewers, secrets, etc.)
+    environment: ${{ inputs.environment }}
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: '18'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Run migrations
+        env:
+          # Select secret based on environment input. Make sure the repo has these secrets configured.
+          DATABASE_URL: ${{ inputs.environment == 'production' && secrets.PRODUCTION_DATABASE_URL || secrets.STAGING_DATABASE_URL }}
+        run: |
+          if [ -z "$DATABASE_URL" ]; then
+            echo "DATABASE_URL not set for the selected environment (${{ inputs.environment }}). Aborting.";
+            exit 1;
+          fi
+          echo "Running migrations against environment: ${{ inputs.environment }}";
+          node ./src/database/migrations/add-gems-and-inventory-migration.js
