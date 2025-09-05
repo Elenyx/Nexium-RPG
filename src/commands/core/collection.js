@@ -47,16 +47,16 @@ module.exports = {
                 return await interaction.editReply({ components: [emptyTextDisplay], flags: MessageFlags.IsComponentsV2 });
             }
 
-            const characters = userCharacters.map(uc => {
+            const characters = await Promise.all(userCharacters.map(async uc => {
                 const characterData = uc.character.toJSON();
                 // IMPORTANT: Generate the framed URL for each character before passing to the album generator
-                characterData.image = CharacterCardRenderer.renderCardUrl(characterData);
+                characterData.image = await CharacterCardRenderer.renderCardUrl(characterData);
                 return {
                     ...characterData,
                     customLevel: uc.customLevel,
                     isFavorite: uc.isFavorite,
                 };
-            });
+            }));
 
             const cardAlbum = new CardAlbum();
             const albumBuffer = await cardAlbum.generateAlbum(characters, page, {

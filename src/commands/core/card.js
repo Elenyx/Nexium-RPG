@@ -35,7 +35,7 @@ module.exports = {
             }
 
             // Generate the framed card URL using our new renderer
-            const framedCardUrl = CharacterCardRenderer.renderCardUrl(character.toJSON());
+            const framedCardUrl = await CharacterCardRenderer.renderCardUrl(character.toJSON());
 
             let cardBuffer;
             try {

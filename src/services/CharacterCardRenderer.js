@@ -14,14 +14,14 @@ class CharacterCardRenderer {
      * @param {object} character - The character object from your database/assets.
      * @returns {string} The complete ImageKit URL with transformations or local fallback path.
      */
-    renderCardUrl(character) {
+    async renderCardUrl(character) {
         if (!character || !character.image || !character.rarity) {
             // Return a local placeholder if character data is incomplete
             return this.getLocalFallbackPath('placeholder');
         }
 
         // Check if ImageKit is available (we'll implement a simple check)
-        if (!this.isImageKitAvailable()) {
+        if (!(await this.isImageKitAvailable())) {
             return this.getLocalFallbackPath(character.rarity.toLowerCase());
         }
 
@@ -52,10 +52,21 @@ class CharacterCardRenderer {
      * Check if ImageKit service is available
      * @returns {boolean} True if ImageKit appears to be available
      */
-    isImageKitAvailable() {
-        // For now, we'll assume ImageKit is down since the account is suspended
-        // In a production environment, you might want to implement a health check
-        return false;
+    async isImageKitAvailable() {
+        try {
+            // Test with a known working URL
+            const testUrl = 'https://ik.imagekit.io/NexiumRPG/Characters/NC001.png';
+            const response = await axios.get(testUrl, {
+                timeout: 5000,
+                validateStatus: function (status) {
+                    return status < 400; // Accept 2xx and 3xx
+                }
+            });
+            return response.status === 200;
+        } catch (error) {
+            console.warn('ImageKit availability check failed:', error.message);
+            return false;
+        }
     }
 
     /**

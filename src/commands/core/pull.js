@@ -70,12 +70,12 @@ module.exports = {
 
             try {
                 // Generate framed URLs for the image generator
-                const pulledCharacterData = pulledCharacters.map(pull => {
+                const pulledCharacterData = await Promise.all(pulledCharacters.map(async pull => {
                     const characterData = pull.character.toJSON();
                     // Replace the base image with the new framed URL from the renderer
-                    characterData.image = CharacterCardRenderer.renderCardUrl(characterData);
+                    characterData.image = await CharacterCardRenderer.renderCardUrl(characterData);
                     return characterData;
-                });
+                }));
                 
                 const imageBuffer = await imageGenerator.generatePullResultsImage(pulledCharacterData);
                 resultImage = new AttachmentBuilder(imageBuffer, { name: 'pull-results.png' });

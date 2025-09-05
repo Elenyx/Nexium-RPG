@@ -101,7 +101,7 @@ class CardAlbum {
 
         try {
             // Get the ImageKit URL for the character
-            const imageUrl = this.getImageKitUrl(character);
+            const imageUrl = await this.getImageKitUrl(character);
 
             if (imageUrl) {
                 let image;
@@ -189,11 +189,11 @@ class CardAlbum {
      * @param {Object} character - Character object
      * @returns {string|null} ImageKit URL or null if not available
      */
-    getImageKitUrl(character) {
+    async getImageKitUrl(character) {
         const { IMAGE_KIT_BASE_URL } = require('../config/constants');
 
         // Check if ImageKit is available
-        if (!this.isImageKitAvailable()) {
+        if (!(await this.isImageKitAvailable())) {
             return this.getLocalFallbackPath(character.rarity);
         }
 
@@ -219,9 +219,21 @@ class CardAlbum {
      * Check if ImageKit service is available
      * @returns {boolean} True if ImageKit appears to be available
      */
-    isImageKitAvailable() {
-        // For now, we'll assume ImageKit is down since the account is suspended
-        return false;
+    async isImageKitAvailable() {
+        try {
+            // Test with a known working URL
+            const testUrl = 'https://ik.imagekit.io/NexiumRPG/Characters/NC001.png';
+            const response = await axios.get(testUrl, {
+                timeout: 5000,
+                validateStatus: function (status) {
+                    return status < 400; // Accept 2xx and 3xx
+                }
+            });
+            return response.status === 200;
+        } catch (error) {
+            console.warn('ImageKit availability check failed:', error.message);
+            return false;
+        }
     }
 
     /**
