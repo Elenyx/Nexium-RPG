@@ -8,11 +8,10 @@ module.exports = {
 
     async execute(interaction) {
         const sent = await interaction.reply({ 
-            content: 'Pinging...', 
-            withResponse: true 
+            content: 'Pinging...'
         });
 
-        const timeDiff = sent.resource.createdTimestamp - interaction.createdTimestamp;
+        const timeDiff = sent.createdTimestamp - interaction.createdTimestamp;
         const apiLatency = Math.round(interaction.client.ws.ping);
 
         const embed = new EmbedBuilder()
