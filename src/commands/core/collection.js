@@ -51,7 +51,12 @@ module.exports = {
                 const characterData = uc.character.toJSON();
                 // IMPORTANT: Generate the framed URL for each character before passing to the album generator
                 const cardRenderer = new CharacterCardRenderer();
-                characterData.image = await cardRenderer.renderCardUrl(characterData);
+                try {
+                    characterData.image = await cardRenderer.renderCardUrl(characterData);
+                } catch (error) {
+                    console.warn(`Failed to render card for ${characterData.name}:`, error.message);
+                    characterData.image = null;
+                }
                 return {
                     ...characterData,
                     customLevel: uc.customLevel,

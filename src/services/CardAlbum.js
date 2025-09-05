@@ -21,6 +21,13 @@ class CardAlbum {
         this.margin = 20;
         this.cardSpacing = 10;
         this.characterImageManager = new CharacterImageManager();
+        // Add caching for generated albums
+        this.albumCache = new Map();
+        this.imageCache = new Map();
+        this.cacheTimeout = 5 * 60 * 1000; // 5 minutes
+        
+        // Periodic cache cleanup
+        setInterval(() => this.clearExpiredCache(), 60 * 1000); // Clean every minute
     }
 
     /**
@@ -31,6 +38,18 @@ class CardAlbum {
      * @returns {Buffer} PNG image buffer
      */
     async generateAlbum(characters, page = 0, user = null) {
+        const cacheKey = this.getCacheKey(user?.id, page, characters.length);
+        
+        // Check cache first
+        const cached = this.albumCache.get(cacheKey);
+        if (cached && Date.now() - cached.timestamp < this.cacheTimeout) {
+            console.log(`📸 Using cached album for ${cacheKey}`);
+            return cached.buffer;
+        }
+
+        console.log(`🎨 Generating new album for ${cacheKey}`);
+        const startTime = Date.now();
+
         const canvas = createCanvas(this.canvasWidth, this.canvasHeight);
         const ctx = canvas.getContext('2d');
 
@@ -42,10 +61,49 @@ class CardAlbum {
         const endIndex = Math.min(startIndex + this.cardsPerPage, characters.length);
         const pageCharacters = characters.slice(startIndex, endIndex);
 
-        // Draw character cards (centered)
+        // Draw character cards (centered) - now with parallel processing
         await this.drawCharacterCards(ctx, pageCharacters, startIndex);
 
-        return canvas.toBuffer('image/png');
+        const buffer = canvas.toBuffer('image/png');
+        
+        // Cache the result
+        this.albumCache.set(cacheKey, {
+            buffer: buffer,
+            timestamp: Date.now()
+        });
+
+        const endTime = Date.now();
+        console.log(`✅ Album generated in ${endTime - startTime}ms`);
+
+        return buffer;
+    }
+
+    /**
+     * Generate cache key for album
+     * @param {string} userId - User ID
+     * @param {number} page - Page number
+     * @param {number} totalCharacters - Total character count
+     * @returns {string} Cache key
+     */
+    getCacheKey(userId, page, totalCharacters) {
+        return `${userId}_${page}_${totalCharacters}`;
+    }
+
+    /**
+     * Clear expired cache entries
+     */
+    clearExpiredCache() {
+        const now = Date.now();
+        for (const [key, value] of this.albumCache.entries()) {
+            if (now - value.timestamp > this.cacheTimeout) {
+                this.albumCache.delete(key);
+            }
+        }
+        for (const [key, value] of this.imageCache.entries()) {
+            if (now - value.timestamp > this.cacheTimeout) {
+                this.imageCache.delete(key);
+            }
+        }
     }
 
     /**
@@ -74,16 +132,18 @@ class CardAlbum {
         const startX = (this.canvasWidth - totalGridWidth) / 2;
         const startY = (this.canvasHeight - totalGridHeight) / 2;
 
-        for (let i = 0; i < characters.length; i++) {
-            const character = characters[i];
+        // Process cards in parallel for better performance
+        const cardPromises = characters.map(async (character, i) => {
             const row = Math.floor(i / cardsPerRow);
             const col = i % cardsPerRow;
 
             const x = startX + col * (this.cardWidth + this.cardSpacing);
             const y = startY + row * (this.cardHeight + this.cardSpacing);
 
-            await this.drawCharacterCard(ctx, character, x, y, startIndex + i + 1);
-        }
+            return this.drawCharacterCard(ctx, character, x, y, startIndex + i + 1);
+        });
+
+        await Promise.all(cardPromises);
     }
 
     /**
@@ -97,16 +157,29 @@ class CardAlbum {
             
             let image;
             if (cardImageData) {
-                if (Buffer.isBuffer(cardImageData)) {
-                    // Convert buffer to data URL
-                    const base64 = cardImageData.toString('base64');
-                    image = await loadImage(`data:image/png;base64,${base64}`);
-                } else if (typeof cardImageData === 'string' && cardImageData.startsWith('data:image/')) {
-                    // Already a data URL
-                    image = await loadImage(cardImageData);
+                const cacheKey = `card_${character.id}_${character.rarity}`;
+                const cached = this.imageCache.get(cacheKey);
+                
+                if (cached && Date.now() - cached.timestamp < this.cacheTimeout) {
+                    image = cached.image;
                 } else {
-                    // URL or path
-                    image = await loadImage(cardImageData);
+                    if (Buffer.isBuffer(cardImageData)) {
+                        // Convert buffer to data URL
+                        const base64 = cardImageData.toString('base64');
+                        image = await loadImage(`data:image/png;base64,${base64}`);
+                    } else if (typeof cardImageData === 'string' && cardImageData.startsWith('data:image/')) {
+                        // Already a data URL
+                        image = await loadImage(cardImageData);
+                    } else {
+                        // URL or path
+                        image = await loadImage(cardImageData);
+                    }
+                    
+                    // Cache the loaded image
+                    this.imageCache.set(cacheKey, {
+                        image: image,
+                        timestamp: Date.now()
+                    });
                 }
                 
                 // Draw the framed character card directly
@@ -264,6 +337,18 @@ class CardAlbum {
             console.warn('ImageKit availability check failed:', error.message);
             return false;
         }
+    }
+
+    /**
+     * Get cache statistics
+     * @returns {Object} Cache statistics
+     */
+    getCacheStats() {
+        return {
+            albums: this.albumCache.size,
+            images: this.imageCache.size,
+            total: this.albumCache.size + this.imageCache.size
+        };
     }
 }
 

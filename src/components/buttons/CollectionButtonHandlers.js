@@ -59,18 +59,25 @@ class CollectionButtonHandlers {
                 });
             }
 
-            // Transform data for CardAlbum
-            const characters = userCharacters.map(uc => ({
-                id: uc.character.id,
-                name: uc.character.name,
-                rarity: uc.character.rarity,
-                imagePath: uc.character.imagePath,
-                imageUrl: uc.character.imageUrl,
-                imageUrls: uc.character.imageUrls,
-                anime: uc.character.anime,
-                customLevel: uc.customLevel,
-                isFavorite: uc.isFavorite,
-                collectedShards: uc.collectedShards
+            // Transform data for CardAlbum - optimize by pre-rendering URLs
+            const characters = await Promise.all(userCharacters.map(async uc => {
+                const characterData = uc.character.toJSON();
+                
+                // Pre-render card URLs in parallel for better performance
+                const cardRenderer = new CharacterCardRenderer();
+                try {
+                    characterData.image = await cardRenderer.renderCardUrl(characterData);
+                } catch (error) {
+                    console.warn(`Failed to render card for ${characterData.name}:`, error.message);
+                    characterData.image = null;
+                }
+                
+                return {
+                    ...characterData,
+                    customLevel: uc.customLevel,
+                    isFavorite: uc.isFavorite,
+                    collectedShards: uc.collectedShards
+                };
             }));
 
             // Calculate new page
