@@ -122,7 +122,7 @@ module.exports = {
         }
     },
 
-    // Frame Configuration for Character Cards (Overlay Skins)
+    // Frame Configuration for Character Cards (Rarity-Based Frames)
     FRAMES: {
         // Default frame (no special styling)
         DEFAULT: {
@@ -133,58 +133,129 @@ module.exports = {
             obtainable: 'default' // Always available
         },
 
-        // Basic frames - obtained through events/tasks
-        BASIC_GOLD: {
-            id: 'basic_gold',
-            name: 'Golden Frame',
-            description: 'Elegant gold border frame overlay',
-            imageUrl: 'https://ik.imagekit.io/NexiumRPG/frames/gold_pattern.png',
-            obtainable: 'event' // Obtained through events
+        // Rarity-based frames - automatically applied based on character rarity
+        COMMON: {
+            id: 'common',
+            name: 'Common Frame',
+            description: 'Standard frame for common rarity characters',
+            imageUrl: 'https://ik.imagekit.io/NexiumRPG/frames/common_frame.png',
+            obtainable: 'rarity' // Automatically applied based on rarity
         },
 
-        BASIC_SILVER: {
-            id: 'basic_silver',
-            name: 'Silver Frame',
-            description: 'Shiny silver border frame overlay',
-            imageUrl: 'https://ik.imagekit.io/NexiumRPG/frames/silver_pattern.png',
-            obtainable: 'task' // Obtained through tasks
+        RARE: {
+            id: 'rare',
+            name: 'Rare Frame',
+            description: 'Enhanced frame for rare rarity characters',
+            imageUrl: 'https://ik.imagekit.io/NexiumRPG/frames/rare_frame.png',
+            obtainable: 'rarity' // Automatically applied based on rarity
         },
 
-        // Premium frames - obtained through wins/achievements
-        PREMIUM_DIAMOND: {
-            id: 'premium_diamond',
-            name: 'Diamond Frame',
-            description: 'Luxurious diamond-encrusted frame overlay',
-            imageUrl: 'https://ik.imagekit.io/NexiumRPG/frames/diamond_pattern.png',
-            obtainable: 'win' // Obtained through wins
+        EPIC: {
+            id: 'epic',
+            name: 'Epic Frame',
+            description: 'Premium frame for epic rarity characters',
+            imageUrl: 'https://ik.imagekit.io/NexiumRPG/frames/epic_frame.png',
+            obtainable: 'rarity' // Automatically applied based on rarity
         },
 
-        PREMIUM_PLATINUM: {
-            id: 'premium_platinum',
-            name: 'Platinum Frame',
-            description: 'Premium platinum frame overlay with effects',
-            imageUrl: 'https://ik.imagekit.io/NexiumRPG/frames/platinum_pattern.png',
-            obtainable: 'achievement' // Obtained through achievements
+        LEGENDARY: {
+            id: 'legendary',
+            name: 'Legendary Frame',
+            description: 'Luxurious frame for legendary rarity characters',
+            imageUrl: 'https://ik.imagekit.io/NexiumRPG/frames/legendary_frame.png',
+            obtainable: 'rarity' // Automatically applied based on rarity
         },
 
-        // Seasonal/Event frames - limited time availability
-        SEASONAL_CHRISTMAS: {
-            id: 'seasonal_christmas',
+        MYTHIC: {
+            id: 'mythic',
+            name: 'Mythic Frame',
+            description: 'Mythical frame for mythic rarity characters',
+            imageUrl: 'https://ik.imagekit.io/NexiumRPG/frames/mythic_frame.png',
+            obtainable: 'rarity' // Automatically applied based on rarity
+        },
+
+        DIMENSIONAL: {
+            id: 'dimensional',
+            name: 'Dimensional Frame',
+            description: 'Transcendent frame for dimensional rarity characters',
+            imageUrl: 'https://ik.imagekit.io/NexiumRPG/frames/dimensional_frame.png',
+            obtainable: 'rarity' // Automatically applied based on rarity
+        },
+
+        // Special frames - obtainable through events, seasonal, or special tasks
+        GOLDEN_ANNIVERSARY: {
+            id: 'golden_anniversary',
+            name: 'Golden Anniversary Frame',
+            description: 'Special golden frame celebrating milestones',
+            imageUrl: 'https://ik.imagekit.io/NexiumRPG/frames/golden_anniversary.png',
+            obtainable: 'event' // Special event frame
+        },
+
+        CHRISTMAS_FESTIVE: {
+            id: 'christmas_festive',
             name: 'Festive Christmas Frame',
-            description: 'Holiday-themed frame overlay with snow effects',
-            imageUrl: 'https://ik.imagekit.io/NexiumRPG/frames/christmas_pattern.png',
-            obtainable: 'seasonal' // Seasonal event
+            description: 'Holiday-themed frame with festive decorations',
+            imageUrl: 'https://ik.imagekit.io/NexiumRPG/frames/christmas_festive.png',
+            obtainable: 'seasonal' // Seasonal event frame
         },
 
-        SEASONAL_HALLOWEEN: {
-            id: 'seasonal_halloween',
+        HALLOWEEN_SPOOKY: {
+            id: 'halloween_spooky',
             name: 'Spooky Halloween Frame',
-            description: 'Halloween-themed frame overlay with special effects',
-            imageUrl: 'https://ik.imagekit.io/NexiumRPG/frames/halloween_pattern.png',
-            obtainable: 'seasonal' // Seasonal event
+            description: 'Eerie Halloween-themed frame with special effects',
+            imageUrl: 'https://ik.imagekit.io/NexiumRPG/frames/halloween_spooky.png',
+            obtainable: 'seasonal' // Seasonal event frame
+        },
+
+        VALENTINES_ROMANTIC: {
+            id: 'valentines_romantic',
+            name: 'Romantic Valentine Frame',
+            description: 'Heart-themed frame for Valentine\'s Day',
+            imageUrl: 'https://ik.imagekit.io/NexiumRPG/frames/valentines_romantic.png',
+            obtainable: 'seasonal' // Seasonal event frame
+        },
+
+        SUMMER_VACATION: {
+            id: 'summer_vacation',
+            name: 'Summer Vacation Frame',
+            description: 'Tropical frame for summer events',
+            imageUrl: 'https://ik.imagekit.io/NexiumRPG/frames/summer_vacation.png',
+            obtainable: 'seasonal' // Seasonal event frame
+        },
+
+        NEW_YEAR_CELEBRATION: {
+            id: 'new_year_celebration',
+            name: 'New Year Celebration Frame',
+            description: 'Festive frame for New Year celebrations',
+            imageUrl: 'https://ik.imagekit.io/NexiumRPG/frames/new_year_celebration.png',
+            obtainable: 'seasonal' // Seasonal event frame
+        },
+
+        COMMUNITY_CHAMPION: {
+            id: 'community_champion',
+            name: 'Community Champion Frame',
+            description: 'Exclusive frame for community champions',
+            imageUrl: 'https://ik.imagekit.io/NexiumRPG/frames/community_champion.png',
+            obtainable: 'achievement' // Special achievement frame
+        },
+
+        BETA_TESTER: {
+            id: 'beta_tester',
+            name: 'Beta Tester Frame',
+            description: 'Special frame for beta testers',
+            imageUrl: 'https://ik.imagekit.io/NexiumRPG/frames/beta_tester.png',
+            obtainable: 'special' // Special recognition frame
+        },
+
+        EARLY_SUPPORTER: {
+            id: 'early_supporter',
+            name: 'Early Supporter Frame',
+            description: 'Frame for early supporters of the project',
+            imageUrl: 'https://ik.imagekit.io/NexiumRPG/frames/early_supporter.png',
+            obtainable: 'special' // Special recognition frame
         }
     },
 
     // Frame IDs list for validation
-    VALID_FRAME_IDS: ['default', 'basic_gold', 'basic_silver', 'premium_diamond', 'premium_platinum', 'seasonal_christmas', 'seasonal_halloween'],
+    VALID_FRAME_IDS: ['default', 'common', 'rare', 'epic', 'legendary', 'mythic', 'dimensional', 'golden_anniversary', 'christmas_festive', 'halloween_spooky', 'valentines_romantic', 'summer_vacation', 'new_year_celebration', 'community_champion', 'beta_tester', 'early_supporter'],
 };

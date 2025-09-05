@@ -5,27 +5,33 @@ const { COLORS, EMOJIS, VALID_FRAME_IDS, FRAMES } = require('../../config/consta
 module.exports = {
     data: new SlashCommandBuilder()
         .setName('giveframe')
-        .setDescription('[ADMIN] Give a frame to a user for a specific character')
+        .setDescription('[ADMIN] Give a special frame to a user')
         .addUserOption(option =>
             option.setName('user')
                 .setDescription('User to give frame to')
                 .setRequired(true))
         .addStringOption(option =>
-            option.setName('character_id')
-                .setDescription('Character ID to apply frame to')
-                .setRequired(true))
-        .addStringOption(option =>
             option.setName('frame_id')
-                .setDescription('Frame ID to give')
+                .setDescription('Special frame ID to give')
                 .setRequired(true)
                 .addChoices(
-                    { name: 'Default Frame', value: 'default' },
-                    { name: 'Golden Frame', value: 'basic_gold' },
-                    { name: 'Silver Frame', value: 'basic_silver' },
-                    { name: 'Diamond Frame', value: 'premium_diamond' },
-                    { name: 'Platinum Frame', value: 'premium_platinum' },
-                    { name: 'Christmas Frame', value: 'seasonal_christmas' },
-                    { name: 'Halloween Frame', value: 'seasonal_halloween' }
+                    // Rarity frames
+                    { name: 'Common Frame', value: 'common' },
+                    { name: 'Rare Frame', value: 'rare' },
+                    { name: 'Epic Frame', value: 'epic' },
+                    { name: 'Legendary Frame', value: 'legendary' },
+                    { name: 'Mythic Frame', value: 'mythic' },
+                    { name: 'Dimensional Frame', value: 'dimensional' },
+                    // Special frames
+                    { name: '🎉 Golden Anniversary Frame', value: 'golden_anniversary' },
+                    { name: '🎄 Christmas Festive Frame', value: 'christmas_festive' },
+                    { name: '👻 Halloween Spooky Frame', value: 'halloween_spooky' },
+                    { name: '💝 Valentine\'s Romantic Frame', value: 'valentines_romantic' },
+                    { name: '🏖️ Summer Vacation Frame', value: 'summer_vacation' },
+                    { name: '🎊 New Year Celebration Frame', value: 'new_year_celebration' },
+                    { name: '🏆 Community Champion Frame', value: 'community_champion' },
+                    { name: '🧪 Beta Tester Frame', value: 'beta_tester' },
+                    { name: '⭐ Early Supporter Frame', value: 'early_supporter' }
                 )),
 
     async execute(interaction) {
@@ -39,7 +45,6 @@ module.exports = {
         }
 
         const targetUser = interaction.options.getUser('user');
-        const characterId = interaction.options.getString('character_id');
         const frameId = interaction.options.getString('frame_id');
 
         try {
@@ -55,76 +60,63 @@ module.exports = {
                 return await interaction.editReply({ embeds: [embed] });
             }
 
-            // Check if character exists
-            const character = await models.Character.findByPk(characterId);
-            if (!character) {
-                const embed = new EmbedBuilder()
-                    .setColor(COLORS.ERROR)
-                    .setTitle(`${EMOJIS.ERROR} Character Not Found`)
-                    .setDescription(`Character with ID \`${characterId}\` does not exist.`);
-
-                return await interaction.editReply({ embeds: [embed] });
-            }
-
-            // Check if user owns this character
-            const userCharacter = await models.UserCharacter.findOne({
-                where: { userId: targetUser.id, characterId }
-            });
-
-            if (!userCharacter) {
-                const embed = new EmbedBuilder()
-                    .setColor(COLORS.ERROR)
-                    .setTitle(`${EMOJIS.ERROR} Character Not Owned`)
-                    .setDescription(`${targetUser.username} doesn't own the character \`${character.name}\` (${characterId}).\nUse \`/givecharacter\` first to give them the character.`);
-
-                return await interaction.editReply({ embeds: [embed] });
-            }
-
-            // Validate frame ID
-            if (!VALID_FRAME_IDS.includes(frameId)) {
-                const availableFrames = VALID_FRAME_IDS.map(id => `\`${id}\``).join(', ');
-                const embed = new EmbedBuilder()
-                    .setColor(COLORS.ERROR)
-                    .setTitle(`${EMOJIS.ERROR} Invalid Frame ID`)
-                    .setDescription(`\`${frameId}\` is not a valid frame ID.\n\n**Available Frames:**\n${availableFrames}`);
-
-                return await interaction.editReply({ embeds: [embed] });
-            }
-
             // Get frame details
             const selectedFrame = FRAMES[frameId.toUpperCase()] || FRAMES[Object.keys(FRAMES).find(key => FRAMES[key].id === frameId)];
-
-            // Update the frame in database
-            const previousFrameId = userCharacter.frameId;
-            await userCharacter.update({ frameId });
-
-            // Verify the update was successful
-            await userCharacter.reload();
-            if (userCharacter.frameId !== frameId) {
-                console.error(`[ERROR] Frame update failed for user ${targetUser.id}, character ${characterId}`);
+            if (!selectedFrame) {
                 const embed = new EmbedBuilder()
                     .setColor(COLORS.ERROR)
-                    .setTitle(`${EMOJIS.ERROR} Update Failed`)
-                    .setDescription('Failed to update the character frame. Please try again.');
+                    .setTitle(`${EMOJIS.ERROR} Invalid Frame`)
+                    .setDescription(`Frame \`${frameId}\` does not exist.`);
 
                 return await interaction.editReply({ embeds: [embed] });
             }
 
-            // Log successful frame assignment
-            console.log(`[ADMIN] ${interaction.user.username} gave frame '${frameId}' to ${targetUser.username} for character ${characterId}`);
+            // Find or create user profile to store unlocked frames
+            let userProfile = await models.UserProfile.findOne({
+                where: { userId: targetUser.id }
+            });
+
+            if (!userProfile) {
+                // Create user profile if it doesn't exist
+                userProfile = await models.UserProfile.create({
+                    userId: targetUser.id,
+                    unlockedFrames: [frameId],
+                    createdAt: new Date(),
+                    updatedAt: new Date()
+                });
+            } else {
+                // Add frame to unlocked frames if not already unlocked
+                const unlockedFrames = userProfile.unlockedFrames || [];
+                if (!unlockedFrames.includes(frameId)) {
+                    unlockedFrames.push(frameId);
+                    await userProfile.update({ 
+                        unlockedFrames,
+                        updatedAt: new Date()
+                    });
+                } else {
+                    const embed = new EmbedBuilder()
+                        .setColor(COLORS.WARNING)
+                        .setTitle(`${EMOJIS.WARNING} Frame Already Unlocked`)
+                        .setDescription(`${targetUser.username} already has the **${selectedFrame.name}** unlocked.`);
+
+                    return await interaction.editReply({ embeds: [embed] });
+                }
+            }
+
+            // Log successful frame unlock
+            console.log(`[ADMIN] ${interaction.user.username} unlocked frame '${frameId}' for ${targetUser.username}`);
 
             const embed = new EmbedBuilder()
                 .setColor(COLORS.SUCCESS)
-                .setTitle(`${EMOJIS.SUCCESS} Frame Assigned`)
-                .setDescription(`Successfully assigned **${selectedFrame.name}** to ${targetUser.username}'s **${character.name}**!`)
+                .setTitle(`${EMOJIS.SUCCESS} Special Frame Unlocked!`)
+                .setDescription(`Successfully unlocked **${selectedFrame.name}** for ${targetUser.username}!`)
                 .addFields(
                     { name: 'User', value: targetUser.username, inline: true },
-                    { name: 'Character', value: `${character.name} (${characterId})`, inline: true },
-                    { name: 'Frame Applied', value: `${selectedFrame.name} (${frameId})`, inline: true },
-                    { name: 'Previous Frame', value: previousFrameId || 'Default', inline: true },
+                    { name: 'Frame Unlocked', value: `${selectedFrame.name} (${frameId})`, inline: true },
+                    { name: 'Obtainable', value: selectedFrame.obtainable, inline: true },
                     { name: 'Frame Description', value: selectedFrame.description, inline: false }
                 )
-                .setFooter({ text: 'Frame changes will be visible when viewing character cards' })
+                .setFooter({ text: 'User can now apply this frame to any character they own using /skin' })
                 .setTimestamp();
 
             await interaction.editReply({ embeds: [embed] });
@@ -135,7 +127,7 @@ module.exports = {
             const embed = new EmbedBuilder()
                 .setColor(COLORS.ERROR)
                 .setTitle(`${EMOJIS.ERROR} Error`)
-                .setDescription('An error occurred while assigning the frame.');
+                .setDescription('An error occurred while unlocking the frame.');
 
             await interaction.editReply({ embeds: [embed] });
         }

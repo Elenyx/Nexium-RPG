@@ -7,14 +7,6 @@ const rareCharacters = [
     anime: 'Naruto',
     rarity: 'RARE',
     image: 'https://ik.imagekit.io/NexiumRPG/Characters/Naruto/RARE/Shikamaru.png',
-    imageUrls: {
-      COMMON: 'https://ik.imagekit.io/NexiumRPG/Characters/Naruto/COMMON/Shikamaru.png',
-      RARE: 'https://ik.imagekit.io/NexiumRPG/Characters/Naruto/RARE/Shikamaru.png',
-      EPIC: 'https://ik.imagekit.io/NexiumRPG/Characters/Naruto/EPIC/Shikamaru.png',
-      LEGENDARY: 'https://ik.imagekit.io/NexiumRPG/Characters/Naruto/LEGENDARY/Shikamaru.png',
-      MYTHIC: 'https://ik.imagekit.io/NexiumRPG/Characters/Naruto/MYTHIC/Shikamaru.png',
-      DIMENSIONAL: 'https://ik.imagekit.io/NexiumRPG/Characters/Naruto/DIMENSIONAL/Shikamaru.png'
-    },
     baseStats: {
       health: 1400,
       attack: 160,
@@ -49,14 +41,6 @@ const rareCharacters = [
     anime: 'Naruto',
     rarity: 'RARE',
     image: 'https://ik.imagekit.io/NexiumRPG/Characters/Naruto/RARE/Choji.png',
-    imageUrls: {
-      COMMON: 'https://ik.imagekit.io/NexiumRPG/Characters/Naruto/COMMON/Choji.png',
-      RARE: 'https://ik.imagekit.io/NexiumRPG/Characters/Naruto/RARE/Choji.png',
-      EPIC: 'https://ik.imagekit.io/NexiumRPG/Characters/Naruto/EPIC/Choji.png',
-      LEGENDARY: 'https://ik.imagekit.io/NexiumRPG/Characters/Naruto/LEGENDARY/Choji.png',
-      MYTHIC: 'https://ik.imagekit.io/NexiumRPG/Characters/Naruto/MYTHIC/Choji.png',
-      DIMENSIONAL: 'https://ik.imagekit.io/NexiumRPG/Characters/Naruto/DIMENSIONAL/Choji.png'
-    },
     baseStats: {
       health: 1800,
       attack: 140,
@@ -91,14 +75,6 @@ const rareCharacters = [
     anime: 'Naruto',
     rarity: 'RARE',
     image: 'https://ik.imagekit.io/NexiumRPG/Characters/Naruto/RARE/Kiba.png',
-    imageUrls: {
-      COMMON: 'https://ik.imagekit.io/NexiumRPG/Characters/Naruto/COMMON/Kiba.png',
-      RARE: 'https://ik.imagekit.io/NexiumRPG/Characters/Naruto/RARE/Kiba.png',
-      EPIC: 'https://ik.imagekit.io/NexiumRPG/Characters/Naruto/EPIC/Kiba.png',
-      LEGENDARY: 'https://ik.imagekit.io/NexiumRPG/Characters/Naruto/LEGENDARY/Kiba.png',
-      MYTHIC: 'https://ik.imagekit.io/NexiumRPG/Characters/Naruto/MYTHIC/Kiba.png',
-      DIMENSIONAL: 'https://ik.imagekit.io/NexiumRPG/Characters/Naruto/DIMENSIONAL/Kiba.png'
-    },
     baseStats: {
       health: 1300,
       attack: 170,
@@ -175,14 +151,6 @@ const rareCharacters = [
     anime: 'Naruto',
     rarity: 'RARE',
     image: 'https://ik.imagekit.io/NexiumRPG/Characters/Naruto/RARE/Tenten.png',
-    imageUrls: {
-      COMMON: 'https://ik.imagekit.io/NexiumRPG/Characters/Naruto/COMMON/Tenten.png',
-      RARE: 'https://ik.imagekit.io/NexiumRPG/Characters/Naruto/RARE/Tenten.png',
-      EPIC: 'https://ik.imagekit.io/NexiumRPG/Characters/Naruto/EPIC/Tenten.png',
-      LEGENDARY: 'https://ik.imagekit.io/NexiumRPG/Characters/Naruto/LEGENDARY/Tenten.png',
-      MYTHIC: 'https://ik.imagekit.io/NexiumRPG/Characters/Naruto/MYTHIC/Tenten.png',
-      DIMENSIONAL: 'https://ik.imagekit.io/NexiumRPG/Characters/Naruto/DIMENSIONAL/Tenten.png'
-    },
     baseStats: {
       health: 1250,
       attack: 160,
@@ -217,14 +185,6 @@ const rareCharacters = [
     anime: 'Naruto',
     rarity: 'RARE',
     image: 'https://ik.imagekit.io/NexiumRPG/Characters/Naruto/RARE/Anko.png',
-    imageUrls: {
-      COMMON: 'https://ik.imagekit.io/NexiumRPG/Characters/Naruto/COMMON/Anko.png',
-      RARE: 'https://ik.imagekit.io/NexiumRPG/Characters/Naruto/RARE/Anko.png',
-      EPIC: 'https://ik.imagekit.io/NexiumRPG/Characters/Naruto/EPIC/Anko.png',
-      LEGENDARY: 'https://ik.imagekit.io/NexiumRPG/Characters/Naruto/LEGENDARY/Anko.png',
-      MYTHIC: 'https://ik.imagekit.io/NexiumRPG/Characters/Naruto/MYTHIC/Anko.png',
-      DIMENSIONAL: 'https://ik.imagekit.io/NexiumRPG/Characters/Naruto/DIMENSIONAL/Anko.png'
-    },
     baseStats: {
       health: 1350,
       attack: 175,
@@ -259,14 +219,6 @@ const rareCharacters = [
     anime: 'Naruto',
     rarity: 'RARE',
     image: 'https://ik.imagekit.io/NexiumRPG/Characters/Naruto/RARE/Kurenai.png',
-    imageUrls: {
-      COMMON: 'https://ik.imagekit.io/NexiumRPG/Characters/Naruto/COMMON/Kurenai.png',
-      RARE: 'https://ik.imagekit.io/NexiumRPG/Characters/Naruto/RARE/Kurenai.png',
-      EPIC: 'https://ik.imagekit.io/NexiumRPG/Characters/Naruto/EPIC/Kurenai.png',
-      LEGENDARY: 'https://ik.imagekit.io/NexiumRPG/Characters/Naruto/LEGENDARY/Kurenai.png',
-      MYTHIC: 'https://ik.imagekit.io/NexiumRPG/Characters/Naruto/MYTHIC/Kurenai.png',
-      DIMENSIONAL: 'https://ik.imagekit.io/NexiumRPG/Characters/Naruto/DIMENSIONAL/Kurenai.png'
-    },
     baseStats: {
       health: 1280,
       attack: 135,
@@ -301,14 +253,6 @@ const rareCharacters = [
     anime: 'Naruto',
     rarity: 'RARE',
     image: 'https://ik.imagekit.io/NexiumRPG/Characters/Naruto/RARE/Asuma.png',
-    imageUrls: {
-      COMMON: 'https://ik.imagekit.io/NexiumRPG/Characters/Naruto/COMMON/Asuma.png',
-      RARE: 'https://ik.imagekit.io/NexiumRPG/Characters/Naruto/RARE/Asuma.png',
-      EPIC: 'https://ik.imagekit.io/NexiumRPG/Characters/Naruto/EPIC/Asuma.png',
-      LEGENDARY: 'https://ik.imagekit.io/NexiumRPG/Characters/Naruto/LEGENDARY/Asuma.png',
-      MYTHIC: 'https://ik.imagekit.io/NexiumRPG/Characters/Naruto/MYTHIC/Asuma.png',
-      DIMENSIONAL: 'https://ik.imagekit.io/NexiumRPG/Characters/Naruto/DIMENSIONAL/Asuma.png'
-    },
     baseStats: {
       health: 1500,
       attack: 185,

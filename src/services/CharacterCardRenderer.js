@@ -37,9 +37,12 @@ class CharacterCardRenderer {
             fontSize: 32,
             fontFamily: 'Arial',
             color: '#FFFFFF',
+            textColor: '#FFFFFF', // Added missing textColor
             backgroundColor: 'rgba(0, 0, 0, 0.7)',
             padding: 20,
             borderRadius: 15,
+            textAlign: 'left', // Added missing textAlign
+            textBaseline: 'middle', // Added missing textBaseline
             position: {
                 x: 50,
                 y: this.frameHeight - 80,
@@ -75,10 +78,10 @@ class CharacterCardRenderer {
     /**
      * Render character card with frame overlay and character name
      * @param {string} characterId - Character ID
-     * @param {string} frameId - Frame ID to apply
+     * @param {string} frameId - Frame ID to apply (optional, will use rarity-based if not provided)
      * @returns {Buffer} PNG buffer of the rendered card
      */
-    async renderCharacterCard(characterId, frameId) {
+    async renderCharacterCard(characterId, frameId = null) {
         const canvas = createCanvas(this.frameWidth, this.frameHeight);
         const ctx = canvas.getContext('2d');
 
@@ -87,13 +90,24 @@ class CharacterCardRenderer {
         ctx.imageSmoothingQuality = this.quality.imageSmoothingQuality;
 
         try {
-            // 1. Get character data from database
-            const character = await this.getCharacterData(characterId);
+            // 1. Get character data from assets first (primary source)
+            let character = this.getCharacterDataFromAssets(characterId);
+            
+            // 2. If not found in assets, try database as fallback
             if (!character) {
-                throw new Error(`Character not found: ${characterId}`);
+                character = await this.getCharacterData(characterId);
+                if (!character) {
+                    throw new Error(`Character not found: ${characterId}`);
+                }
             }
 
-            // 2. Load character image
+            // 3. Determine frame to use
+            if (!frameId) {
+                // Auto-select frame based on character rarity
+                frameId = this.getRarityFrameId(character.rarity);
+            }
+
+            // 3. Load character image
             const characterImageUrl = this.getCharacterImageUrl(characterId, character);
             const characterImage = await loadImage(characterImageUrl);
 
@@ -234,17 +248,45 @@ class CharacterCardRenderer {
     }
 
     /**
-     * Get character image URL (clean art without frames)
+     * Get character image URL (using asset URLs directly)
      * @param {string} characterId - Character ID
      * @param {Object} character - Character data from database
      * @returns {string} Character image URL
      */
     getCharacterImageUrl(characterId, character) {
-        // For frame system, we want clean character art without pre-built frames
-        // Use the character ID format: https://ik.imagekit.io/NexiumRPG/Characters/{CharacterId}.png
+        // Get character data from assets to use the pre-defined URLs
+        const characterData = this.getCharacterDataFromAssets(characterId);
+        if (characterData && characterData.image) {
+            return characterData.image;
+        }
 
-        // Use character ID directly for consistency with existing system
+        // Fallback: construct URL using database character data and rarity
+        if (character && character.anime && character.rarity && character.name) {
+            return `https://ik.imagekit.io/NexiumRPG/Characters/${character.anime}/${character.rarity}/${character.name.replace(/\s+/g, '')}.png`;
+        }
+
+        // Final fallback
         return `https://ik.imagekit.io/NexiumRPG/Characters/${characterId}.png`;
+    }
+
+    /**
+     * Get character data from assets by character ID
+     * @param {string} characterId - Character ID to look up
+     * @returns {Object|null} Character data from assets or null if not found
+     */
+    getCharacterDataFromAssets(characterId) {
+        try {
+            // Load all characters from assets
+            const { all: allCharacters } = require('../assets/characters');
+            
+            // Find the character by ID
+            const character = allCharacters.find(char => char.id === characterId);
+            
+            return character || null;
+        } catch (error) {
+            console.warn('Error loading character data from assets:', error.message);
+            return null;
+        }
     }
 
     /**
@@ -264,16 +306,24 @@ class CharacterCardRenderer {
     }
 
     /**
-     * Get character image with specific dimensions (for optimization)
-     * @param {string} characterId - Character ID
-     * @param {number} width - Desired width
-     * @param {number} height - Desired height
-     * @returns {string} ImageKit URL with transformations
+     * Get the appropriate frame ID based on character rarity
+     * @param {string} rarity - Character rarity
+     * @returns {string} Frame ID to use
      */
-    getCharacterImageUrlWithSize(characterId, width, height) {
-        // ImageKit URL with resize transformation
-        const baseUrl = this.getCharacterImageUrl(characterId);
-        return `${baseUrl}?tr=w-${width},h-${height},c-at_max`;
+    getRarityFrameId(rarity) {
+        if (!rarity) return 'default';
+        
+        // Map rarity to frame ID (convert to lowercase)
+        const rarityMap = {
+            'COMMON': 'common',
+            'RARE': 'rare',
+            'EPIC': 'epic',
+            'LEGENDARY': 'legendary',
+            'MYTHIC': 'mythic',
+            'DIMENSIONAL': 'dimensional'
+        };
+        
+        return rarityMap[rarity.toUpperCase()] || 'default';
     }
 }
 

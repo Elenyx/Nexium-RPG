@@ -9,11 +9,13 @@ const path = require('path');
 const fs = require('fs');
 const { IMAGE_KIT_BASE_URL } = require('../config/constants');
 const CharacterImageManager = require('../components/builders/CharacterImageManager');
+const CharacterCardRenderer = require('./CharacterCardRenderer');
 
 class PullImageGenerator {
     constructor() {
         this.characterCache = new Map();
         this.characterImageManager = new CharacterImageManager();
+        this.characterCardRenderer = new CharacterCardRenderer();
 
         // Register fonts if available
         this.registerFonts();
@@ -63,31 +65,35 @@ class PullImageGenerator {
     }
 
     /**
-     * Generate a single character card with complete design (art + name)
-     * @param {Object} character - Character data object with rarity and imageUrls
+     * Generate a single character card with complete design (art + name + rarity frame)
+     * @param {Object} character - Character data object
      * @param {number} width - Card width (default: 450)
      * @param {number} height - Card height (default: 600)
      * @returns {Promise<Buffer>} PNG buffer of the character card
      */
     async generateCharacterCard(character, width = 450, height = 600) {
-        const canvas = createCanvas(width, height);
-        const ctx = canvas.getContext('2d');
-
         try {
-            // Get the correct image URL based on current rarity
-            const imageUrl = this.characterImageManager.getCharacterImageUrlByRarity(character);
-            const characterImage = await this.loadCharacterImage(imageUrl);
-
-            // Draw the complete character card image
-            ctx.drawImage(characterImage, 0, 0, width, height);
-
-            return canvas.toBuffer('image/png');
+            // Use CharacterCardRenderer to generate card with automatic rarity frame
+            const cardBuffer = await this.characterCardRenderer.renderCharacterCard(character.id);
+            return cardBuffer;
 
         } catch (error) {
-            console.error('Error generating character card:', error);
+            console.error('Error generating character card with renderer:', error);
 
-            // Generate fallback card
-            return this.generateFallbackCard(character, width, height);
+            // Fallback to original method if renderer fails
+            try {
+                const imageUrl = this.characterImageManager.getCharacterImageUrlByRarity(character);
+                const characterImage = await this.loadCharacterImage(imageUrl);
+
+                const canvas = createCanvas(width, height);
+                const ctx = canvas.getContext('2d');
+                ctx.drawImage(characterImage, 0, 0, width, height);
+
+                return canvas.toBuffer('image/png');
+            } catch (fallbackError) {
+                console.error('Fallback method also failed:', fallbackError);
+                return this.generateFallbackCard(character, width, height);
+            }
         }
     }
 

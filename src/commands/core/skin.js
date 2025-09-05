@@ -13,7 +13,27 @@ module.exports = {
         .addStringOption(option =>
             option.setName('frame_id')
                 .setDescription('ID of the frame to apply')
-                .setRequired(true)),
+                .setRequired(true)
+                .addChoices(
+                    // Default and rarity frames (always available)
+                    { name: 'Default Frame', value: 'default' },
+                    { name: 'Common Frame', value: 'common' },
+                    { name: 'Rare Frame', value: 'rare' },
+                    { name: 'Epic Frame', value: 'epic' },
+                    { name: 'Legendary Frame', value: 'legendary' },
+                    { name: 'Mythic Frame', value: 'mythic' },
+                    { name: 'Dimensional Frame', value: 'dimensional' },
+                    // Special frames (require unlock)
+                    { name: '🎉 Golden Anniversary Frame', value: 'golden_anniversary' },
+                    { name: '🎄 Christmas Festive Frame', value: 'christmas_festive' },
+                    { name: '👻 Halloween Spooky Frame', value: 'halloween_spooky' },
+                    { name: '💝 Valentine\'s Romantic Frame', value: 'valentines_romantic' },
+                    { name: '🏖️ Summer Vacation Frame', value: 'summer_vacation' },
+                    { name: '🎊 New Year Celebration Frame', value: 'new_year_celebration' },
+                    { name: '🏆 Community Champion Frame', value: 'community_champion' },
+                    { name: '🧪 Beta Tester Frame', value: 'beta_tester' },
+                    { name: '⭐ Early Supporter Frame', value: 'early_supporter' }
+                )),
 
     async execute(interaction) {
         const characterId = interaction.options.getString('character_id');
@@ -87,11 +107,22 @@ module.exports = {
             // Get frame details for validation
             const selectedFrame = FRAMES[frameId.toUpperCase()] || FRAMES[Object.keys(FRAMES).find(key => FRAMES[key].id === frameId)];
 
-            // Additional validation: Check if frame is obtainable (basic validation)
-            if (selectedFrame && selectedFrame.obtainable === 'event') {
-                // For event frames, you might want to add additional checks here
-                // For now, we'll allow them but you could add event participation checks
-                console.log(`[FRAME] User ${userId} using event frame: ${frameId}`);
+            // Check if frame requires unlock (special frames)
+            if (selectedFrame && ['event', 'seasonal', 'achievement', 'special'].includes(selectedFrame.obtainable)) {
+                // Check if user has unlocked this special frame
+                const userProfile = await models.UserProfile.findOne({
+                    where: { userId }
+                });
+
+                const unlockedFrames = userProfile?.unlockedFrames || [];
+                if (!unlockedFrames.includes(frameId)) {
+                    const embed = new EmbedBuilder()
+                        .setColor(COLORS.ERROR)
+                        .setTitle(`${EMOJIS.ERROR} Frame Not Unlocked`)
+                        .setDescription(`You haven't unlocked the **${selectedFrame.name}** yet!\n\nSpecial frames can be obtained through:\n• Events\n• Seasonal activities\n• Achievements\n• Special promotions\n\nContact an administrator if you believe this is an error.`);
+
+                    return await interaction.editReply({ embeds: [embed] });
+                }
             }
 
             // Update the frame in database
