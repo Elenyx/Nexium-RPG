@@ -28,19 +28,19 @@ class InventoryDisplay {
             )
             .addSeparatorComponents(separator => separator)
             .addTextDisplayComponents(
-                new TextDisplayBuilder().setContent(`## 🔹 Shards\n${shardList}`)
+                new TextDisplayBuilder().setContent(`**🔹 Shards**\n${shardList}`)
             )
             .addSeparatorComponents(separator => separator)
             .addTextDisplayComponents(
-                new TextDisplayBuilder().setContent(`## 🧰 Items\n${itemList}`)
+                new TextDisplayBuilder().setContent(`**🧰 Items**\n${itemList}`)
             )
             .addSeparatorComponents(separator => separator)
             .addTextDisplayComponents(
-                new TextDisplayBuilder().setContent(`## 💍 Accessories\n${accessoryList}`)
+                new TextDisplayBuilder().setContent(`**💍 Accessories**\n${accessoryList}`)
             )
             .addSeparatorComponents(separator => separator)
             .addTextDisplayComponents(
-                new TextDisplayBuilder().setContent(`## 🖼️ Frames\n${frameList}`)
+                new TextDisplayBuilder().setContent(`**🖼️ Frames**\n${frameList}`)
             );
 
         return { components: [container], flags: MessageFlags.IsComponentsV2 };
