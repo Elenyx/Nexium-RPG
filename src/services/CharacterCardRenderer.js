@@ -16,7 +16,7 @@ class CharacterCardRenderer {
     renderCardUrl(character) {
         if (!character || !character.image || !character.rarity) {
             // Return a placeholder if character data is incomplete
-            return 'https://ik.imagekit.io/nexiumrpg/placeholder.png';
+            return `${IMAGE_KIT_BASE_URL}placeholder.png`;
         }
 
         // The base image URL for the character (e.g., from your characters.js files)
