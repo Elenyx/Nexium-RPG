@@ -1,4 +1,4 @@
-const { ContainerBuilder, SectionBuilder, TextDisplayBuilder, ActionRowBuilder, ButtonBuilder, ButtonStyle, MessageFlags } = require('discord.js');
+const { ContainerBuilder, SectionBuilder, TextDisplayBuilder, ButtonBuilder, ButtonStyle, MessageFlags, SeparatorBuilder } = require('discord.js');
 const { EMOJIS } = require('../../config/constants');
 
 class InventoryDisplay {
@@ -21,26 +21,50 @@ class InventoryDisplay {
         const accessoryList = accessories.map(a => `• ${a.name}${a.equipped ? ' (equipped)' : ''}`).join('\n') || 'No accessories';
         const frameList = frames.map(f => `• ${f.name}${f.equipped ? ' (equipped)' : ''}`).join('\n') || 'No frames';
 
-        // Create text display components safely
-        const textDisplays = [
-            new TextDisplayBuilder().setContent(`# ${EMOJIS.INVENTORY || '🎒'} Inventory — ${username}\n\n**Gems:** ${gems}\n\n## 🔹 Shards\n${shardList}`),
-            new TextDisplayBuilder().setContent(`## 🧰 Items\n${itemList}\n\n## 💍 Accessories\n${accessoryList}`),
-            new TextDisplayBuilder().setContent(`## 🖼️ Frames\n${frameList}`)
-        ];
+        // Create sections with content and individual actions
+        const inventorySection = new SectionBuilder()
+            .addTextDisplayComponents(
+                new TextDisplayBuilder().setContent(`# ${EMOJIS.INVENTORY || '🎒'} Inventory — ${username}\n\n**Gems:** ${gems}`)
+            )
+            .setButtonAccessory(
+                new ButtonBuilder()
+                    .setCustomId(`inventory_refresh_${targetUser?.id || 'unknown'}`)
+                    .setLabel('Refresh')
+                    .setStyle(ButtonStyle.Secondary)
+            );
 
-        const section = new SectionBuilder()
-            .addTextDisplayComponents(...textDisplays);
+        const shardsSection = new SectionBuilder()
+            .addTextDisplayComponents(
+                new TextDisplayBuilder().setContent(`## � Shards\n${shardList}`)
+            );
 
-        const actionRow = new ActionRowBuilder()
-            .addComponents(
+        const itemsSection = new SectionBuilder()
+            .addTextDisplayComponents(
+                new TextDisplayBuilder().setContent(`## 🧰 Items\n${itemList}`)
+            )
+            .setButtonAccessory(
                 new ButtonBuilder()
                     .setCustomId(`inventory_use_${targetUser?.id || 'unknown'}`)
                     .setLabel('Use Item')
-                    .setStyle(ButtonStyle.Primary),
+                    .setStyle(ButtonStyle.Primary)
+            );
+
+        const accessoriesSection = new SectionBuilder()
+            .addTextDisplayComponents(
+                new TextDisplayBuilder().setContent(`## 💍 Accessories\n${accessoryList}`)
+            )
+            .setButtonAccessory(
                 new ButtonBuilder()
                     .setCustomId(`inventory_equip_${targetUser?.id || 'unknown'}`)
                     .setLabel('Equip')
-                    .setStyle(ButtonStyle.Secondary),
+                    .setStyle(ButtonStyle.Secondary)
+            );
+
+        const framesSection = new SectionBuilder()
+            .addTextDisplayComponents(
+                new TextDisplayBuilder().setContent(`## 🖼️ Frames\n${frameList}`)
+            )
+            .setButtonAccessory(
                 new ButtonBuilder()
                     .setCustomId(`inventory_sell_${targetUser?.id || 'unknown'}`)
                     .setLabel('Sell')
@@ -49,8 +73,15 @@ class InventoryDisplay {
 
         const container = new ContainerBuilder()
             .setAccentColor(0x00AAFF)
-            .addSectionComponents(section)
-            .addActionRowComponents(actionRow);
+            .addSectionComponents(inventorySection)
+            .addSeparatorComponents(separator => separator)
+            .addSectionComponents(shardsSection)
+            .addSeparatorComponents(separator => separator)
+            .addSectionComponents(itemsSection)
+            .addSeparatorComponents(separator => separator)
+            .addSectionComponents(accessoriesSection)
+            .addSeparatorComponents(separator => separator)
+            .addSectionComponents(framesSection);
 
         return { components: [container], flags: MessageFlags.IsComponentsV2 };
     }

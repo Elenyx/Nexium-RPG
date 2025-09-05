@@ -559,6 +559,15 @@ class ButtonHandler {
                 case 'sell':
                     responseMessage = 'Item selling feature coming soon!';
                     break;
+                case 'refresh':
+                    // Refresh the inventory view
+                    const InventoryService = require('../../services/InventoryService');
+                    const InventoryDisplay = require('../builders/InventoryDisplay');
+                    const invService = new InventoryService();
+                    const inventory = await invService.getOrCreateInventory(interaction.user.id);
+                    const display = InventoryDisplay.createInventoryView(inventory.data || {}, interaction.user);
+                    await interaction.editReply(display);
+                    return true;
                 default:
                     responseMessage = 'Unknown inventory action.';
             }
