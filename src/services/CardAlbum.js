@@ -6,6 +6,7 @@
 const { createCanvas, loadImage } = require('canvas');
 const path = require('path');
 const fs = require('fs');
+const axios = require('axios');
 const CharacterImageManager = require('../components/builders/CharacterImageManager');
 
 class CardAlbum {
@@ -242,7 +243,6 @@ class CardAlbum {
      * @returns {string} Local file path to fallback image
      */
     getLocalFallbackPath(rarity) {
-        const path = require('path');
         const fallbackImages = {
             'COMMON': 'test-fallback-card.png',
             'RARE': 'test-fallback-card.png',
@@ -253,7 +253,8 @@ class CardAlbum {
         };
 
         const imageName = fallbackImages[rarity.toUpperCase()] || 'test-fallback-card.png';
-        return path.join(__dirname, '../../tests', imageName);
+        // Return relative path from project root
+        return path.join('tests', imageName);
     }
 }
 

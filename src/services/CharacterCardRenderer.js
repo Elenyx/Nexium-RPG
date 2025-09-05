@@ -75,7 +75,6 @@ class CharacterCardRenderer {
      * @returns {string} Local file path to fallback image
      */
     getLocalFallbackPath(type) {
-        const path = require('path');
         const fallbackImages = {
             'common': 'test-fallback-card.png',
             'rare': 'test-fallback-card.png',
@@ -87,7 +86,8 @@ class CharacterCardRenderer {
         };
 
         const imageName = fallbackImages[type.toLowerCase()] || 'test-fallback-card.png';
-        return path.join(__dirname, '../../tests', imageName);
+        // Return relative path from project root
+        return `tests/${imageName}`;
     }
 }
 

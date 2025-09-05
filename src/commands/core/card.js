@@ -39,9 +39,18 @@ module.exports = {
 
             let cardBuffer;
             try {
-                // Fetch the image from the URL to attach it to the Discord message
-                const response = await axios.get(framedCardUrl, { responseType: 'arraybuffer' });
-                cardBuffer = Buffer.from(response.data, 'binary');
+                // Check if the returned value is a URL or local file path
+                if (framedCardUrl.startsWith('http://') || framedCardUrl.startsWith('https://')) {
+                    // It's a URL, fetch with axios
+                    const response = await axios.get(framedCardUrl, { responseType: 'arraybuffer' });
+                    cardBuffer = Buffer.from(response.data, 'binary');
+                } else {
+                    // It's a local file path, read from filesystem
+                    const fs = require('fs');
+                    const path = require('path');
+                    const fullPath = path.join(__dirname, '../../', framedCardUrl);
+                    cardBuffer = fs.readFileSync(fullPath);
+                }
             } catch (error) {
                 if (error.response && error.response.status === 403) {
                     // ImageKit account suspended, use local fallback
