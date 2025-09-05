@@ -8,6 +8,7 @@ const path = require('path');
 const fs = require('fs');
 const axios = require('axios');
 const CharacterImageManager = require('../components/builders/CharacterImageManager');
+const CharacterCardRenderer = require('./CharacterCardRenderer');
 
 class CardAlbum {
     constructor() {
@@ -89,6 +90,41 @@ class CardAlbum {
      * Draw a single character card
      */
     async drawCharacterCard(ctx, character, x, y, cardNumber) {
+        try {
+            // Use CharacterCardRenderer to get framed card
+            const cardRenderer = new CharacterCardRenderer();
+            const cardImageData = await cardRenderer.generateCharacterCard(character);
+            
+            let image;
+            if (cardImageData) {
+                if (Buffer.isBuffer(cardImageData)) {
+                    // Convert buffer to data URL
+                    const base64 = cardImageData.toString('base64');
+                    image = await loadImage(`data:image/png;base64,${base64}`);
+                } else if (typeof cardImageData === 'string' && cardImageData.startsWith('data:image/')) {
+                    // Already a data URL
+                    image = await loadImage(cardImageData);
+                } else {
+                    // URL or path
+                    image = await loadImage(cardImageData);
+                }
+                
+                // Draw the framed character card directly
+                ctx.drawImage(image, x, y, this.cardWidth, this.cardHeight);
+                return;
+            }
+        } catch (error) {
+            console.log('Error using CharacterCardRenderer:', error.message);
+        }
+
+        // Fallback to basic card drawing
+        await this.drawBasicCharacterCard(ctx, character, x, y, cardNumber);
+    }
+
+    /**
+     * Draw a basic character card without frames (fallback)
+     */
+    async drawBasicCharacterCard(ctx, character, x, y, cardNumber) {
         // Draw card background/frame
         this.roundedRect(ctx, x, y, this.cardWidth, this.cardHeight, 8);
         ctx.fillStyle = 'rgba(255, 255, 255, 0.1)'; // Subtle white background
@@ -106,7 +142,10 @@ class CardAlbum {
 
             if (imageUrl) {
                 let image;
-                if (imageUrl.startsWith('http://') || imageUrl.startsWith('https://')) {
+                if (imageUrl.startsWith('data:image/')) {
+                    // Handle base64 data URL from canvas
+                    image = await loadImage(imageUrl);
+                } else if (imageUrl.startsWith('http://') || imageUrl.startsWith('https://')) {
                     // Handle URL
                     image = await loadImage(imageUrl);
                 } else {
@@ -195,25 +234,15 @@ class CardAlbum {
 
         // Check if ImageKit is available
         if (!(await this.isImageKitAvailable())) {
-            return this.getLocalFallbackPath(character.rarity);
+            return null; // Return null instead of fallback path
         }
 
-        // If character has imagePath, construct ImageKit URL
-        if (character.imagePath) {
-            return `${IMAGE_KIT_BASE_URL}${character.imagePath}`;
+        // Construct URL using character ID
+        if (character.id) {
+            return `${IMAGE_KIT_BASE_URL}Characters/${character.id}.png`;
         }
 
-        // Fallback to imageUrl if available
-        if (character.imageUrl) {
-            return character.imageUrl;
-        }
-
-        // Fallback to rarity-specific imageUrls
-        if (character.imageUrls && character.imageUrls[character.rarity]) {
-            return character.imageUrls[character.rarity];
-        }
-
-        return this.getLocalFallbackPath(character.rarity);
+        return null;
     }
 
     /**
@@ -235,26 +264,6 @@ class CardAlbum {
             console.warn('ImageKit availability check failed:', error.message);
             return false;
         }
-    }
-
-    /**
-     * Get local fallback image path for a given rarity
-     * @param {string} rarity - The character rarity
-     * @returns {string} Local file path to fallback image
-     */
-    getLocalFallbackPath(rarity) {
-        const fallbackImages = {
-            'COMMON': 'test-fallback-card.png',
-            'RARE': 'test-fallback-card.png',
-            'EPIC': 'test-fallback-card.png',
-            'LEGENDARY': 'test-fallback-card.png',
-            'MYTHIC': 'test-fallback-card.png',
-            'DIMENSIONAL': 'test-fallback-card.png'
-        };
-
-        const imageName = fallbackImages[rarity.toUpperCase()] || 'test-fallback-card.png';
-        // Return relative path from project root
-        return path.join('tests', imageName);
     }
 }
 

@@ -7,6 +7,7 @@
 const { createCanvas, loadImage, registerFont } = require('canvas');
 const path = require('path');
 const fs = require('fs');
+const CharacterCardRenderer = require('./CharacterCardRenderer');
 
 class PullImageGenerator {
     constructor() {
@@ -37,8 +38,8 @@ class PullImageGenerator {
 
     /**
      * Load and cache character images.
-     * Supports both URLs and local file paths.
-     * @param {string} imageUrl - The full ImageKit URL or local file path.
+     * Supports URLs, base64 data URLs, and local file paths.
+     * @param {string} imageUrl - The full ImageKit URL, base64 data URL, or local file path.
      * @returns {Promise<import('canvas').Image|null>} Canvas Image object or null on failure.
      */
     async loadCharacterImage(imageUrl) {
@@ -53,7 +54,10 @@ class PullImageGenerator {
 
         try {
             let image;
-            if (imageUrl.startsWith('http://') || imageUrl.startsWith('https://')) {
+            if (imageUrl.startsWith('data:image/')) {
+                // Handle base64 data URL from canvas
+                image = await loadImage(imageUrl);
+            } else if (imageUrl.startsWith('http://') || imageUrl.startsWith('https://')) {
                 // Handle URL
                 image = await loadImage(imageUrl);
             } else {
@@ -101,17 +105,55 @@ class PullImageGenerator {
             const x = padding + col * (cardWidth + padding);
             const y = padding + row * (cardHeight + padding);
 
-            // The character object should already have the transformed URL in its 'image' property
-            const framedUrl = character.image;
-            const cardImage = await this.loadCharacterImage(framedUrl);
+            try {
+                // Use CharacterCardRenderer to get framed card
+                const cardRenderer = new CharacterCardRenderer();
+                const cardImageData = await cardRenderer.generateCharacterCard(character);
+                
+                let cardImage;
+                if (cardImageData) {
+                    if (Buffer.isBuffer(cardImageData)) {
+                        // Convert buffer to data URL
+                        const base64 = cardImageData.toString('base64');
+                        cardImage = await loadImage(`data:image/png;base64,${base64}`);
+                    } else if (typeof cardImageData === 'string' && cardImageData.startsWith('data:image/')) {
+                        // Already a data URL
+                        cardImage = await loadImage(cardImageData);
+                    } else {
+                        // URL or path
+                        cardImage = await loadImage(cardImageData);
+                    }
+                }
 
-            if (cardImage) {
-                ctx.drawImage(cardImage, x, y, cardWidth, cardHeight);
-            } else {
-                // Draw a fallback card if the image failed to load
-                const fallbackBuffer = this.generateFallbackCard(character, cardWidth, cardHeight);
-                const fallbackImage = await loadImage(fallbackBuffer);
-                ctx.drawImage(fallbackImage, x, y, cardWidth, cardHeight);
+                if (cardImage) {
+                    ctx.drawImage(cardImage, x, y, cardWidth, cardHeight);
+                } else {
+                    // Fallback to basic character image loading
+                    const framedUrl = character.image;
+                    const basicImage = await this.loadCharacterImage(framedUrl);
+                    if (basicImage) {
+                        ctx.drawImage(basicImage, x, y, cardWidth, cardHeight);
+                    } else {
+                        // Draw a fallback card if the image failed to load
+                        const fallbackBuffer = this.generateFallbackCard(character, cardWidth, cardHeight);
+                        const fallbackImage = await loadImage(fallbackBuffer);
+                        ctx.drawImage(fallbackImage, x, y, cardWidth, cardHeight);
+                    }
+                }
+            } catch (error) {
+                console.log('Error using CharacterCardRenderer for pull:', error.message);
+                // Fallback to basic image loading
+                const framedUrl = character.image;
+                const cardImage = await this.loadCharacterImage(framedUrl);
+
+                if (cardImage) {
+                    ctx.drawImage(cardImage, x, y, cardWidth, cardHeight);
+                } else {
+                    // Draw a fallback card if the image failed to load
+                    const fallbackBuffer = this.generateFallbackCard(character, cardWidth, cardHeight);
+                    const fallbackImage = await loadImage(fallbackBuffer);
+                    ctx.drawImage(fallbackImage, x, y, cardWidth, cardHeight);
+                }
             }
         });
 

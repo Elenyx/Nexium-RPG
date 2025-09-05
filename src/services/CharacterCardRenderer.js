@@ -5,47 +5,196 @@
  */
 
 const { IMAGE_KIT_BASE_URL } = require('../config/constants');
+const { createCanvas, loadImage } = require('canvas');
+const fs = require('fs');
+const path = require('path');
+const axios = require('axios');
 
 class CharacterCardRenderer {
 
     /**
+     * Main method to generate character card - alias for renderCardUrl for consistency
+     * @param {object} character - The character object
+     * @returns {string} The complete ImageKit URL with transformations or base64 data URL
+     */
+    async generateCharacterCard(character) {
+        return await this.renderCardUrl(character);
+    }
+
+    /**
      * Generates a fully-formed ImageKit URL that overlays a rarity frame on a character's base image.
-     * Falls back to local images if ImageKit is unavailable.
+     * Falls back to canvas-generated framed images if ImageKit is unavailable.
      * @param {object} character - The character object from your database/assets.
-     * @returns {string} The complete ImageKit URL with transformations or local fallback path.
+     * @returns {string} The complete ImageKit URL with transformations or base64 data URL for canvas-generated image.
      */
     async renderCardUrl(character) {
-        if (!character || !character.image || !character.rarity) {
-            // Return a local placeholder if character data is incomplete
-            return this.getLocalFallbackPath('placeholder');
+        if (!character || !character.id || !character.rarity) {
+            // Return a simple generated card if character data is incomplete
+            return this.generateSimpleCard(character || {});
         }
 
-        // Check if ImageKit is available (we'll implement a simple check)
+        // Check if ImageKit is available
         if (!(await this.isImageKitAvailable())) {
-            return this.getLocalFallbackPath(character.rarity.toLowerCase());
+            // Use canvas to create framed image
+            return await this.createFramedImageWithCanvas(character);
         }
 
-        // The base image URL for the character (e.g., from your characters.js files)
-        const baseImageUrl = character.image;
+        // Construct the base image URL using character ID
+        const baseImageUrl = `${IMAGE_KIT_BASE_URL}Characters/${character.id}.png`;
 
-        // Extract the path from the full URL to use in the transformation
-        // Example: "characters/Naruto/COMMON/NC001.png"
-        const baseImagePath = baseImageUrl.replace(IMAGE_KIT_BASE_URL, '');
-
-        // Define the path for the rarity frame. The frame images should be named after the rarity.
-        // Example: "frames/RARE.png"
+        // Define the path for the rarity frame
         const framePath = `frames/${character.rarity.toUpperCase()}.png`;
 
         // Construct the ImageKit URL with the overlay transformation
-        // tr=l-image... tells ImageKit to start a layer transformation.
-        // i- is the path to the image to overlay.
-        // l-end marks the end of the layer.
         const transformation = `tr=l-image,i-${framePath},l-end`;
 
-        // Combine the base URL, the base image path, and the transformation query.
-        const finalUrl = `${IMAGE_KIT_BASE_URL}${baseImagePath}?${transformation}`;
+        // Combine the base URL, the base image path, and the transformation query
+        const finalUrl = `${baseImageUrl}?${transformation}`;
 
         return finalUrl;
+    }
+
+    /**
+     * Create a framed character image using canvas when ImageKit is unavailable
+     * @param {object} character - The character object
+     * @returns {string} Base64 data URL of the framed image
+     */
+    async createFramedImageWithCanvas(character) {
+        try {
+            // Standard card dimensions
+            const cardWidth = 400;
+            const cardHeight = 560;
+            
+            const canvas = createCanvas(cardWidth, cardHeight);
+            const ctx = canvas.getContext('2d');
+
+            // Draw background with rarity color
+            const rarityColors = {
+                'COMMON': '#9CA3AF', 'RARE': '#3B82F6', 'EPIC': '#8B5CF6',
+                'LEGENDARY': '#F59E0B', 'MYTHIC': '#EF4444', 'DIMENSIONAL': '#7C3AED'
+            };
+            
+            const bgColor = rarityColors[character.rarity.toUpperCase()] || '#9CA3AF';
+            ctx.fillStyle = bgColor;
+            ctx.fillRect(0, 0, cardWidth, cardHeight);
+            
+            // Try to load character image if available
+            if (character.id) {
+                try {
+                    const characterImageUrl = `${IMAGE_KIT_BASE_URL}Characters/${character.id}.png`;
+                    const characterImage = await this.loadImageFromPath(characterImageUrl);
+                    if (characterImage) {
+                        // Draw character image with some padding for frame
+                        const padding = 20;
+                        ctx.drawImage(characterImage, padding, padding, cardWidth - 2*padding, cardHeight - 2*padding);
+                    }
+                } catch (error) {
+                    console.log('Could not load character image for canvas:', error.message);
+                }
+            }
+
+            // Draw a simple frame border
+            this.drawSimpleFrame(ctx, cardWidth, cardHeight, character.rarity);
+            
+            // Draw character info
+            ctx.fillStyle = '#FFFFFF';
+            ctx.font = 'bold 24px Arial';
+            ctx.textAlign = 'center';
+            ctx.strokeStyle = '#000000';
+            ctx.lineWidth = 2;
+            
+            // Character name with outline
+            ctx.strokeText(character.name, cardWidth/2, cardHeight - 60);
+            ctx.fillText(character.name, cardWidth/2, cardHeight - 60);
+            
+            // Rarity text
+            ctx.font = '18px Arial';
+            ctx.strokeText(character.rarity, cardWidth/2, cardHeight - 30);
+            ctx.fillText(character.rarity, cardWidth/2, cardHeight - 30);
+
+            // Return as base64 data URL
+            return canvas.toDataURL('image/png');
+        } catch (error) {
+            console.warn('Failed to create canvas framed image:', error.message);
+            // Return a simple generated card
+            return this.generateSimpleCard(character);
+        }
+    }
+
+    /**
+     * Generate a simple card when all else fails
+     * @param {object} character - The character object
+     * @returns {string} Base64 data URL of a simple card
+     */
+    generateSimpleCard(character) {
+        const canvas = createCanvas(400, 560);
+        const ctx = canvas.getContext('2d');
+        
+        // Draw simple background
+        ctx.fillStyle = '#2C2F33';
+        ctx.fillRect(0, 0, 400, 560);
+        
+        // Draw text
+        ctx.fillStyle = '#FFFFFF';
+        ctx.font = 'bold 24px Arial';
+        ctx.textAlign = 'center';
+        ctx.fillText(character.name || 'Character', 200, 280);
+        ctx.font = '18px Arial';
+        ctx.fillText(character.rarity || 'COMMON', 200, 310);
+        
+        return canvas.toDataURL('image/png');
+    }
+
+    /**
+     * Load image from local file path
+     * @param {string} imagePath - Path to the image file
+     * @returns {Promise<Image>} Loaded image
+     */
+    async loadImageFromPath(imagePath) {
+        const fullPath = path.join(__dirname, '../../', imagePath);
+        const imageBuffer = fs.readFileSync(fullPath);
+        return await loadImage(imageBuffer);
+    }
+
+    /**
+     * Get local frame image path for a given rarity
+     * @param {string} rarity - The character rarity
+     * @returns {string} Local file path to frame image
+     */
+    getLocalFramePath(rarity) {
+        // Return null since we don't want to use local files
+        return null;
+    }
+
+    /**
+     * Draw a simple colored frame border when no frame image is available
+     * @param {CanvasRenderingContext2D} ctx - Canvas context
+     * @param {number} width - Canvas width
+     * @param {number} height - Canvas height
+     * @param {string} rarity - Character rarity
+     */
+    drawSimpleFrame(ctx, width, height, rarity) {
+        const colors = {
+            'COMMON': '#9CA3AF',
+            'RARE': '#3B82F6', 
+            'EPIC': '#8B5CF6',
+            'LEGENDARY': '#F59E0B',
+            'MYTHIC': '#EF4444',
+            'DIMENSIONAL': '#7C3AED'
+        };
+
+        const frameColor = colors[rarity.toUpperCase()] || colors['COMMON'];
+        const borderWidth = 8;
+
+        ctx.strokeStyle = frameColor;
+        ctx.lineWidth = borderWidth;
+        ctx.strokeRect(borderWidth / 2, borderWidth / 2, width - borderWidth, height - borderWidth);
+
+        // Add inner glow effect
+        ctx.shadowColor = frameColor;
+        ctx.shadowBlur = 10;
+        ctx.strokeRect(borderWidth / 2, borderWidth / 2, width - borderWidth, height - borderWidth);
+        ctx.shadowBlur = 0;
     }
 
     /**
@@ -68,28 +217,7 @@ class CharacterCardRenderer {
             return false;
         }
     }
-
-    /**
-     * Get local fallback image path for a given rarity or type
-     * @param {string} type - The type of fallback image needed (rarity or 'placeholder')
-     * @returns {string} Local file path to fallback image
-     */
-    getLocalFallbackPath(type) {
-        const fallbackImages = {
-            'common': 'test-fallback-card.png',
-            'rare': 'test-fallback-card.png',
-            'epic': 'test-fallback-card.png',
-            'legendary': 'test-fallback-card.png',
-            'mythic': 'test-fallback-card.png',
-            'dimensional': 'test-fallback-card.png',
-            'placeholder': 'test-fallback-card.png'
-        };
-
-        const imageName = fallbackImages[type.toLowerCase()] || 'test-fallback-card.png';
-        // Return relative path from project root
-        return `tests/${imageName}`;
-    }
 }
 
-module.exports = new CharacterCardRenderer();
+module.exports = CharacterCardRenderer;
 
