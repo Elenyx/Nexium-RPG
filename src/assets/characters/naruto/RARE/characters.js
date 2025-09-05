@@ -6,7 +6,7 @@ const rareCharacters = [
     name: 'Shikamaru Nara',
     anime: 'Naruto',
     rarity: 'RARE',
-    image: 'https://ik.imagekit.io/NexiumRPG/Characters/Naruto/RARE/NR001.png',
+    image: 'https://ik.imagekit.io/NexiumRPG/Characters/NR001.png',
     baseStats: {
       health: 1400,
       attack: 160,
@@ -40,7 +40,7 @@ const rareCharacters = [
     name: 'Choji Akimichi',
     anime: 'Naruto',
     rarity: 'RARE',
-    image: 'https://ik.imagekit.io/NexiumRPG/Characters/Naruto/RARE/NR002.png',
+    image: 'https://ik.imagekit.io/NexiumRPG/Characters/NR002.png',
     baseStats: {
       health: 1800,
       attack: 140,
@@ -74,7 +74,7 @@ const rareCharacters = [
     name: 'Kiba Inuzuka',
     anime: 'Naruto',
     rarity: 'RARE',
-    image: 'https://ik.imagekit.io/NexiumRPG/Characters/Naruto/RARE/NR003.png',
+    image: 'https://ik.imagekit.io/NexiumRPG/Characters/NR003.png',
     baseStats: {
       health: 1300,
       attack: 170,
@@ -108,7 +108,7 @@ const rareCharacters = [
     name: 'Ino Yamanaka',
     anime: 'Naruto',
     rarity: 'RARE',
-    image: 'https://ik.imagekit.io/NexiumRPG/Characters/Naruto/RARE/NR004.png',
+    image: 'https://ik.imagekit.io/NexiumRPG/Characters/NR004.png',
     imageUrls: {
     },
     baseStats: {
@@ -144,7 +144,7 @@ const rareCharacters = [
     name: 'Tenten',
     anime: 'Naruto',
     rarity: 'RARE',
-    image: 'https://ik.imagekit.io/NexiumRPG/Characters/Naruto/RARE/NR005.png',
+    image: 'https://ik.imagekit.io/NexiumRPG/Characters/NR005.png',
     baseStats: {
       health: 1250,
       attack: 160,
@@ -178,7 +178,7 @@ const rareCharacters = [
     name: 'Anko Mitarashi',
     anime: 'Naruto',
     rarity: 'RARE',
-    image: 'https://ik.imagekit.io/NexiumRPG/Characters/Naruto/RARE/NR006.png',
+    image: 'https://ik.imagekit.io/NexiumRPG/Characters/NR006.png',
     baseStats: {
       health: 1350,
       attack: 175,
@@ -212,7 +212,7 @@ const rareCharacters = [
     name: 'Kurenai Yuhi',
     anime: 'Naruto',
     rarity: 'RARE',
-    image: 'https://ik.imagekit.io/NexiumRPG/Characters/Naruto/RARE/NR007.png',
+    image: 'https://ik.imagekit.io/NexiumRPG/Characters/NR007.png',
     baseStats: {
       health: 1280,
       attack: 135,
@@ -246,7 +246,7 @@ const rareCharacters = [
     name: 'Asuma Sarutobi',
     anime: 'Naruto',
     rarity: 'RARE',
-    image: 'https://ik.imagekit.io/NexiumRPG/Characters/Naruto/RARE/NR008.png',
+    image: 'https://ik.imagekit.io/NexiumRPG/Characters/NR008.png',
     baseStats: {
       health: 1500,
       attack: 185,

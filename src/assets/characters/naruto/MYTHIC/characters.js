@@ -4,7 +4,7 @@ const mythicCharacters = [
     name: 'Naruto Uzumaki (Kurama Chakra Mode)',
     anime: 'Naruto',
     rarity: 'MYTHIC',
-    image: 'https://ik.imagekit.io/NexiumRPG/Characters/Naruto/MYTHIC/NM001.png',
+    image: 'https://ik.imagekit.io/NexiumRPG/Characters/NM001.png',
     baseStats: {
       health: 2800,
       attack: 320,
@@ -38,7 +38,7 @@ const mythicCharacters = [
     name: 'Sasuke Uchiha (Eternal Mangekyo Sharingan)',
     anime: 'Naruto',
     rarity: 'MYTHIC',
-    image: 'https://ik.imagekit.io/NexiumRPG/Characters/Naruto/MYTHIC/NM002.png',
+    image: 'https://ik.imagekit.io/NexiumRPG/Characters/NM002.png',
     baseStats: {
       health: 2600,
       attack: 340,
@@ -72,7 +72,7 @@ const mythicCharacters = [
     name: 'Might Guy (8th Gate)',
     anime: 'Naruto',
     rarity: 'MYTHIC',
-    image: 'https://ik.imagekit.io/NexiumRPG/Characters/Naruto/MYTHIC/NM003.png',
+    image: 'https://ik.imagekit.io/NexiumRPG/Characters/NM003.png',
     baseStats: {
       health: 2700,
       attack: 350,
@@ -106,7 +106,7 @@ const mythicCharacters = [
     name: 'Kakashi Hatake (Double Mangekyo Sharingan)',
     anime: 'Naruto',
     rarity: 'MYTHIC',
-    image: 'https://ik.imagekit.io/NexiumRPG/Characters/Naruto/MYTHIC/NM004.png',
+    image: 'https://ik.imagekit.io/NexiumRPG/Characters/NM004.png',
     baseStats: {
       health: 2500,
       attack: 310,
@@ -140,7 +140,7 @@ const mythicCharacters = [
     name: 'Minato Namikaze (Edo Tensei)',
     anime: 'Naruto',
     rarity: 'MYTHIC',
-    image: 'https://ik.imagekit.io/NexiumRPG/Characters/Naruto/MYTHIC/NM005.png',
+    image: 'https://ik.imagekit.io/NexiumRPG/Characters/NM005.png',
     baseStats: {
       health: 2400,
       attack: 290,
@@ -174,7 +174,7 @@ const mythicCharacters = [
     name: 'Hashirama Senju',
     anime: 'Naruto',
     rarity: 'MYTHIC',
-    image: 'https://ik.imagekit.io/NexiumRPG/Characters/Naruto/MYTHIC/NM006.png',
+    image: 'https://ik.imagekit.io/NexiumRPG/Characters/NM006.png',
     baseStats: {
       health: 3000,
       attack: 330,
@@ -208,7 +208,7 @@ const mythicCharacters = [
     name: 'Itachi Uchiha (Edo Tensei)',
     anime: 'Naruto',
     rarity: 'MYTHIC',
-    image: 'https://ik.imagekit.io/NexiumRPG/Characters/Naruto/MYTHIC/NM007.png',
+    image: 'https://ik.imagekit.io/NexiumRPG/Characters/NM007.png',
     baseStats: {
       health: 2300,
       attack: 280,
@@ -242,7 +242,7 @@ const mythicCharacters = [
     name: 'Nagato (Pain)',
     anime: 'Naruto',
     rarity: 'MYTHIC',
-    image: 'https://ik.imagekit.io/NexiumRPG/Characters/Naruto/MYTHIC/NM008.png',
+    image: 'https://ik.imagekit.io/NexiumRPG/Characters/NM008.png',
     baseStats: {
       health: 2750,
       attack: 315,
@@ -276,7 +276,7 @@ const mythicCharacters = [
     name: 'Killer Bee (8-Tailed Form)',
     anime: 'Naruto',
     rarity: 'MYTHIC',
-    image: 'https://ik.imagekit.io/NexiumRPG/Characters/Naruto/MYTHIC/NM009.png',
+    image: 'https://ik.imagekit.io/NexiumRPG/Characters/NM009.png',
     baseStats: {
       health: 2850,
       attack: 325,
@@ -310,7 +310,7 @@ const mythicCharacters = [
     name: 'Naruto Uzumaki - Toad Sage Mode',
     anime: 'Naruto',
     rarity: 'MYTHIC',
-    image: 'https://ik.imagekit.io/NexiumRPG/Characters/Naruto/MYTHIC/NM010.png',
+    image: 'https://ik.imagekit.io/NexiumRPG/Characters/NM010.png',
     baseStats: {
       health: 2750,
       attack: 340,
@@ -344,7 +344,7 @@ const mythicCharacters = [
     name: 'Madara - Border Jail',
     anime: 'Naruto',
     rarity: 'MYTHIC',
-    image: 'https://ik.imagekit.io/NexiumRPG/Characters/Naruto/MYTHIC/NM011.png',
+    image: 'https://ik.imagekit.io/NexiumRPG/Characters/NM011.png',
     baseStats: {
       health: 2900,
       attack: 350,
@@ -378,7 +378,7 @@ const mythicCharacters = [
     name: 'Nagato - The Asura Path',
     anime: 'Naruto',
     rarity: 'MYTHIC',
-    image: 'https://ik.imagekit.io/NexiumRPG/Characters/Naruto/MYTHIC/NM012.png',
+    image: 'https://ik.imagekit.io/NexiumRPG/Characters/NM012.png',
     baseStats: {
       health: 2850,
       attack: 355,
@@ -412,7 +412,7 @@ const mythicCharacters = [
     name: 'Sasuke - Mangekyo Sharingan',
     anime: 'Naruto',
     rarity: 'MYTHIC',
-    image: 'https://ik.imagekit.io/NexiumRPG/Characters/Naruto/MYTHIC/NM013.png',
+    image: 'https://ik.imagekit.io/NexiumRPG/Characters/NM013.png',
     baseStats: {
       health: 2800,
       attack: 345,
@@ -446,7 +446,7 @@ const mythicCharacters = [
     name: 'Susanoo Humanoid Form',
     anime: 'Naruto',
     rarity: 'MYTHIC',
-    image: 'https://ik.imagekit.io/NexiumRPG/Characters/Naruto/MYTHIC/NM014.png',
+    image: 'https://ik.imagekit.io/NexiumRPG/Characters/NM014.png',
     baseStats: {
       health: 2950,
       attack: 360,
@@ -480,7 +480,7 @@ const mythicCharacters = [
     name: 'Naruto Uzumaki - Six-Tails Transformation',
     anime: 'Naruto',
     rarity: 'MYTHIC',
-    image: 'https://ik.imagekit.io/NexiumRPG/Characters/Naruto/MYTHIC/NM015.png',
+    image: 'https://ik.imagekit.io/NexiumRPG/Characters/NM015.png',
     baseStats: {
       health: 2900,
       attack: 330,

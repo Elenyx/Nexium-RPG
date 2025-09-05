@@ -4,7 +4,7 @@ const epicCharacters = [
     name: 'Kakashi Hatake',
     anime: 'Naruto',
     rarity: 'EPIC',
-    image: 'https://ik.imagekit.io/NexiumRPG/Characters/Naruto/EPIC/NE001.png',
+    image: 'https://ik.imagekit.io/NexiumRPG/Characters/NE001.png',
     baseStats: {
       health: 1600,
       attack: 200,
@@ -38,7 +38,7 @@ const epicCharacters = [
     name: 'Might Guy',
     anime: 'Naruto',
     rarity: 'EPIC',
-    image: 'https://ik.imagekit.io/NexiumRPG/Characters/Naruto/EPIC/NE002.png',
+    image: 'https://ik.imagekit.io/NexiumRPG/Characters/NE002.png',
     baseStats: {
       health: 1900,
       attack: 220,
@@ -72,7 +72,7 @@ const epicCharacters = [
     name: 'Shikamaru Nara',
     anime: 'Naruto',
     rarity: 'EPIC',
-    image: 'https://ik.imagekit.io/NexiumRPG/Characters/Naruto/EPIC/NE003.png',
+    image: 'https://ik.imagekit.io/NexiumRPG/Characters/NE003.png',
     baseStats: {
       health: 1500,
       attack: 180,
@@ -106,7 +106,7 @@ const epicCharacters = [
     name: 'Neji Hyuga',
     anime: 'Naruto',
     rarity: 'EPIC',
-    image: 'https://ik.imagekit.io/NexiumRPG/Characters/Naruto/EPIC/NE004.png',
+    image: 'https://ik.imagekit.io/NexiumRPG/Characters/NE004.png',
     baseStats: {
       health: 1550,
       attack: 210,
@@ -140,7 +140,7 @@ const epicCharacters = [
     name: 'Rock Lee',
     anime: 'Naruto',
     rarity: 'EPIC',
-    image: 'https://ik.imagekit.io/NexiumRPG/Characters/Naruto/EPIC/NE005.png',
+    image: 'https://ik.imagekit.io/NexiumRPG/Characters/NE005.png',
     baseStats: {
       health: 1700,
       attack: 230,
@@ -174,7 +174,7 @@ const epicCharacters = [
     name: 'Temari',
     anime: 'Naruto',
     rarity: 'EPIC',
-    image: 'https://ik.imagekit.io/NexiumRPG/Characters/Naruto/EPIC/NE006.png',
+    image: 'https://ik.imagekit.io/NexiumRPG/Characters/NE006.png',
     baseStats: {
       health: 1450,
       attack: 190,
@@ -208,7 +208,7 @@ const epicCharacters = [
     name: 'Kankuro',
     anime: 'Naruto',
     rarity: 'EPIC',
-    image: 'https://ik.imagekit.io/NexiumRPG/Characters/Naruto/EPIC/NE007.png',
+    image: 'https://ik.imagekit.io/NexiumRPG/Characters/NE007.png',
     baseStats: {
       health: 1520,
       attack: 185,
@@ -242,7 +242,7 @@ const epicCharacters = [
     name: 'Choji Akimichi',
     anime: 'Naruto',
     rarity: 'EPIC',
-    image: 'https://ik.imagekit.io/NexiumRPG/Characters/Naruto/EPIC/NE008.png',
+    image: 'https://ik.imagekit.io/NexiumRPG/Characters/NE008.png',
     baseStats: {
       health: 2200,
       attack: 180,
@@ -276,7 +276,7 @@ const epicCharacters = [
     name: 'Shino Aburame',
     anime: 'Naruto',
     rarity: 'EPIC',
-    image: 'https://ik.imagekit.io/NexiumRPG/Characters/Naruto/EPIC/NE009.png',
+    image: 'https://ik.imagekit.io/NexiumRPG/Characters/NE009.png',
     baseStats: {
       health: 1480,
       attack: 175,
@@ -310,7 +310,7 @@ const epicCharacters = [
     name: 'Hinata Hyuga',
     anime: 'Naruto',
     rarity: 'EPIC',
-    image: 'https://ik.imagekit.io/NexiumRPG/Characters/Naruto/EPIC/NE010.png',
+    image: 'https://ik.imagekit.io/NexiumRPG/Characters/NE010.png',
     baseStats: {
       health: 1580,
       attack: 195,
@@ -344,7 +344,7 @@ const epicCharacters = [
     name: 'Iruka Umino',
     anime: 'Naruto',
     rarity: 'EPIC',
-    image: 'https://ik.imagekit.io/NexiumRPG/Characters/Naruto/EPIC/NE011.png',
+    image: 'https://ik.imagekit.io/NexiumRPG/Characters/NE011.png',
     baseStats: {
       health: 1650,
       attack: 170,
@@ -378,7 +378,7 @@ const epicCharacters = [
     name: 'Naruto Uzumaki - Demon Cloak Form',
     anime: 'Naruto',
     rarity: 'EPIC',
-    image: 'https://ik.imagekit.io/NexiumRPG/Characters/Naruto/EPIC/NE012.png',
+    image: 'https://ik.imagekit.io/NexiumRPG/Characters/NE012.png',
     baseStats: {
       health: 1800,
       attack: 240,
@@ -412,7 +412,7 @@ const epicCharacters = [
     name: 'Sasuke\'s Curse Mark',
     anime: 'Naruto',
     rarity: 'EPIC',
-    image: 'https://ik.imagekit.io/NexiumRPG/Characters/Naruto/EPIC/NE013.png',
+    image: 'https://ik.imagekit.io/NexiumRPG/Characters/NE013.png',
     baseStats: {
       health: 1700,
       attack: 250,
@@ -446,7 +446,7 @@ const epicCharacters = [
     name: 'Susanoo Rib Cage',
     anime: 'Naruto',
     rarity: 'EPIC',
-    image: 'https://ik.imagekit.io/NexiumRPG/Characters/Naruto/EPIC/NE014.png',
+    image: 'https://ik.imagekit.io/NexiumRPG/Characters/NE014.png',
     baseStats: {
       health: 1750,
       attack: 255,

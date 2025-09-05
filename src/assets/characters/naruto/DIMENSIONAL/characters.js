@@ -4,7 +4,7 @@ const dimensionalCharacters = [
     name: 'Kaguya Otsutsuki',
     anime: 'Naruto',
     rarity: 'DIMENSIONAL',
-    image: 'https://ik.imagekit.io/NexiumRPG/Characters/Naruto/DIMENSIONAL/ND001.png',
+    image: 'https://ik.imagekit.io/NexiumRPG/Characters/ND001.png',
     baseStats: {
       health: 3500,
       attack: 400,
@@ -38,7 +38,7 @@ const dimensionalCharacters = [
     name: 'Hagoromo Otsutsuki',
     anime: 'Naruto',
     rarity: 'DIMENSIONAL',
-    image: 'https://ik.imagekit.io/NexiumRPG/Characters/Naruto/DIMENSIONAL/ND002.png',
+    image: 'https://ik.imagekit.io/NexiumRPG/Characters/ND002.png',
     baseStats: {
       health: 3200,
       attack: 380,
@@ -72,7 +72,7 @@ const dimensionalCharacters = [
     name: 'Hamura Otsutsuki',
     anime: 'Naruto',
     rarity: 'DIMENSIONAL',
-    image: 'https://ik.imagekit.io/NexiumRPG/Characters/Naruto/DIMENSIONAL/ND003.png',
+    image: 'https://ik.imagekit.io/NexiumRPG/Characters/ND003.png',
     baseStats: {
       health: 3100,
       attack: 370,
@@ -106,7 +106,7 @@ const dimensionalCharacters = [
     name: 'Naruto Uzumaki (Six Paths Sage Mode)',
     anime: 'Naruto',
     rarity: 'DIMENSIONAL',
-    image: 'https://ik.imagekit.io/NexiumRPG/Characters/Naruto/DIMENSIONAL/ND004.png',
+    image: 'https://ik.imagekit.io/NexiumRPG/Characters/ND004.png',
     baseStats: {
       health: 3300,
       attack: 390,
@@ -140,7 +140,7 @@ const dimensionalCharacters = [
     name: 'Sasuke Uchiha (Rinnegan + Eternal Mangekyo)',
     anime: 'Naruto',
     rarity: 'DIMENSIONAL',
-    image: 'https://ik.imagekit.io/NexiumRPG/Characters/Naruto/DIMENSIONAL/ND005.png',
+    image: 'https://ik.imagekit.io/NexiumRPG/Characters/ND005.png',
     baseStats: {
       health: 3150,
       attack: 385,
@@ -174,7 +174,7 @@ const dimensionalCharacters = [
     name: 'Madara Uchiha (Ten Tails Jinchuriki)',
     anime: 'Naruto',
     rarity: 'DIMENSIONAL',
-    image: 'https://ik.imagekit.io/NexiumRPG/Characters/Naruto/DIMENSIONAL/ND006.png',
+    image: 'https://ik.imagekit.io/NexiumRPG/Characters/ND006.png',
     baseStats: {
       health: 3600,
       attack: 410,
@@ -208,7 +208,7 @@ const dimensionalCharacters = [
     name: 'Obito Uchiha (Ten Tails Jinchuriki)',
     anime: 'Naruto',
     rarity: 'DIMENSIONAL',
-    image: 'https://ik.imagekit.io/NexiumRPG/Characters/Naruto/DIMENSIONAL/ND007.png',
+    image: 'https://ik.imagekit.io/NexiumRPG/Characters/ND007.png',
     baseStats: {
       health: 3400,
       attack: 395,
@@ -242,7 +242,7 @@ const dimensionalCharacters = [
     name: 'Naruto Uzumaki - Nine Tails Sage Mode',
     anime: 'Naruto',
     rarity: 'DIMENSIONAL',
-    image: 'https://ik.imagekit.io/NexiumRPG/Characters/Naruto/DIMENSIONAL/ND008.png',
+    image: 'https://ik.imagekit.io/NexiumRPG/Characters/ND008.png',
     baseStats: {
       health: 3600,
       attack: 410,
@@ -276,7 +276,7 @@ const dimensionalCharacters = [
     name: 'Naruto Uzumaki - Tailed Beast Mode',
     anime: 'Naruto',
     rarity: 'DIMENSIONAL',
-    image: 'https://ik.imagekit.io/NexiumRPG/Characters/Naruto/DIMENSIONAL/ND009.png',
+    image: 'https://ik.imagekit.io/NexiumRPG/Characters/ND009.png',
     baseStats: {
       health: 3800,
       attack: 420,
@@ -310,7 +310,7 @@ const dimensionalCharacters = [
     name: 'Naruto Uzumaki - Sage Mode (Mastered)',
     anime: 'Naruto',
     rarity: 'DIMENSIONAL',
-    image: 'https://ik.imagekit.io/NexiumRPG/Characters/Naruto/DIMENSIONAL/ND010.png',
+    image: 'https://ik.imagekit.io/NexiumRPG/Characters/ND010.png',
     baseStats: {
       health: 3550,
       attack: 395,
@@ -344,7 +344,7 @@ const dimensionalCharacters = [
     name: 'Naruto Uzumaki - Kurama Sage Mode',
     anime: 'Naruto',
     rarity: 'DIMENSIONAL',
-    image: 'https://ik.imagekit.io/NexiumRPG/Characters/Naruto/DIMENSIONAL/ND011.png',
+    image: 'https://ik.imagekit.io/NexiumRPG/Characters/ND011.png',
     baseStats: {
       health: 3650,
       attack: 405,
@@ -378,7 +378,7 @@ const dimensionalCharacters = [
     name: 'Naruto Uzumaki - Ashura Mode',
     anime: 'Naruto',
     rarity: 'DIMENSIONAL',
-    image: 'https://ik.imagekit.io/NexiumRPG/Characters/Naruto/DIMENSIONAL/ND012.png',
+    image: 'https://ik.imagekit.io/NexiumRPG/Characters/ND012.png',
     baseStats: {
       health: 3700,
       attack: 415,
@@ -412,7 +412,7 @@ const dimensionalCharacters = [
     name: 'Naruto Uzumaki - Baryon Mode',
     anime: 'Naruto',
     rarity: 'DIMENSIONAL',
-    image: 'https://ik.imagekit.io/NexiumRPG/Characters/Naruto/DIMENSIONAL/ND013.png',
+    image: 'https://ik.imagekit.io/NexiumRPG/Characters/ND013.png',
     baseStats: {
       health: 3900,
       attack: 430,
@@ -446,7 +446,7 @@ const dimensionalCharacters = [
     name: 'Madara - Divine Genesis: World of Trees',
     anime: 'Naruto',
     rarity: 'DIMENSIONAL',
-    image: 'https://ik.imagekit.io/NexiumRPG/Characters/Naruto/DIMENSIONAL/ND014.png',
+    image: 'https://ik.imagekit.io/NexiumRPG/Characters/ND014.png',
     baseStats: {
       health: 3800,
       attack: 425,
@@ -480,7 +480,7 @@ const dimensionalCharacters = [
     name: 'Hagoromo\'s Chakra Transfer Jutsu',
     anime: 'Naruto',
     rarity: 'DIMENSIONAL',
-    image: 'https://ik.imagekit.io/NexiumRPG/Characters/Naruto/DIMENSIONAL/ND015.png',
+    image: 'https://ik.imagekit.io/NexiumRPG/Characters/ND015.png',
     baseStats: {
       health: 3750,
       attack: 410,
@@ -514,7 +514,7 @@ const dimensionalCharacters = [
     name: 'Hagoromo\'s Complete Body — Susanoo',
     anime: 'Naruto',
     rarity: 'DIMENSIONAL',
-    image: 'https://ik.imagekit.io/NexiumRPG/Characters/Naruto/DIMENSIONAL/ND016.png',
+    image: 'https://ik.imagekit.io/NexiumRPG/Characters/ND016.png',
     baseStats: {
       health: 3850,
       attack: 435,
@@ -548,7 +548,7 @@ const dimensionalCharacters = [
     name: 'Sasuke Senjutsu Susanoo',
     anime: 'Naruto',
     rarity: 'DIMENSIONAL',
-    image: 'https://ik.imagekit.io/NexiumRPG/Characters/Naruto/DIMENSIONAL/ND017.png',
+    image: 'https://ik.imagekit.io/NexiumRPG/Characters/ND017.png',
     baseStats: {
       health: 3800,
       attack: 420,
@@ -582,7 +582,7 @@ const dimensionalCharacters = [
     name: 'Susanoo Complete Body (perfect Susanoo)',
     anime: 'Naruto',
     rarity: 'DIMENSIONAL',
-    image: 'https://ik.imagekit.io/NexiumRPG/Characters/Naruto/DIMENSIONAL/ND018.png',
+    image: 'https://ik.imagekit.io/NexiumRPG/Characters/ND018.png',
     baseStats: {
       health: 3850,
       attack: 430,
@@ -616,7 +616,7 @@ const dimensionalCharacters = [
     name: 'Chibaku Tensei',
     anime: 'Naruto',
     rarity: 'DIMENSIONAL',
-    image: 'https://ik.imagekit.io/NexiumRPG/Characters/Naruto/DIMENSIONAL/ND019.png',
+    image: 'https://ik.imagekit.io/NexiumRPG/Characters/ND019.png',
     baseStats: {
       health: 3750,
       attack: 415,
@@ -650,7 +650,7 @@ const dimensionalCharacters = [
     name: 'Pain - The Almighty Push and Pull',
     anime: 'Naruto',
     rarity: 'DIMENSIONAL',
-    image: 'https://ik.imagekit.io/NexiumRPG/Characters/Naruto/DIMENSIONAL/ND020.png',
+    image: 'https://ik.imagekit.io/NexiumRPG/Characters/ND020.png',
     baseStats: {
       health: 3800,
       attack: 425,
@@ -684,7 +684,7 @@ const dimensionalCharacters = [
     name: 'Nagato - The Gedo Art of Rinne Rebirth',
     anime: 'Naruto',
     rarity: 'DIMENSIONAL',
-    image: 'https://ik.imagekit.io/NexiumRPG/Characters/Naruto/DIMENSIONAL/ND021.png',
+    image: 'https://ik.imagekit.io/NexiumRPG/Characters/ND021.png',
     baseStats: {
       health: 3780,
       attack: 420,
@@ -718,7 +718,7 @@ const dimensionalCharacters = [
     name: 'The Six Paths\' Yang Power',
     anime: 'Naruto',
     rarity: 'DIMENSIONAL',
-    image: 'https://ik.imagekit.io/NexiumRPG/Characters/Naruto/DIMENSIONAL/ND022.png',
+    image: 'https://ik.imagekit.io/NexiumRPG/Characters/ND022.png',
     baseStats: {
       health: 3900,
       attack: 440,
