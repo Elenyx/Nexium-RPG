@@ -8,49 +8,63 @@ const PullImageGenerator = require('../src/services/PullImageGenerator');
 const fs = require('fs');
 const path = require('path');
 
-// Sample character data for testing
+// Sample character data for testing (using corrected ImageKit URLs with character IDs)
 const sampleCharacters = [
     {
-        id: 'char_001',
+        id: 'NC001',
         name: 'Naruto Uzumaki',
         anime: 'Naruto',
         rarity: 'COMMON',
-        imageUrl: 'https://ik.imagekit.io/NexiumRPG/naruto.jpg'
+        imageUrl: 'https://ik.imagekit.io/NexiumRPG/NC001.png'
     },
     {
-        id: 'char_002',
+        id: 'NC002',
         name: 'Sasuke Uchiha',
         anime: 'Naruto',
+        rarity: 'COMMON',
+        imageUrl: 'https://ik.imagekit.io/NexiumRPG/NC002.png'
+    },
+    {
+        id: 'NC003',
+        name: 'Sakura Haruno',
+        anime: 'Naruto',
+        rarity: 'COMMON',
+        imageUrl: 'https://ik.imagekit.io/NexiumRPG/NC003.png'
+    },
+    {
+        id: 'NR001',
+        name: 'Shikamaru Nara',
+        anime: 'Naruto',
         rarity: 'RARE',
-        imageUrl: 'https://ik.imagekit.io/NexiumRPG/sasuke.png'
+        imageUrl: 'https://ik.imagekit.io/NexiumRPG/NR001.png'
     },
     {
-        id: 'char_003',
-        name: 'Monkey D. Luffy',
-        anime: 'One Piece',
+        id: 'NE001',
+        name: 'Kakashi Hatake',
+        anime: 'Naruto',
         rarity: 'EPIC',
-        imageUrl: 'https://ik.imagekit.io/NexiumRPG/luffy.png'
+        imageUrl: 'https://ik.imagekit.io/NexiumRPG/NE001.png'
     },
     {
-        id: 'char_004',
-        name: 'Edward Elric',
-        anime: 'Fullmetal Alchemist',
+        id: 'NL001',
+        name: 'Jiraiya',
+        anime: 'Naruto',
         rarity: 'LEGENDARY',
-        imageUrl: 'https://ik.imagekit.io/NexiumRPG/edward.png'
+        imageUrl: 'https://ik.imagekit.io/NexiumRPG/NL001.png'
     },
     {
-        id: 'char_005',
-        name: 'Son Goku',
-        anime: 'Dragon Ball',
+        id: 'NM001',
+        name: 'Naruto Uzumaki (Kurama Chakra Mode)',
+        anime: 'Naruto',
         rarity: 'MYTHIC',
-        imageUrl: 'https://ik.imagekit.io/NexiumRPG/goku.png'
+        imageUrl: 'https://ik.imagekit.io/NexiumRPG/NM001.png'
     },
     {
-        id: 'char_006',
-        name: 'Light Yagami',
-        anime: 'Death Note',
-        rarity: 'DIMENSIONAL', // Note: DIMENSIONAL characters are event-only, not available in regular pulls
-        imageUrl: 'https://ik.imagekit.io/NexiumRPG/light.png'
+        id: 'ND001',
+        name: 'Kaguya Otsutsuki',
+        anime: 'Naruto',
+        rarity: 'DIMENSIONAL',
+        imageUrl: 'https://ik.imagekit.io/NexiumRPG/ND001.png'
     }
 ];
 
@@ -62,6 +76,7 @@ async function testSingleCharacterCard() {
     try {
         const character = sampleCharacters[0]; // Naruto
         console.log(`Generating card for: ${character.name} (${character.rarity})`);
+        console.log(`Using ImageKit URL: ${character.imageUrl}`);
 
         const imageBuffer = await generator.generateCharacterCard(character);
 
@@ -74,6 +89,7 @@ async function testSingleCharacterCard() {
 
     } catch (error) {
         console.error('❌ Single card generation failed:', error.message);
+        console.error('Stack trace:', error.stack);
     }
 }
 
@@ -83,10 +99,17 @@ async function testMultiCharacterPull() {
     const generator = new PullImageGenerator();
 
     try {
-        // Test with 3 characters
-        const testCharacters = sampleCharacters.slice(0, 3);
+        // Test with 3 characters from different rarities
+        const testCharacters = [
+            sampleCharacters[0], // COMMON - Naruto
+            sampleCharacters[3], // RARE - Shikamaru
+            sampleCharacters[4]  // EPIC - Kakashi
+        ];
         console.log(`Generating pull results for ${testCharacters.length} characters:`);
-        testCharacters.forEach(char => console.log(`   - ${char.name} (${char.rarity})`));
+        testCharacters.forEach(char => {
+            console.log(`   - ${char.name} (${char.rarity})`);
+            console.log(`     ImageKit URL: ${char.imageUrl}`);
+        });
 
         const imageBuffer = await generator.generatePullResultsImage(testCharacters);
 
@@ -98,7 +121,8 @@ async function testMultiCharacterPull() {
         console.log(`   File size: ${imageBuffer.length} bytes`);
 
     } catch (error) {
-        console.error('❌ Multi-character generation failed:', error.message);
+        console.error('❌ Multi-character pull failed:', error.message);
+        console.error('Stack trace:', error.stack);
     }
 }
 

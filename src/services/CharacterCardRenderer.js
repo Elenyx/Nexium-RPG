@@ -8,7 +8,7 @@ const path = require('path');
 const fs = require('fs');
 const FrameManager = require('../services/FrameManager');
 const { CARD_DIMENSIONS } = require('../config/constants');
-const { models } = require('../database/connection');
+// Removed top-level models import to avoid initialization issues
 
 class CharacterCardRenderer {
     constructor() {
@@ -109,7 +109,14 @@ class CharacterCardRenderer {
 
             // 3. Load character image
             const characterImageUrl = this.getCharacterImageUrl(characterId, character);
-            const characterImage = await loadImage(characterImageUrl);
+            let characterImage;
+            try {
+                characterImage = await loadImage(characterImageUrl);
+                console.log(`✅ Character image loaded: ${characterImageUrl}`);
+            } catch (imageError) {
+                console.error(`❌ Character image not available: ${characterImageUrl}`);
+                throw new Error(`Character image not available: ${characterImageUrl}`);
+            }
 
             // 3. Calculate scaling to fit character art in designated area
             const scale = this.calculateOptimalScale(
@@ -139,9 +146,15 @@ class CharacterCardRenderer {
             if (frameId !== 'default') {
                 const frameImageUrl = this.frameManager.getFrameImageUrl(frameId);
                 if (frameImageUrl) {
-                    const frameImage = await loadImage(frameImageUrl);
-                    // Draw frame overlay at full frame size
-                    ctx.drawImage(frameImage, 0, 0, this.frameWidth, this.frameHeight);
+                    try {
+                        const frameImage = await loadImage(frameImageUrl);
+                        // Draw frame overlay at full frame size
+                        ctx.drawImage(frameImage, 0, 0, this.frameWidth, this.frameHeight);
+                        console.log(`✅ Applied frame: ${frameId}`);
+                    } catch (frameError) {
+                        console.warn(`⚠️ Frame image not available: ${frameImageUrl}, rendering without frame`);
+                        // Continue without frame - character will still be rendered
+                    }
                 }
             }
 
@@ -164,8 +177,13 @@ class CharacterCardRenderer {
      */
     async getCharacterData(characterId) {
         try {
-            const Character = require('../database/models/Character');
-            const character = await Character.findByPk(characterId);
+            // Dynamically import models to ensure they're initialized
+            const { models } = require('../database/connection');
+
+            if (!models || !models.Character) {
+                throw new Error('Database models not initialized');
+            }
+            const character = await models.Character.findByPk(characterId);
             return character ? character.toJSON() : null;
         } catch (error) {
             console.error('Error fetching character data:', error);

@@ -71,6 +71,61 @@ const frames = {
         imageUrl: 'https://ik.imagekit.io/NexiumRPG/frames/halloween_pattern.png', // Full URL for separated system
         obtainable: 'seasonal',
         rarity: 'epic'
+    },
+
+    // Rarity-based frames for automatic application
+    COMMON: {
+        id: 'common',
+        name: 'Common Frame',
+        description: 'Standard frame for common rarity characters',
+        imageUrl: 'https://ik.imagekit.io/NexiumRPG/frames/common.png',
+        obtainable: 'default',
+        rarity: 'common'
+    },
+
+    RARE: {
+        id: 'rare',
+        name: 'Rare Frame',
+        description: 'Enhanced frame for rare rarity characters',
+        imageUrl: 'https://ik.imagekit.io/NexiumRPG/frames/rare.png',
+        obtainable: 'default',
+        rarity: 'rare'
+    },
+
+    EPIC: {
+        id: 'epic',
+        name: 'Epic Frame',
+        description: 'Premium frame for epic rarity characters',
+        imageUrl: 'https://ik.imagekit.io/NexiumRPG/frames/epic.png',
+        obtainable: 'default',
+        rarity: 'epic'
+    },
+
+    LEGENDARY: {
+        id: 'legendary',
+        name: 'Legendary Frame',
+        description: 'Luxurious frame for legendary rarity characters',
+        imageUrl: 'https://ik.imagekit.io/NexiumRPG/frames/legendary.png',
+        obtainable: 'default',
+        rarity: 'legendary'
+    },
+
+    MYTHIC: {
+        id: 'mythic',
+        name: 'Mythic Frame',
+        description: 'Mythical frame for mythic rarity characters',
+        imageUrl: 'https://ik.imagekit.io/NexiumRPG/frames/mythic.png',
+        obtainable: 'default',
+        rarity: 'mythic'
+    },
+
+    DIMENSIONAL: {
+        id: 'dimensional',
+        name: 'Dimensional Frame',
+        description: 'Otherworldly frame for dimensional rarity characters',
+        imageUrl: 'https://ik.imagekit.io/NexiumRPG/frames/dimensional.png',
+        obtainable: 'default',
+        rarity: 'dimensional'
     }
 };
 
