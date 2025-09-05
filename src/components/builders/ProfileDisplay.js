@@ -1,5 +1,5 @@
 /**
- * @file Profile Display Component Builder
+ * @file Profile Display Component Builde            `**Current Dimension:** \`${this.formatDimensionName(userData.currentDimension)}\``,
  * @description Creates interactive profile displays using Discord Components V2
  * @author Nexium Bot Development Team
  */
@@ -19,6 +19,19 @@ const { COLORS, EMOJIS } = require('../../config/constants');
 
 class ProfileDisplay {
     /**
+     * Formats dimension names from underscore format to readable format
+     * @param {string} dimensionName - The raw dimension name (e.g., "nexus_hub")
+     * @returns {string} Formatted dimension name (e.g., "Nexus Hub")
+     */
+    static formatDimensionName(dimensionName) {
+        if (!dimensionName) return 'Unknown Dimension';
+        
+        return dimensionName
+            .split('_')
+            .map(word => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase())
+            .join(' ');
+    }
+    /**
      * Creates a profile embed with interactive buttons
      * @param {Object} userData - User profile data
      * @param {Object} targetUser - Discord user object
@@ -31,7 +44,7 @@ class ProfileDisplay {
             `**Energy:** \`${userData.dimensionalEnergy}/${userData.maxEnergy}\``,
             `**Coins:** \`${userData.coins.toLocaleString()}\``,
             `**${EMOJIS.SHARD} Shards:** \`${userData.shards?.toLocaleString() || '0'}\``,
-            `**Current Dimension:** \`${userData.currentDimension}\``,
+            `**Current Dimension:** \`${this.formatDimensionName(userData.currentDimension)}\``,
             `**Daily Streak:** \`${userData.dailyStreak} days\``
         ].join('\n');
 
@@ -151,7 +164,7 @@ class ProfileDisplay {
         ].join('\n');
 
         const activityStats = [
-            `**Current Dimension:** ${userData.currentDimension}`,
+            `**Current Dimension:** ${this.formatDimensionName(userData.currentDimension)}`,
             `**Total Dimensions Visited:** ${userData.dimensionsVisited || 1}`,
             `**Account Created:** ${new Date(userData.createdAt || Date.now()).toLocaleDateString()}`,
             `**Days Active:** ${Math.floor((Date.now() - (userData.createdAt || Date.now())) / (1000 * 60 * 60 * 24))}`,
