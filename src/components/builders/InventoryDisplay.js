@@ -6,11 +6,12 @@ class InventoryDisplay {
         // Ensure inventoryData is an object
         const data = inventoryData || {};
         
-        const shards = data.shards || [];
-        const items = data.items || [];
-        const accessories = data.accessories || [];
-        const frames = data.frames || [];
-        const gems = data.gems || 0;
+        // Ensure arrays are actually arrays
+        const shards = Array.isArray(data.shards) ? data.shards : [];
+        const items = Array.isArray(data.items) ? data.items : [];
+        const accessories = Array.isArray(data.accessories) ? data.accessories : [];
+        const frames = Array.isArray(data.frames) ? data.frames : [];
+        const gems = typeof data.gems === 'number' ? data.gems : 0;
 
         // Ensure targetUser exists and has username
         const username = targetUser?.username || 'Unknown User';
