@@ -8,6 +8,17 @@ class InventoryService {
         }
 
         try {
+            // First, ensure the user exists
+            let user = await models.User.findByPk(userId);
+            if (!user) {
+                // Create the user if they don't exist
+                user = await models.User.create({
+                    id: userId,
+                    username: `User_${userId}`, // Default username
+                });
+                logger.info(`Created user for inventory: ${userId}`);
+            }
+
             let inventory = await models.Inventory.findOne({ where: { userId } });
             if (!inventory) {
                 inventory = await models.Inventory.create({ userId, data: {} });
