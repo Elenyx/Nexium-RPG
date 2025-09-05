@@ -28,13 +28,17 @@ class PullImageGenerator {
                 });
             }
         } catch (error) {
-            console.warn('Font registration failed:', error.message);
+            // Suppress fontconfig warnings on Windows
+            if (!error.message.includes('Cannot load default config file')) {
+                console.warn('Font registration failed:', error.message);
+            }
         }
     }
 
     /**
      * Load and cache character images.
-     * @param {string} imageUrl - The full ImageKit URL (already transformed).
+     * Supports both URLs and local file paths.
+     * @param {string} imageUrl - The full ImageKit URL or local file path.
      * @returns {Promise<import('canvas').Image|null>} Canvas Image object or null on failure.
      */
     async loadCharacterImage(imageUrl) {
@@ -48,11 +52,20 @@ class PullImageGenerator {
         }
 
         try {
-            const image = await loadImage(imageUrl);
+            let image;
+            if (imageUrl.startsWith('http://') || imageUrl.startsWith('https://')) {
+                // Handle URL
+                image = await loadImage(imageUrl);
+            } else {
+                // Handle local file path
+                const fs = require('fs');
+                const imageBuffer = fs.readFileSync(imageUrl);
+                image = await loadImage(imageBuffer);
+            }
             this.characterCache.set(imageUrl, image);
             return image;
         } catch (error) {
-            console.warn(`Failed to load character image from URL: ${imageUrl}`, error.message);
+            console.warn(`Failed to load character image from: ${imageUrl}`, error.message);
             return null; // Return null instead of throwing
         }
     }

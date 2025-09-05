@@ -10,13 +10,19 @@ class CharacterCardRenderer {
 
     /**
      * Generates a fully-formed ImageKit URL that overlays a rarity frame on a character's base image.
+     * Falls back to local images if ImageKit is unavailable.
      * @param {object} character - The character object from your database/assets.
-     * @returns {string} The complete ImageKit URL with transformations.
+     * @returns {string} The complete ImageKit URL with transformations or local fallback path.
      */
     renderCardUrl(character) {
         if (!character || !character.image || !character.rarity) {
-            // Return a placeholder if character data is incomplete
-            return `${IMAGE_KIT_BASE_URL}placeholder.png`;
+            // Return a local placeholder if character data is incomplete
+            return this.getLocalFallbackPath('placeholder');
+        }
+
+        // Check if ImageKit is available (we'll implement a simple check)
+        if (!this.isImageKitAvailable()) {
+            return this.getLocalFallbackPath(character.rarity.toLowerCase());
         }
 
         // The base image URL for the character (e.g., from your characters.js files)
@@ -40,6 +46,37 @@ class CharacterCardRenderer {
         const finalUrl = `${IMAGE_KIT_BASE_URL}${baseImagePath}?${transformation}`;
 
         return finalUrl;
+    }
+
+    /**
+     * Check if ImageKit service is available
+     * @returns {boolean} True if ImageKit appears to be available
+     */
+    isImageKitAvailable() {
+        // For now, we'll assume ImageKit is down since the account is suspended
+        // In a production environment, you might want to implement a health check
+        return false;
+    }
+
+    /**
+     * Get local fallback image path for a given rarity or type
+     * @param {string} type - The type of fallback image needed (rarity or 'placeholder')
+     * @returns {string} Local file path to fallback image
+     */
+    getLocalFallbackPath(type) {
+        const path = require('path');
+        const fallbackImages = {
+            'common': 'test-fallback-card.png',
+            'rare': 'test-fallback-card.png',
+            'epic': 'test-fallback-card.png',
+            'legendary': 'test-fallback-card.png',
+            'mythic': 'test-fallback-card.png',
+            'dimensional': 'test-fallback-card.png',
+            'placeholder': 'test-fallback-card.png'
+        };
+
+        const imageName = fallbackImages[type.toLowerCase()] || 'test-fallback-card.png';
+        return path.join(__dirname, '../../tests', imageName);
     }
 }
 
