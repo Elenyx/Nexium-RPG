@@ -35,7 +35,13 @@ class InventoryDisplay {
 
         const shardsSection = new SectionBuilder()
             .addTextDisplayComponents(
-                new TextDisplayBuilder().setContent(`## � Shards\n${shardList}`)
+                new TextDisplayBuilder().setContent(`## 🔹 Shards\n${shardList}`)
+            )
+            .setButtonAccessory(
+                new ButtonBuilder()
+                    .setCustomId(`inventory_manage_shards_${targetUser?.id || 'unknown'}`)
+                    .setLabel('Manage Shards')
+                    .setStyle(ButtonStyle.Secondary)
             );
 
         const itemsSection = new SectionBuilder()

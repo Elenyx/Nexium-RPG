@@ -559,6 +559,13 @@ class ButtonHandler {
                 case 'sell':
                     responseMessage = 'Item selling feature coming soon!';
                     break;
+                case 'manage':
+                    if (params[0] === 'shards') {
+                        responseMessage = 'Shard management feature coming soon!';
+                    } else {
+                        responseMessage = 'Management feature coming soon!';
+                    }
+                    break;
                 case 'refresh':
                     // Refresh the inventory view
                     const InventoryService = require('../../services/InventoryService');
