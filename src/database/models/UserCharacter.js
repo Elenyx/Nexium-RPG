@@ -71,6 +71,12 @@ const defineUserCharacter = (sequelize) => {
             type: DataTypes.INTEGER,
             allowNull: true,
             comment: 'Custom health stat after rarity upgrades'
+        },
+        frameId: {
+            type: DataTypes.STRING,
+            allowNull: true,
+            defaultValue: null,
+            comment: 'ID of the frame applied to this character card'
         }
     }, {
         indexes: [

@@ -71,6 +71,23 @@ module.exports = {
     // ImageKit.io Configuration for Character Images
     IMAGE_KIT_BASE_URL: 'https://ik.imagekit.io/NexiumRPG/',
 
+    // Card and Frame Dimensions
+    CARD_DIMENSIONS: {
+        FRAME_WIDTH: 900,
+        FRAME_HEIGHT: 1200,
+        CHARACTER_AREA_WIDTH: 800,    // Character art width within frame
+        CHARACTER_AREA_HEIGHT: 1000,  // Character art height within frame
+        CHARACTER_OFFSET_X: 50,       // X offset from frame edge
+        CHARACTER_OFFSET_Y: 100       // Y offset from frame edge
+    },
+
+    // Recommended Character Art Sizes
+    CHARACTER_ART_SIZES: {
+        STANDARD: { width: 800, height: 1000 },  // Fits perfectly in frame
+        MINIMUM: { width: 400, height: 500 },    // Minimum recommended size
+        MAXIMUM: { width: 1200, height: 1500 }   // Maximum recommended size
+    },
+
     DIMENSIONS: {
         NEXUS_HUB: {
             name: 'Nexus Hub',
@@ -103,5 +120,71 @@ module.exports = {
             JOIN: 0x10B981,       // Success green
             LEAVE: 0xEF4444       // Error red
         }
-    }
+    },
+
+    // Frame Configuration for Character Cards (Overlay Skins)
+    FRAMES: {
+        // Default frame (no special styling)
+        DEFAULT: {
+            id: 'default',
+            name: 'Default Frame',
+            description: 'Standard character card frame',
+            imageUrl: null, // No overlay needed
+            obtainable: 'default' // Always available
+        },
+
+        // Basic frames - obtained through events/tasks
+        BASIC_GOLD: {
+            id: 'basic_gold',
+            name: 'Golden Frame',
+            description: 'Elegant gold border frame overlay',
+            imageUrl: 'frames/basic_gold.png',
+            obtainable: 'event' // Obtained through events
+        },
+
+        BASIC_SILVER: {
+            id: 'basic_silver',
+            name: 'Silver Frame',
+            description: 'Shiny silver border frame overlay',
+            imageUrl: 'frames/basic_silver.png',
+            obtainable: 'task' // Obtained through tasks
+        },
+
+        // Premium frames - obtained through wins/achievements
+        PREMIUM_DIAMOND: {
+            id: 'premium_diamond',
+            name: 'Diamond Frame',
+            description: 'Luxurious diamond-encrusted frame overlay',
+            imageUrl: 'frames/premium_diamond.png',
+            obtainable: 'win' // Obtained through wins
+        },
+
+        PREMIUM_PLATINUM: {
+            id: 'premium_platinum',
+            name: 'Platinum Frame',
+            description: 'Premium platinum frame overlay with effects',
+            imageUrl: 'frames/premium_platinum.png',
+            obtainable: 'achievement' // Obtained through achievements
+        },
+
+        // Seasonal/Event frames - limited time availability
+        SEASONAL_CHRISTMAS: {
+            id: 'seasonal_christmas',
+            name: 'Festive Christmas Frame',
+            description: 'Holiday-themed frame overlay with snow effects',
+            imageUrl: 'frames/seasonal_christmas.png',
+            obtainable: 'seasonal' // Seasonal event
+        },
+
+        SEASONAL_HALLOWEEN: {
+            id: 'seasonal_halloween',
+            name: 'Spooky Halloween Frame',
+            description: 'Halloween-themed frame overlay with special effects',
+            imageUrl: 'frames/seasonal_halloween.png',
+            obtainable: 'seasonal' // Seasonal event
+        }
+    },
+
+    // Frame IDs list for validation
+    VALID_FRAME_IDS: ['default', 'basic_gold', 'basic_silver', 'premium_diamond', 'premium_platinum', 'seasonal_christmas', 'seasonal_halloween'],
 };
