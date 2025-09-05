@@ -6,6 +6,8 @@
 
 const ComponentRegistry = require('../ComponentRegistry');
 const UserService = require('../../services/UserService');
+const InventoryService = require('../../services/InventoryService');
+const InventoryDisplay = require('../builders/InventoryDisplay');
 const CardAlbum = require('../../services/CardAlbum');
 const characters = require('../../assets/characters');
 const { SectionBuilder, TextDisplayBuilder, ContainerBuilder, MessageFlags, ButtonStyle, ActionRowBuilder, ButtonBuilder, MediaGalleryBuilder } = require('discord.js');
@@ -31,27 +33,12 @@ class ProfileButtonHandlers {
         try {
             await interaction.deferUpdate();
 
-            // TODO: Implement inventory system
-            const inventoryTextDisplay = new TextDisplayBuilder()
-                .setContent(`**🎒 Inventory System**\n\nInventory system coming soon!\n\nThis will show your collected items, equipment, and consumables.\n\n*Use /profile to return to your profile*`);
+            // Show real inventory using InventoryService and InventoryDisplay
+            const invService = new InventoryService();
+            const inventory = await invService.getOrCreateInventory(userId);
 
-            const row = {
-                type: 1,
-                components: [
-                    {
-                        type: 2,
-                        style: 2,
-                        label: 'Back to Profile',
-                        emoji: '⬅️',
-                        custom_id: `profile_back_${userId}`
-                    }
-                ]
-            };
-
-            await interaction.editReply({
-                components: [inventoryTextDisplay, row],
-                flags: 128 // MessageFlags.IsComponentsV2
-            });
+            const display = InventoryDisplay.createInventoryView(inventory.data || {}, targetUser);
+            await interaction.editReply(display);
 
         } catch (error) {
             console.error('Error handling inventory button:', error);
