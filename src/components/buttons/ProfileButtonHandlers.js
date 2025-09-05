@@ -296,7 +296,11 @@ class ProfileButtonHandlers {
             profile.lastDaily = now;
             profile.dailyStreak = (profile.dailyStreak || 0) + 1;
 
-            await profile.save();
+            await this.userService.updateUser(userId, {
+                coins: profile.coins,
+                lastDaily: profile.lastDaily,
+                dailyStreak: profile.dailyStreak
+            });
 
             const successSection = new SectionBuilder()
                 .addTextDisplayComponents(

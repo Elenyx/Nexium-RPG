@@ -288,7 +288,7 @@ class ShopButtonHandlers {
 
             // Process purchase
             profile.coins -= item.price;
-            await profile.save();
+            await this.userService.updateUser(userId, { coins: profile.coins });
 
             const successDisplay = this.registry.createPurchaseSuccess(item, profile, targetUser);
             await interaction.editReply(successDisplay);
