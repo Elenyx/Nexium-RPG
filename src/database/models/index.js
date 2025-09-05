@@ -1,11 +1,13 @@
 const defineUser = require('./User');
 const defineCharacter = require('./Character');
 const defineUserCharacter = require('./UserCharacter');
+const defineInventory = require('./Inventory');
 
 const initializeModels = (sequelize) => {
     const User = defineUser(sequelize);
     const Character = defineCharacter(sequelize);
     const UserCharacter = defineUserCharacter(sequelize);
+    const Inventory = defineInventory(sequelize);
 
     // Define associations
     User.belongsToMany(Character, {
@@ -31,6 +33,11 @@ const initializeModels = (sequelize) => {
         foreignKey: 'characterId',
         as: 'character'
     });
+
+    // Inventory belongs to User
+    if (Inventory && User) {
+        Inventory.belongsTo(User, { foreignKey: 'userId', as: 'user' });
+    }
 
     return {
         User,

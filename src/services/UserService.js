@@ -1,6 +1,7 @@
 const { models } = require('../database/connection');
 const { RARITY_UPGRADE_THRESHOLDS } = require('../config/constants');
 const logger = require('../utils/logger');
+const InventoryService = require('./InventoryService');
 
 class UserService {
     async getOrCreateUser(userId, username) {
@@ -33,9 +34,14 @@ class UserService {
                 logger.info(`Created new user: ${username} (${userId})`);
                 
                 // Return user with collection count for new users
+                // Create inventory for new user
+                const invService = new InventoryService();
+                const inventory = await invService.getOrCreateInventory(userId);
+
                 return {
                     ...user.toJSON(),
-                    collectionCount: 0
+                    collectionCount: 0,
+                    inventory: inventory.data || {}
                 };
             }
             
@@ -44,9 +50,14 @@ class UserService {
                 where: { userId: userId }
             });
             
+            // Append inventory data
+            const invService = new InventoryService();
+            const inventory = await invService.getOrCreateInventory(userId);
+
             return {
                 ...user.toJSON(),
-                collectionCount: collectionCount
+                collectionCount: collectionCount,
+                inventory: inventory.data || {}
             };
         } catch (error) {
             logger.error('Error in getOrCreateUser:', error);

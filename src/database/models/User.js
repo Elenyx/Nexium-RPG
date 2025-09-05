@@ -48,6 +48,11 @@ const defineUser = (sequelize) => {
             type: DataTypes.INTEGER,
             defaultValue: 0
         },
+        // Premium currency (gems) for purchases, cosmetics, etc.
+        gems: {
+            type: DataTypes.INTEGER,
+            defaultValue: 0
+        },
         pityCounter: {
             type: DataTypes.INTEGER,
             defaultValue: 0,

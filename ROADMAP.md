@@ -697,6 +697,8 @@ Nexium is an anime-themed Discord RPG bot built with Discord.js v14, featuring c
   - [ ] Code documentation
   - [ ] User guide creation
 
+Later, when inventory features are stable, you may want to normalize common item types into their own tables (Items, Accessories, InventoryItems) for querying and constraints.
+
 ## 📈 Metrics & KPIs
 
 - [ ] User engagement tracking
