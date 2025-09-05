@@ -51,10 +51,24 @@ module.exports = {
             });
 
             if (!userCharacter) {
+                // Log the attempt for security monitoring
+                console.warn(`[SECURITY] User ${userId} (${interaction.user.username}) attempted to change frame for unowned character ${characterId}`);
+
                 const embed = new EmbedBuilder()
                     .setColor(COLORS.ERROR)
                     .setTitle(`${EMOJIS.ERROR} Character Not Owned`)
                     .setDescription(`You don't own the character \`${character.name}\` (${characterId}).\nUse \`/pull\` to get new characters or \`/collection\` to see your owned characters.`);
+
+                return await interaction.editReply({ embeds: [embed] });
+            }
+
+            // Double-check ownership by ensuring the record belongs to the current user
+            if (userCharacter.userId !== userId) {
+                console.error(`[SECURITY] Ownership validation failed for user ${userId} on character ${characterId}`);
+                const embed = new EmbedBuilder()
+                    .setColor(COLORS.ERROR)
+                    .setTitle(`${EMOJIS.ERROR} Access Denied`)
+                    .setDescription('You do not have permission to modify this character.');
 
                 return await interaction.editReply({ embeds: [embed] });
             }
@@ -70,8 +84,34 @@ module.exports = {
                 return await interaction.editReply({ embeds: [embed] });
             }
 
+            // Get frame details for validation
+            const selectedFrame = FRAMES[frameId.toUpperCase()] || FRAMES[Object.keys(FRAMES).find(key => FRAMES[key].id === frameId)];
+
+            // Additional validation: Check if frame is obtainable (basic validation)
+            if (selectedFrame && selectedFrame.obtainable === 'event') {
+                // For event frames, you might want to add additional checks here
+                // For now, we'll allow them but you could add event participation checks
+                console.log(`[FRAME] User ${userId} using event frame: ${frameId}`);
+            }
+
             // Update the frame in database
+            const previousFrameId = userCharacter.frameId;
             await userCharacter.update({ frameId });
+
+            // Verify the update was successful
+            await userCharacter.reload();
+            if (userCharacter.frameId !== frameId) {
+                console.error(`[ERROR] Frame update failed for user ${userId}, character ${characterId}`);
+                const embed = new EmbedBuilder()
+                    .setColor(COLORS.ERROR)
+                    .setTitle(`${EMOJIS.ERROR} Update Failed`)
+                    .setDescription('Failed to update the character frame. Please try again.');
+
+                return await interaction.editReply({ embeds: [embed] });
+            }
+
+            // Log successful frame change
+            console.log(`[SKIN] User ${userId} changed frame for character ${characterId} from '${previousFrameId || 'default'}' to '${frameId}'`);
 
             // Success response
             const embed = new EmbedBuilder()

@@ -3,6 +3,13 @@
 ## Overview
 The frame system allows users to customize their character cards with different visual **overlay frames** (skins). Frames are stored on ImageKit.io and applied as overlays via canvas rendering. Frames are **rarity-independent** and can be used on any character card.
 
+## Quick Reference
+- **Frame Size**: 900 × 1200 pixels
+- **Character Art**: 800 × 1000 pixels (recommended)
+- **Format**: PNG with transparency
+- **ImageKit Path**: `frames/` directory
+- **Command**: `/skin <character_id> <frame_id>`
+
 ## Frame Configuration
 
 ### Adding New Frames
@@ -20,13 +27,46 @@ FRAMES: {
 }
 ```
 
-### Obtain Methods
-- `default` - Always available (standard frame)
-- `event` - Obtained through special events
-- `task` - Obtained through completing tasks
-- `win` - Obtained through winning competitions/battles
-- `achievement` - Obtained through achievements
-- `seasonal` - Limited time seasonal frames
+## Frame Management Options
+
+### Option 1: Constants Configuration (Current)
+Frames are managed in `src/config/constants.js` under the `FRAMES` object.
+
+### Option 2: Dedicated Frames File (Recommended)
+Create `src/config/frames.js` for better organization:
+
+```javascript
+// src/config/frames.js
+const frames = {
+    BASIC_GOLD: {
+        id: 'basic_gold',
+        name: 'Golden Frame',
+        description: 'Elegant gold border frame overlay',
+        imageUrl: 'frames/basic_gold.png', // Relative path (recommended)
+        // OR full URL:
+        // imageUrl: 'https://ik.imagekit.io/NexiumRPG/frames/basic_gold.png',
+        obtainable: 'event',
+        rarity: 'common' // Optional: for future rarity-based features
+    }
+    // ... more frames
+};
+
+module.exports = { frames, validFrameIds: Object.values(frames).map(f => f.id) };
+```
+
+**URL Options:**
+- **Relative Path**: `'frames/basic_gold.png'` → `'https://ik.imagekit.io/NexiumRPG/frames/basic_gold.png'`
+- **Full URL**: `'https://ik.imagekit.io/NexiumRPG/frames/custom_frame.png'` (used as-is)
+
+Both formats are supported automatically!
+
+## Frame & Art Specifications
+
+### Frame Dimensions
+- **Frame Size**: 900 × 1200 pixels (standard card dimensions)
+- **Format**: PNG with transparency
+- **Usage**: Full-size overlays applied over character cards
+- **ImageKit Path**: `frames/` directory
 
 ### Character Art Sizing Guidelines
 
@@ -45,6 +85,30 @@ FRAMES: {
 - Smaller images are upscaled with high-quality interpolation
 - Larger images are downscaled proportionally
 - All images are centered within the character area
+
+### Layout Structure
+```
+900×1200 Frame
+┌─────────────────────────────────────┐
+│              50px margin            │
+│  ┌─────────────────────────────┐   │
+│  │                             │   │
+│  │     800×1000 Character      │   │
+│100│        Art Area            │   │
+│px │                             │   │
+│  │                             │   │
+│  └─────────────────────────────┘   │
+│              50px margin            │
+└─────────────────────────────────────┘
+```
+
+### Obtain Methods
+- `default` - Always available (standard frame)
+- `event` - Obtained through special events
+- `task` - Obtained through completing tasks
+- `win` - Obtained through winning competitions/battles
+- `achievement` - Obtained through achievements
+- `seasonal` - Limited time seasonal frames
 
 ### Frame ID Validation
 - Add new frame IDs to `VALID_FRAME_IDS` array in constants

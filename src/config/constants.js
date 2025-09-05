@@ -138,7 +138,7 @@ module.exports = {
             id: 'basic_gold',
             name: 'Golden Frame',
             description: 'Elegant gold border frame overlay',
-            imageUrl: 'frames/basic_gold.png',
+            imageUrl: 'https://ik.imagekit.io/NexiumRPG/frames/gold_pattern.png',
             obtainable: 'event' // Obtained through events
         },
 
@@ -146,7 +146,7 @@ module.exports = {
             id: 'basic_silver',
             name: 'Silver Frame',
             description: 'Shiny silver border frame overlay',
-            imageUrl: 'frames/basic_silver.png',
+            imageUrl: 'https://ik.imagekit.io/NexiumRPG/frames/silver_pattern.png',
             obtainable: 'task' // Obtained through tasks
         },
 
@@ -155,7 +155,7 @@ module.exports = {
             id: 'premium_diamond',
             name: 'Diamond Frame',
             description: 'Luxurious diamond-encrusted frame overlay',
-            imageUrl: 'frames/premium_diamond.png',
+            imageUrl: 'https://ik.imagekit.io/NexiumRPG/frames/diamond_pattern.png',
             obtainable: 'win' // Obtained through wins
         },
 
@@ -163,7 +163,7 @@ module.exports = {
             id: 'premium_platinum',
             name: 'Platinum Frame',
             description: 'Premium platinum frame overlay with effects',
-            imageUrl: 'frames/premium_platinum.png',
+            imageUrl: 'https://ik.imagekit.io/NexiumRPG/frames/platinum_pattern.png',
             obtainable: 'achievement' // Obtained through achievements
         },
 
@@ -172,7 +172,7 @@ module.exports = {
             id: 'seasonal_christmas',
             name: 'Festive Christmas Frame',
             description: 'Holiday-themed frame overlay with snow effects',
-            imageUrl: 'frames/seasonal_christmas.png',
+            imageUrl: 'https://ik.imagekit.io/NexiumRPG/frames/christmas_pattern.png',
             obtainable: 'seasonal' // Seasonal event
         },
 
@@ -180,7 +180,7 @@ module.exports = {
             id: 'seasonal_halloween',
             name: 'Spooky Halloween Frame',
             description: 'Halloween-themed frame overlay with special effects',
-            imageUrl: 'frames/seasonal_halloween.png',
+            imageUrl: 'https://ik.imagekit.io/NexiumRPG/frames/halloween_pattern.png',
             obtainable: 'seasonal' // Seasonal event
         }
     },

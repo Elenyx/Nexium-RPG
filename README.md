@@ -1,7 +1,61 @@
 # 🌌 Nexium - Anime Multiverse Discord Bot
 
 [![Discord.js](https://img.shields.io/badge/discord.js-14.19.3+-blue.svg)](https://discord.js.org/)
-[![Node.js](https://img.shields.io/badge/node.js-18.0.0+-green.svg)](https://nodejs.org/)
+[![Node.js](https://img.shields.io/badge/node.js/rarity-progress NU001   # Check upgrade progress
+```
+
+## 🎨 Character Card System
+
+### **Frame Overlay System**
+
+Nexium features a comprehensive character card customization system that allows players to apply decorative frames to their character cards:
+
+#### **Available Frames**
+
+| Frame ID | Name | Description | Obtain Method |
+|----------|------|-------------|---------------|
+| `default` | Default Frame | Standard character card frame | Always available |
+| `basic_gold` | Golden Frame | Elegant gold border frame overlay | Event rewards |
+| `basic_silver` | Silver Frame | Shiny silver border frame overlay | Task completion |
+| `premium_diamond` | Diamond Frame | Luxurious diamond-encrusted frame overlay | Battle victories |
+| `premium_platinum` | Platinum Frame | Premium platinum frame overlay with effects | Achievements |
+| `seasonal_christmas` | Festive Christmas Frame | Holiday-themed frame overlay with snow effects | Seasonal events |
+| `seasonal_halloween` | Spooky Halloween Frame | Halloween-themed frame overlay with special effects | Seasonal events |
+
+#### **Key Features**
+
+- **High-Quality Rendering**: Canvas-based rendering with automatic scaling
+- **ImageKit Integration**: Fast CDN delivery for frame and character images
+- **Character Name Overlay**: Automatic character name rendering with transparent backgrounds
+- **Fade Effects**: Gradient backgrounds with smooth transparency
+- **Flexible Sizing**: Automatic scaling to fit various character art dimensions
+- **Real-time Updates**: Instant frame changes via Discord commands
+
+#### **Technical Specifications**
+
+- **Canvas Dimensions**: 900x1200 pixels (3:4 aspect ratio)
+- **Character Area**: 800x1000 pixels within frame
+- **Text Rendering**: Bottom-aligned with rounded background
+- **Image Formats**: PNG with transparency support
+- **Font System**: Custom font loading with fallback support
+
+### **Skin Command Usage**
+
+```bash
+/skin <character_id> <frame_id>    # Apply frame to character
+/skin NU001 basic_gold            # Apply golden frame
+/skin NU001 default               # Remove frame overlay
+```
+
+### **Character Name Rendering**
+
+- **Position**: Bottom center of card with padding
+- **Background**: Semi-transparent with gradient fade
+- **Font**: Configurable size and family
+- **Alignment**: Center-aligned text
+- **Effects**: Rounded corners with smooth edges
+
+## 🏗️ Architecture0.0+-green.svg)](https://nodejs.org/)
 [![PostgreSQL](https://img.shields.io/badge/PostgreSQL-15.0+-blue.svg)](https://www.postgresql.org/)
 [![License](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 [![Components V2](https://img.shields.io/badge/Components-V2%20Ready-purple.svg)](https://discord.com/developers/docs/interactions/message-components)

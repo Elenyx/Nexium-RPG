@@ -5,10 +5,34 @@
 
 const { FRAMES, VALID_FRAME_IDS, IMAGE_KIT_BASE_URL } = require('../config/constants');
 
+// Optional: Use dedicated frames config if available
+let framesConfig;
+try {
+    framesConfig = require('../config/frames');
+} catch (error) {
+    // Fallback to constants if frames.js doesn't exist
+    framesConfig = null;
+}
+
 class FrameManager {
     constructor() {
-        this.frames = FRAMES;
-        this.validFrameIds = VALID_FRAME_IDS;
+        // Try to load dedicated frames config, fallback to constants
+        let framesConfig = null;
+        try {
+            framesConfig = require('../config/frames');
+        } catch (error) {
+            // Fallback to constants if frames.js doesn't exist or has errors
+        }
+
+        // Use dedicated frames config if available, otherwise fallback to constants
+        if (framesConfig) {
+            this.frames = framesConfig.frames;
+            this.validFrameIds = framesConfig.validFrameIds;
+        } else {
+            this.frames = FRAMES;
+            this.validFrameIds = VALID_FRAME_IDS;
+        }
+
         this.baseUrl = IMAGE_KIT_BASE_URL;
     }
 
@@ -41,6 +65,7 @@ class FrameManager {
 
     /**
      * Get the full ImageKit URL for a frame
+     * Supports both relative paths and full URLs
      * @param {string} frameId - Frame ID
      * @returns {string|null} Full URL or null if frame not found
      */
@@ -48,6 +73,17 @@ class FrameManager {
         const frame = this.getFrame(frameId);
         if (!frame || !frame.imageUrl) return null;
 
+        // If it's already a full ImageKit URL, return as-is
+        if (frame.imageUrl.startsWith('https://ik.imagekit.io/')) {
+            return frame.imageUrl;
+        }
+
+        // Check if it's already a full URL
+        if (frame.imageUrl.startsWith('http://') || frame.imageUrl.startsWith('https://')) {
+            return frame.imageUrl;
+        }
+
+        // Otherwise, combine with base URL for relative paths
         return `${this.baseUrl}${frame.imageUrl}`;
     }
 
