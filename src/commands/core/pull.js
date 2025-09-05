@@ -73,7 +73,8 @@ module.exports = {
                 const pulledCharacterData = await Promise.all(pulledCharacters.map(async pull => {
                     const characterData = pull.character.toJSON();
                     // Replace the base image with the new framed URL from the renderer
-                    characterData.image = await CharacterCardRenderer.renderCardUrl(characterData);
+                    const cardRenderer = new CharacterCardRenderer();
+                    characterData.image = await cardRenderer.renderCardUrl(characterData);
                     return characterData;
                 }));
                 

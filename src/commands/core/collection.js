@@ -50,7 +50,8 @@ module.exports = {
             const characters = await Promise.all(userCharacters.map(async uc => {
                 const characterData = uc.character.toJSON();
                 // IMPORTANT: Generate the framed URL for each character before passing to the album generator
-                characterData.image = await CharacterCardRenderer.renderCardUrl(characterData);
+                const cardRenderer = new CharacterCardRenderer();
+                characterData.image = await cardRenderer.renderCardUrl(characterData);
                 return {
                     ...characterData,
                     customLevel: uc.customLevel,
