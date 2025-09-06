@@ -7,17 +7,8 @@
 const ComponentRegistry = require('../ComponentRegistry');
 const UserService = require('../../services/UserService');
 const { models } = require('../../database/connection');
-const { 
-    ButtonBuilder,
-    ButtonStyle, 
-    ActionRowBuilder, 
-    ContainerBuilder,
-    TextDisplayBuilder,
-    SectionBuilder,
-    ThumbnailBuilder,
-    EmbedBuilder,
-    MessageFlags 
-} = require('discord.js');
+// Import our ComponentsV2 utility that fixes validation issues
+const ComponentsV2 = require('../../utils/ComponentsV2');
 
 class ShopButtonHandlers {
     constructor(client) {
@@ -54,7 +45,7 @@ class ShopButtonHandlers {
             
             await interaction.editReply({
                 components: [errorContainer],
-                flags: MessageFlags.IsComponentsV2
+                flags: ComponentsV2.MessageFlags.IsComponentsV2
             });
         }
     }
@@ -82,40 +73,40 @@ class ShopButtonHandlers {
 
             const categories = this.registry.getDefaultShopCategories();
 
-            const container = new ContainerBuilder()
+            const container = new ComponentsV2.ContainerBuilder()
                 .setAccentColor(0xF59E0B)
                 .addTextDisplayComponents(
-                    new TextDisplayBuilder()
+                    new ComponentsV2.TextDisplayBuilder()
                         .setContent(`# ⭐ Featured Items\nCheck out our most popular items!`)
                 )
                 .addSectionComponents(
-                    new SectionBuilder()
+                    new ComponentsV2.SectionBuilder()
                         .addTextDisplayComponents(
                             ...allItems.map(item =>
-                                new TextDisplayBuilder()
+                                new ComponentsV2.TextDisplayBuilder()
                                     .setContent(`${item.emoji} **${item.name}**\n${item.description}\n**Price:** ${item.price} coins`)
                             )
                         )
                 );
 
             // Add category buttons
-            const row1 = new ActionRowBuilder()
+            const row1 = new ComponentsV2.ActionRowBuilder()
                 .addComponents(
                     ...categories.slice(0, 4).map(cat =>
-                        new ButtonBuilder()
+                        new ComponentsV2.ButtonBuilder()
                             .setCustomId(`shop_category_${cat.id}_${userId}`)
                             .setLabel(cat.name)
-                            .setStyle(ButtonStyle.Secondary)
+                            .setStyle(ComponentsV2.ButtonStyle.Secondary)
                             .setEmoji(cat.emoji)
                     )
                 );
 
-            const row2 = new ActionRowBuilder()
+            const row2 = new ComponentsV2.ActionRowBuilder()
                 .addComponents(
-                    new ButtonBuilder()
+                    new ComponentsV2.ButtonBuilder()
                         .setCustomId(`shop_back_cat_${userId}`)
                         .setLabel('Back to Shop')
-                        .setStyle(ButtonStyle.Secondary)
+                        .setStyle(ComponentsV2.ButtonStyle.Secondary)
                         .setEmoji('⬅️')
                 );
 
@@ -123,7 +114,7 @@ class ShopButtonHandlers {
 
             await interaction.editReply({
                 components: [container],
-                flags: MessageFlags.IsComponentsV2
+                flags: ComponentsV2.MessageFlags.IsComponentsV2
             });
 
         } catch (error) {
@@ -134,7 +125,7 @@ class ShopButtonHandlers {
             
             await interaction.editReply({
                 components: [errorContainer],
-                flags: MessageFlags.IsComponentsV2
+                flags: ComponentsV2.MessageFlags.IsComponentsV2
             });
         }
     }
@@ -600,40 +591,41 @@ class ShopButtonHandlers {
             // If ephemeral, reply directly to the user (private message-like ephemeral reply).
             const profile = await this.userService.getOrCreateUser(userId, targetUser.username);
 
-            const container = new ContainerBuilder()
+            // Use our ComponentsV2 utility
+            const container = new ComponentsV2.ContainerBuilder()
                 .setAccentColor(0x3B82F6)
                 .addTextDisplayComponents(
-                    new TextDisplayBuilder()
+                    new ComponentsV2.TextDisplayBuilder()
                         .setContent('# 🛒 Nexium Shop — Quick Guide')
                 )
                 .addSectionComponents(
-                    new SectionBuilder()
+                    new ComponentsV2.SectionBuilder()
                         .addTextDisplayComponents(
-                            new TextDisplayBuilder()
+                            new ComponentsV2.TextDisplayBuilder()
                                 .setContent(`**Currency:** Coins = spend on items. Shards = premium currency for X.\n**How to buy:** Click item → Confirm Purchase → Item applied. Purchases are immediate; no refunds.`),
-                            new TextDisplayBuilder()
+                            new ComponentsV2.TextDisplayBuilder()
                                 .setContent(`**Featured/Daily:** Featured items are curated; daily deals refresh every 24h.\n**Frames:** Frames unlock visual card frames. They are stored in your profile's unlockedFrames.`),
-                            new TextDisplayBuilder()
+                            new ComponentsV2.TextDisplayBuilder()
                                 .setContent(`**Limits & notes:** Some items are one-time, some stack; pages show up to 5 items; use navigation buttons.\n**Support:** Use /support if you see a bug or incorrect charge.`)
                         )
                 );
 
-            const row = new ActionRowBuilder()
+            const row = new ComponentsV2.ActionRowBuilder()
                 .addComponents(
-                    new ButtonBuilder()
+                    new ComponentsV2.ButtonBuilder()
                         .setCustomId(`shop_featured_${userId}`)
                         .setLabel('Featured Items')
-                        .setStyle(ButtonStyle.Primary)
+                        .setStyle(ComponentsV2.ButtonStyle.Primary)
                         .setEmoji('⭐'),
-                    new ButtonBuilder()
+                    new ComponentsV2.ButtonBuilder()
                         .setCustomId(`shop_daily_${userId}`)
                         .setLabel('Daily Deals')
-                        .setStyle(ButtonStyle.Success)
+                        .setStyle(ComponentsV2.ButtonStyle.Success)
                         .setEmoji('🎯'),
-                    new ButtonBuilder()
+                    new ComponentsV2.ButtonBuilder()
                         .setCustomId(`shop_back_${userId}`)
                         .setLabel('Back to Profile')
-                        .setStyle(ButtonStyle.Secondary)
+                        .setStyle(ComponentsV2.ButtonStyle.Secondary)
                         .setEmoji('⬅️')
                 );
 
@@ -643,13 +635,13 @@ class ShopButtonHandlers {
                 // send a private ephemeral reply to the clicking user
                 await interaction.reply({
                     components: [container],
-                    flags: MessageFlags.Ephemeral
+                    flags: ComponentsV2.MessageFlags.Ephemeral
                 });
             } else {
                 await interaction.deferUpdate();
                 await interaction.editReply({
                     components: [container],
-                    flags: MessageFlags.IsComponentsV2
+                    flags: ComponentsV2.MessageFlags.IsComponentsV2
                 });
             }
 
@@ -660,7 +652,7 @@ class ShopButtonHandlers {
             if (!interaction.replied && !interaction.deferred) {
                 await interaction.reply({
                     content: 'An error occurred while loading shop information.',
-                    flags: MessageFlags.Ephemeral
+                    flags: ComponentsV2.MessageFlags.Ephemeral
                 });
             } else {
                 try {
@@ -669,7 +661,7 @@ class ShopButtonHandlers {
                     
                     await interaction.editReply({
                         components: [errorContainer],
-                        flags: MessageFlags.IsComponentsV2
+                        flags: ComponentsV2.MessageFlags.IsComponentsV2
                     });
                 } catch (editError) {
                     console.error('Failed to edit reply:', editError);

@@ -9,17 +9,8 @@ const CharacterCollection = require('./builders/CharacterCollection');
 const ShopDisplay = require('./builders/ShopDisplay');
 const BattleDisplay = require('./builders/BattleDisplay');
 
-const { 
-    ButtonBuilder,
-    ButtonStyle, 
-    ActionRowBuilder, 
-    ContainerBuilder,
-    TextDisplayBuilder,
-    SectionBuilder,
-    ThumbnailBuilder,
-    EmbedBuilder,
-    MessageFlags 
-} = require('discord.js');
+// Import our ComponentsV2 utility that fixes validation issues
+const ComponentsV2 = require('../utils/ComponentsV2');
 
 class ComponentRegistry {
     constructor() {
@@ -63,11 +54,7 @@ class ComponentRegistry {
      * @returns {Object} Container with error message
      */
     createErrorContainer(errorMessage) {
-        return new ContainerBuilder()
-            .addTextDisplayComponents(
-                new TextDisplayBuilder()
-                    .setContent(errorMessage || 'An error occurred. Please try again later.')
-            );
+        return ComponentsV2.createErrorContainer(errorMessage);
     }
 
     /**
