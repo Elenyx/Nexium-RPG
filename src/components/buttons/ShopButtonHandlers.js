@@ -31,10 +31,9 @@ class ShopButtonHandlers {
             const items = this.registry.getSampleShopItems(categoryId);
             const shopDisplay = this.registry.createShopCategory(categoryId, items, profile, targetUser, 1);
 
-            await interaction.editReply({
-                ...shopDisplay,
-                flags: undefined
-            });
+            // Edit with the prepared shop display. Do not unset the Components V2 flag here
+            // (the flag cannot be removed from a message once set).
+            await interaction.editReply(shopDisplay);
 
         } catch (error) {
             console.error('Error handling shop category:', error);
@@ -238,10 +237,8 @@ class ShopButtonHandlers {
             const item = items[0];
             const purchaseDisplay = this.registry.createPurchaseConfirmation(item, profile, userId);
 
-            await interaction.editReply({
-                ...purchaseDisplay,
-                flags: undefined
-            });
+            // Send the purchase display without attempting to remove Components V2 flag.
+            await interaction.editReply(purchaseDisplay);
 
         } catch (error) {
             console.error('Error handling purchase:', error);
@@ -328,10 +325,8 @@ class ShopButtonHandlers {
             }
 
             const successDisplay = this.registry.createPurchaseSuccess(item, profile, targetUser);
-            await interaction.editReply({
-                ...successDisplay,
-                flags: undefined
-            });
+            // Send success display; keep Components V2 flag as provided by the builder.
+            await interaction.editReply(successDisplay);
 
         } catch (error) {
             console.error('Error confirming purchase:', error);

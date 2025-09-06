@@ -55,12 +55,12 @@ class SelectMenuHandler {
 
             const targetUser = await this.client.users.fetch(userId);
             const profile = await userService.getOrCreateUser(userId, targetUser.username);
+            // Resolve items for the selected category from the registry (avoid using undefined variable)
+            const items = registry.getSampleShopItems(categoryId);
             const shopDisplay = registry.createShopCategory(categoryId, items, profile, targetUser, 1);
 
-            await interaction.editReply({
-                ...shopDisplay,
-                flags: undefined
-            });
+            // Edit reply using the display returned by the registry. Do not attempt to unset Components V2 flag.
+            await interaction.editReply(shopDisplay);
 
         } catch (error) {
             logger.error('Error handling shop category selection:', error);
