@@ -46,6 +46,21 @@ class ComponentRegistry {
     }
 
     /**
+     * Creates an error container with a message using Components V2
+     * @param {string} errorMessage - Error message to display
+     * @returns {Object} Container with error message
+     */
+    createErrorContainer(errorMessage) {
+        const { ContainerBuilder, TextDisplayBuilder, MessageFlags } = require('discord.js');
+        
+        return new ContainerBuilder()
+            .addTextDisplayComponents(
+                new TextDisplayBuilder()
+                    .setContent(errorMessage || 'An error occurred. Please try again later.')
+            );
+    }
+
+    /**
      * Creates a profile display
      * @param {Object} userData - User profile data
      * @param {Object} targetUser - Discord user object

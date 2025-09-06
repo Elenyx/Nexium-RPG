@@ -37,10 +37,14 @@ class ShopButtonHandlers {
 
         } catch (error) {
             console.error('Error handling shop category:', error);
+            
+            // Use the registry helper to create a valid error container
+            const errorContainer = this.registry.createErrorContainer('An error occurred while loading the shop category.');
+            const { MessageFlags } = require('discord.js');
+            
             await interaction.editReply({
-                content: 'An error occurred while loading the shop category.',
-                embeds: [],
-                components: []
+                components: [errorContainer],
+                flags: MessageFlags.IsComponentsV2
             });
         }
     }
@@ -114,9 +118,14 @@ class ShopButtonHandlers {
 
         } catch (error) {
             console.error('Error handling featured items:', error);
+            
+            // Use the registry helper to create a valid error container
+            const errorContainer = this.registry.createErrorContainer('An error occurred while loading featured items.');
+            const { MessageFlags } = require('discord.js');
+            
             await interaction.editReply({
-                content: 'An error occurred while loading featured items.',
-                flags: require('discord.js').MessageFlags.Ephemeral
+                components: [errorContainer],
+                flags: MessageFlags.IsComponentsV2
             });
         }
     }
@@ -648,10 +657,13 @@ class ShopButtonHandlers {
                 });
             } else {
                 try {
+                    // Use the registry helper to create a valid error container
+                    const errorContainer = this.registry.createErrorContainer('An error occurred while loading shop information.');
+                    const { MessageFlags } = require('discord.js');
+                    
                     await interaction.editReply({
-                        content: 'An error occurred while loading shop information.',
-                        components: [],
-                        embeds: []
+                        components: [errorContainer],
+                        flags: MessageFlags.IsComponentsV2
                     });
                 } catch (editError) {
                     console.error('Failed to edit reply:', editError);
