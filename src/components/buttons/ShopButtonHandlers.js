@@ -441,8 +441,185 @@ class ShopButtonHandlers {
             console.error('Error handling shop back:', error);
             await interaction.editReply({
                 content: 'An error occurred while going back to the shop.',
-                embeds: [],
-                components: []
+                flags: require('discord.js').MessageFlags.Ephemeral
+            });
+        }
+    }
+
+    /**
+     * Handles shop item info button
+     * @param {Object} interaction - Discord interaction
+     * @param {Array} params - Button parameters [itemId, userId]
+     */
+    async handleItemInfo(interaction, params) {
+        const [itemId, userId] = params;
+        const targetUser = await this.client.users.fetch(userId);
+
+        try {
+            await interaction.deferUpdate();
+
+            const profile = await this.userService.getOrCreateUser(userId, targetUser.username);
+
+            // Find the item from all categories
+            const allItems = [
+                ...this.registry.getSampleShopItems('consumables'),
+                ...this.registry.getSampleShopItems('equipment'),
+                ...this.registry.getSampleShopItems('boosters'),
+                ...this.registry.getSampleShopItems('cosmetics')
+            ];
+
+            const item = allItems.find(i => i.id === itemId);
+
+            if (!item) {
+                await interaction.editReply({
+                    content: 'Item not found.',
+                    flags: require('discord.js').MessageFlags.Ephemeral
+                });
+                return;
+            }
+
+            const canAfford = profile.coins >= item.price;
+
+            const container = new (require('discord.js').ContainerBuilder)()
+                .setAccentColor(canAfford ? 0x10B981 : 0xEF4444)
+                .addTextDisplayComponents(
+                    new (require('discord.js').TextDisplayBuilder)()
+                        .setContent(`# ${item.emoji} ${item.name}\nDetailed item information`)
+                )
+                .addSectionComponents(
+                    new (require('discord.js').SectionBuilder)()
+                        .addTextDisplayComponents(
+                            new (require('discord.js').TextDisplayBuilder)()
+                                .setContent(`**Description:** ${item.description}\n**Effect:** ${item.effect || 'Special effect'}\n**Price:** ${item.price} coins\n**Can Afford:** ${canAfford ? '✅ Yes' : '❌ No'}`)
+                        )
+                );
+
+            const row = new (require('discord.js').ActionRowBuilder)()
+                .addComponents(
+                    new (require('discord.js').ButtonBuilder)()
+                        .setCustomId(`shop_purchase_${itemId}_${userId}`)
+                        .setLabel('Purchase')
+                        .setStyle(canAfford ? require('discord.js').ButtonStyle.Success : require('discord.js').ButtonStyle.Secondary)
+                        .setDisabled(!canAfford)
+                        .setEmoji('🛒'),
+                    new (require('discord.js').ButtonBuilder)()
+                        .setCustomId(`shop_back_cat_${userId}`)
+                        .setLabel('Back')
+                        .setStyle(require('discord.js').ButtonStyle.Secondary)
+                        .setEmoji('⬅️')
+                );
+
+            container.addActionRowComponents(row);
+
+            await interaction.editReply({
+                components: [container],
+                flags: require('discord.js').MessageFlags.IsComponentsV2
+            });
+
+        } catch (error) {
+            console.error('Error handling item info:', error);
+            await interaction.editReply({
+                content: 'An error occurred while loading item information.',
+                flags: require('discord.js').MessageFlags.Ephemeral
+            });
+        }
+    }
+
+    /**
+     * Handles shop category navigation (next/prev)
+     * @param {Object} interaction - Discord interaction
+     * @param {Array} params - Button parameters [action, categoryId, userId, page]
+     */
+    async handleCategoryNavigation(interaction, params) {
+        const [action, categoryId, userId, pageStr] = params;
+        const targetUser = await this.client.users.fetch(userId);
+        const currentPage = parseInt(pageStr) || 1;
+
+        try {
+            await interaction.deferUpdate();
+
+            const profile = await this.userService.getOrCreateUser(userId, targetUser.username);
+            const items = this.registry.getSampleShopItems(categoryId);
+
+            let newPage = currentPage;
+            if (action === 'next') {
+                newPage = Math.min(currentPage + 1, Math.ceil(items.length / 5));
+            } else if (action === 'prev') {
+                newPage = Math.max(currentPage - 1, 1);
+            }
+
+            const shopDisplay = this.registry.createShopCategory(categoryId, items, profile, targetUser, newPage);
+
+            await interaction.editReply(shopDisplay);
+
+        } catch (error) {
+            console.error('Error handling category navigation:', error);
+            await interaction.editReply({
+                content: 'An error occurred while navigating categories.',
+                flags: require('discord.js').MessageFlags.Ephemeral
+            });
+        }
+    }
+
+    /**
+     * Handles shop info button
+     * @param {Object} interaction - Discord interaction
+     * @param {Array} params - Button parameters [userId]
+     */
+    async handleShopInfo(interaction, params) {
+        const [userId] = params;
+        const targetUser = await this.client.users.fetch(userId);
+
+        try {
+            await interaction.deferUpdate();
+
+            const profile = await this.userService.getOrCreateUser(userId, targetUser.username);
+
+            const container = new (require('discord.js').ContainerBuilder)()
+                .setAccentColor(0x3B82F6)
+                .addTextDisplayComponents(
+                    new (require('discord.js').TextDisplayBuilder)()
+                        .setContent(`# 🛒 Nexium Shop Information\nWelcome to the Dimensional Shop!`)
+                )
+                .addSectionComponents(
+                    new (require('discord.js').SectionBuilder)()
+                        .addTextDisplayComponents(
+                            new (require('discord.js').TextDisplayBuilder)()
+                                .setContent(`**Your Balance:** ${profile.coins.toLocaleString()} coins\n**Energy:** ${profile.dimensionalEnergy}/${profile.maxEnergy}\n\n**Shop Categories:**\n• 🧪 Consumables - Potions and items\n• ⚔️ Equipment - Weapons and armor\n• ⚡ Boosters - XP multipliers\n• 🎨 Cosmetics - Frames and themes`)
+                        )
+                );
+
+            const row = new (require('discord.js').ActionRowBuilder)()
+                .addComponents(
+                    new (require('discord.js').ButtonBuilder)()
+                        .setCustomId(`shop_featured_${userId}`)
+                        .setLabel('Featured Items')
+                        .setStyle(require('discord.js').ButtonStyle.Primary)
+                        .setEmoji('⭐'),
+                    new (require('discord.js').ButtonBuilder)()
+                        .setCustomId(`shop_daily_${userId}`)
+                        .setLabel('Daily Deals')
+                        .setStyle(require('discord.js').ButtonStyle.Success)
+                        .setEmoji('🎯'),
+                    new (require('discord.js').ButtonBuilder)()
+                        .setCustomId(`shop_back_${userId}`)
+                        .setLabel('Back to Profile')
+                        .setStyle(require('discord.js').ButtonStyle.Secondary)
+                        .setEmoji('⬅️')
+                );
+
+            container.addActionRowComponents(row);
+
+            await interaction.editReply({
+                components: [container],
+                flags: require('discord.js').MessageFlags.IsComponentsV2
+            });
+
+        } catch (error) {
+            console.error('Error handling shop info:', error);
+            await interaction.editReply({
+                content: 'An error occurred while loading shop information.',
+                flags: require('discord.js').MessageFlags.Ephemeral
             });
         }
     }

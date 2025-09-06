@@ -153,6 +153,15 @@ class ButtonHandler {
             case 'backprofile':
                 await this.shopHandlers.handleBack(interaction, params);
                 return true;
+            case 'item':
+                await this.shopHandlers.handleItemInfo(interaction, params);
+                return true;
+            case 'cat':
+                await this.shopHandlers.handleCategoryNavigation(interaction, params);
+                return true;
+            case 'info':
+                await this.shopHandlers.handleShopInfo(interaction, params);
+                return true;
             default:
                 return false;
         }
