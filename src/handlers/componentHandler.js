@@ -28,12 +28,17 @@ class ComponentHandler {
             const filePath = join(buttonsPath, file);
             const buttonModule = require(filePath);
 
-            // If it's a class with execute method, register it
-            if (buttonModule.prototype && buttonModule.prototype.execute) {
+            // If module exports an execute function, register it on client.buttons
+            if (buttonModule && typeof buttonModule.execute === 'function') {
                 const buttonName = file.replace('.js', '');
-                // Register individual button handlers
-                // This is handled by the ButtonHandler class
-                logger.info(`Loaded button handler module: ${buttonName}`);
+                this.client.buttons.set(buttonName, buttonModule);
+                logger.info(`Registered client button handler: ${buttonName}`);
+            } else if (buttonModule.prototype && buttonModule.prototype.execute) {
+                const buttonName = file.replace('.js', '');
+                this.client.buttons.set(buttonName, buttonModule);
+                logger.info(`Registered client button handler (class): ${buttonName}`);
+            } else {
+                logger.info(`Loaded button module (not registered as client handler): ${file}`);
             }
         }
     }
