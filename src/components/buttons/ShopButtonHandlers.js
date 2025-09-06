@@ -6,17 +6,11 @@
 
 const ComponentRegistry = require('../ComponentRegistry');
 const UserService = require('../../services/UserService');
+const { models } = require('../../database/connection');
 
 class ShopButtonHandlers {
     constructor(client) {
-                    });
-            }
-
-            const successDisplay = this.registry.createPurchaseSuccess(item, profile, targetUser);
-            await interaction.editReply({
-                ...successDisplay,
-                flags: undefined
-            });his.client = client;
+        this.client = client;
         this.registry = new ComponentRegistry();
         this.userService = new UserService();
     }
@@ -34,6 +28,7 @@ class ShopButtonHandlers {
             await interaction.deferUpdate();
 
             const profile = await this.userService.getOrCreateUser(userId, targetUser.username);
+            const items = this.registry.getSampleShopItems(categoryId);
             const shopDisplay = this.registry.createShopCategory(categoryId, items, profile, targetUser, 1);
 
             await interaction.editReply({
@@ -239,6 +234,8 @@ class ShopButtonHandlers {
                 return;
             }
 
+            // Show first item as example
+            const item = items[0];
             const purchaseDisplay = this.registry.createPurchaseConfirmation(item, profile, userId);
 
             await interaction.editReply({
@@ -568,7 +565,10 @@ class ShopButtonHandlers {
 
             const shopDisplay = this.registry.createShopCategory(categoryId, items, profile, targetUser, newPage);
 
-            await interaction.editReply(shopDisplay);
+            await interaction.editReply({
+                ...shopDisplay,
+                flags: undefined
+            });
 
         } catch (error) {
             console.error('Error handling category navigation:', error);
