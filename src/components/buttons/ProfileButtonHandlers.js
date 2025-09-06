@@ -349,10 +349,7 @@ class ProfileButtonHandlers {
             const profile = await this.userService.getOrCreateUser(userId, targetUser.username);
             const shopDisplay = this.registry.createShopInterface(categories, profile, targetUser);
 
-            await interaction.editReply({
-                ...shopDisplay,
-                flags: undefined
-            });
+            await interaction.editReply(shopDisplay);
 
         } catch (error) {
             console.error('Error handling shop button:', error);

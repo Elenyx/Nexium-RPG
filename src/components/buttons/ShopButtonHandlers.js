@@ -407,10 +407,7 @@ class ShopButtonHandlers {
             }
 
             const successDisplay = this.registry.createPurchaseSuccess(item, profile, targetUser);
-            await interaction.editReply({
-                ...successDisplay,
-                flags: undefined
-            });
+            await interaction.editReply(successDisplay);
 
         } catch (error) {
             console.error('Error handling frame purchase:', error);
@@ -442,10 +439,7 @@ class ShopButtonHandlers {
                 targetUser
             );
 
-            await interaction.editReply({
-                ...shopDisplay,
-                flags: undefined
-            });
+            await interaction.editReply(shopDisplay);
 
         } catch (error) {
             console.error('Error handling shop back:', error);
@@ -560,10 +554,7 @@ class ShopButtonHandlers {
 
             const shopDisplay = this.registry.createShopCategory(categoryId, items, profile, targetUser, newPage);
 
-            await interaction.editReply({
-                ...shopDisplay,
-                flags: undefined
-            });
+            await interaction.editReply(shopDisplay);
 
         } catch (error) {
             console.error('Error handling category navigation:', error);
@@ -580,41 +571,56 @@ class ShopButtonHandlers {
      * @param {Array} params - Button parameters [userId]
      */
     async handleShopInfo(interaction, params) {
-        const [userId] = params;
+        // support both public and ephemeral variants
+        // params can be: [userId] or ['ephemeral', userId]
+        const isEphemeral = params && params[0] === 'ephemeral';
+        const userId = isEphemeral ? params[1] : params[0];
         const targetUser = await this.client.users.fetch(userId);
 
         try {
-            await interaction.deferUpdate();
-
+            // If showing publicly, defer the update and edit the original reply.
+            // If ephemeral, reply directly to the user (private message-like ephemeral reply).
             const profile = await this.userService.getOrCreateUser(userId, targetUser.username);
 
-            const container = new (require('discord.js').ContainerBuilder)()
+            const { ContainerBuilder, TextDisplayBuilder, SectionBuilder, ActionRowBuilder, ButtonBuilder, MessageFlags } = require('discord.js');
+
+            const container = new ContainerBuilder()
                 .setAccentColor(0x3B82F6)
                 .addTextDisplayComponents(
-                    new (require('discord.js').TextDisplayBuilder)()
-                        .setContent(`# 🛒 Nexium Shop Information\nWelcome to the Dimensional Shop!`)
+                    new TextDisplayBuilder()
+                        .setContent('# 🛒 Nexium Shop — Quick Guide')
                 )
                 .addSectionComponents(
-                    new (require('discord.js').SectionBuilder)()
+                    new SectionBuilder()
                         .addTextDisplayComponents(
-                            new (require('discord.js').TextDisplayBuilder)()
-                                .setContent(`**Your Balance:** ${profile.coins.toLocaleString()} coins\n**Energy:** ${profile.dimensionalEnergy}/${profile.maxEnergy}\n\n**Shop Categories:**\n• 🧪 Consumables - Potions and items\n• ⚔️ Equipment - Weapons and armor\n• ⚡ Boosters - XP multipliers\n• 🎨 Cosmetics - Frames and themes`)
+                            new TextDisplayBuilder()
+                                .setContent(`**Currency:** Coins = spend on items. Shards = premium currency for X.`),
+                            new TextDisplayBuilder()
+                                .setContent(`**How to buy:** Click item → Confirm Purchase → Item applied. Purchases are immediate; no refunds.`),
+                            new TextDisplayBuilder()
+                                .setContent(`**Featured/Daily:** Featured items are curated; daily deals refresh every 24h.`),
+                            new TextDisplayBuilder()
+                                .setContent(`**Frames:** Frames unlock visual card frames. They are stored in your profile's unlockedFrames.`),
+                            new TextDisplayBuilder()
+                                .setContent(`**Limits & notes:** Some items are one-time, some stack; pages show up to 5 items; use navigation buttons.`),
+                            new TextDisplayBuilder()
+                                .setContent(`**Support:** Use /support if you see a bug or incorrect charge.`)
                         )
                 );
 
-            const row = new (require('discord.js').ActionRowBuilder)()
+            const row = new ActionRowBuilder()
                 .addComponents(
-                    new (require('discord.js').ButtonBuilder)()
+                    new ButtonBuilder()
                         .setCustomId(`shop_featured_${userId}`)
                         .setLabel('Featured Items')
                         .setStyle(require('discord.js').ButtonStyle.Primary)
                         .setEmoji('⭐'),
-                    new (require('discord.js').ButtonBuilder)()
+                    new ButtonBuilder()
                         .setCustomId(`shop_daily_${userId}`)
                         .setLabel('Daily Deals')
                         .setStyle(require('discord.js').ButtonStyle.Success)
                         .setEmoji('🎯'),
-                    new (require('discord.js').ButtonBuilder)()
+                    new ButtonBuilder()
                         .setCustomId(`shop_back_${userId}`)
                         .setLabel('Back to Profile')
                         .setStyle(require('discord.js').ButtonStyle.Secondary)
@@ -623,17 +629,34 @@ class ShopButtonHandlers {
 
             container.addActionRowComponents(row);
 
-            await interaction.editReply({
-                components: [container],
-                flags: require('discord.js').MessageFlags.IsComponentsV2
-            });
+            if (isEphemeral) {
+                // send a private ephemeral reply to the clicking user
+                await interaction.reply({
+                    components: [container],
+                    flags: MessageFlags.Ephemeral
+                });
+            } else {
+                await interaction.deferUpdate();
+                await interaction.editReply({
+                    components: [container],
+                    flags: MessageFlags.IsComponentsV2
+                });
+            }
 
         } catch (error) {
             console.error('Error handling shop info:', error);
-            await interaction.editReply({
-                content: 'An error occurred while loading shop information.',
-                flags: require('discord.js').MessageFlags.Ephemeral
-            });
+            try {
+                await interaction.editReply({
+                    content: 'An error occurred while loading shop information.',
+                    flags: require('discord.js').MessageFlags.Ephemeral
+                });
+            } catch (e) {
+                // fallback: try reply
+                await interaction.reply({
+                    content: 'An error occurred while loading shop information.',
+                    flags: require('discord.js').MessageFlags.Ephemeral
+                });
+            }
         }
     }
 }
