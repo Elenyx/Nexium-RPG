@@ -149,6 +149,13 @@ class ButtonHandler {
                 await this.shopHandlers.handleBuyFrame(interaction, params);
                 return true;
             case 'back':
+                // Check if this is a back to profile button
+                if (interaction.customId.includes('shop_back_') && !interaction.customId.includes('shop_back_cat_')) {
+                    await this.shopHandlers.handleBackToProfile(interaction, params);
+                } else {
+                    await this.shopHandlers.handleBack(interaction, params);
+                }
+                return true;
             case 'continue':
             case 'backprofile':
                 await this.shopHandlers.handleBack(interaction, params);

@@ -659,6 +659,32 @@ class ShopButtonHandlers {
             }
         }
     }
+
+    /**
+     * Handles shop back to profile button
+     * @param {Object} interaction - Discord interaction
+     * @param {Array} params - Button parameters
+     */
+    async handleBackToProfile(interaction, params) {
+        const [userId] = params;
+        const targetUser = await this.client.users.fetch(userId);
+
+        try {
+            await interaction.deferUpdate();
+
+            const profile = await this.userService.getOrCreateUser(userId, targetUser.username);
+            const profileDisplay = this.registry.createProfile(profile, targetUser);
+
+            await interaction.editReply(profileDisplay);
+
+        } catch (error) {
+            console.error('Error handling back to profile:', error);
+            await interaction.editReply({
+                content: 'An error occurred while going back to your profile.',
+                flags: require('discord.js').MessageFlags.Ephemeral
+            });
+        }
+    }
 }
 
 module.exports = ShopButtonHandlers;
