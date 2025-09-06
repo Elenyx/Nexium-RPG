@@ -159,7 +159,8 @@ class ProfileDisplay {
 
         return {
             components: [container],
-            flags: MessageFlags.IsComponentsV2
+            flags: MessageFlags.IsComponentsV2,
+            embeds: []
         };
     }
 
@@ -227,7 +228,8 @@ class ProfileDisplay {
 
         return {
             components: [container],
-            flags: MessageFlags.IsComponentsV2
+            flags: MessageFlags.IsComponentsV2,
+            embeds: []
         };
     }
 }

@@ -134,9 +134,9 @@ class CharacterCollection {
         components.push(actionRow);
 
         return {
-            embeds: [embed],
             components: components,
-            flags: MessageFlags.IsComponentsV2
+            flags: MessageFlags.IsComponentsV2,
+            embeds: []
         };
     }
 
@@ -300,7 +300,8 @@ class CharacterCollection {
 
         return {
             components: allComponents,
-            flags: MessageFlags.IsComponentsV2
+            flags: MessageFlags.IsComponentsV2,
+            embeds: []
             // NO files array - this prevents downloadable attachments!
         };
     }
@@ -467,9 +468,9 @@ class CharacterCollection {
             );
 
         return {
-            embeds: [embed],
             components: [row],
-            flags: MessageFlags.IsComponentsV2
+            flags: MessageFlags.IsComponentsV2,
+            embeds: []
         };
     }
 
@@ -536,9 +537,9 @@ class CharacterCollection {
             .addComponents(selectMenu);
 
         return {
-            embeds: [embed],
             components: [row],
-            flags: MessageFlags.IsComponentsV2
+            flags: MessageFlags.IsComponentsV2,
+            embeds: []
         };
     }
 

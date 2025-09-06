@@ -360,7 +360,8 @@ class ProfileButtonHandlers {
                 );
             await interaction.editReply({
                 components: [errorSection],
-                flags: MessageFlags.IsComponentsV2
+                flags: MessageFlags.IsComponentsV2,
+                embeds: []
             });
         }
     }

@@ -121,9 +121,9 @@ class BattleDisplay {
         }
 
         return {
-            embeds: [embed],
             components: components,
-            flags: MessageFlags.IsComponentsV2
+            flags: MessageFlags.IsComponentsV2,
+            embeds: []
         };
     }
 
@@ -191,9 +191,9 @@ class BattleDisplay {
             );
 
         return {
-            embeds: [embed],
             components: [row],
-            flags: MessageFlags.IsComponentsV2
+            flags: MessageFlags.IsComponentsV2,
+            embeds: []
         };
     }
 
@@ -264,9 +264,9 @@ class BattleDisplay {
         components.push(controlRow);
 
         return {
-            embeds: [embed],
             components: components,
-            flags: MessageFlags.IsComponentsV2
+            flags: MessageFlags.IsComponentsV2,
+            embeds: []
         };
     }
 
@@ -333,9 +333,9 @@ class BattleDisplay {
         components.push(backRow);
 
         return {
-            embeds: [embed],
             components: components,
-            flags: MessageFlags.IsComponentsV2
+            flags: MessageFlags.IsComponentsV2,
+            embeds: []
         };
     }
 

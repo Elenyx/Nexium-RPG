@@ -43,7 +43,7 @@ class InventoryDisplay {
                 new TextDisplayBuilder().setContent(`**🖼️ Frames**\n${frameList}`)
             );
 
-        return { components: [container], flags: MessageFlags.IsComponentsV2 };
+        return { components: [container], flags: MessageFlags.IsComponentsV2, embeds: [] };
     }
 }
 

@@ -82,7 +82,8 @@ class ShopDisplay {
 
         return {
             components: [container],
-            flags: MessageFlags.IsComponentsV2
+            flags: MessageFlags.IsComponentsV2,
+            embeds: []
         };
     }
 
@@ -228,7 +229,8 @@ class ShopDisplay {
 
         return {
             components: [container],
-            flags: MessageFlags.IsComponentsV2
+            flags: MessageFlags.IsComponentsV2,
+            embeds: []
         };
     }
 
@@ -279,7 +281,8 @@ class ShopDisplay {
 
         return {
             components: [container],
-            flags: MessageFlags.IsComponentsV2
+            flags: MessageFlags.IsComponentsV2,
+            embeds: []
         };
     }
 
@@ -327,7 +330,8 @@ class ShopDisplay {
 
         return {
             components: [container],
-            flags: MessageFlags.IsComponentsV2
+            flags: MessageFlags.IsComponentsV2,
+            embeds: []
         };
     }
 }
