@@ -7,6 +7,17 @@
 const ComponentRegistry = require('../ComponentRegistry');
 const UserService = require('../../services/UserService');
 const { models } = require('../../database/connection');
+const { 
+    ButtonBuilder,
+    ButtonStyle, 
+    ActionRowBuilder, 
+    ContainerBuilder,
+    TextDisplayBuilder,
+    SectionBuilder,
+    ThumbnailBuilder,
+    EmbedBuilder,
+    MessageFlags 
+} = require('discord.js');
 
 class ShopButtonHandlers {
     constructor(client) {
@@ -40,7 +51,6 @@ class ShopButtonHandlers {
             
             // Use the registry helper to create a valid error container
             const errorContainer = this.registry.createErrorContainer('An error occurred while loading the shop category.');
-            const { MessageFlags } = require('discord.js');
             
             await interaction.editReply({
                 components: [errorContainer],
@@ -72,40 +82,40 @@ class ShopButtonHandlers {
 
             const categories = this.registry.getDefaultShopCategories();
 
-            const container = new (require('discord.js').ContainerBuilder)()
+            const container = new ContainerBuilder()
                 .setAccentColor(0xF59E0B)
                 .addTextDisplayComponents(
-                    new (require('discord.js').TextDisplayBuilder)()
+                    new TextDisplayBuilder()
                         .setContent(`# ⭐ Featured Items\nCheck out our most popular items!`)
                 )
                 .addSectionComponents(
-                    new (require('discord.js').SectionBuilder)()
+                    new SectionBuilder()
                         .addTextDisplayComponents(
                             ...allItems.map(item =>
-                                new (require('discord.js').TextDisplayBuilder)()
+                                new TextDisplayBuilder()
                                     .setContent(`${item.emoji} **${item.name}**\n${item.description}\n**Price:** ${item.price} coins`)
                             )
                         )
                 );
 
             // Add category buttons
-            const row1 = new (require('discord.js').ActionRowBuilder)()
+            const row1 = new ActionRowBuilder()
                 .addComponents(
                     ...categories.slice(0, 4).map(cat =>
-                        new (require('discord.js').ButtonBuilder)()
+                        new ButtonBuilder()
                             .setCustomId(`shop_category_${cat.id}_${userId}`)
                             .setLabel(cat.name)
-                            .setStyle(require('discord.js').ButtonStyle.Secondary)
+                            .setStyle(ButtonStyle.Secondary)
                             .setEmoji(cat.emoji)
                     )
                 );
 
-            const row2 = new (require('discord.js').ActionRowBuilder)()
+            const row2 = new ActionRowBuilder()
                 .addComponents(
-                    new (require('discord.js').ButtonBuilder)()
+                    new ButtonBuilder()
                         .setCustomId(`shop_back_cat_${userId}`)
                         .setLabel('Back to Shop')
-                        .setStyle(require('discord.js').ButtonStyle.Secondary)
+                        .setStyle(ButtonStyle.Secondary)
                         .setEmoji('⬅️')
                 );
 
@@ -113,7 +123,7 @@ class ShopButtonHandlers {
 
             await interaction.editReply({
                 components: [container],
-                flags: require('discord.js').MessageFlags.IsComponentsV2
+                flags: MessageFlags.IsComponentsV2
             });
 
         } catch (error) {
@@ -121,7 +131,6 @@ class ShopButtonHandlers {
             
             // Use the registry helper to create a valid error container
             const errorContainer = this.registry.createErrorContainer('An error occurred while loading featured items.');
-            const { MessageFlags } = require('discord.js');
             
             await interaction.editReply({
                 components: [errorContainer],
@@ -591,8 +600,6 @@ class ShopButtonHandlers {
             // If ephemeral, reply directly to the user (private message-like ephemeral reply).
             const profile = await this.userService.getOrCreateUser(userId, targetUser.username);
 
-            const { ContainerBuilder, TextDisplayBuilder, SectionBuilder, ActionRowBuilder, ButtonBuilder, MessageFlags } = require('discord.js');
-
             const container = new ContainerBuilder()
                 .setAccentColor(0x3B82F6)
                 .addTextDisplayComponents(
@@ -616,17 +623,17 @@ class ShopButtonHandlers {
                     new ButtonBuilder()
                         .setCustomId(`shop_featured_${userId}`)
                         .setLabel('Featured Items')
-                        .setStyle(require('discord.js').ButtonStyle.Primary)
+                        .setStyle(ButtonStyle.Primary)
                         .setEmoji('⭐'),
                     new ButtonBuilder()
                         .setCustomId(`shop_daily_${userId}`)
                         .setLabel('Daily Deals')
-                        .setStyle(require('discord.js').ButtonStyle.Success)
+                        .setStyle(ButtonStyle.Success)
                         .setEmoji('🎯'),
                     new ButtonBuilder()
                         .setCustomId(`shop_back_${userId}`)
                         .setLabel('Back to Profile')
-                        .setStyle(require('discord.js').ButtonStyle.Secondary)
+                        .setStyle(ButtonStyle.Secondary)
                         .setEmoji('⬅️')
                 );
 
@@ -653,13 +660,12 @@ class ShopButtonHandlers {
             if (!interaction.replied && !interaction.deferred) {
                 await interaction.reply({
                     content: 'An error occurred while loading shop information.',
-                    flags: require('discord.js').MessageFlags.Ephemeral
+                    flags: MessageFlags.Ephemeral
                 });
             } else {
                 try {
                     // Use the registry helper to create a valid error container
                     const errorContainer = this.registry.createErrorContainer('An error occurred while loading shop information.');
-                    const { MessageFlags } = require('discord.js');
                     
                     await interaction.editReply({
                         components: [errorContainer],

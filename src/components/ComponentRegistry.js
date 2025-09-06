@@ -9,6 +9,18 @@ const CharacterCollection = require('./builders/CharacterCollection');
 const ShopDisplay = require('./builders/ShopDisplay');
 const BattleDisplay = require('./builders/BattleDisplay');
 
+const { 
+    ButtonBuilder,
+    ButtonStyle, 
+    ActionRowBuilder, 
+    ContainerBuilder,
+    TextDisplayBuilder,
+    SectionBuilder,
+    ThumbnailBuilder,
+    EmbedBuilder,
+    MessageFlags 
+} = require('discord.js');
+
 class ComponentRegistry {
     constructor() {
         this.builders = {
@@ -51,8 +63,6 @@ class ComponentRegistry {
      * @returns {Object} Container with error message
      */
     createErrorContainer(errorMessage) {
-        const { ContainerBuilder, TextDisplayBuilder, MessageFlags } = require('discord.js');
-        
         return new ContainerBuilder()
             .addTextDisplayComponents(
                 new TextDisplayBuilder()
