@@ -43,7 +43,6 @@ module.exports = {
                     { name: '🏖️ Summer Vacation Frame', value: 'summer_vacation' },
                     { name: '🎊 New Year Celebration Frame', value: 'new_year_celebration' },
                     { name: '🏆 Community Champion Frame', value: 'community_champion' },
-                    { name: '🧪 Beta Tester Frame', value: 'beta_tester' },
                     { name: '⭐ Early Supporter Frame', value: 'early_supporter' }
                 )),
 
