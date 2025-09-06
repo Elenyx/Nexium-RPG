@@ -87,7 +87,7 @@ class ProfileDisplay {
 
         const section1 = new SectionBuilder()
             .addTextDisplayComponents(
-                td => td.setContent(`# ${EMOJIS.DIMENSION} Dimensional Profile\n**${targetUser.username}**'s journey through the multiverse\n\n${profileStats}`)
+                td => td.setContent(`**${EMOJIS.DIMENSION} Dimensional Profile**\n**${targetUser.username}**'s journey through the multiverse\n\n${profileStats}`)
             )
             .setButtonAccessory(
                 btn => btn
@@ -99,7 +99,7 @@ class ProfileDisplay {
 
         const section2 = new SectionBuilder()
             .addTextDisplayComponents(
-                td => td.setContent(`## 📊 Progress Details\n${progressStats}`)
+                td => td.setContent(`**📊 Progress Details**\n${progressStats}`)
             )
             .setButtonAccessory(
                 btn => btn
@@ -111,7 +111,7 @@ class ProfileDisplay {
 
         const section3 = new SectionBuilder()
             .addTextDisplayComponents(
-                td => td.setContent(`## ⚡ Energy Status\n**Current:** ${userData.dimensionalEnergy}/${userData.maxEnergy}\n**Regeneration:** Active\n**Last Regen:** ${new Date().toLocaleTimeString()}`)
+                td => td.setContent(`**⚡ Energy Status**\n**Current:** ${userData.dimensionalEnergy}/${userData.maxEnergy}\n**Regeneration:** Active\n**Last Regen:** ${new Date().toLocaleTimeString()}`)
             )
             .setButtonAccessory(
                 btn => btn
@@ -123,7 +123,7 @@ class ProfileDisplay {
 
         const section4 = new SectionBuilder()
             .addTextDisplayComponents(
-                td => td.setContent(`## 💰 Economy Overview\n**Coins:** ${userData.coins.toLocaleString()}\n**Daily Streak:** ${userData.dailyStreak} days\n**Next Daily:** ${this.getDailyCountdown(userData.lastDaily)}\n**Last Daily:** ${userData.lastDaily ? new Date(userData.lastDaily).toLocaleDateString() : 'Never'}`)
+                td => td.setContent(`**💰 Economy Overview**\n**Coins:** ${userData.coins.toLocaleString()}\n**Daily Streak:** ${userData.dailyStreak} days\n**Next Daily:** ${this.getDailyCountdown(userData.lastDaily)}\n**Last Daily:** ${userData.lastDaily ? new Date(userData.lastDaily).toLocaleDateString() : 'Never'}`)
             )
             .setButtonAccessory(
                 btn => btn
@@ -135,7 +135,7 @@ class ProfileDisplay {
 
         const section5 = new SectionBuilder()
             .addTextDisplayComponents(
-                td => td.setContent(`## 🛒 Shop Access\nBrowse items, characters, and upgrades available in the dimensional shop.`)
+                td => td.setContent(`**🛒 Shop Access**\nBrowse items, characters, and upgrades available in the dimensional shop.`)
             )
             .setButtonAccessory(
                 btn => btn
@@ -208,11 +208,11 @@ class ProfileDisplay {
 
         const detailedStatsSection = new SectionBuilder()
             .addTextDisplayComponents(
-                td => td.setContent(`# ${EMOJIS.LEVEL} Detailed Statistics\n**${targetUser.username}**'s comprehensive dimensional profile\n\nThis section provides in-depth analysis of your dimensional journey.`),
-                td => td.setContent(`## 📊 Progress Statistics\n${progressStats}`),
-                td => td.setContent(`## ⚡ Energy Analysis\n${energyStats}`),
-                td => td.setContent(`## 💰 Economy Details\n${economyStats}`),
-                td => td.setContent(`## 🌌 Activity Overview\n${activityStats}`)
+                td => td.setContent(`**${EMOJIS.LEVEL} Detailed Statistics**\n**${targetUser.username}**'s comprehensive dimensional profile\n\nThis section provides in-depth analysis of your dimensional journey.`),
+                td => td.setContent(`**📊 Progress Statistics**\n${progressStats}`),
+                td => td.setContent(`**⚡ Energy Analysis**\n${energyStats}`),
+                td => td.setContent(`**💰 Economy Details**\n${economyStats}`),
+                td => td.setContent(`**🌌 Activity Overview**\n${activityStats}`)
             )
             .setButtonAccessory(
                 btn => btn

@@ -9,7 +9,14 @@ const UserService = require('../../services/UserService');
 
 class ShopButtonHandlers {
     constructor(client) {
-        this.client = client;
+                    });
+            }
+
+            const successDisplay = this.registry.createPurchaseSuccess(item, profile, targetUser);
+            await interaction.editReply({
+                ...successDisplay,
+                flags: undefined
+            });his.client = client;
         this.registry = new ComponentRegistry();
         this.userService = new UserService();
     }
@@ -27,10 +34,12 @@ class ShopButtonHandlers {
             await interaction.deferUpdate();
 
             const profile = await this.userService.getOrCreateUser(userId, targetUser.username);
-            const items = this.registry.getSampleShopItems(categoryId);
             const shopDisplay = this.registry.createShopCategory(categoryId, items, profile, targetUser, 1);
 
-            await interaction.editReply(shopDisplay);
+            await interaction.editReply({
+                ...shopDisplay,
+                flags: undefined
+            });
 
         } catch (error) {
             console.error('Error handling shop category:', error);
@@ -230,11 +239,12 @@ class ShopButtonHandlers {
                 return;
             }
 
-            // Show first item as example
-            const item = items[0];
             const purchaseDisplay = this.registry.createPurchaseConfirmation(item, profile, userId);
 
-            await interaction.editReply(purchaseDisplay);
+            await interaction.editReply({
+                ...purchaseDisplay,
+                flags: undefined
+            });
 
         } catch (error) {
             console.error('Error handling purchase:', error);
@@ -321,7 +331,10 @@ class ShopButtonHandlers {
             }
 
             const successDisplay = this.registry.createPurchaseSuccess(item, profile, targetUser);
-            await interaction.editReply(successDisplay);
+            await interaction.editReply({
+                ...successDisplay,
+                flags: undefined
+            });
 
         } catch (error) {
             console.error('Error confirming purchase:', error);
@@ -402,7 +415,10 @@ class ShopButtonHandlers {
             }
 
             const successDisplay = this.registry.createPurchaseSuccess(item, profile, targetUser);
-            await interaction.editReply(successDisplay);
+            await interaction.editReply({
+                ...successDisplay,
+                flags: undefined
+            });
 
         } catch (error) {
             console.error('Error handling frame purchase:', error);
@@ -428,14 +444,16 @@ class ShopButtonHandlers {
 
             const profile = await this.userService.getOrCreateUser(userId, targetUser.username);
 
-            // Create main shop display
             const shopDisplay = this.registry.createShopInterface(
                 this.registry.getDefaultShopCategories(),
                 profile,
                 targetUser
             );
 
-            await interaction.editReply(shopDisplay);
+            await interaction.editReply({
+                ...shopDisplay,
+                flags: undefined
+            });
 
         } catch (error) {
             console.error('Error handling shop back:', error);

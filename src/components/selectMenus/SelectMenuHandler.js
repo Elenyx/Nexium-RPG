@@ -55,11 +55,12 @@ class SelectMenuHandler {
 
             const targetUser = await this.client.users.fetch(userId);
             const profile = await userService.getOrCreateUser(userId, targetUser.username);
-            const items = registry.getSampleShopItems(categoryId);
-
             const shopDisplay = registry.createShopCategory(categoryId, items, profile, targetUser, 1);
 
-            await interaction.editReply(shopDisplay);
+            await interaction.editReply({
+                ...shopDisplay,
+                flags: undefined
+            });
 
         } catch (error) {
             logger.error('Error handling shop category selection:', error);

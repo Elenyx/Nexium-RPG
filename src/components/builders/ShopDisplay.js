@@ -30,7 +30,7 @@ class ShopDisplay {
             .setAccentColor(COLORS.SUCCESS)
             .addTextDisplayComponents(
                 new TextDisplayBuilder()
-                    .setContent(`# ${EMOJIS.COIN} Nexium Shop\nWelcome to the Dimensional Shop!\nBrowse and purchase items to enhance your journey.`)
+                    .setContent(`**${EMOJIS.COIN} Nexium Shop**\nWelcome to the Dimensional Shop!\nBrowse and purchase items to enhance your journey.`)
             )
             .addSectionComponents(
                 new SectionBuilder()
@@ -41,11 +41,10 @@ class ShopDisplay {
                             .setContent(`🛒 **Shop Categories**\n${categories.map(cat => `${cat.emoji} ${cat.name}`).join('\n')}`)
                     )
                     .setButtonAccessory(
-                        btn => btn
+                        new ButtonBuilder()
                             .setCustomId(`shop_info_${targetUser.id}`)
                             .setLabel('Shop Info')
                             .setStyle(ButtonStyle.Secondary)
-                            .setEmoji({ name: 'ℹ️' })
                     )
             );
 
@@ -127,7 +126,7 @@ class ShopDisplay {
             .setAccentColor(COLORS.PRIMARY)
             .addTextDisplayComponents(
                 new TextDisplayBuilder()
-                    .setContent(`# ${categoryEmojis[categoryId]} ${categoryNames[categoryId]} Shop\nBrowse ${categoryNames[categoryId].toLowerCase()} to enhance your adventure!\n\n**Balance:** ${userData.coins.toLocaleString()} coins • **Page ${page}/${totalPages}**`)
+                    .setContent(`**${categoryEmojis[categoryId]} ${categoryNames[categoryId]} Shop**\nBrowse ${categoryNames[categoryId].toLowerCase()} to enhance your adventure!\n\n**Balance:** ${userData.coins.toLocaleString()} coins • **Page ${page}/${totalPages}**`)
             );
 
         if (pageItems.length === 0) {
@@ -159,11 +158,10 @@ class ShopDisplay {
                                 .setContent(`${item.emoji} **${item.name}** ${canAfford ? '✅' : '❌'}\n${item.description}\n**Price:** ${priceText}\n**Effect:** ${item.effect || 'Special effect'}\n**ID:** ${item.id}`)
                         )
                         .setButtonAccessory(
-                            btn => btn
+                            new ButtonBuilder()
                                 .setCustomId(`shop_item_info_${item.id}_${targetUser.id}`)
                                 .setLabel('View Item')
                                 .setStyle(ButtonStyle.Secondary)
-                                .setEmoji({ name: '👁️' })
                         )
                 );
             });
@@ -269,7 +267,7 @@ class ShopDisplay {
             .setAccentColor(canAfford ? COLORS.SUCCESS : COLORS.ERROR)
             .addTextDisplayComponents(
                 new TextDisplayBuilder()
-                    .setContent(`# 🛒 Purchase Confirmation\nAre you sure you want to purchase **${item.name}**?`)
+                    .setContent(`**🛒 Purchase Confirmation**\nAre you sure you want to purchase **${item.name}**?`)
             )
             .addSectionComponents(
                 new SectionBuilder()
@@ -278,11 +276,10 @@ class ShopDisplay {
                             .setContent(`📦 **Item Details**\n**Name:** ${item.name}\n**Description:** ${item.description}\n**Effect:** ${item.effect || 'Special effect'}\n**Price:** ${EMOJIS.COIN} ${item.price.toLocaleString()}`)
                     )
                     .setButtonAccessory(
-                        btn => btn
+                        new ButtonBuilder()
                             .setCustomId(`shop_item_details_${item.id}_${userId}`)
                             .setLabel('Item Details')
                             .setStyle(ButtonStyle.Secondary)
-                            .setEmoji({ name: '📦' })
                     ),
                 new SectionBuilder()
                     .addTextDisplayComponents(
@@ -290,11 +287,10 @@ class ShopDisplay {
                             .setContent(`💰 **Your Balance**\n**Current:** ${EMOJIS.COIN} ${userData.coins.toLocaleString()}\n**After Purchase:** ${EMOJIS.COIN} ${(userData.coins - item.price).toLocaleString()}\n${canAfford ? '✅ You can afford this item' : '❌ Insufficient funds'}`)
                     )
                     .setButtonAccessory(
-                        btn => btn
+                        new ButtonBuilder()
                             .setCustomId(`shop_balance_${userId}`)
                             .setLabel('Check Balance')
                             .setStyle(ButtonStyle.Secondary)
-                            .setEmoji({ name: '💰' })
                     )
             )
             .addActionRowComponents(
@@ -333,7 +329,7 @@ class ShopDisplay {
             .setAccentColor(COLORS.SUCCESS)
             .addTextDisplayComponents(
                 new TextDisplayBuilder()
-                    .setContent(`# ✅ Purchase Successful!\nCongratulations, ${targetUser.username}!`)
+                    .setContent(`**✅ Purchase Successful!**\nCongratulations, ${targetUser.username}!`)
             )
             .addSectionComponents(
                 new SectionBuilder()
@@ -342,11 +338,10 @@ class ShopDisplay {
                             .setContent(`📦 **Item Purchased**\n${item.emoji} **${item.name}**\n${item.description}`)
                     )
                     .setButtonAccessory(
-                        btn => btn
+                        new ButtonBuilder()
                             .setCustomId(`shop_purchased_item_${item.id}_${targetUser.id}`)
                             .setLabel('Purchased Item')
                             .setStyle(ButtonStyle.Secondary)
-                            .setEmoji({ name: '📦' })
                     ),
                 new SectionBuilder()
                     .addTextDisplayComponents(
@@ -354,11 +349,10 @@ class ShopDisplay {
                             .setContent(`💰 **Updated Balance**\n${EMOJIS.COIN} ${userData.coins.toLocaleString()} coins remaining\n\n🎉 **Effect Applied**\n${item.effect || 'Item effect has been applied to your account!'}`)
                     )
                     .setButtonAccessory(
-                        btn => btn
+                        new ButtonBuilder()
                             .setCustomId(`shop_updated_balance_${targetUser.id}`)
                             .setLabel('Updated Balance')
                             .setStyle(ButtonStyle.Secondary)
-                            .setEmoji({ name: '💰' })
                     )
             )
             .addActionRowComponents(
