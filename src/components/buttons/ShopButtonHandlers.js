@@ -63,55 +63,57 @@ class ShopButtonHandlers {
                 ...this.registry.getSampleShopItems('boosters')
             ].slice(0, 6); // Top 6 featured items
 
-            const embed = {
-                title: '⭐ Featured Items',
-                description: 'Check out our most popular items!',
-                color: 0xF59E0B,
-                fields: allItems.map(item => ({
-                    name: `${item.emoji} ${item.name}`,
-                    value: `${item.description}\n**Price:** ${item.price} coins`,
-                    inline: true
-                })),
-                footer: { text: 'Select a category to browse more items' }
-            };
-
             const categories = this.registry.getDefaultShopCategories();
-            const row1 = {
-                type: 1,
-                components: categories.slice(0, 4).map(cat => ({
-                    type: 2,
-                    style: 2,
-                    label: cat.name,
-                    emoji: cat.emoji,
-                    custom_id: `shop_category_${cat.id}_${userId}`
-                }))
-            };
 
-            const row2 = {
-                type: 1,
-                components: [
-                    {
-                        type: 2,
-                        style: 2,
-                        label: 'Back to Shop',
-                        emoji: '⬅️',
-                        custom_id: `shop_back_cat_${userId}`
-                    }
-                ]
-            };
+            const container = new (require('discord.js').ContainerBuilder)()
+                .setAccentColor(0xF59E0B)
+                .addTextDisplayComponents(
+                    new (require('discord.js').TextDisplayBuilder)()
+                        .setContent(`# ⭐ Featured Items\nCheck out our most popular items!`)
+                )
+                .addSectionComponents(
+                    new (require('discord.js').SectionBuilder)()
+                        .addTextDisplayComponents(
+                            ...allItems.map(item =>
+                                new (require('discord.js').TextDisplayBuilder)()
+                                    .setContent(`${item.emoji} **${item.name}**\n${item.description}\n**Price:** ${item.price} coins`)
+                            )
+                        )
+                );
+
+            // Add category buttons
+            const row1 = new (require('discord.js').ActionRowBuilder)()
+                .addComponents(
+                    ...categories.slice(0, 4).map(cat =>
+                        new (require('discord.js').ButtonBuilder)()
+                            .setCustomId(`shop_category_${cat.id}_${userId}`)
+                            .setLabel(cat.name)
+                            .setStyle(require('discord.js').ButtonStyle.Secondary)
+                            .setEmoji(cat.emoji)
+                    )
+                );
+
+            const row2 = new (require('discord.js').ActionRowBuilder)()
+                .addComponents(
+                    new (require('discord.js').ButtonBuilder)()
+                        .setCustomId(`shop_back_cat_${userId}`)
+                        .setLabel('Back to Shop')
+                        .setStyle(require('discord.js').ButtonStyle.Secondary)
+                        .setEmoji('⬅️')
+                );
+
+            container.addActionRowComponents(row1, row2);
 
             await interaction.editReply({
-                embeds: [embed],
-                components: [row1, row2],
-                flags: 128
+                components: [container],
+                flags: require('discord.js').MessageFlags.IsComponentsV2
             });
 
         } catch (error) {
             console.error('Error handling featured items:', error);
             await interaction.editReply({
                 content: 'An error occurred while loading featured items.',
-                embeds: [],
-                components: []
+                flags: require('discord.js').MessageFlags.Ephemeral
             });
         }
     }
@@ -152,54 +154,54 @@ class ShopButtonHandlers {
                 }
             ];
 
-            const embed = {
-                title: '🎯 Daily Deals',
-                description: 'Limited time offers! These deals refresh daily.',
-                color: 0xEF4444,
-                fields: dailyDeals.map(deal => ({
-                    name: `${deal.emoji} ${deal.name}`,
-                    value: `${deal.description}\n~~${deal.originalPrice}~~ **${deal.dealPrice}** coins`,
-                    inline: true
-                })),
-                footer: { text: 'Deals refresh every 24 hours • Limited time only!' }
-            };
+            const container = new (require('discord.js').ContainerBuilder)()
+                .setAccentColor(0xEF4444)
+                .addTextDisplayComponents(
+                    new (require('discord.js').TextDisplayBuilder)()
+                        .setContent(`# 🎯 Daily Deals\nLimited time offers! These deals refresh daily.`)
+                )
+                .addSectionComponents(
+                    new (require('discord.js').SectionBuilder)()
+                        .addTextDisplayComponents(
+                            ...dailyDeals.map(deal =>
+                                new (require('discord.js').TextDisplayBuilder)()
+                                    .setContent(`${deal.emoji} **${deal.name}**\n${deal.description}\n~~${deal.originalPrice}~~ **${deal.dealPrice}** coins`)
+                            )
+                        )
+                );
 
-            const row1 = {
-                type: 1,
-                components: dailyDeals.map(deal => ({
-                    type: 2,
-                    style: 3,
-                    label: `Buy ${deal.name.split(' ')[0]}`,
-                    emoji: deal.emoji,
-                    custom_id: `shop_purchase_deal_${deal.id}_${userId}`
-                }))
-            };
+            const row1 = new (require('discord.js').ActionRowBuilder)()
+                .addComponents(
+                    ...dailyDeals.map(deal =>
+                        new (require('discord.js').ButtonBuilder)()
+                            .setCustomId(`shop_purchase_deal_${deal.id}_${userId}`)
+                            .setLabel(`Buy ${deal.name.split(' ')[0]}`)
+                            .setStyle(require('discord.js').ButtonStyle.Success)
+                            .setEmoji(deal.emoji)
+                    )
+                );
 
-            const row2 = {
-                type: 1,
-                components: [
-                    {
-                        type: 2,
-                        style: 2,
-                        label: 'Back to Shop',
-                        emoji: '⬅️',
-                        custom_id: `shop_back_cat_${userId}`
-                    }
-                ]
-            };
+            const row2 = new (require('discord.js').ActionRowBuilder)()
+                .addComponents(
+                    new (require('discord.js').ButtonBuilder)()
+                        .setCustomId(`shop_back_cat_${userId}`)
+                        .setLabel('Back to Shop')
+                        .setStyle(require('discord.js').ButtonStyle.Secondary)
+                        .setEmoji('⬅️')
+                );
+
+            container.addActionRowComponents(row1, row2);
 
             await interaction.editReply({
-                embeds: [embed],
-                components: [row1, row2],
-                flags: 128
+                components: [container],
+                flags: require('discord.js').MessageFlags.IsComponentsV2
             });
 
         } catch (error) {
             console.error('Error handling daily deals:', error);
             await interaction.editReply({
                 content: 'An error occurred while loading daily deals.',
-                embeds: [],
-                components: []
+                flags: require('discord.js').MessageFlags.Ephemeral
             });
         }
     }
@@ -406,6 +408,39 @@ class ShopButtonHandlers {
             console.error('Error handling frame purchase:', error);
             await interaction.editReply({
                 content: 'An error occurred while processing your purchase.',
+                embeds: [],
+                components: []
+            });
+        }
+    }
+
+    /**
+     * Handles shop back button
+     * @param {Object} interaction - Discord interaction
+     * @param {Array} params - Button parameters
+     */
+    async handleBack(interaction, params) {
+        const [userId] = params;
+        const targetUser = await this.client.users.fetch(userId);
+
+        try {
+            await interaction.deferUpdate();
+
+            const profile = await this.userService.getOrCreateUser(userId, targetUser.username);
+
+            // Create main shop display
+            const shopDisplay = this.registry.createShopInterface(
+                this.registry.getDefaultShopCategories(),
+                profile,
+                targetUser
+            );
+
+            await interaction.editReply(shopDisplay);
+
+        } catch (error) {
+            console.error('Error handling shop back:', error);
+            await interaction.editReply({
+                content: 'An error occurred while going back to the shop.',
                 embeds: [],
                 components: []
             });

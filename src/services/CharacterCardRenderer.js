@@ -94,8 +94,15 @@ class CharacterCardRenderer {
      * @returns {boolean} True if ImageKit is available, false otherwise
      */
     async isImageKitAvailable() {
-    // Always use ImageKit overlays for all runs (test and production)
-    return true;
+        try {
+            // Try to fetch a small test image to check if ImageKit is responding
+            const testUrl = `${IMAGE_KIT_BASE_URL}Characters/test.png`;
+            const response = await axios.head(testUrl, { timeout: 5000 });
+            return response.status === 200;
+        } catch (error) {
+            console.log('ImageKit service unavailable, falling back to canvas rendering:', error.message);
+            return false;
+        }
     }
 
     async createFramedImageWithCanvas(character) {
@@ -121,14 +128,20 @@ class CharacterCardRenderer {
             if (character.id) {
                 try {
                     const characterImageUrl = `${IMAGE_KIT_BASE_URL}Characters/${character.id}.png`;
-                    const characterImage = await loadImage(characterImageUrl);
-                    if (characterImage) {
-                        // Draw character image with some padding for frame
-                        const padding = 20;
-                        ctx.drawImage(characterImage, padding, padding, cardWidth - 2*padding, cardHeight - 2*padding);
+                    console.log('Attempting to load character image:', characterImageUrl);
+                    const response = await axios.head(characterImageUrl, { timeout: 5000 });
+                    if (response.status === 200) {
+                        const characterImage = await loadImage(characterImageUrl);
+                        if (characterImage) {
+                            // Draw character image with some padding for frame
+                            const padding = 20;
+                            ctx.drawImage(characterImage, padding, padding, cardWidth - 2*padding, cardHeight - 2*padding);
+                        }
+                    } else {
+                        console.log('Character image not found (status:', response.status, ') for character:', character.id);
                     }
                 } catch (error) {
-                    console.log('Could not load character image for canvas:', error.message);
+                    console.log('Could not load character image for canvas:', error.message, 'for character:', character.id);
                 }
             }
 
@@ -137,7 +150,12 @@ class CharacterCardRenderer {
             
             // Draw character info
             ctx.fillStyle = '#FFFFFF';
-            ctx.font = 'bold 24px Arial';
+            try {
+                ctx.font = 'bold 24px Arial';
+            } catch (fontError) {
+                console.log('Font loading error, using fallback:', fontError.message);
+                ctx.font = 'bold 24px sans-serif';
+            }
             ctx.textAlign = 'center';
             ctx.strokeStyle = '#000000';
             ctx.lineWidth = 2;
@@ -147,7 +165,11 @@ class CharacterCardRenderer {
             ctx.fillText(character.name, cardWidth/2, cardHeight - 60);
             
             // Rarity text
-            ctx.font = '18px Arial';
+            try {
+                ctx.font = '18px Arial';
+            } catch (fontError) {
+                ctx.font = '18px sans-serif';
+            }
             ctx.strokeText(character.rarity, cardWidth/2, cardHeight - 30);
             ctx.fillText(character.rarity, cardWidth/2, cardHeight - 30);
 
@@ -335,7 +357,11 @@ class CharacterCardRenderer {
 
         // Character info
         ctx.fillStyle = '#FFFFFF';
-        ctx.font = 'bold 16px Arial';
+        try {
+            ctx.font = 'bold 16px Arial';
+        } catch (fontError) {
+            ctx.font = 'bold 16px sans-serif';
+        }
         ctx.textAlign = 'center';
         ctx.fillText(character.name, 200, 540);
 

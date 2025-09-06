@@ -66,7 +66,7 @@ class ButtonHandler {
                 if (!interaction.replied && !interaction.deferred) {
                     await interaction.reply({
                         content: 'This button is no longer active.',
-                        ephemeral: true
+                        flags: require('discord.js').MessageFlags.Ephemeral
                     });
                 }
             }
@@ -77,7 +77,7 @@ class ButtonHandler {
             if (!interaction.replied && !interaction.deferred) {
                 await interaction.reply({
                     content: 'An error occurred while processing this button.',
-                    ephemeral: true
+                    flags: require('discord.js').MessageFlags.Ephemeral
                 });
             }
         }
