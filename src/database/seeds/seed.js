@@ -1,9 +1,17 @@
 require('dotenv').config();
 const { models } = require('../connection');
+const seedCharacters = require('./seed-characters');
+const seedFrames = require('./seed-frames');
 
 const runSeeds = async () => {
     try {
-        console.log('Running seeds...');
+        console.log('🚀 Running all seeds...');
+
+        // Seed characters first
+        await seedCharacters();
+
+        // Seed frames for existing users
+        await seedFrames();
 
         // Example seed data - you can customize this
         const sampleUsers = [
@@ -25,9 +33,9 @@ const runSeeds = async () => {
             await models.User.upsert(userData);
         }
 
-        console.log('Seeding completed successfully');
+        console.log('✅ All seeding completed successfully');
     } catch (error) {
-        console.error('Seeding failed:', error);
+        console.error('❌ Seeding failed:', error);
         process.exit(1);
     }
 };

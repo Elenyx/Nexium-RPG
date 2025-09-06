@@ -10,7 +10,10 @@ const {
     ButtonBuilder,
     ButtonStyle,
     StringSelectMenuBuilder,
-    MessageFlags
+    MessageFlags,
+    ContainerBuilder,
+    TextDisplayBuilder,
+    SectionBuilder
 } = require('discord.js');
 const { COLORS, EMOJIS } = require('../../config/constants');
 
@@ -23,30 +26,21 @@ class ShopDisplay {
      * @returns {Object} Message options with shop interface
      */
     static createShopInterface(categories, userData, targetUser) {
-        const embed = new EmbedBuilder()
-            .setTitle(`${EMOJIS.COIN} Nexium Shop`)
-            .setDescription('Welcome to the Dimensional Shop!\nBrowse and purchase items to enhance your journey.')
-            .setColor(COLORS.SUCCESS)
-            .setThumbnail(targetUser.displayAvatarURL({ dynamic: true }))
-            .addFields(
-                {
-                    name: `${EMOJIS.COIN} Your Balance`,
-                    value: `\`${userData.coins.toLocaleString()} coins\``,
-                    inline: true
-                },
-                {
-                    name: `${EMOJIS.ENERGY} Your Energy`,
-                    value: `\`${userData.dimensionalEnergy}/${userData.maxEnergy}\``,
-                    inline: true
-                },
-                {
-                    name: '🛒 Shop Categories',
-                    value: categories.map(cat => `${cat.emoji} ${cat.name}`).join('\n'),
-                    inline: false
-                }
+        const container = new ContainerBuilder()
+            .setAccentColor(COLORS.SUCCESS)
+            .addTextDisplayComponents(
+                new TextDisplayBuilder()
+                    .setContent(`# ${EMOJIS.COIN} Nexium Shop\nWelcome to the Dimensional Shop!\nBrowse and purchase items to enhance your journey.`)
             )
-            .setFooter({ text: 'Select a category to start browsing • Use /profile to return' })
-            .setTimestamp();
+            .addSectionComponents(
+                new SectionBuilder()
+                    .addTextDisplayComponents(
+                        new TextDisplayBuilder()
+                            .setContent(`${EMOJIS.COIN} **Your Balance:** \`${userData.coins.toLocaleString()} coins\`\n${EMOJIS.ENERGY} **Your Energy:** \`${userData.dimensionalEnergy}/${userData.maxEnergy}\``),
+                        new TextDisplayBuilder()
+                            .setContent(`🛒 **Shop Categories**\n${categories.map(cat => `${cat.emoji} ${cat.name}`).join('\n')}`)
+                    )
+            );
 
         const selectMenu = new StringSelectMenuBuilder()
             .setCustomId(`shop_category_${targetUser.id}`)
@@ -60,31 +54,34 @@ class ShopDisplay {
                 }))
             );
 
-        const row1 = new ActionRowBuilder()
-            .addComponents(selectMenu);
+        container.addActionRowComponents(
+            new ActionRowBuilder()
+                .addComponents(selectMenu)
+        );
 
-        const row2 = new ActionRowBuilder()
-            .addComponents(
-                new ButtonBuilder()
-                    .setCustomId(`shop_featured_${targetUser.id}`)
-                    .setLabel('Featured Items')
-                    .setStyle(ButtonStyle.Primary)
-                    .setEmoji({ name: '⭐' }),
-                new ButtonBuilder()
-                    .setCustomId(`shop_daily_${targetUser.id}`)
-                    .setLabel('Daily Deals')
-                    .setStyle(ButtonStyle.Success)
-                    .setEmoji({ name: '🎯' }),
-                new ButtonBuilder()
-                    .setCustomId(`shop_back_${targetUser.id}`)
-                    .setLabel('Back to Profile')
-                    .setStyle(ButtonStyle.Secondary)
-                    .setEmoji({ name: '⬅️' })
-            );
+        container.addActionRowComponents(
+            new ActionRowBuilder()
+                .addComponents(
+                    new ButtonBuilder()
+                        .setCustomId(`shop_featured_${targetUser.id}`)
+                        .setLabel('Featured Items')
+                        .setStyle(ButtonStyle.Primary)
+                        .setEmoji({ name: '⭐' }),
+                    new ButtonBuilder()
+                        .setCustomId(`shop_daily_${targetUser.id}`)
+                        .setLabel('Daily Deals')
+                        .setStyle(ButtonStyle.Success)
+                        .setEmoji({ name: '🎯' }),
+                    new ButtonBuilder()
+                        .setCustomId(`shop_back_${targetUser.id}`)
+                        .setLabel('Back to Profile')
+                        .setStyle(ButtonStyle.Secondary)
+                        .setEmoji({ name: '⬅️' })
+                )
+        );
 
         return {
-            embeds: [embed],
-            components: [row1, row2],
+            components: [container],
             flags: MessageFlags.IsComponentsV2
         };
     }
@@ -118,18 +115,21 @@ class ShopDisplay {
         const pageItems = items.slice(startIndex, endIndex);
         const totalPages = Math.ceil(items.length / 5);
 
-        const embed = new EmbedBuilder()
-            .setTitle(`${categoryEmojis[categoryId]} ${categoryNames[categoryId]} Shop`)
-            .setDescription(`Browse ${categoryNames[categoryId].toLowerCase()} to enhance your adventure!`)
-            .setColor(COLORS.PRIMARY)
-            .setFooter({ text: `Page ${page}/${totalPages} • Balance: ${userData.coins.toLocaleString()} coins` });
+        const container = new ContainerBuilder()
+            .setAccentColor(COLORS.PRIMARY)
+            .addTextDisplayComponents(
+                new TextDisplayBuilder()
+                    .setContent(`# ${categoryEmojis[categoryId]} ${categoryNames[categoryId]} Shop\nBrowse ${categoryNames[categoryId].toLowerCase()} to enhance your adventure!\n\n**Balance:** ${userData.coins.toLocaleString()} coins • **Page ${page}/${totalPages}**`)
+            );
 
         if (pageItems.length === 0) {
-            embed.addFields({
-                name: '📭 No Items Available',
-                value: 'This category is currently empty. Check back later!',
-                inline: false
-            });
+            container.addSectionComponents(
+                new SectionBuilder()
+                    .addTextDisplayComponents(
+                        new TextDisplayBuilder()
+                            .setContent('📭 **No Items Available**\nThis category is currently empty. Check back later!')
+                    )
+            );
         } else {
             pageItems.forEach((item, index) => {
                 const canAfford = userData.coins >= item.price;
@@ -137,44 +137,42 @@ class ShopDisplay {
                     ? `${EMOJIS.COIN} ${item.price.toLocaleString()}`
                     : `~~${EMOJIS.COIN} ${item.price.toLocaleString()}~~ ❌`;
 
-                embed.addFields({
-                    name: `${item.emoji} ${item.name} ${canAfford ? '✅' : '❌'}`,
-                    value: [
-                        item.description,
-                        `**Price:** ${priceText}`,
-                        `**Effect:** ${item.effect || 'Special effect'}`,
-                        `**ID:** ${item.id}`
-                    ].join('\n'),
-                    inline: true
-                });
+                container.addSectionComponents(
+                    new SectionBuilder()
+                        .addTextDisplayComponents(
+                            new TextDisplayBuilder()
+                                .setContent(`${item.emoji} **${item.name}** ${canAfford ? '✅' : '❌'}\n${item.description}\n**Price:** ${priceText}\n**Effect:** ${item.effect || 'Special effect'}\n**ID:** ${item.id}`)
+                        )
+                );
             });
         }
 
         const components = [];
 
-        // Navigation row (if multiple pages)
+        // Add navigation components to container
         if (totalPages > 1) {
-            const navRow = new ActionRowBuilder()
-                .addComponents(
-                    new ButtonBuilder()
-                        .setCustomId(`shop_cat_prev_${categoryId}_${targetUser.id}_${page}`)
-                        .setLabel('Previous')
-                        .setStyle(ButtonStyle.Secondary)
-                        .setEmoji({ name: '⬅️' })
-                        .setDisabled(page === 1),
-                    new ButtonBuilder()
-                        .setCustomId(`shop_cat_page_${categoryId}_${targetUser.id}_${page}`)
-                        .setLabel(`${page}/${totalPages}`)
-                        .setStyle(ButtonStyle.Secondary)
-                        .setDisabled(true),
-                    new ButtonBuilder()
-                        .setCustomId(`shop_cat_next_${categoryId}_${targetUser.id}_${page}`)
-                        .setLabel('Next')
-                        .setStyle(ButtonStyle.Secondary)
-                        .setEmoji({ name: '➡️' })
-                        .setDisabled(page === totalPages)
-                );
-            components.push(navRow);
+            container.addActionRowComponents(
+                new ActionRowBuilder()
+                    .addComponents(
+                        new ButtonBuilder()
+                            .setCustomId(`shop_cat_prev_${categoryId}_${targetUser.id}_${page}`)
+                            .setLabel('Previous')
+                            .setStyle(ButtonStyle.Secondary)
+                            .setEmoji({ name: '⬅️' })
+                            .setDisabled(page === 1),
+                        new ButtonBuilder()
+                            .setCustomId(`shop_cat_page_${categoryId}_${targetUser.id}_${page}`)
+                            .setLabel(`${page}/${totalPages}`)
+                            .setStyle(ButtonStyle.Secondary)
+                            .setDisabled(true),
+                        new ButtonBuilder()
+                            .setCustomId(`shop_cat_next_${categoryId}_${targetUser.id}_${page}`)
+                            .setLabel('Next')
+                            .setStyle(ButtonStyle.Secondary)
+                            .setEmoji({ name: '➡️' })
+                            .setDisabled(page === totalPages)
+                    )
+            );
         }
 
         // Action row - different for cosmetics (frames)
@@ -191,43 +189,45 @@ class ShopDisplay {
 
             // Split buttons into rows of 5
             for (let i = 0; i < buyButtons.length; i += 5) {
-                const row = new ActionRowBuilder()
-                    .addComponents(buyButtons.slice(i, i + 5));
-                components.push(row);
+                container.addActionRowComponents(
+                    new ActionRowBuilder()
+                        .addComponents(buyButtons.slice(i, i + 5))
+                );
             }
 
             // Add back button
-            const backRow = new ActionRowBuilder()
-                .addComponents(
-                    new ButtonBuilder()
-                        .setCustomId(`shop_back_cat_${targetUser.id}`)
-                        .setLabel('Back to Categories')
-                        .setStyle(ButtonStyle.Secondary)
-                        .setEmoji({ name: '⬅️' })
-                );
-            components.push(backRow);
+            container.addActionRowComponents(
+                new ActionRowBuilder()
+                    .addComponents(
+                        new ButtonBuilder()
+                            .setCustomId(`shop_back_cat_${targetUser.id}`)
+                            .setLabel('Back to Categories')
+                            .setStyle(ButtonStyle.Secondary)
+                            .setEmoji({ name: '⬅️' })
+                    )
+            );
         } else {
             // Default action row for other categories
-            const actionRow = new ActionRowBuilder()
-                .addComponents(
-                    new ButtonBuilder()
-                        .setCustomId(`shop_purchase_${categoryId}_${targetUser.id}`)
-                        .setLabel('Purchase Item')
-                        .setStyle(ButtonStyle.Success)
-                        .setEmoji({ name: '🛒' })
-                        .setDisabled(pageItems.length === 0),
-                    new ButtonBuilder()
-                        .setCustomId(`shop_back_cat_${targetUser.id}`)
-                        .setLabel('Back to Categories')
-                        .setStyle(ButtonStyle.Secondary)
-                        .setEmoji({ name: '⬅️' })
-                );
-            components.push(actionRow);
+            container.addActionRowComponents(
+                new ActionRowBuilder()
+                    .addComponents(
+                        new ButtonBuilder()
+                            .setCustomId(`shop_purchase_${categoryId}_${targetUser.id}`)
+                            .setLabel('Purchase Item')
+                            .setStyle(ButtonStyle.Success)
+                            .setEmoji({ name: '🛒' })
+                            .setDisabled(pageItems.length === 0),
+                        new ButtonBuilder()
+                            .setCustomId(`shop_back_cat_${targetUser.id}`)
+                            .setLabel('Back to Categories')
+                            .setStyle(ButtonStyle.Secondary)
+                            .setEmoji({ name: '⬅️' })
+                    )
+            );
         }
 
         return {
-            embeds: [embed],
-            components: components,
+            components: [container],
             flags: MessageFlags.IsComponentsV2
         };
     }
@@ -242,52 +242,43 @@ class ShopDisplay {
     static createPurchaseModal(item, userData, userId) {
         const canAfford = userData.coins >= item.price;
 
-        const embed = new EmbedBuilder()
-            .setTitle('🛒 Purchase Confirmation')
-            .setDescription(`Are you sure you want to purchase **${item.name}**?`)
-            .setColor(canAfford ? COLORS.SUCCESS : COLORS.ERROR)
-            .addFields(
-                {
-                    name: '📦 Item Details',
-                    value: [
-                        `**Name:** ${item.name}`,
-                        `**Description:** ${item.description}`,
-                        `**Effect:** ${item.effect || 'Special effect'}`,
-                        `**Price:** ${EMOJIS.COIN} ${item.price.toLocaleString()}`
-                    ].join('\n'),
-                    inline: false
-                },
-                {
-                    name: '💰 Your Balance',
-                    value: [
-                        `**Current:** ${EMOJIS.COIN} ${userData.coins.toLocaleString()}`,
-                        `**After Purchase:** ${EMOJIS.COIN} ${(userData.coins - item.price).toLocaleString()}`,
-                        canAfford ? '✅ You can afford this item' : '❌ Insufficient funds'
-                    ].join('\n'),
-                    inline: false
-                }
+        const container = new ContainerBuilder()
+            .setAccentColor(canAfford ? COLORS.SUCCESS : COLORS.ERROR)
+            .addTextDisplayComponents(
+                new TextDisplayBuilder()
+                    .setContent(`# 🛒 Purchase Confirmation\nAre you sure you want to purchase **${item.name}**?`)
             )
-            .setFooter({ text: 'This action cannot be undone' })
-            .setTimestamp();
-
-        const row = new ActionRowBuilder()
-            .addComponents(
-                new ButtonBuilder()
-                    .setCustomId(`shop_confirm_${item.id}_${userId}`)
-                    .setLabel('Confirm Purchase')
-                    .setStyle(ButtonStyle.Success)
-                    .setEmoji({ name: '✅' })
-                    .setDisabled(!canAfford),
-                new ButtonBuilder()
-                    .setCustomId(`shop_cancel_${userId}`)
-                    .setLabel('Cancel')
-                    .setStyle(ButtonStyle.Secondary)
-                    .setEmoji({ name: '❌' })
+            .addSectionComponents(
+                new SectionBuilder()
+                    .addTextDisplayComponents(
+                        new TextDisplayBuilder()
+                            .setContent(`📦 **Item Details**\n**Name:** ${item.name}\n**Description:** ${item.description}\n**Effect:** ${item.effect || 'Special effect'}\n**Price:** ${EMOJIS.COIN} ${item.price.toLocaleString()}`)
+                    ),
+                new SectionBuilder()
+                    .addTextDisplayComponents(
+                        new TextDisplayBuilder()
+                            .setContent(`💰 **Your Balance**\n**Current:** ${EMOJIS.COIN} ${userData.coins.toLocaleString()}\n**After Purchase:** ${EMOJIS.COIN} ${(userData.coins - item.price).toLocaleString()}\n${canAfford ? '✅ You can afford this item' : '❌ Insufficient funds'}`)
+                    )
+            )
+            .addActionRowComponents(
+                new ActionRowBuilder()
+                    .addComponents(
+                        new ButtonBuilder()
+                            .setCustomId(`shop_confirm_${item.id}_${userId}`)
+                            .setLabel('Confirm Purchase')
+                            .setStyle(ButtonStyle.Success)
+                            .setEmoji({ name: '✅' })
+                            .setDisabled(!canAfford),
+                        new ButtonBuilder()
+                            .setCustomId(`shop_cancel_${userId}`)
+                            .setLabel('Cancel')
+                            .setStyle(ButtonStyle.Secondary)
+                            .setEmoji({ name: '❌' })
+                    )
             );
 
         return {
-            embeds: [embed],
-            components: [row],
+            components: [container],
             flags: MessageFlags.IsComponentsV2
         };
     }
@@ -300,47 +291,42 @@ class ShopDisplay {
      * @returns {Object} Success message options
      */
     static createPurchaseSuccess(item, userData, targetUser) {
-        const embed = new EmbedBuilder()
-            .setTitle('✅ Purchase Successful!')
-            .setDescription(`Congratulations, ${targetUser.username}!`)
-            .setColor(COLORS.SUCCESS)
-            .addFields(
-                {
-                    name: '📦 Item Purchased',
-                    value: `${item.emoji} **${item.name}**\n${item.description}`,
-                    inline: false
-                },
-                {
-                    name: '💰 Updated Balance',
-                    value: `${EMOJIS.COIN} ${userData.coins.toLocaleString()} coins remaining`,
-                    inline: true
-                },
-                {
-                    name: '🎉 Effect Applied',
-                    value: item.effect || 'Item effect has been applied to your account!',
-                    inline: true
-                }
+        const container = new ContainerBuilder()
+            .setAccentColor(COLORS.SUCCESS)
+            .addTextDisplayComponents(
+                new TextDisplayBuilder()
+                    .setContent(`# ✅ Purchase Successful!\nCongratulations, ${targetUser.username}!`)
             )
-            .setFooter({ text: 'Thank you for shopping at Nexium Shop!' })
-            .setTimestamp();
-
-        const row = new ActionRowBuilder()
-            .addComponents(
-                new ButtonBuilder()
-                    .setCustomId(`shop_continue_${targetUser.id}`)
-                    .setLabel('Continue Shopping')
-                    .setStyle(ButtonStyle.Primary)
-                    .setEmoji({ name: '🛒' }),
-                new ButtonBuilder()
-                    .setCustomId(`shop_back_profile_${targetUser.id}`)
-                    .setLabel('Back to Profile')
-                    .setStyle(ButtonStyle.Secondary)
-                    .setEmoji({ name: '⬅️' })
+            .addSectionComponents(
+                new SectionBuilder()
+                    .addTextDisplayComponents(
+                        new TextDisplayBuilder()
+                            .setContent(`📦 **Item Purchased**\n${item.emoji} **${item.name}**\n${item.description}`)
+                    ),
+                new SectionBuilder()
+                    .addTextDisplayComponents(
+                        new TextDisplayBuilder()
+                            .setContent(`💰 **Updated Balance**\n${EMOJIS.COIN} ${userData.coins.toLocaleString()} coins remaining\n\n🎉 **Effect Applied**\n${item.effect || 'Item effect has been applied to your account!'}`)
+                    )
+            )
+            .addActionRowComponents(
+                new ActionRowBuilder()
+                    .addComponents(
+                        new ButtonBuilder()
+                            .setCustomId(`shop_continue_${targetUser.id}`)
+                            .setLabel('Continue Shopping')
+                            .setStyle(ButtonStyle.Primary)
+                            .setEmoji({ name: '🛒' }),
+                        new ButtonBuilder()
+                            .setCustomId(`shop_back_profile_${targetUser.id}`)
+                            .setLabel('Back to Profile')
+                            .setStyle(ButtonStyle.Secondary)
+                            .setEmoji({ name: '⬅️' })
+                    )
             );
 
         return {
-            embeds: [embed],
-            components: [row],
+            components: [container],
             flags: MessageFlags.IsComponentsV2
         };
     }
