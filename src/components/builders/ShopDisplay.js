@@ -177,22 +177,53 @@ class ShopDisplay {
             components.push(navRow);
         }
 
-        // Action row
-        const actionRow = new ActionRowBuilder()
-            .addComponents(
-                new ButtonBuilder()
-                    .setCustomId(`shop_purchase_${categoryId}_${targetUser.id}`)
-                    .setLabel('Purchase Item')
-                    .setStyle(ButtonStyle.Success)
-                    .setEmoji({ name: '🛒' })
-                    .setDisabled(pageItems.length === 0),
-                new ButtonBuilder()
-                    .setCustomId(`shop_back_cat_${targetUser.id}`)
-                    .setLabel('Back to Categories')
-                    .setStyle(ButtonStyle.Secondary)
-                    .setEmoji({ name: '⬅️' })
-            );
-        components.push(actionRow);
+        // Action row - different for cosmetics (frames)
+        if (categoryId === 'cosmetics') {
+            // Create individual buy buttons for frames
+            const buyButtons = pageItems.map((item, index) => {
+                const canAfford = userData.coins >= item.price;
+                return new ButtonBuilder()
+                    .setCustomId(`shop_buy_frame_${item.id}_${targetUser.id}`)
+                    .setLabel(`Buy ${item.emoji}`)
+                    .setStyle(canAfford ? ButtonStyle.Success : ButtonStyle.Secondary)
+                    .setDisabled(!canAfford);
+            });
+
+            // Split buttons into rows of 5
+            for (let i = 0; i < buyButtons.length; i += 5) {
+                const row = new ActionRowBuilder()
+                    .addComponents(buyButtons.slice(i, i + 5));
+                components.push(row);
+            }
+
+            // Add back button
+            const backRow = new ActionRowBuilder()
+                .addComponents(
+                    new ButtonBuilder()
+                        .setCustomId(`shop_back_cat_${targetUser.id}`)
+                        .setLabel('Back to Categories')
+                        .setStyle(ButtonStyle.Secondary)
+                        .setEmoji({ name: '⬅️' })
+                );
+            components.push(backRow);
+        } else {
+            // Default action row for other categories
+            const actionRow = new ActionRowBuilder()
+                .addComponents(
+                    new ButtonBuilder()
+                        .setCustomId(`shop_purchase_${categoryId}_${targetUser.id}`)
+                        .setLabel('Purchase Item')
+                        .setStyle(ButtonStyle.Success)
+                        .setEmoji({ name: '🛒' })
+                        .setDisabled(pageItems.length === 0),
+                    new ButtonBuilder()
+                        .setCustomId(`shop_back_cat_${targetUser.id}`)
+                        .setLabel('Back to Categories')
+                        .setStyle(ButtonStyle.Secondary)
+                        .setEmoji({ name: '⬅️' })
+                );
+            components.push(actionRow);
+        }
 
         return {
             embeds: [embed],

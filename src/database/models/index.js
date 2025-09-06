@@ -2,12 +2,14 @@ const defineUser = require('./User');
 const defineCharacter = require('./Character');
 const defineUserCharacter = require('./UserCharacter');
 const defineInventory = require('./Inventory');
+const defineUserProfile = require('./UserProfile');
 
 const initializeModels = (sequelize) => {
     const User = defineUser(sequelize);
     const Character = defineCharacter(sequelize);
     const UserCharacter = defineUserCharacter(sequelize);
     const Inventory = defineInventory(sequelize);
+    const UserProfile = defineUserProfile(sequelize);
 
     // Define associations
     User.belongsToMany(Character, {
@@ -43,7 +45,8 @@ const initializeModels = (sequelize) => {
         User,
         Character,
         UserCharacter,
-        Inventory
+        Inventory,
+        UserProfile
     };
 };
 

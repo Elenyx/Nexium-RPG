@@ -22,6 +22,18 @@ module.exports = {
                     { name: 'Legendary Frame', value: 'legendary' },
                     { name: 'Mythic Frame', value: 'mythic' },
                     { name: 'Dimensional Frame', value: 'dimensional' },
+                    // Shop frames
+                    { name: '🔥 Fire Frame', value: 'shop_fire' },
+                    { name: '🧊 Ice Frame', value: 'shop_ice' },
+                    { name: '🌿 Nature Frame', value: 'shop_nature' },
+                    { name: '🔮 Arcane Frame', value: 'shop_arcane' },
+                    { name: '🤖 Futuristic Frame', value: 'shop_futuristic' },
+                    { name: '🏛️ Ancient Ruins Frame', value: 'shop_ancient_ruins' },
+                    // Premium shop frames
+                    { name: '⭐ Celestial Frame', value: 'premium_celestial' },
+                    { name: '🌑 Shadow Frame', value: 'premium_shadow' },
+                    { name: '⚙️ Mechanical Frame', value: 'premium_mechanical' },
+                    { name: '🌊 Oceanic Frame', value: 'premium_oceanic' },
                     // Special frames
                     { name: '🎉 Golden Anniversary Frame', value: 'golden_anniversary' },
                     { name: '🎄 Christmas Festive Frame', value: 'christmas_festive' },

@@ -126,10 +126,100 @@ const frames = {
         imageUrl: 'https://ik.imagekit.io/NexiumRPG/frames/dimensional.png',
         obtainable: 'default',
         rarity: 'dimensional'
+    },
+
+    // Shop frames - available for purchase
+    SHOP_FIRE: {
+        id: 'shop_fire',
+        name: 'Fire Frame',
+        description: 'Fiery red frame with flame effects',
+        imageUrl: 'https://ik.imagekit.io/NexiumRPG/frames/shop_fire.png',
+        obtainable: 'shop',
+        rarity: 'rare'
+    },
+
+    SHOP_ICE: {
+        id: 'shop_ice',
+        name: 'Ice Frame',
+        description: 'Cool blue frame with frost patterns',
+        imageUrl: 'https://ik.imagekit.io/NexiumRPG/frames/shop_ice.png',
+        obtainable: 'shop',
+        rarity: 'rare'
+    },
+
+    SHOP_NATURE: {
+        id: 'shop_nature',
+        name: 'Nature Frame',
+        description: 'Green frame with leaf and vine motifs',
+        imageUrl: 'https://ik.imagekit.io/NexiumRPG/frames/shop_nature.png',
+        obtainable: 'shop',
+        rarity: 'rare'
+    },
+
+    SHOP_ARCANE: {
+        id: 'shop_arcane',
+        name: 'Arcane Frame',
+        description: 'Mystical purple frame with magical runes',
+        imageUrl: 'https://ik.imagekit.io/NexiumRPG/frames/shop_arcane.png',
+        obtainable: 'shop',
+        rarity: 'rare'
+    },
+
+    SHOP_FUTURISTIC: {
+        id: 'shop_futuristic',
+        name: 'Futuristic Frame',
+        description: 'High-tech frame with neon and circuit patterns',
+        imageUrl: 'https://ik.imagekit.io/NexiumRPG/frames/shop_futuristic.png',
+        obtainable: 'shop',
+        rarity: 'epic'
+    },
+
+    SHOP_ANCIENT_RUINS: {
+        id: 'shop_ancient_ruins',
+        name: 'Ancient Ruins Frame',
+        description: 'Stone frame with ancient ruins and mystical symbols',
+        imageUrl: 'https://ik.imagekit.io/NexiumRPG/frames/shop_ancient_ruins.png',
+        obtainable: 'shop',
+        rarity: 'epic'
+    },
+
+    // Premium shop frames - exclusive purchases
+    PREMIUM_SHOP_CELESTIAL: {
+        id: 'premium_celestial',
+        name: 'Celestial Frame',
+        description: 'Golden frame with stars and celestial bodies',
+        imageUrl: 'https://ik.imagekit.io/NexiumRPG/frames/premium_celestial.png',
+        obtainable: 'premium_shop',
+        rarity: 'legendary'
+    },
+
+    PREMIUM_SHOP_SHADOW: {
+        id: 'premium_shadow',
+        name: 'Shadow Frame',
+        description: 'Dark frame with shadow effects and mysterious aura',
+        imageUrl: 'https://ik.imagekit.io/NexiumRPG/frames/premium_shadow.png',
+        obtainable: 'premium_shop',
+        rarity: 'legendary'
+    },
+
+    PREMIUM_SHOP_MECHANICAL: {
+        id: 'premium_mechanical',
+        name: 'Mechanical Frame',
+        description: 'Steampunk frame with gears and mechanical components',
+        imageUrl: 'https://ik.imagekit.io/NexiumRPG/frames/premium_mechanical.png',
+        obtainable: 'premium_shop',
+        rarity: 'legendary'
+    },
+
+    PREMIUM_SHOP_OCEANIC: {
+        id: 'premium_oceanic',
+        name: 'Oceanic Frame',
+        description: 'Deep blue frame with waves and sea creatures',
+        imageUrl: 'https://ik.imagekit.io/NexiumRPG/frames/premium_oceanic.png',
+        obtainable: 'premium_shop',
+        rarity: 'legendary'
     }
 };
-
-// Frame IDs list for validation
 const validFrameIds = Object.values(frames).map(frame => frame.id);
 
 // Export frames and utilities

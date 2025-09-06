@@ -290,6 +290,34 @@ class ShopButtonHandlers {
             profile.coins -= item.price;
             await this.userService.updateUser(userId, { coins: profile.coins });
 
+            // Special handling for frame purchases
+            if (item.type === 'frame') {
+                // Add frame to user's unlocked frames
+                let userProfile = await models.UserProfile.findOne({
+                    where: { userId: userId }
+                });
+
+                if (!userProfile) {
+                    // Create user profile if it doesn't exist
+                    userProfile = await models.UserProfile.create({
+                        userId: userId,
+                        unlockedFrames: [item.id],
+                        createdAt: new Date(),
+                        updatedAt: new Date()
+                    });
+                } else {
+                    // Add frame to unlocked frames if not already unlocked
+                    const unlockedFrames = userProfile.unlockedFrames || [];
+                    if (!unlockedFrames.includes(item.id)) {
+                        unlockedFrames.push(item.id);
+                        await userProfile.update({
+                            unlockedFrames,
+                            updatedAt: new Date()
+                        });
+                    }
+                }
+            }
+
             const successDisplay = this.registry.createPurchaseSuccess(item, profile, targetUser);
             await interaction.editReply(successDisplay);
 
@@ -304,27 +332,80 @@ class ShopButtonHandlers {
     }
 
     /**
-     * Handles shop back button
+     * Handles frame purchase button
      * @param {Object} interaction - Discord interaction
      * @param {Array} params - Button parameters
      */
-    async handleBack(interaction, params) {
-        const [userId] = params;
+    async handleBuyFrame(interaction, params) {
+        const [frameId, userId] = params;
         const targetUser = await this.client.users.fetch(userId);
 
         try {
             await interaction.deferUpdate();
 
             const profile = await this.userService.getOrCreateUser(userId, targetUser.username);
-            const categories = this.registry.getDefaultShopCategories();
-            const shopDisplay = this.registry.createShopInterface(categories, profile, targetUser);
 
-            await interaction.editReply(shopDisplay);
+            // Find the frame item
+            const cosmeticsItems = this.registry.getSampleShopItems('cosmetics');
+            const item = cosmeticsItems.find(i => i.id === frameId);
+
+            if (!item) {
+                await interaction.editReply({
+                    content: 'Frame not found.',
+                    embeds: [],
+                    components: []
+                });
+                return;
+            }
+
+            if (profile.coins < item.price) {
+                await interaction.editReply({
+                    content: 'Insufficient coins for this purchase.',
+                    embeds: [],
+                    components: []
+                });
+                return;
+            }
+
+            // Process purchase
+            profile.coins -= item.price;
+            await this.userService.updateUser(userId, { coins: profile.coins });
+
+            // Add frame to user's unlocked frames
+            const { models } = require('../../database/connection');
+            if (models) {
+                let userProfile = await models.UserProfile.findOne({
+                    where: { userId: userId }
+                });
+
+                if (!userProfile) {
+                    // Create user profile if it doesn't exist
+                    userProfile = await models.UserProfile.create({
+                        userId: userId,
+                        unlockedFrames: [frameId],
+                        createdAt: new Date(),
+                        updatedAt: new Date()
+                    });
+                } else {
+                    // Add frame to unlocked frames if not already unlocked
+                    const unlockedFrames = userProfile.unlockedFrames || [];
+                    if (!unlockedFrames.includes(frameId)) {
+                        unlockedFrames.push(frameId);
+                        await userProfile.update({
+                            unlockedFrames,
+                            updatedAt: new Date()
+                        });
+                    }
+                }
+            }
+
+            const successDisplay = this.registry.createPurchaseSuccess(item, profile, targetUser);
+            await interaction.editReply(successDisplay);
 
         } catch (error) {
-            console.error('Error handling shop back:', error);
+            console.error('Error handling frame purchase:', error);
             await interaction.editReply({
-                content: 'An error occurred while returning to shop.',
+                content: 'An error occurred while processing your purchase.',
                 embeds: [],
                 components: []
             });

@@ -20,6 +20,12 @@ class UserService {
                 lastDaily: null,
                 shards: 0,
                 collectionCount: 0,
+                inventory: {
+                    frames: [
+                        { id: 'shop_fire', name: 'Fire Frame', equipped: false },
+                        { id: 'shop_ice', name: 'Ice Frame', equipped: false }
+                    ]
+                },
                 createdAt: new Date()
             };
         }
@@ -54,10 +60,34 @@ class UserService {
             const invService = new InventoryService();
             const inventory = await invService.getOrCreateInventory(userId);
 
+            // Get unlocked frames from UserProfile
+            let unlockedFrames = [];
+            if (models && models.UserProfile) {
+                const userProfile = await models.UserProfile.findOne({
+                    where: { userId: userId }
+                });
+                if (userProfile && userProfile.unlockedFrames) {
+                    unlockedFrames = userProfile.unlockedFrames;
+                }
+            }
+
+            // Merge unlocked frames into inventory data
+            const inventoryData = inventory.data || {};
+            inventoryData.frames = unlockedFrames.map(frameId => {
+                // Get frame details from frames config
+                const { frames } = require('../config/frames');
+                const frameData = Object.values(frames).find(f => f.id === frameId);
+                return {
+                    id: frameId,
+                    name: frameData ? frameData.name : frameId,
+                    equipped: false // You can add equipped status later if needed
+                };
+            });
+
             return {
                 ...user.toJSON(),
                 collectionCount: collectionCount,
-                inventory: inventory.data || {}
+                inventory: inventoryData
             };
         } catch (error) {
             logger.error('Error in getOrCreateUser:', error);

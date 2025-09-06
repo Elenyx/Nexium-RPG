@@ -145,6 +145,9 @@ class ButtonHandler {
             case 'confirm':
                 await this.shopHandlers.handlePurchaseConfirm(interaction, params);
                 return true;
+            case 'buy':
+                await this.shopHandlers.handleBuyFrame(interaction, params);
+                return true;
             case 'back':
             case 'continue':
             case 'backprofile':

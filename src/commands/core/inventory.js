@@ -1,5 +1,5 @@
 const { SlashCommandBuilder, MessageFlags } = require('discord.js');
-const InventoryService = require('../../services/InventoryService');
+const UserService = require('../../services/UserService');
 const InventoryDisplay = require('../../components/builders/InventoryDisplay');
 
 module.exports = {
@@ -9,11 +9,11 @@ module.exports = {
 
     async execute(interaction) {
         const targetUser = interaction.user;
-        const invService = new InventoryService();
+        const userService = new UserService();
 
         try {
-            const inventory = await invService.getOrCreateInventory(targetUser.id);
-            const display = InventoryDisplay.createInventoryView(inventory.data || {}, targetUser);
+            const userData = await userService.getOrCreateUser(targetUser.id, targetUser.username);
+            const display = InventoryDisplay.createInventoryView(userData.inventory || {}, targetUser);
             await interaction.reply(display);
         } catch (error) {
             console.error('Inventory command error:', error);

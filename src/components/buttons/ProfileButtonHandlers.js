@@ -33,11 +33,11 @@ class ProfileButtonHandlers {
         try {
             await interaction.deferUpdate();
 
-            // Show real inventory using InventoryService and InventoryDisplay
-            const invService = new InventoryService();
-            const inventory = await invService.getOrCreateInventory(userId);
+            // Show real inventory using UserService and InventoryDisplay
+            const userService = new UserService();
+            const userData = await userService.getOrCreateUser(userId, targetUser.username);
 
-            const display = InventoryDisplay.createInventoryView(inventory.data || {}, targetUser);
+            const display = InventoryDisplay.createInventoryView(userData.inventory || {}, targetUser);
             await interaction.editReply(display);
 
         } catch (error) {

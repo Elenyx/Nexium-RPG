@@ -287,12 +287,94 @@ class ComponentRegistry {
             ],
             cosmetics: [
                 {
-                    id: 'golden_frame',
-                    name: 'Golden Frame',
-                    description: 'Fancy golden border for your profile',
-                    effect: 'Golden profile frame',
+                    id: 'shop_fire',
+                    name: 'Fire Frame',
+                    description: 'Fiery red frame with flame effects',
+                    effect: 'Unlocks Fire Frame for character cards',
+                    price: 500,
+                    emoji: '🔥',
+                    type: 'frame'
+                },
+                {
+                    id: 'shop_ice',
+                    name: 'Ice Frame',
+                    description: 'Cool blue frame with frost patterns',
+                    effect: 'Unlocks Ice Frame for character cards',
+                    price: 500,
+                    emoji: '🧊',
+                    type: 'frame'
+                },
+                {
+                    id: 'shop_nature',
+                    name: 'Nature Frame',
+                    description: 'Green frame with leaf and vine motifs',
+                    effect: 'Unlocks Nature Frame for character cards',
+                    price: 500,
+                    emoji: '🌿',
+                    type: 'frame'
+                },
+                {
+                    id: 'shop_arcane',
+                    name: 'Arcane Frame',
+                    description: 'Mystical purple frame with magical runes',
+                    effect: 'Unlocks Arcane Frame for character cards',
+                    price: 500,
+                    emoji: '🔮',
+                    type: 'frame'
+                },
+                {
+                    id: 'shop_futuristic',
+                    name: 'Futuristic Frame',
+                    description: 'High-tech frame with neon and circuit patterns',
+                    effect: 'Unlocks Futuristic Frame for character cards',
                     price: 1000,
-                    emoji: '👑'
+                    emoji: '🤖',
+                    type: 'frame'
+                },
+                {
+                    id: 'shop_ancient_ruins',
+                    name: 'Ancient Ruins Frame',
+                    description: 'Stone frame with ancient ruins and mystical symbols',
+                    effect: 'Unlocks Ancient Ruins Frame for character cards',
+                    price: 1000,
+                    emoji: '🏛️',
+                    type: 'frame'
+                },
+                {
+                    id: 'premium_celestial',
+                    name: 'Celestial Frame',
+                    description: 'Golden frame with stars and celestial bodies',
+                    effect: 'Unlocks Celestial Frame for character cards',
+                    price: 2500,
+                    emoji: '⭐',
+                    type: 'frame'
+                },
+                {
+                    id: 'premium_shadow',
+                    name: 'Shadow Frame',
+                    description: 'Dark frame with shadow effects and mysterious aura',
+                    effect: 'Unlocks Shadow Frame for character cards',
+                    price: 2500,
+                    emoji: '🌑',
+                    type: 'frame'
+                },
+                {
+                    id: 'premium_mechanical',
+                    name: 'Mechanical Frame',
+                    description: 'Steampunk frame with gears and mechanical components',
+                    effect: 'Unlocks Mechanical Frame for character cards',
+                    price: 2500,
+                    emoji: '⚙️',
+                    type: 'frame'
+                },
+                {
+                    id: 'premium_oceanic',
+                    name: 'Oceanic Frame',
+                    description: 'Deep blue frame with waves and sea creatures',
+                    effect: 'Unlocks Oceanic Frame for character cards',
+                    price: 2500,
+                    emoji: '🌊',
+                    type: 'frame'
                 }
             ]
         };
