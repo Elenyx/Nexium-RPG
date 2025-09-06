@@ -95,8 +95,8 @@ class CharacterCardRenderer {
      */
     async isImageKitAvailable() {
         try {
-            // Try to fetch a small test image to check if ImageKit is responding
-            const testUrl = `${IMAGE_KIT_BASE_URL}Characters/test.png`;
+            // Try to fetch a known character image to check if ImageKit is responding
+            const testUrl = `${IMAGE_KIT_BASE_URL}Characters/NC001.png`;
             const response = await axios.head(testUrl, { timeout: 5000 });
             return response.status === 200;
         } catch (error) {
