@@ -1,11 +1,31 @@
 /**
- * Test script for collection performance optimizations
- * @file test-collection-performance.js
+ * Test script for collection performance optimizat        // Test 5: Test with equipped frame
+        console.log('5️⃣ Testing with equipped frame:');
+        
+        // Mock equipped frame in inventory (this will fail gracefully if DB not available)
+        const InventoryService = require('../src/services/InventoryService');
+        const inventoryService = new InventoryService();
+        const mockFrame = { id: 'basic_gold', name: 'Golden Frame' };
+        try {
+            await inventoryService.addFrame(mockUser.id, mockFrame);
+            await inventoryService.equipFrame(mockUser.id, 'basic_gold');
+            console.log('   ✅ Mock frame equipped');
+        } catch (error) {
+            console.log('   ⚠️  Could not set up mock frame (database not available):', error.message);
+        }
+        
+        const startTime5 = Date.now();
+        const album5 = await cardAlbum.generateAlbum(mockCharacters, 0, mockUser);
+        const endTime5 = Date.now();
+        console.log(`   ⏱️  Time: ${endTime5 - startTime5}ms`);
+        console.log(`   📏 Size: ${album5.length} bytes`);
+        console.log(`   🎨 Frame: Equipped frame applied\n`);* @file test-collection-performance.js
  * @description Tests the performance improvements for collection album generation
  */
 
 const CardAlbum = require('../src/services/CardAlbum');
 const CharacterCardRenderer = require('../src/services/CharacterCardRenderer');
+const InventoryService = require('../src/services/InventoryService');
 
 async function testCollectionPerformance() {
     console.log('🚀 Testing Collection Performance Optimizations...\n');

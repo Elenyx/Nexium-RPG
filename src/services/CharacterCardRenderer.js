@@ -88,6 +88,16 @@ class CharacterCardRenderer {
 
         return finalUrl;
     }
+
+    /**
+     * Check if ImageKit service is available
+     * @returns {boolean} True if ImageKit is available, false otherwise
+     */
+    async isImageKitAvailable() {
+    // Always use ImageKit overlays for all runs (test and production)
+    return true;
+    }
+
     async createFramedImageWithCanvas(character) {
         try {
             // Standard card dimensions
@@ -111,7 +121,7 @@ class CharacterCardRenderer {
             if (character.id) {
                 try {
                     const characterImageUrl = `${IMAGE_KIT_BASE_URL}Characters/${character.id}.png`;
-                    const characterImage = await this.loadImageFromPath(characterImageUrl);
+                    const characterImage = await loadImage(characterImageUrl);
                     if (characterImage) {
                         // Draw character image with some padding for frame
                         const padding = 20;

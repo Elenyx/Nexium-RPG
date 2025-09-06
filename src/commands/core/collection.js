@@ -2,7 +2,6 @@ const { SlashCommandBuilder, ActionRowBuilder, ButtonBuilder, ButtonStyle, Messa
 const { models } = require('../../database/connection');
 const CardAlbum = require('../../services/CardAlbum');
 const { COLORS, EMOJIS } = require('../../config/constants');
-const CharacterCardRenderer = require('../../services/CharacterCardRenderer'); // Import the new renderer
 
 module.exports = {
     data: new SlashCommandBuilder()
@@ -49,14 +48,6 @@ module.exports = {
 
             const characters = await Promise.all(userCharacters.map(async uc => {
                 const characterData = uc.character.toJSON();
-                // IMPORTANT: Generate the framed URL for each character before passing to the album generator
-                const cardRenderer = new CharacterCardRenderer();
-                try {
-                    characterData.image = await cardRenderer.renderCardUrl(characterData);
-                } catch (error) {
-                    console.warn(`Failed to render card for ${characterData.name}:`, error.message);
-                    characterData.image = null;
-                }
                 return {
                     ...characterData,
                     customLevel: uc.customLevel,

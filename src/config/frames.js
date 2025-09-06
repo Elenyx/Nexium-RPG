@@ -78,7 +78,7 @@ const frames = {
         id: 'common',
         name: 'Common Frame',
         description: 'Standard frame for common rarity characters',
-        imageUrl: 'https://ik.imagekit.io/NexiumRPG/frames/common.png',
+        imageUrl: 'https://ik.imagekit.io/NexiumRPG/frames/COMMON.png',
         obtainable: 'default',
         rarity: 'common'
     },
@@ -87,7 +87,7 @@ const frames = {
         id: 'rare',
         name: 'Rare Frame',
         description: 'Enhanced frame for rare rarity characters',
-        imageUrl: 'https://ik.imagekit.io/NexiumRPG/frames/rare.png',
+        imageUrl: 'https://ik.imagekit.io/NexiumRPG/frames/RARE.png',
         obtainable: 'default',
         rarity: 'rare'
     },
@@ -96,7 +96,7 @@ const frames = {
         id: 'epic',
         name: 'Epic Frame',
         description: 'Premium frame for epic rarity characters',
-        imageUrl: 'https://ik.imagekit.io/NexiumRPG/frames/epic.png',
+        imageUrl: 'https://ik.imagekit.io/NexiumRPG/frames/EPIC.png',
         obtainable: 'default',
         rarity: 'epic'
     },
@@ -105,7 +105,7 @@ const frames = {
         id: 'legendary',
         name: 'Legendary Frame',
         description: 'Luxurious frame for legendary rarity characters',
-        imageUrl: 'https://ik.imagekit.io/NexiumRPG/frames/legendary.png',
+        imageUrl: 'https://ik.imagekit.io/NexiumRPG/frames/LEGENDARY.png',
         obtainable: 'default',
         rarity: 'legendary'
     },
@@ -114,7 +114,7 @@ const frames = {
         id: 'mythic',
         name: 'Mythic Frame',
         description: 'Mythical frame for mythic rarity characters',
-        imageUrl: 'https://ik.imagekit.io/NexiumRPG/frames/mythic.png',
+        imageUrl: 'https://ik.imagekit.io/NexiumRPG/frames/MYTHIC.png',
         obtainable: 'default',
         rarity: 'mythic'
     },
@@ -123,7 +123,7 @@ const frames = {
         id: 'dimensional',
         name: 'Dimensional Frame',
         description: 'Otherworldly frame for dimensional rarity characters',
-        imageUrl: 'https://ik.imagekit.io/NexiumRPG/frames/dimensional.png',
+        imageUrl: 'https://ik.imagekit.io/NexiumRPG/frames/DIMENSIONAL.png',
         obtainable: 'default',
         rarity: 'dimensional'
     },

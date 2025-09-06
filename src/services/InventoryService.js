@@ -1,10 +1,21 @@
 const { models } = require('../database/connection');
 const logger = require('../utils/logger');
 
+// Shared memory storage for when database is not available
+const memoryStorage = new Map();
+
 class InventoryService {
+    constructor() {
+        // Use shared memory storage
+        this.memoryStorage = memoryStorage;
+    }
     async getOrCreateInventory(userId) {
         if (!models) {
-            return { userId, data: {} };
+            // Use in-memory storage
+            if (!this.memoryStorage.has(userId)) {
+                this.memoryStorage.set(userId, { userId, data: {} });
+            }
+            return this.memoryStorage.get(userId);
         }
 
         try {
@@ -164,6 +175,108 @@ class InventoryService {
             return accessory;
         } catch (error) {
             logger.error('Error in equipAccessory:', error);
+            throw error;
+        }
+    }
+
+    async equipFrame(userId, frameId) {
+        if (!models) {
+            // Use in-memory storage
+            const inv = await this.getOrCreateInventory(userId);
+            const data = inv.data || {};
+            data.frames = data.frames || [];
+            const frame = data.frames.find(f => f.id === frameId);
+            if (!frame) throw new Error('Frame not found in inventory');
+
+            // Mark frame as equipped and unequip all other frames
+            data.frames.forEach(f => f.equipped = false);
+            frame.equipped = true;
+            // Persist back to shared memory
+            inv.data = data;
+            memoryStorage.set(userId, inv);
+            return frame;
+        }
+        
+        try {
+            const inv = await this.getOrCreateInventory(userId);
+            const data = inv.data || {};
+            data.frames = data.frames || [];
+            const frame = data.frames.find(f => f.id === frameId);
+            if (!frame) throw new Error('Frame not found in inventory');
+
+            // Mark frame as equipped and unequip all other frames
+            data.frames.forEach(f => f.equipped = false);
+            frame.equipped = true;
+
+            await models.Inventory.update({ data }, { where: { userId } });
+            return frame;
+        } catch (error) {
+            logger.error('Error in equipFrame:', error);
+            throw error;
+        }
+    }
+
+    async getEquippedFrame(userId) {
+        if (!models) {
+            // Use in-memory storage
+            const inv = await this.getOrCreateInventory(userId);
+            const data = inv.data || {};
+            const frames = data.frames || [];
+            return frames.find(f => f.equipped === true) || null;
+        }
+        
+        try {
+            const inv = await this.getOrCreateInventory(userId);
+            const data = inv.data || {};
+            const frames = data.frames || [];
+            return frames.find(f => f.equipped === true) || null;
+        } catch (error) {
+            logger.error('Error in getEquippedFrame:', error);
+            return null;
+        }
+    }
+
+    async addFrame(userId, frame) {
+        if (!models) {
+            // Use in-memory storage
+            const inv = await this.getOrCreateInventory(userId);
+            const data = inv.data || {};
+            data.frames = data.frames || [];
+
+            // Check if frame already exists
+            const existing = data.frames.find(f => f.id === frame.id);
+            if (existing) {
+                return existing; // Already have this frame
+            }
+
+            // Add new frame
+            const newFrame = Object.assign({ equipped: false }, frame);
+            data.frames.push(newFrame);
+            // Persist back to shared memory
+            inv.data = data;
+            memoryStorage.set(userId, inv);
+            return newFrame;
+        }
+        
+        try {
+            const inv = await this.getOrCreateInventory(userId);
+            const data = inv.data || {};
+            data.frames = data.frames || [];
+
+            // Check if frame already exists
+            const existing = data.frames.find(f => f.id === frame.id);
+            if (existing) {
+                return existing; // Already have this frame
+            }
+
+            // Add new frame
+            const newFrame = Object.assign({ equipped: false }, frame);
+            data.frames.push(newFrame);
+
+            await models.Inventory.update({ data }, { where: { userId } });
+            return newFrame;
+        } catch (error) {
+            logger.error('Error in addFrame:', error);
             throw error;
         }
     }

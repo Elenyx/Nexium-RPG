@@ -8,49 +8,49 @@ const CardAlbum = require('../src/services/CardAlbum');
 const fs = require('fs');
 const path = require('path');
 
-// Sample character data for testing
+// Sample character data for testing - using actual characters from assets
 const sampleCharacters = [
     {
-        id: 'char_001',
-        name: 'Naruto Uzumaki',
+        id: 'NL001',
+        name: 'Jiraiya',
         rarity: 'LEGENDARY',
-        imagePath: 'src/assets/images/characters/naruto.jpg'
+        anime: 'Naruto'
     },
     {
-        id: 'char_002',
-        name: 'Sasuke Uchiha',
+        id: 'NL002',
+        name: 'Tsunade Senju',
         rarity: 'LEGENDARY',
-        imagePath: 'src/assets/images/characters/sasuke.png'
+        anime: 'Naruto'
     },
     {
-        id: 'char_003',
-        name: 'Monkey D. Luffy',
+        id: 'NM001',
+        name: 'Naruto Uzumaki (Kurama Chakra Mode)',
         rarity: 'MYTHIC',
-        imagePath: 'src/assets/images/characters/luffy.png'
+        anime: 'Naruto'
     },
     {
-        id: 'char_004',
-        name: 'Edward Elric',
+        id: 'NE001',
+        name: 'Kakashi Hatake',
         rarity: 'EPIC',
-        imagePath: 'src/assets/images/characters/edward.png'
+        anime: 'Naruto'
     },
     {
-        id: 'char_005',
-        name: 'Light Yagami',
+        id: 'NR001',
+        name: 'Shikamaru Nara',
         rarity: 'RARE',
-        imagePath: 'src/assets/images/characters/light.png'
+        anime: 'Naruto'
     },
     {
-        id: 'char_006',
-        name: 'Tanjiro Kamado',
-        rarity: 'RARE',
-        imagePath: 'src/assets/images/characters/tanjiro.png'
+        id: 'NC001',
+        name: 'Konohamaru',
+        rarity: 'COMMON',
+        anime: 'Naruto'
     },
     {
-        id: 'char_007',
-        name: 'Goku',
-        rarity: 'MYTHIC',
-        imagePath: 'src/assets/images/characters/goku.png'
+        id: 'ND001',
+        name: 'Hagoromo Otsutsuki',
+        rarity: 'DIMENSIONAL',
+        anime: 'Naruto'
     }
 ];
 

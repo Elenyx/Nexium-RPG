@@ -9,6 +9,7 @@ const fs = require('fs');
 const axios = require('axios');
 const CharacterImageManager = require('../components/builders/CharacterImageManager');
 const CharacterCardRenderer = require('./CharacterCardRenderer');
+const InventoryService = require('./InventoryService');
 
 class CardAlbum {
     constructor() {
@@ -38,7 +39,18 @@ class CardAlbum {
      * @returns {Buffer} PNG image buffer
      */
     async generateAlbum(characters, page = 0, user = null) {
-        const cacheKey = this.getCacheKey(user?.id, page, characters.length);
+        // Get user's equipped frame first for cache key
+        let equippedFrame = null;
+        if (user?.id) {
+            try {
+                const inventoryService = new InventoryService();
+                equippedFrame = await inventoryService.getEquippedFrame(user.id);
+            } catch (error) {
+                console.log('Could not get equipped frame:', error.message);
+            }
+        }
+
+        const cacheKey = this.getCacheKey(user?.id, page, characters.length, equippedFrame?.id);
         
         // Check cache first
         const cached = this.albumCache.get(cacheKey);
@@ -62,7 +74,7 @@ class CardAlbum {
         const pageCharacters = characters.slice(startIndex, endIndex);
 
         // Draw character cards (centered) - now with parallel processing
-        await this.drawCharacterCards(ctx, pageCharacters, startIndex);
+        await this.drawCharacterCards(ctx, pageCharacters, startIndex, equippedFrame);
 
         const buffer = canvas.toBuffer('image/png');
         
@@ -83,10 +95,12 @@ class CardAlbum {
      * @param {string} userId - User ID
      * @param {number} page - Page number
      * @param {number} totalCharacters - Total character count
+     * @param {string} frameId - Equipped frame ID (optional)
      * @returns {string} Cache key
      */
-    getCacheKey(userId, page, totalCharacters) {
-        return `${userId}_${page}_${totalCharacters}`;
+    getCacheKey(userId, page, totalCharacters, frameId = null) {
+        const framePart = frameId ? `_${frameId}` : '';
+        return `${userId}_${page}_${totalCharacters}${framePart}`;
     }
 
     /**
@@ -120,7 +134,7 @@ class CardAlbum {
     /**
      * Draw character cards on the canvas
      */
-    async drawCharacterCards(ctx, characters, startIndex) {
+    async drawCharacterCards(ctx, characters, startIndex, equippedFrame = null) {
         const cardsPerRow = 4;
         const rows = Math.ceil(characters.length / cardsPerRow);
 
@@ -140,7 +154,7 @@ class CardAlbum {
             const x = startX + col * (this.cardWidth + this.cardSpacing);
             const y = startY + row * (this.cardHeight + this.cardSpacing);
 
-            return this.drawCharacterCard(ctx, character, x, y, startIndex + i + 1);
+            return this.drawCharacterCard(ctx, character, x, y, startIndex + i + 1, equippedFrame);
         });
 
         await Promise.all(cardPromises);
@@ -149,15 +163,21 @@ class CardAlbum {
     /**
      * Draw a single character card
      */
-    async drawCharacterCard(ctx, character, x, y, cardNumber) {
+    async drawCharacterCard(ctx, character, x, y, cardNumber, equippedFrame = null) {
         try {
             // Use CharacterCardRenderer to get framed card
             const cardRenderer = new CharacterCardRenderer();
-            const cardImageData = await cardRenderer.generateCharacterCard(character);
+            
+            // Use equipped frame if available, otherwise use default rarity frame
+            const cardImageData = equippedFrame 
+                ? await cardRenderer.renderCardWithFrame(character, equippedFrame.id)
+                : await cardRenderer.generateCharacterCard(character);
             
             let image;
             if (cardImageData) {
-                const cacheKey = `card_${character.id}_${character.rarity}`;
+                // Update cache key to include frame information
+                const frameId = equippedFrame ? equippedFrame.id : 'default';
+                const cacheKey = `card_${character.id}_${character.rarity}_${frameId}`;
                 const cached = this.imageCache.get(cacheKey);
                 
                 if (cached && Date.now() - cached.timestamp < this.cacheTimeout) {
