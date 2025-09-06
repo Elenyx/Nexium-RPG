@@ -1,4 +1,4 @@
-const { SlashCommandBuilder, EmbedBuilder, MessageFlags } = require('discord.js');
+const { SlashCommandBuilder, EmbedBuilder, MessageFlags, AttachmentBuilder } = require('discord.js');
 const { models } = require('../../database/connection');
 const { COLORS, EMOJIS, VALID_FRAME_IDS, FRAMES } = require('../../config/constants');
 
@@ -156,6 +156,23 @@ module.exports = {
             // Log successful frame change
             console.log(`[SKIN] User ${userId} changed frame for character ${characterId} from '${previousFrameId || 'default'}' to '${frameId}'`);
 
+            // Generate comparison image
+            const CharacterCardRenderer = require('../../services/CharacterCardRenderer');
+            const cardRenderer = new CharacterCardRenderer();
+            let comparisonImage = null;
+
+            try {
+                const comparisonImageData = await cardRenderer.generateFrameComparison(character, previousFrameId, frameId);
+                if (comparisonImageData && comparisonImageData.startsWith('data:image')) {
+                    // Convert base64 to buffer for Discord attachment
+                    const base64Data = comparisonImageData.split(',')[1];
+                    const imageBuffer = Buffer.from(base64Data, 'base64');
+                    comparisonImage = new AttachmentBuilder(imageBuffer, { name: 'frame-comparison.png' });
+                }
+            } catch (error) {
+                console.warn('Failed to generate frame comparison image:', error);
+            }
+
             // Success response
             const embed = new EmbedBuilder()
                 .setColor(COLORS.SUCCESS)
@@ -163,13 +180,19 @@ module.exports = {
                 .setDescription(`Successfully changed the frame for **${character.name}** (${characterId}) to **${selectedFrame.name}**.`)
                 .addFields(
                     { name: 'Character', value: character.name, inline: true },
-                    { name: 'Previous Frame', value: userCharacter.frameId || 'Default', inline: true },
+                    { name: 'Previous Frame', value: previousFrameId ? getFrameName(previousFrameId) : 'Default', inline: true },
                     { name: 'New Frame', value: `${selectedFrame.name} (${frameId})`, inline: true },
                     { name: 'Frame Description', value: selectedFrame.description, inline: false }
                 )
                 .setFooter({ text: 'Frame changes will be visible when viewing character cards' });
 
-            await interaction.editReply({ embeds: [embed] });
+            const response = { embeds: [embed] };
+            if (comparisonImage) {
+                response.files = [comparisonImage];
+                embed.setImage('attachment://frame-comparison.png');
+            }
+
+            await interaction.editReply(response);
 
         } catch (error) {
             console.error('Error in skin command:', error);
@@ -187,3 +210,14 @@ module.exports = {
         }
     },
 };
+
+/**
+ * Get frame name from frame ID
+ * @param {string} frameId - Frame ID
+ * @returns {string} Frame name
+ */
+function getFrameName(frameId) {
+    const { frames } = require('../config/frames');
+    const frameData = Object.values(frames).find(f => f.id === frameId);
+    return frameData ? frameData.name : frameId;
+}

@@ -22,6 +22,45 @@ class CharacterCardRenderer {
     }
 
     /**
+     * Render a character card with a specific frame
+     * @param {object} character - The character object
+     * @param {string} frameId - Frame ID to apply (optional, defaults to rarity frame)
+     * @returns {string} The complete ImageKit URL with transformations or base64 data URL
+     */
+    async renderCardWithFrame(character, frameId = null) {
+        if (!character || !character.id || !character.rarity) {
+            return this.generateSimpleCard(character || {});
+        }
+
+        // If no specific frame requested, use rarity frame
+        if (!frameId || frameId === 'default') {
+            return this.renderCardUrl(character);
+        }
+
+        // Check if ImageKit is available
+        if (!(await this.isImageKitAvailable())) {
+            return await this.createFramedImageWithCanvas(character, frameId);
+        }
+
+        // Construct the base image URL using character ID
+        const baseImageUrl = `${IMAGE_KIT_BASE_URL}Characters/${character.id}.png`;
+
+        // Get frame path
+        const { frames } = require('../config/frames');
+        const frameData = Object.values(frames).find(f => f.id === frameId);
+        const framePath = frameData ? frameData.imageUrl : `frames/${character.rarity.toUpperCase()}.png`;
+
+        // Remove base URL if present in frame path
+        const cleanFramePath = framePath.replace(IMAGE_KIT_BASE_URL, '');
+
+        // Construct the ImageKit URL with the overlay transformation
+        const transformation = `tr=l-image,i-${cleanFramePath},l-end`;
+        const finalUrl = `${baseImageUrl}?${transformation}`;
+
+        return finalUrl;
+    }
+
+    /**
      * Generates a fully-formed ImageKit URL that overlays a rarity frame on a character's base image.
      * Falls back to canvas-generated framed images if ImageKit is unavailable.
      * @param {object} character - The character object from your database/assets.
@@ -29,13 +68,11 @@ class CharacterCardRenderer {
      */
     async renderCardUrl(character) {
         if (!character || !character.id || !character.rarity) {
-            // Return a simple generated card if character data is incomplete
             return this.generateSimpleCard(character || {});
         }
 
         // Check if ImageKit is available
         if (!(await this.isImageKitAvailable())) {
-            // Use canvas to create framed image
             return await this.createFramedImageWithCanvas(character);
         }
 
@@ -47,18 +84,10 @@ class CharacterCardRenderer {
 
         // Construct the ImageKit URL with the overlay transformation
         const transformation = `tr=l-image,i-${framePath},l-end`;
-
-        // Combine the base URL, the base image path, and the transformation query
         const finalUrl = `${baseImageUrl}?${transformation}`;
 
         return finalUrl;
     }
-
-    /**
-     * Create a framed character image using canvas when ImageKit is unavailable
-     * @param {object} character - The character object
-     * @returns {string} Base64 data URL of the framed image
-     */
     async createFramedImageWithCanvas(character) {
         try {
             // Standard card dimensions
@@ -198,24 +227,150 @@ class CharacterCardRenderer {
     }
 
     /**
-     * Check if ImageKit service is available
-     * @returns {boolean} True if ImageKit appears to be available
+     * Generate a comparison image showing current and new frame
+     * @param {object} character - The character object
+     * @param {string} currentFrameId - Current frame ID (or null for default rarity)
+     * @param {string} newFrameId - New frame ID to preview
+     * @returns {string} Base64 data URL of the comparison image
      */
-    async isImageKitAvailable() {
+    async generateFrameComparison(character, currentFrameId, newFrameId) {
         try {
-            // Test with a known working URL
-            const testUrl = 'https://ik.imagekit.io/NexiumRPG/Characters/NC001.png';
-            const response = await axios.get(testUrl, {
-                timeout: 5000,
-                validateStatus: function (status) {
-                    return status < 400; // Accept 2xx and 3xx
-                }
-            });
-            return response.status === 200;
+            const canvas = createCanvas(900, 600); // Wider canvas for side-by-side
+            const ctx = canvas.getContext('2d');
+
+            // Background
+            ctx.fillStyle = '#1a1a1a';
+            ctx.fillRect(0, 0, 900, 600);
+
+            // Title
+            ctx.fillStyle = '#ffffff';
+            ctx.font = 'bold 28px Arial';
+            ctx.textAlign = 'center';
+            ctx.fillText('Frame Comparison', 450, 40);
+
+            // Load character image
+            let characterImage = null;
+            try {
+                const characterImageUrl = `${IMAGE_KIT_BASE_URL}Characters/${character.id}.png`;
+                characterImage = await loadImage(characterImageUrl);
+            } catch (error) {
+                console.log('Could not load character image for comparison:', error.message);
+            }
+
+            // Generate current frame image
+            const currentImage = await this.generateSingleFrameImage(character, currentFrameId, characterImage);
+            const newImage = await this.generateSingleFrameImage(character, newFrameId, characterImage);
+
+            // Draw current frame (left side)
+            if (currentImage) {
+                ctx.drawImage(currentImage, 50, 80, 350, 490);
+            }
+
+            // Draw new frame (right side)
+            if (newImage) {
+                ctx.drawImage(newImage, 500, 80, 350, 490);
+            }
+
+            // Labels
+            ctx.fillStyle = '#ffffff';
+            ctx.font = 'bold 20px Arial';
+            ctx.textAlign = 'center';
+
+            const currentLabel = currentFrameId ? this.getFrameName(currentFrameId) : `${character.rarity} Frame`;
+            const newLabel = this.getFrameName(newFrameId);
+
+            ctx.fillText(`Current: ${currentLabel}`, 225, 590);
+            ctx.fillText(`New: ${newLabel}`, 675, 590);
+
+            // Arrows
+            ctx.fillStyle = '#00ff00';
+            ctx.font = 'bold 48px Arial';
+            ctx.fillText('→', 450, 300);
+
+            return canvas.toDataURL('image/png');
         } catch (error) {
-            console.warn('ImageKit availability check failed:', error.message);
-            return false;
+            console.warn('Failed to generate frame comparison:', error.message);
+            return this.generateSimpleCard(character);
         }
+    }
+
+    /**
+     * Generate a single frame image for comparison
+     * @param {object} character - The character object
+     * @param {string} frameId - Frame ID to apply
+     * @param {Image} characterImage - Pre-loaded character image
+     * @returns {Canvas} Canvas with framed image
+     */
+    async generateSingleFrameImage(character, frameId, characterImage) {
+        const frameCanvas = createCanvas(400, 560);
+        const ctx = frameCanvas.getContext('2d');
+
+        // Background
+        ctx.fillStyle = '#2C2F33';
+        ctx.fillRect(0, 0, 400, 560);
+
+        // Draw character image
+        if (characterImage) {
+            const padding = 20;
+            ctx.drawImage(characterImage, padding, padding, 400 - 2*padding, 560 - 2*padding);
+        }
+
+        // Apply frame
+        if (frameId && frameId !== 'default') {
+            await this.applyFrameToCanvas(ctx, frameId, 400, 560);
+        } else {
+            // Default rarity frame
+            this.drawSimpleFrame(ctx, 400, 560, character.rarity);
+        }
+
+        // Character info
+        ctx.fillStyle = '#FFFFFF';
+        ctx.font = 'bold 16px Arial';
+        ctx.textAlign = 'center';
+        ctx.fillText(character.name, 200, 540);
+
+        return frameCanvas;
+    }
+
+    /**
+     * Apply a specific frame to canvas
+     * @param {CanvasRenderingContext2D} ctx - Canvas context
+     * @param {string} frameId - Frame ID to apply
+     * @param {number} width - Canvas width
+     * @param {number} height - Canvas height
+     */
+    async applyFrameToCanvas(ctx, frameId, width, height) {
+        try {
+            const { frames } = require('../config/frames');
+            const frameData = Object.values(frames).find(f => f.id === frameId);
+
+            if (frameData && frameData.imageUrl) {
+                let frameImage;
+                if (frameData.imageUrl.startsWith('http')) {
+                    frameImage = await loadImage(frameData.imageUrl);
+                } else {
+                    const framePath = `${IMAGE_KIT_BASE_URL}${frameData.imageUrl}`;
+                    frameImage = await loadImage(framePath);
+                }
+
+                if (frameImage) {
+                    ctx.drawImage(frameImage, 0, 0, width, height);
+                }
+            }
+        } catch (error) {
+            console.warn(`Failed to apply frame ${frameId}:`, error.message);
+        }
+    }
+
+    /**
+     * Get frame name from frame ID
+     * @param {string} frameId - Frame ID
+     * @returns {string} Frame name
+     */
+    getFrameName(frameId) {
+        const { frames } = require('../config/frames');
+        const frameData = Object.values(frames).find(f => f.id === frameId);
+        return frameData ? frameData.name : frameId;
     }
 }
 
