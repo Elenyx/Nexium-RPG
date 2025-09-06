@@ -594,17 +594,11 @@ class ShopButtonHandlers {
                     new SectionBuilder()
                         .addTextDisplayComponents(
                             new TextDisplayBuilder()
-                                .setContent(`**Currency:** Coins = spend on items. Shards = premium currency for X.`),
+                                .setContent(`**Currency:** Coins = spend on items. Shards = premium currency for X.\n**How to buy:** Click item → Confirm Purchase → Item applied. Purchases are immediate; no refunds.`),
                             new TextDisplayBuilder()
-                                .setContent(`**How to buy:** Click item → Confirm Purchase → Item applied. Purchases are immediate; no refunds.`),
+                                .setContent(`**Featured/Daily:** Featured items are curated; daily deals refresh every 24h.\n**Frames:** Frames unlock visual card frames. They are stored in your profile's unlockedFrames.`),
                             new TextDisplayBuilder()
-                                .setContent(`**Featured/Daily:** Featured items are curated; daily deals refresh every 24h.`),
-                            new TextDisplayBuilder()
-                                .setContent(`**Frames:** Frames unlock visual card frames. They are stored in your profile's unlockedFrames.`),
-                            new TextDisplayBuilder()
-                                .setContent(`**Limits & notes:** Some items are one-time, some stack; pages show up to 5 items; use navigation buttons.`),
-                            new TextDisplayBuilder()
-                                .setContent(`**Support:** Use /support if you see a bug or incorrect charge.`)
+                                .setContent(`**Limits & notes:** Some items are one-time, some stack; pages show up to 5 items; use navigation buttons.\n**Support:** Use /support if you see a bug or incorrect charge.`)
                         )
                 );
 
@@ -645,17 +639,23 @@ class ShopButtonHandlers {
 
         } catch (error) {
             console.error('Error handling shop info:', error);
-            try {
-                await interaction.editReply({
-                    content: 'An error occurred while loading shop information.',
-                    flags: require('discord.js').MessageFlags.Ephemeral
-                });
-            } catch (e) {
-                // fallback: try reply
+            
+            // Better error response handling
+            if (!interaction.replied && !interaction.deferred) {
                 await interaction.reply({
                     content: 'An error occurred while loading shop information.',
                     flags: require('discord.js').MessageFlags.Ephemeral
                 });
+            } else {
+                try {
+                    await interaction.editReply({
+                        content: 'An error occurred while loading shop information.',
+                        components: [],
+                        embeds: []
+                    });
+                } catch (editError) {
+                    console.error('Failed to edit reply:', editError);
+                }
             }
         }
     }
