@@ -37,8 +37,12 @@ class CharacterCollection {
             .setTitle(`${EMOJIS.SUMMON} Character Collection`)
             .setDescription(`**${targetUser.username}**'s anime character collection\nShowing ${startIndex + 1}-${Math.min(endIndex, characters.length)} of ${characters.length} characters`)
             .setColor(COLORS.PRIMARY)
-            .setThumbnail(targetUser.displayAvatarURL({ dynamic: true }))
             .setFooter({ text: `Page ${page}/${totalPages} • Use the buttons below to navigate` });
+
+        // Set thumbnail if targetUser has displayAvatarURL method (real Discord user)
+        if (typeof targetUser.displayAvatarURL === 'function') {
+            embed.setThumbnail(targetUser.displayAvatarURL({ dynamic: true }));
+        }
 
         if (pageCharacters.length === 0) {
             embed.addFields({

@@ -40,6 +40,13 @@ class ShopDisplay {
                         new TextDisplayBuilder()
                             .setContent(`🛒 **Shop Categories**\n${categories.map(cat => `${cat.emoji} ${cat.name}`).join('\n')}`)
                     )
+                    .setButtonAccessory(
+                        btn => btn
+                            .setCustomId(`shop_info_${targetUser.id}`)
+                            .setLabel('Shop Info')
+                            .setStyle(ButtonStyle.Secondary)
+                            .setEmoji({ name: 'ℹ️' })
+                    )
             );
 
         const selectMenu = new StringSelectMenuBuilder()
@@ -50,7 +57,7 @@ class ShopDisplay {
                     label: category.name,
                     description: category.description,
                     value: category.id,
-                    emoji: category.emoji
+                    emoji: { name: category.emoji }
                 }))
             );
 
@@ -130,6 +137,13 @@ class ShopDisplay {
                         new TextDisplayBuilder()
                             .setContent('📭 **No Items Available**\nThis category is currently empty. Check back later!')
                     )
+                    .setButtonAccessory(
+                        btn => btn
+                            .setCustomId(`shop_empty_${targetUser.id}`)
+                            .setLabel('No Items')
+                            .setStyle(ButtonStyle.Secondary)
+                            .setDisabled(true)
+                    )
             );
         } else {
             pageItems.forEach((item, index) => {
@@ -143,6 +157,13 @@ class ShopDisplay {
                         .addTextDisplayComponents(
                             new TextDisplayBuilder()
                                 .setContent(`${item.emoji} **${item.name}** ${canAfford ? '✅' : '❌'}\n${item.description}\n**Price:** ${priceText}\n**Effect:** ${item.effect || 'Special effect'}\n**ID:** ${item.id}`)
+                        )
+                        .setButtonAccessory(
+                            btn => btn
+                                .setCustomId(`shop_item_info_${item.id}_${targetUser.id}`)
+                                .setLabel('View Item')
+                                .setStyle(ButtonStyle.Secondary)
+                                .setEmoji({ name: '👁️' })
                         )
                 );
             });
@@ -255,11 +276,25 @@ class ShopDisplay {
                     .addTextDisplayComponents(
                         new TextDisplayBuilder()
                             .setContent(`📦 **Item Details**\n**Name:** ${item.name}\n**Description:** ${item.description}\n**Effect:** ${item.effect || 'Special effect'}\n**Price:** ${EMOJIS.COIN} ${item.price.toLocaleString()}`)
+                    )
+                    .setButtonAccessory(
+                        btn => btn
+                            .setCustomId(`shop_item_details_${item.id}_${userId}`)
+                            .setLabel('Item Details')
+                            .setStyle(ButtonStyle.Secondary)
+                            .setEmoji({ name: '📦' })
                     ),
                 new SectionBuilder()
                     .addTextDisplayComponents(
                         new TextDisplayBuilder()
                             .setContent(`💰 **Your Balance**\n**Current:** ${EMOJIS.COIN} ${userData.coins.toLocaleString()}\n**After Purchase:** ${EMOJIS.COIN} ${(userData.coins - item.price).toLocaleString()}\n${canAfford ? '✅ You can afford this item' : '❌ Insufficient funds'}`)
+                    )
+                    .setButtonAccessory(
+                        btn => btn
+                            .setCustomId(`shop_balance_${userId}`)
+                            .setLabel('Check Balance')
+                            .setStyle(ButtonStyle.Secondary)
+                            .setEmoji({ name: '💰' })
                     )
             )
             .addActionRowComponents(
@@ -305,11 +340,25 @@ class ShopDisplay {
                     .addTextDisplayComponents(
                         new TextDisplayBuilder()
                             .setContent(`📦 **Item Purchased**\n${item.emoji} **${item.name}**\n${item.description}`)
+                    )
+                    .setButtonAccessory(
+                        btn => btn
+                            .setCustomId(`shop_purchased_item_${item.id}_${targetUser.id}`)
+                            .setLabel('Purchased Item')
+                            .setStyle(ButtonStyle.Secondary)
+                            .setEmoji({ name: '📦' })
                     ),
                 new SectionBuilder()
                     .addTextDisplayComponents(
                         new TextDisplayBuilder()
                             .setContent(`💰 **Updated Balance**\n${EMOJIS.COIN} ${userData.coins.toLocaleString()} coins remaining\n\n🎉 **Effect Applied**\n${item.effect || 'Item effect has been applied to your account!'}`)
+                    )
+                    .setButtonAccessory(
+                        btn => btn
+                            .setCustomId(`shop_updated_balance_${targetUser.id}`)
+                            .setLabel('Updated Balance')
+                            .setStyle(ButtonStyle.Secondary)
+                            .setEmoji({ name: '💰' })
                     )
             )
             .addActionRowComponents(
