@@ -1,0 +1,53 @@
+# Netlify configuration file
+
+# Build settings
+[build]
+  # Base directory (project root)
+  base = "."
+  # Directory to publish (the static files)
+  publish = "src/web"
+  # Build command (we don't need to build anything for this project)
+  command = "echo 'No build step required'"
+  # Functions directory
+  functions = "netlify/functions"
+  # Node.js version
+  environment = { NODE_VERSION = "20" }
+
+# Dev settings (for netlify dev command)
+[dev]
+  framework = "#static"
+  publish = "src/web"
+  functions = "netlify/functions"
+  targetPort = 3000
+
+# Redirects and proxy rules
+[[redirects]]
+  # Serve the API routes via Netlify Functions
+  from = "/auth/*"
+  to = "/.netlify/functions/api/:splat"
+  status = 200
+
+[[redirects]]
+  # Handle /me endpoint
+  from = "/me"
+  to = "/.netlify/functions/api/me"
+  status = 200
+
+[[redirects]]
+  # Handle other API endpoints
+  from = "/leaderboards"
+  to = "/.netlify/functions/api/leaderboards"
+  status = 200
+
+[[redirects]]
+  # Handle rewards endpoint
+  from = "/rewards"
+  to = "/.netlify/functions/api/rewards"
+  status = 200
+
+# This needs to be the LAST redirect, as it's a catch-all
+[[redirects]]
+  # Handle the SPA fallback for client-side routing
+  from = "/*"
+  to = "/index.html"
+  status = 200
