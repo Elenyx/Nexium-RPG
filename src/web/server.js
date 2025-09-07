@@ -80,6 +80,14 @@ app.use((req, res) => {
 });
 
 // Start the server
-app.listen(PORT, () => {
-  console.log(`Server is running on http://localhost:${PORT}`);
+const server = app.listen(PORT, '0.0.0.0', () => {
+  const address = server.address();
+  console.log(`Server is running and listening at http://${address.address}:${address.port}`);
+});
+
+server.on('error', (err) => {
+  console.error('Server startup error:', err);
+  if (err.code === 'EADDRINUSE') {
+    console.error(`Port ${PORT} is already in use.`);
+  }
 });
