@@ -2,7 +2,7 @@ const express = require('express');
 const path = require('path');
 
 // Import the actual server implementation from httpdocs
-const webServer = require('./httpdocs/server');
+const webServer = require('./web/server');
 
 // This file acts as a wrapper for the main server implementation
 console.log('Nexium RPG web server starting up...');
