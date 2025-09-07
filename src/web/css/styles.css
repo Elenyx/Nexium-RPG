@@ -19,6 +19,7 @@
 
 html {
     scroll-behavior: smooth;
+    height: 100%; /* Ensure full height for grid layout */
 }
 
 body {
@@ -27,6 +28,11 @@ body {
     color: var(--text-primary);
     overflow-x: hidden;
     position: relative;
+    
+    /* Full page layout to ensure footer consistency */
+    min-height: 100vh;
+    display: grid;
+    grid-template-rows: auto 1fr auto;
 }
 
 /* Aurora background effect */
@@ -57,6 +63,7 @@ body::before {
     padding: 20px;
     position: relative;
     z-index: 2;
+    grid-row: 2; /* Main content area in the grid */
 }
 
 /* Enhanced Navigation with Glow Effect */
@@ -73,6 +80,7 @@ body::before {
     padding: 15px 0;
     transition: all 0.3s ease;
     box-shadow: 0 0 20px rgba(138, 43, 226, 0.1);
+    grid-row: 1; /* Explicit grid positioning */
 }
 
 .nav-header:hover {
@@ -111,6 +119,33 @@ body::before {
     align-items: center;
     gap: 30px;
     list-style: none;
+}
+
+/* Reserve space for login button to avoid layout shift when toggling */
+#login-button-container {
+    display: flex;
+    align-items: center;
+    min-width: 80px; /* enough to hold login link */
+}
+
+/* When login is hidden, keep layout space but not interactive */
+#login-button-container[aria-hidden="true"] {
+    visibility: hidden;
+    pointer-events: none;
+}
+
+/* Ensure user-profile keeps consistent sizing */
+.user-profile {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.user-avatar {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    object-fit: cover;
 }
 
 .nav-menu a {
@@ -231,16 +266,21 @@ header {
 footer {
     background: rgba(10, 10, 20, 0.7);
     border-top: 1px solid var(--border-color);
-    margin-top: 80px;
+    margin-top: 0; /* Reset margin as grid layout handles spacing */
     color: var(--text-secondary);
     backdrop-filter: blur(12px);
     -webkit-backdrop-filter: blur(12px);
+    width: 100%;
+    position: relative;
+    z-index: 10;
+    grid-row: 3; /* Footer is always the third row */
 }
 
 .footer-content {
     max-width: 1200px;
     margin: 0 auto;
     padding: 60px 20px 20px 20px;
+    position: relative;
 }
 
 .footer-grid {
@@ -299,6 +339,11 @@ footer {
 .footer-links a:hover {
     color: var(--bright-purple);
     text-decoration: underline;
+}
+
+/* Page content spacing */
+.container, main {
+    padding-bottom: 50px; /* Add consistent bottom padding before footer */
 }
 
 /* Media Queries */
