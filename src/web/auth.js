@@ -76,8 +76,10 @@ exports.discordCallback = async (req, res) => {
       maxAge: typeof expires_in === 'number' ? expires_in * 1000 : 24 * 60 * 60 * 1000,
     });
 
-    // redirect to frontend (cookie will be used by frontend)
-    res.redirect('/login-success.html');
+  // redirect to frontend (cookie will be used by frontend)
+  // Use an absolute URL for the final redirect
+  const baseUrl = process.env.BASE_URL || '';
+  res.redirect(`${baseUrl}/login-success.html`);
   } catch (err) {
     console.error('OAuth callback error', err.response ? err.response.data : err.message);
     res.status(500).send('OAuth error');

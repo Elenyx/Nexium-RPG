@@ -11,6 +11,7 @@ This directory contains the Netlify configuration and serverless functions for t
 ## Dependencies
 
 The functions require several dependencies, including:
+
 - `serverless-http`
 - `express`
 - `cookie-parser`
@@ -71,4 +72,4 @@ cd ../..
 netlify dev
 ```
 
-This starts a local server at http://localhost:8888 that emulates the Netlify environment.
+This starts a local server at <http://localhost:8888> that emulates the Netlify environment.

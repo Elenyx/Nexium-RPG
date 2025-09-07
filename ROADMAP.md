@@ -327,11 +327,13 @@ Nexium is an anime-themed Discord RPG bot built with Discord.js v14, featuring c
 **Core Concept**: Dynamic "Hub and Rift" system for scalable dimensional travel without overwhelming players with 30+ persistent worlds.
 
 #### **🏠 The Nexus Hub**
+
 - [ ] **Central Hub Development**: Solidify `Nexus Hub` as social and utility area
 - [ ] **Hub Features**: Social spaces, collection management, core feature access
 - [ ] **Hub Services**: Rest areas, merchant NPCs, dimensional portals
 
 #### **🌌 Dimensional Rifts (Scalable Solution)**
+
 - [ ] **Rift System Architecture**: Temporary, rotating dimensional access
 - [ ] **Rift Scheduler**: Automated opening/closing system with rotating schedule
 - [ ] **Rift Pool**: Curated selection of 5-10 anime dimensions in rotation
@@ -339,18 +341,21 @@ Nexium is an anime-themed Discord RPG bot built with Discord.js v14, featuring c
 - [ ] **Rift Mechanics**: Energy-based travel with immediate landing (no speed elements)
 
 #### **🗺️ Exploration System**
+
 - [ ] **Mini-Game Exploration**: Energy-based exploration in rifts and permanent dimensions
 - [ ] **Resource Discovery**: Find "Dimensional Fragments" and exclusive resources
 - [ ] **Lore Uncovering**: Discover dimension-specific stories and secrets
 - [ ] **Rare Character Hunting**: Dimension-exclusive characters and variants
 
 #### **💎 New Currency - Dimensional Fragments**
+
 - [ ] **Fragment System**: Exclusive currency from dimensional exploration
 - [ ] **Fragment Uses**: Craft dimension-specific items, unlock new dimensions
 - [ ] **Fragment Sources**: Exploration rewards, battle victories, quest completion
 - [ ] **Fragment Trading**: Limited marketplace for dimensional goods
 
 #### **👑 World Bosses**
+
 - [ ] **Boss Implementation**: Unique world bosses per dimension
 - [ ] **Server Collaboration**: Multi-player boss battles requiring coordination
 - [ ] **Exclusive Rewards**: Dimension-specific loot and achievements
@@ -361,6 +366,7 @@ Nexium is an anime-themed Discord RPG bot built with Discord.js v14, featuring c
 **Core Concept**: Enhanced battle mechanics with dimensional modifiers and cross-dimensional strategy.
 
 #### **🌟 Dimensional Anomalies**
+
 - [ ] **Anomaly System**: Random battle modifiers in dimensional locations
 - [ ] **Anomaly Types**:
   - Zero Gravity: Speed stats doubled
@@ -370,12 +376,14 @@ Nexium is an anime-themed Discord RPG bot built with Discord.js v14, featuring c
 - [ ] **Anomaly Integration**: Automatic application during dimensional battles
 
 #### **🌍 Cross-Dimensional PvP**
+
 - [ ] **Global Ladder**: Ranked PvP across all dimensions
 - [ ] **Cross-Server Battles**: Compete against players from different servers
 - [ ] **Dimensional Advantages**: Home dimension bonuses in battles
 - [ ] **Tournament System**: Seasonal competitive events
 
 #### **🤝 Team Synergy System**
+
 - [ ] **Anime Series Synergy**: Characters from same series or themes (e.g., "Swordsmen," "Mages") get stat boosts
 - [ ] **Thematic Synergies**: Similar themes (Swordsmen, Mages) receive bonuses
 - [ ] **Cross-Dimensional Combos**: Multi-dimension team bonuses
@@ -386,18 +394,21 @@ Nexium is an anime-themed Discord RPG bot built with Discord.js v14, featuring c
 **Core Concept**: Large-scale events spanning multiple dimensions with collaborative gameplay.
 
 #### **🎭 Themed Events**
+
 - [ ] **Isekai Festival**: Characters from "other world" anime in single dimension
 - [ ] **Event Storylines**: Unique narratives with special quests
 - [ ] **Exclusive Gacha**: Limited-time character banners
 - [ ] **Event Cosmetics**: Temporary dimensional frames and effects
 
 #### **❓ "What If?" Scenarios**
+
 - [ ] **Alternate Timelines**: "What if Naruto joined Akatsuki?"
 - [ ] **Variant Characters**: Alternative versions with different abilities
 - [ ] **Scenario-Specific Mechanics**: Unique battle modifiers per scenario
 - [ ] **Collectible Variants**: Limited-time alternate character designs
 
 #### **🌐 Global Events**
+
 - [ ] **World-Ending Threats**: Server-wide dimensional tear events
 - [ ] **Wave Defense**: Progressive enemy waves across dimensions
 - [ ] **Collaborative Goals**: Server-wide objectives and rewards
@@ -408,12 +419,14 @@ Nexium is an anime-themed Discord RPG bot built with Discord.js v14, featuring c
 **Core Concept**: Character card frames as dimensional cosmetics with canvas integration.
 
 #### **🖼️ Frame System**
+
 - [ ] **Canvas Integration**: Dynamic frame generation using existing Canvas package
 - [ ] **Frame Types**: Dimension-specific borders and backgrounds
 - [ ] **Frame Unlocking**: Earned through dimensional exploration and achievements
 - [ ] **`/skin` Command**: `/skin <character_id> <frame_id>` for frame application
 
 #### **🎨 Cosmetic Features**
+
 - [ ] **Frame Collection**: Unlock and collect dimensional frames
 - [ ] **Visual Customization**: Apply frames to character cards
 - [ ] **Achievement Integration**: Special frames for dimensional milestones
@@ -480,18 +493,21 @@ Nexium is an anime-themed Discord RPG bot built with Discord.js v14, featuring c
 ### **🛠️ Technical Implementation Notes**
 
 #### **Database Schema Extensions**
+
 - [ ] `dimensions` table: Properties, mechanics, unlock requirements
 - [ ] `dimensional_rifts` table: Active rifts, timers, rewards
 - [ ] `user_dimensions` table: Progress tracking, unlocks, fragments
 - [ ] `dimensional_frames` table: Cosmetic frames, ownership, application
 
 #### **Service Layer Additions**
+
 - [ ] **DimensionService**: Travel, rift management, exploration
 - [ ] **EventService**: Cross-dimensional event coordination
 - [ ] **CosmeticService**: Frame management, canvas integration
 - [ ] **SynergyService**: Team synergy calculations
 
 #### **Performance Considerations**
+
 - [ ] Rift rotation caching in Redis
 - [ ] Dimensional data preloading
 - [ ] Event state synchronization

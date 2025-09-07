@@ -112,8 +112,10 @@ app.get('/auth/discord/callback', async (req, res) => {
       maxAge: typeof expires_in === 'number' ? expires_in * 1000 : 24 * 60 * 60 * 1000,
     });
 
-    // Redirect to login success page
-    res.redirect('/login-success.html');
+  // Redirect to login success page
+  // Use an absolute URL for the final redirect (BASE_URL can be set in Netlify env)
+  const baseUrl = process.env.BASE_URL || '';
+  res.redirect(`${baseUrl}/login-success.html`);
   } catch (err) {
     console.error('OAuth callback error', err.response ? err.response.data : err.message);
     res.status(500).send('OAuth error');

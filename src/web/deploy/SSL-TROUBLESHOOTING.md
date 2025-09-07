@@ -20,12 +20,13 @@ dig nexium-rpg.win +noall +answer
 ```
 
 Expected results:
+
 - For apex domain: Should show A records pointing to Netlify's IPs
 - For www subdomain: Should show CNAME record pointing to your Netlify site
 
 ### 2. Check SSL Certificate in Netlify
 
-1. Go to [Netlify Dashboard](https://app.netlify.com/)
+1. Go to Netlify Dashboard
 2. Select your site
 3. Navigate to: **Site settings** → **Domain management** → **HTTPS**
 4. Check the status of your certificate provisioning
@@ -36,7 +37,7 @@ Expected results:
 The error message mentions HSTS, which can prevent access even after fixing SSL:
 
 1. In Netlify dashboard: **Site settings** → **Domain management** → **HTTPS**
-2. Under HSTS, disable preloading temporarily 
+2. Under HSTS, disable preloading temporarily
 3. Update your `netlify.toml` to remove HSTS headers temporarily
 4. Redeploy your site
 
@@ -66,7 +67,7 @@ openssl s_client -connect nexium-rpg.win:443 -servername nexium-rpg.win
 
 If the issue persists after 24 hours:
 
-1. Go to [Netlify Support](https://www.netlify.com/support/)
+1. Go to Netlify Support
 2. Provide your site name, custom domain, and error screenshots
 3. Mention that you're having SSL certificate issues with HSTS
 

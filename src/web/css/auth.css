@@ -2,56 +2,65 @@
 .user-profile {
     display: flex;
     align-items: center;
+    gap: 12px; /* Adds space between items */
     margin-left: 20px;
-    padding: 5px 10px;
+    padding: 5px;
     background: rgba(75, 0, 130, 0.2);
-    border-radius: 20px;
+    border: 1px solid var(--border-color);
+    border-radius: 50px; /* Pill shape */
     transition: all 0.3s ease;
+    height: 42px; /* Set a fixed height */
 }
 
 .user-avatar {
-    width: 30px;
-    height: 30px;
+    width: 32px;
+    height: 32px;
     border-radius: 50%;
-    margin-right: 10px;
     border: 2px solid var(--primary-purple);
 }
 
 .user-name {
     color: var(--light-purple);
-    margin-right: 10px;
     font-weight: 500;
+    max-width: 100px; /* Prevent long names from breaking layout */
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
 .logout-button {
     background: var(--dark-purple);
     color: var(--text-primary);
     border: none;
-    padding: 3px 10px;
-    border-radius: 15px;
+    padding: 6px 14px;
+    border-radius: 20px;
     cursor: pointer;
     font-size: 0.8rem;
+    font-weight: bold;
     transition: all 0.2s ease;
 }
 
 .logout-button:hover {
     background: var(--primary-purple);
+    box-shadow: 0 0 10px var(--glow-color);
 }
 
 .nav-login-button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px; /* Space for an icon */
     background: var(--primary-purple);
     color: white !important;
-    padding: 5px 15px;
-    border-radius: 15px;
+    padding: 10px 20px;
+    border-radius: 50px;
+    font-weight: bold;
+    height: 42px; /* Match the height of the user profile */
     transition: all 0.2s ease;
 }
 
 .nav-login-button:hover {
     background: var(--bright-purple);
     transform: translateY(-2px);
-}
-
-.login-button {
-    margin-left: 15px;
-    background-color: var(--dark-purple);
+    box-shadow: 0 4px 15px var(--glow-color);
 }

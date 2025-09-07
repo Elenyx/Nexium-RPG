@@ -1,9 +1,11 @@
 # Frame System Documentation
 
 ## Overview
+
 The frame system allows users to customize their character cards with different visual **overlay frames** (skins). Frames are stored on ImageKit.io and applied as overlays via canvas rendering. Frames are **rarity-independent** and can be used on any character card.
 
 ## Quick Reference
+
 - **Frame Size**: 900 × 1200 pixels
 - **Character Art**: 800 × 1000 pixels (recommended)
 - **Format**: PNG with transparency
@@ -13,6 +15,7 @@ The frame system allows users to customize their character cards with different 
 ## Frame Configuration
 
 ### Adding New Frames
+
 To add a new frame, update the `FRAMES` object in `src/config/constants.js`:
 
 ```javascript
@@ -30,9 +33,11 @@ FRAMES: {
 ## Frame Management Options
 
 ### Option 1: Constants Configuration (Current)
+
 Frames are managed in `src/config/constants.js` under the `FRAMES` object.
 
 ### Option 2: Dedicated Frames File (Recommended)
+
 Create `src/config/frames.js` for better organization:
 
 ```javascript
@@ -55,6 +60,7 @@ module.exports = { frames, validFrameIds: Object.values(frames).map(f => f.id) }
 ```
 
 **URL Options:**
+
 - **Relative Path**: `'frames/basic_gold.png'` → `'https://ik.imagekit.io/NexiumRPG/frames/basic_gold.png'`
 - **Full URL**: `'https://ik.imagekit.io/NexiumRPG/frames/custom_frame.png'` (used as-is)
 
@@ -63,6 +69,7 @@ Both formats are supported automatically!
 ## Frame & Art Specifications
 
 ### Frame Dimensions
+
 - **Frame Size**: 900 × 1200 pixels (standard card dimensions)
 - **Format**: PNG with transparency
 - **Usage**: Full-size overlays applied over character cards
@@ -71,22 +78,26 @@ Both formats are supported automatically!
 ### Character Art Sizing Guidelines
 
 **Recommended Size**: 800 × 1000 pixels
+
 - Fits perfectly within the 900 × 1200 frame
 - Maintains aspect ratio and quality
 - Automatic centering and scaling
 
 **Supported Sizes**:
+
 - **Minimum**: 400 × 500 pixels (will be upscaled)
 - **Maximum**: 1200 × 1500 pixels (will be downscaled)
 - **Any aspect ratio**: Automatically fitted and centered
 
 **Canvas Processing**:
+
 - Images are scaled to fit within 800×1000 area while maintaining aspect ratio
 - Smaller images are upscaled with high-quality interpolation
 - Larger images are downscaled proportionally
 - All images are centered within the character area
 
 ### Layout Structure
+
 ```
 900×1200 Frame
 ┌─────────────────────────────────────┐
@@ -103,6 +114,7 @@ Both formats are supported automatically!
 ```
 
 ### Obtain Methods
+
 - `default` - Always available (standard frame)
 - `event` - Obtained through special events
 - `task` - Obtained through completing tasks
@@ -111,12 +123,14 @@ Both formats are supported automatically!
 - `seasonal` - Limited time seasonal frames
 
 ### Frame ID Validation
+
 - Add new frame IDs to `VALID_FRAME_IDS` array in constants
 - The system automatically validates frame IDs in the `/skin` command
 
 ## Usage
 
 ### Command
+
 ```
 /skin <character_id> <frame_id>
 ```
@@ -134,15 +148,19 @@ Both formats are supported automatically!
 ## Technical Implementation
 
 ### Database
+
 - Frame ID is stored in `UserCharacter.frameId` field
 - Migration: `add-frame-id-migration.js`
 
 ### Services
+
 - `FrameManager.js` - Handles frame operations and validation
 - Integrates with ImageKit.io for frame image retrieval
 
 ### Canvas Integration
+
 When implementing visual rendering:
+
 1. Load character image from ImageKit
 2. Load selected frame overlay image from ImageKit (if not default)
 3. Composite frame overlay over character image
@@ -150,6 +168,7 @@ When implementing visual rendering:
 5. Return the final composited image
 
 ## Future Enhancements
+
 - Frame unlock requirements (premium currency, achievements)
 - Animated frames
 - User-customizable frame colors

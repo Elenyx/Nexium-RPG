@@ -5,6 +5,7 @@ Keep these snippets as canonical examples of how to build and send Components V2
 
 Text Display
 -----------
+
 ```js
 const { TextDisplayBuilder, MessageFlags } = require('discord.js');
 
@@ -19,6 +20,7 @@ await channel.send({
 
 Section with Button
 -------------------
+
 ```js
 const { SectionBuilder, ButtonStyle, MessageFlags } = require('discord.js');
 
@@ -46,6 +48,7 @@ await channel.send({
 
 Container with an action row
 ----------------------------
+
 ```js
 const { ContainerBuilder, UserSelectMenuBuilder, ButtonStyle, MessageFlags } = require('discord.js');
 
@@ -75,6 +78,7 @@ await channel.send({
 
 Notes / Caveats
 ---------------
+
 - You cannot set `content`, `embeds`, `stickers`, or `poll` when using Components V2. If you need to edit a message and keep V2 components, set those fields explicitly to `null` when calling `edit()`.
 - Messages can have up to 40 components total.
 - Total text across all Text Display components must not exceed 4000 characters.

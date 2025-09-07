@@ -108,6 +108,7 @@ body::before {
 
 .nav-menu {
     display: flex;
+    align-items: center;
     gap: 30px;
     list-style: none;
 }
@@ -751,4 +752,9 @@ footer {
     font-size: 0.8rem;
     font-weight: 600;
     border: 1px solid rgba(138, 43, 226, 0.2);
+}
+#login-button-container, #user-profile {
+    min-width: 210px; /* Reserve space for the wider user profile */
+    display: flex;
+    justify-content: flex-end; /* Aligns the content to the right */
 }

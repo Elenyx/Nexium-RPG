@@ -1,68 +1,91 @@
-# 🌌 Nexium - Anime Multiverse Discord Bot
+# Nexium — Discord RPG Bot
 
-[![Discord.js](https://img.shields.io/badge/discord.js-14.19.3+-blue.svg)](https://discord.js.org/)
-[![Node.js](https://img.shields.io/badge/node.js/rarity-progress NU001   # Check upgrade progress
-```
+[![discord.js](https://img.shields.io/badge/discord.js-14.22.1-blue.svg)](https://discord.js.org/)
+[![node](https://img.shields.io/badge/node-%3E%3D18.0.0-brightgreen.svg)](https://nodejs.org/)
+[![license](https://img.shields.io/badge/license-MIT-yellow.svg)](LICENSE)
+[![components-v2](https://img.shields.io/badge/Components%20V2-ready-purple.svg)](https://discord.com/developers/docs/interactions/message-components)
+[![Netlify Status](https://api.netlify.com/api/v1/badges/37c57f4b-a580-44f8-8e98-88e5702309b2/deploy-status)](https://app.netlify.com/projects/nexium-rpg/deploys)
 
-## 🎨 Character Card System
+Lightweight README focused on the Discord bot (code and deployment). For docs and guides see the `docs/` folder.
 
-### **Frame Overlay System**
+### How do I get more Dimensional Energy?
 
-Nexium features a comprehensive character card customization system that allows players to apply decorative frames to their character cards:
+Dimensional Energy regenerates automatically at 1 point per minute (max 100). You can also:
 
-#### **Available Frames**
+- Claim daily rewards (`/daily`)
+- Complete achievements
+- Participate in server events
+- Purchase energy boosters
 
-| Frame ID | Name | Description | Obtain Method |
-|----------|------|-------------|---------------|
-| `default` | Default Frame | Standard character card frame | Always available |
-| `basic_gold` | Golden Frame | Elegant gold border frame overlay | Event rewards |
-| `basic_silver` | Silver Frame | Shiny silver border frame overlay | Task completion |
-| `premium_diamond` | Diamond Frame | Luxurious diamond-encrusted frame overlay | Battle victories |
-| `premium_platinum` | Platinum Frame | Premium platinum frame overlay with effects | Achievements |
-| `seasonal_christmas` | Festive Christmas Frame | Holiday-themed frame overlay with snow effects | Seasonal events |
-| `seasonal_halloween` | Spooky Halloween Frame | Halloween-themed frame overlay with special effects | Seasonal events |
+### What determines character rarity in summons?
 
-#### **Key Features**
+Summon rates are:
 
-- **High-Quality Rendering**: Canvas-based rendering with automatic scaling
-- **ImageKit Integration**: Fast CDN delivery for frame and character images
-- **Character Name Overlay**: Automatic character name rendering with transparent backgrounds
-- **Fade Effects**: Gradient backgrounds with smooth transparency
-- **Flexible Sizing**: Automatic scaling to fit various character art dimensions
-- **Real-time Updates**: Instant frame changes via Discord commands
+- Common: 47.7%
+- Rare: 30.2%
+- Epic: 15.1%
+- Legendary: 5%
+- Mythic: 2%
+- Dimensional: Event Only*
 
-#### **Technical Specifications**
+Two-Tier Progression System:
 
-- **Canvas Dimensions**: 900x1200 pixels (3:4 aspect ratio)
-- **Character Area**: 800x1000 pixels within frame
-- **Text Rendering**: Bottom-aligned with rounded background
-- **Image Formats**: PNG with transparency support
-- **Font System**: Custom font loading with fallback support
+- Basic Group: Common → Rare → Epic (then level system up to 100)
+- Advanced Group: Legendary → Mythic (then level system up to 100)
 
-### **Skin Command Usage**
+Dimensional characters are only obtainable through dimensional events, raid boss drops, or limited banners.
 
-```bash
-/skin <character_id> <frame_id>    # Apply frame to character
-/skin NU001 basic_gold            # Apply golden frame
-/skin NU001 default               # Remove frame overlay
-```
+### How does the rarity upgrade system work?
 
-### **Character Name Rendering**
+Nexium features a balanced two-group rarity progression system.
 
-- **Position**: Bottom center of card with padding
-- **Background**: Semi-transparent with gradient fade
-- **Font**: Configurable size and family
+Basic Group (Common → Rare → Epic):
+
+- Common → Rare: 1,000 shards
+- Rare → Epic: 2,500 shards
+- Epic = Maximum rarity
+- After reaching Epic: Level system (1-100 levels)
+
+Advanced Group (Legendary → Mythic):
+
+- Legendary → Mythic: 10,000 shards
+- Mythic = Maximum rarity
+- After reaching Mythic: Level system (1-100 levels)
+
+Key Features:
+
+- No upgrades beyond Epic/Mythic — prevents power creep
+- Level system provides long-term progression
+- Remaining shards can be used for leveling
+
+### Can I trade characters with other players?
+
+Yes — use `/trade request @user character_name` to initiate trades. Both players must confirm the exchange. Some limitations apply:
+
+- Cannot trade locked characters
+- Daily trade limits exist
+- Faction restrictions may apply
+
+### How do faction wars work?
+
+Faction wars are server-wide events where factions compete for territory control:
+
+- Declare war with `/war declare`
+- Members participate in battles
+- Victory grants territory and rewards
+- Wars last 7 days with multiple phases
 - **Alignment**: Center-aligned text
 - **Effects**: Rounded corners with smooth edges
 
-## 🏗️ Architecture0.0+-green.svg)](https://nodejs.org/)
+## 🏗️ Architecture
+
 [![PostgreSQL](https://img.shields.io/badge/PostgreSQL-15.0+-blue.svg)](https://www.postgresql.org/)
 [![License](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 [![Components V2](https://img.shields.io/badge/Components-V2%20Ready-purple.svg)](https://discord.com/developers/docs/interactions/message-components)
 
-> **Navigate the void between anime dimensions and forge your multiverse legacy**
+> Navigate the void between anime dimensions and forge your multiverse legacy.
 
-Nexium is an advanced Discord bot that creates an immersive anime multiverse experience, featuring character collection, dimensional battles, territory conquest, faction warfare, and cross-dimensional events. Built with Discord.js v14 and full Components V2 support.
+Nexium is an advanced Discord bot that creates an immersive anime multiverse experience. It features character collection, dimensional battles, and territory conquest. It also supports faction warfare and event-driven features. Built with Discord.js v14 and Components V2.
 
 ## ✨ Features
 
@@ -254,7 +277,7 @@ Nexium features a balanced progression system designed to provide fair and engag
 
 ### **Project Structure**
 
-```
+```text
 nexium-bot/
 ├── src/
 │   ├── commands/          # Slash commands organized by category
@@ -473,8 +496,7 @@ We welcome contributions! Please see our [Contributing Guide](CONTRIBUTING.md) f
 
 ## ❓ FAQ
 
-<details>
-<summary><strong>How do I get more Dimensional Energy?</strong></summary>
+### How do I get more Dimensional Energy?
 
 Dimensional Energy regenerates automatically at 1 point per minute (max 100). You can also:
 
@@ -483,10 +505,7 @@ Dimensional Energy regenerates automatically at 1 point per minute (max 100). Yo
 - Participate in server events
 - Purchase energy boosters
 
-</details>
-
-<details>
-<summary><strong>What determines character rarity in summons?</strong></summary>
+### What determines character rarity in summons?
 
 Summon rates are:
 
@@ -505,10 +524,7 @@ Summon rates are:
 
 *Dimensional characters are only obtainable through dimensional events, raid boss drops, or limited banners.
 
-</details>
-
-<details>
-<summary><strong>How does the rarity upgrade system work?</strong></summary>
+### How does the rarity upgrade system work?
 
 Nexium features a balanced two-group rarity progression system:
 
@@ -532,21 +548,17 @@ Nexium features a balanced two-group rarity progression system:
 - Remaining shards can be used for leveling
 - Balanced gameplay across all character rarities
 
-</details>
+### Can I trade characters with other players?
 
-<details>
-<summary><strong>Can I trade characters with other players?</strong></summary>
+Yes! Use `/trade request @user character_name` to initiate trades. Both players must confirm the exchange.
 
-Yes! Use `/trade request @user character_name` to initiate trades. Both players must confirm the exchange. Some limitations apply:
+Some limitations apply:
 
 - Cannot trade locked characters
 - Daily trade limits exist
 - Faction restrictions may apply
 
-</details>
-
-<details>
-<summary><strong>How do faction wars work?</strong></summary>
+### How do faction wars work?
 
 Faction wars are server-wide events where factions compete for territory control:
 
@@ -554,8 +566,6 @@ Faction wars are server-wide events where factions compete for territory control
 - Members participate in battles
 - Victory grants territory and rewards
 - Wars last 7 days with multiple phases
-
-</details>
 
 ## 🆘 Support
 
@@ -584,10 +594,4 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 ---
 
-<div align="center">
-  <img src="assets/images/nexium-logo.png" alt="Nexium Logo" width="200">
-  
-  **✨ Built with passion for the anime multiverse ✨**
-  
-  [Discord](https://discord.gg/nexium) • [Twitter](https://twitter.com/nexiumbot) • [Patreon](https://patreon.com/nexiumbot)
-</div>
+Built with passion for the anime multiverse. Connect on Discord, Twitter, or Patreon.

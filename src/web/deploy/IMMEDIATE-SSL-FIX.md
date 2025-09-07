@@ -33,6 +33,7 @@ Then deploy the updated configuration.
 Make sure your DNS is properly configured:
 
 For Apex Domain (nexium-rpg.win):
+
 - A Records pointing to Netlify's IPs:
   - 75.2.60.5
   - 99.83.190.57
@@ -40,6 +41,7 @@ For Apex Domain (nexium-rpg.win):
   - 99.83.179.38
 
 For www Subdomain:
+
 - CNAME record pointing to your-site-name.netlify.app
 
 ## 5. Force Netlify to Reprovision Certificate
@@ -51,7 +53,7 @@ For www Subdomain:
 ## 6. Test in Incognito/Private Browsing
 
 - Open an incognito window in Chrome or private window in Firefox
-- Try accessing your site at https://nexium-rpg.win
+- Try accessing your site at <https://nexium-rpg.win>
 
 ## 7. If Still Not Working After 1 Hour
 

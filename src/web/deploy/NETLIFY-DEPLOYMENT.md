@@ -1,3 +1,4 @@
+````markdown
 # Nexium RPG - Netlify Deployment Guide
 
 This guide explains how to deploy the Nexium RPG Discord bot website to Netlify.
@@ -136,3 +137,5 @@ If you encounter SSL errors like "ERR_CERT_AUTHORITY_INVALID" or "Your connectio
      ```
 
 For more help, visit the [Netlify support forums](https://answers.netlify.com/) or [Discord Developer Portal](https://discord.com/developers/docs/intro).
+
+````
