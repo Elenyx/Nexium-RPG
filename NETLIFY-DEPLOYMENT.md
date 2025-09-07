@@ -99,11 +99,40 @@ are available to the Netlify Functions at runtime.
 
 ## Troubleshooting
 
-If you encounter issues:
+### Function and OAuth Issues
 
 1. Check the Netlify function logs in the Netlify dashboard
 2. Verify that your environment variables are set correctly
 3. Make sure your Discord OAuth2 redirect URI matches your Netlify site URL
 4. Check that the Discord application has the correct permissions and redirect URIs
+
+### SSL Certificate Issues
+
+If you encounter SSL errors like "ERR_CERT_AUTHORITY_INVALID" or "Your connection is not private":
+
+1. **Verify DNS Configuration**
+   - Ensure your DNS records are correctly pointing to Netlify
+   - For apex domain: Add `A` records pointing to Netlify's load balancer IPs
+   - For subdomains: Use a `CNAME` record pointing to your `sitename.netlify.app` domain
+
+2. **Check SSL Certificate Status**
+   - Go to Netlify dashboard → Site settings → Domain management → HTTPS
+   - Ensure "Netlify DNS" or "Custom certificate" is enabled
+   - Certificate provisioning can take up to 24 hours
+   - Click "Renew certificate" if provisioning seems stuck
+
+3. **Manage HSTS Settings**
+   - If you're still setting up the site, temporarily disable HSTS until SSL is working correctly
+   - HSTS preload can cause browsers to refuse connections even after fixing SSL issues
+   - To clear HSTS locally in Chrome, visit `chrome://net-internals/#hsts` and delete the domain
+
+4. **Force HTTPS Redirects**
+   - Ensure your `netlify.toml` includes HTTPS headers:
+     ```toml
+     [[headers]]
+       for = "/*"
+       [headers.values]
+         Strict-Transport-Security = "max-age=63072000; includeSubDomains; preload"
+     ```
 
 For more help, visit the [Netlify support forums](https://answers.netlify.com/) or [Discord Developer Portal](https://discord.com/developers/docs/intro).

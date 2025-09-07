@@ -17,6 +17,12 @@
 [[plugins]]
   package = "@netlify/plugin-functions-install-core"
 
+# Force HTTPS
+[[headers]]
+  for = "/*"
+  [headers.values]
+    Strict-Transport-Security = "max-age=63072000; includeSubDomains; preload"
+
 # Dev settings (for netlify dev command)
 [dev]
   framework = "#static"
