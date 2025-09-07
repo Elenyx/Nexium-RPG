@@ -6,12 +6,16 @@
   base = "."
   # Directory to publish (the static files)
   publish = "src/web"
-  # Build command (we don't need to build anything for this project)
-  command = "echo 'No build step required'"
+  # Build command to ensure function dependencies are installed
+  command = "npm install && cd netlify/functions && npm install"
   # Functions directory
   functions = "netlify/functions"
   # Node.js version
   environment = { NODE_VERSION = "20" }
+
+# Install dependencies for Netlify functions
+[[plugins]]
+  package = "@netlify/plugin-functions-install-core"
 
 # Dev settings (for netlify dev command)
 [dev]

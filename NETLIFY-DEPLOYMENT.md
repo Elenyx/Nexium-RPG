@@ -39,8 +39,9 @@ This guide explains how to deploy the Nexium RPG Discord bot website to Netlify.
 3. Connect to your GitHub repository
 4. Select the repository and branch
 5. Configure the build settings:
-   - Build command: `# no build command`
+   - Build command: `npm install && cd netlify/functions && npm install`
    - Publish directory: `src/web`
+   - Functions directory: `netlify/functions`
 6. Click "Deploy site"
 
 #### Option B: Deploy via the Netlify CLI
@@ -75,7 +76,26 @@ To test your Netlify functions locally before deploying:
 
 - `/netlify.toml` - Netlify configuration file
 - `/netlify/functions/api.js` - The serverless function that handles all API routes
+- `/netlify/functions/package.json` - Function-specific dependencies
+- `/package.json` - Main project dependencies (also includes function dependencies)
 - `/src/web/` - Static website files
+
+## Dependency Management
+
+This project uses two approaches to manage function dependencies:
+
+1. **Plugin Method**: The `@netlify/plugin-functions-install-core` plugin is configured in 
+   `netlify.toml` to automatically install dependencies listed in the function's package.json.
+
+2. **Build Command Method**: As a fallback, the build command installs dependencies 
+   for both the main project and the functions:
+
+   ```bash
+   npm install && cd netlify/functions && npm install
+   ```
+
+These approaches ensure that all required dependencies, including `serverless-http`, 
+are available to the Netlify Functions at runtime.
 
 ## Troubleshooting
 
