@@ -9,13 +9,21 @@
     <h1>Login successful</h1>
     <p>Redirecting...</p>
     <script>
-      const params = new URLSearchParams(location.search);
-      const userId = params.get('user_id');
-      if (userId) {
-        location.href = `/?user_id=${userId}`;
-      } else {
-        document.body.innerHTML += '<p>No user id found in query.</p>';
-      }
+      document.addEventListener('DOMContentLoaded', async () => {
+        try {
+          // Attempt to fetch user info using the cookie
+          const response = await fetch('/me');
+          if (response.ok) {
+            const data = await response.json();
+            // Redirect to homepage or dashboard
+            location.href = '/';
+          } else {
+            document.body.innerHTML += '<p>Error fetching user information.</p>';
+          }
+        } catch (error) {
+          document.body.innerHTML += `<p>Error: ${error.message}</p>`;
+        }
+      });
     </script>
   </body>
 </html>

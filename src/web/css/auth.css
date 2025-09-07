@@ -1,0 +1,57 @@
+/* User Profile styles */
+.user-profile {
+    display: flex;
+    align-items: center;
+    margin-left: 20px;
+    padding: 5px 10px;
+    background: rgba(75, 0, 130, 0.2);
+    border-radius: 20px;
+    transition: all 0.3s ease;
+}
+
+.user-avatar {
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    margin-right: 10px;
+    border: 2px solid var(--primary-purple);
+}
+
+.user-name {
+    color: var(--light-purple);
+    margin-right: 10px;
+    font-weight: 500;
+}
+
+.logout-button {
+    background: var(--dark-purple);
+    color: var(--text-primary);
+    border: none;
+    padding: 3px 10px;
+    border-radius: 15px;
+    cursor: pointer;
+    font-size: 0.8rem;
+    transition: all 0.2s ease;
+}
+
+.logout-button:hover {
+    background: var(--primary-purple);
+}
+
+.nav-login-button {
+    background: var(--primary-purple);
+    color: white !important;
+    padding: 5px 15px;
+    border-radius: 15px;
+    transition: all 0.2s ease;
+}
+
+.nav-login-button:hover {
+    background: var(--bright-purple);
+    transform: translateY(-2px);
+}
+
+.login-button {
+    margin-left: 15px;
+    background-color: var(--dark-purple);
+}

@@ -12,6 +12,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="css/styles.css">
     <link rel="stylesheet" href="css/index.css">
+    <link rel="stylesheet" href="css/auth.css">
 </head>
 <body>
     <!-- Navigation Header -->
@@ -24,6 +25,14 @@
                 <li><a href="#features">Features</a></li>
                 <li><a href="characters.html">Characters</a></li>
                 <li><a href="commands.html">Commands</a></li>
+                <li id="user-profile" style="display:none;" class="user-profile">
+                    <img id="user-avatar" alt="User Avatar" class="user-avatar">
+                    <span id="user-name" class="user-name"></span>
+                    <button id="logout-button" class="logout-button">Logout</button>
+                </li>
+                <li id="login-button-container">
+                    <a href="/auth/discord" class="nav-login-button">Login</a>
+                </li>
             </ul>
         </div>
     </nav>
@@ -108,9 +117,12 @@
         <section class="cta-section">
             <h2>Ready to Start Your Adventure?</h2>
             <p>Join thousands of players in the ultimate anime RPG experience!</p>
-            <a href="https://discord.com/api/oauth2/authorize?client_id=YOUR_BOT_ID&permissions=8&scope=bot%20applications.commands"
+            <a href="https://discord.com/api/oauth2/authorize?client_id=${process.env.DISCORD_CLIENT_ID}&permissions=8&scope=bot%20applications.commands"
                class="cta-button" target="_blank">
                 Add to Discord
+            </a>
+            <a href="/auth/discord" class="cta-button login-button">
+                Login with Discord
             </a>
         </section>
     </div>
@@ -192,5 +204,6 @@
             });
         });
     </script>
+    <script src="js/auth.js"></script>
 </body>
 </html>
