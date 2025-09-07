@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nexium RPG - Privacy Policy</title>
+    <link rel="icon" type="image/svg+xml" href="favicon.svg">
+    <link rel="apple-touch-icon" href="favicon.svg">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="css/index.css">
+</head>
+<body>
+    <!-- Navigation Header -->
+    <nav class="nav-header">
+        <div class="nav-container">
+            <a href="index.html" class="nav-logo">NEXIUM</a>
+            <ul class="nav-menu">
+                <li><a href="changelog.html">Changelog</a></li>
+                <li><a href="guides.html">Guides</a></li>
+                <li><a href="index.html#features">Features</a></li>
+                <li><a href="characters.html">Characters</a></li>
+                <li><a href="commands.html">Commands</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <header class="page-header">
+        <h1>Privacy Policy</h1>
+        <p class="page-subtitle">How we protect your data and privacy</p>
+    </header>
+
+    <div class="container">
+        <section class="info-section">
+            <h2>Information We Collect</h2>
+            <p>We collect information you provide directly to us, such as when you interact with our Discord bot. This may include:</p>
+            <ul>
+                <li>Your Discord user ID and username</li>
+                <li>Server information where the bot is used</li>
+                <li>Commands and interactions with the bot</li>
+                <li>Game progress and character collections</li>
+            </ul>
+        </section>
+
+        <section class="info-section">
+            <h2>How We Use Your Information</h2>
+            <p>We use the collected information to:</p>
+            <ul>
+                <li>Provide and maintain the bot's functionality</li>
+                <li>Track game progress and user statistics</li>
+                <li>Improve the bot's features and performance</li>
+                <li>Respond to support requests</li>
+            </ul>
+        </section>
+
+        <section class="info-section">
+            <h2>Data Sharing</h2>
+            <p>We do not sell, trade, or otherwise transfer your personal information to third parties without your consent, except as described in this policy.</p>
+        </section>
+
+        <section class="info-section">
+            <h2>Data Security</h2>
+            <p>We implement appropriate security measures to protect your personal information against unauthorized access, alteration, disclosure, or destruction.</p>
+        </section>
+
+        <section class="info-section">
+            <h2>Your Rights</h2>
+            <p>You have the right to:</p>
+            <ul>
+                <li>Access the personal information we hold about you</li>
+                <li>Request correction of inaccurate data</li>
+                <li>Request deletion of your data</li>
+                <li>Withdraw consent for data processing</li>
+            </ul>
+        </section>
+
+        <section class="info-section">
+            <h2>Contact Us</h2>
+            <p>If you have any questions about this Privacy Policy, please contact us through our Discord server or GitHub repository.</p>
+        </section>
+
+        <section class="info-section">
+            <h2>Changes to This Policy</h2>
+            <p>We may update this Privacy Policy from time to time. We will notify users of any changes by posting the new policy on this page.</p>
+            <p>Last updated: September 4, 2025</p>
+        </section>
+    </div>
+
+    <footer>
+        <div class="footer-content">
+            <div class="footer-grid">
+                <div class="footer-section">
+                    <h3>📚 Resources</h3>
+                    <ul>
+                        <li><a href="terms-and-conditions.html">Terms and Conditions</a></li>
+                        <li><a href="guides.html">Beginner's Guide</a></li>
+                        <li><a href="#">Advanced Strategies</a></li>
+                        <li><a href="#">Development Timeline</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h3>👥 Community</h3>
+                    <ul>
+                        <li><a href="#" target="_blank">Discord Server</a></li>
+                        <li><a href="#">Leaderboards</a></li>
+                        <li><a href="#">Tournaments</a></li>
+                        <li><a href="#">Support Center</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h3>⚔️ Nexium</h3>
+                    <ul>
+                        <li><a href="#">Server Rules</a></li>
+                        <li><a href="commands.html">Bot Commands</a></li>
+                        <li><a href="characters.html">Character Database</a></li>
+                        <li><a href="#">Rewards System</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h3>🔗 Quick Links</h3>
+                    <ul>
+                        <li><a href="#" target="_blank">GitHub Repository</a></li>
+                        <li><a href="#">Bot Status</a></li>
+                        <li><a href="#">Invite Bot</a></li>
+                        <li><a href="#">Support Us</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 Nexium RPG Bot. All Rights Reserved.</p>
+                <p style="margin-top: 5px; font-size: 0.8rem;">
+                    Not affiliated with any anime franchises. All character images and names are for representational purposes only.
+                </p>
+                <div class="footer-links">
+                    <a href="terms-and-conditions.html">Terms and Conditions</a> | <a href="privacy-policy.html">Privacy Policy</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Simple Intersection Observer for fade-in animations
+        document.addEventListener('DOMContentLoaded', function() {
+            const animatedElements = document.querySelectorAll('.info-section');
+
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.style.opacity = '1';
+                        entry.target.style.transform = 'translateY(0)';
+                        observer.unobserve(entry.target);
+                    }
+                });
+            }, {
+                threshold: 0.1
+            });
+
+            animatedElements.forEach(el => {
+                el.style.opacity = '0';
+                el.style.transform = 'translateY(30px)';
+                el.style.transition = 'opacity 0.6s ease-out, transform 0.6s ease-out';
+                observer.observe(el);
+            });
+        });
+    </script>
+</body>
+</html>

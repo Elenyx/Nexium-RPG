@@ -1,22 +1,9 @@
 const express = require('express');
-const app = express();
-const PORT = process.env.PORT || 3000;
+const path = require('path');
 
-// Middleware
-app.use(express.json());
-app.use(express.urlencoded({ extended: true }));
+// Import the actual server implementation from httpdocs
+const webServer = require('./httpdocs/server');
 
-// Routes
-app.get('/', (req, res) => {
-  res.send('Welcome to Nexium RPG!');
-});
-
-// Placeholder for Discord OAuth2 integration
-app.get('/auth/discord', (req, res) => {
-  res.send('Discord OAuth2 integration coming soon!');
-});
-
-// Start the server
-app.listen(PORT, () => {
-  console.log(`Server is running on http://localhost:${PORT}`);
-});
+// This file acts as a wrapper for the main server implementation
+console.log('Nexium RPG web server starting up...');
+console.log('Using httpdocs as the web root directory');

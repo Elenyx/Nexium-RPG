@@ -20,10 +20,10 @@ app.use(express.urlencoded({ extended: true }));
 const cookieParser = require('cookie-parser');
 app.use(cookieParser());
 
-// Primary website: serve our web public folder
+// Primary website: serve our httpdocs folder
 const fs = require('fs');
 const docsDir = path.join(__dirname, '..', '..', 'docs');
-app.use(express.static(path.join(__dirname, 'public')));
+app.use(express.static(__dirname));
 
 // Expose `docs/` as a backup under /backup (keeps GitHub Pages content available but not the site root)
 if (fs.existsSync(docsDir)) {
@@ -72,9 +72,9 @@ app.get('/me', async (req, res) => {
   }
 });
 
-// Fallback: serve public/index.html for SPA routes
+// Fallback: serve index.html for SPA routes
 app.use((req, res) => {
-  const publicIndex = path.join(__dirname, 'public', 'index.html');
+  const publicIndex = path.join(__dirname, 'index.html');
   if (fs.existsSync(publicIndex)) return res.sendFile(publicIndex);
   res.status(404).send('Not found');
 });

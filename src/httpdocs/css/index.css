@@ -1,0 +1,209 @@
+/* Features Section */
+.features {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 30px;
+    margin: 80px 0;
+}
+
+.feature-card {
+    background: var(--card-bg);
+    border: 1px solid var(--border-color);
+    border-radius: 15px;
+    padding: 30px;
+    text-align: center;
+    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    backdrop-filter: blur(5px);
+    position: relative;
+    overflow: hidden;
+}
+
+.feature-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(138, 43, 226, 0.1), transparent);
+    transition: left 0.5s ease;
+}
+
+.feature-card:hover::before {
+    left: 100%;
+}
+
+.feature-card:hover {
+    transform: translateY(-10px) scale(1.03);
+    box-shadow: 0 15px 40px rgba(0,0,0,0.3), 0 0 30px var(--glow-color), 0 0 60px rgba(138, 43, 226, 0.2);
+    border-color: var(--primary-purple);
+}
+
+.feature-icon {
+    font-size: 3rem;
+    margin-bottom: 20px;
+    display: block;
+    text-shadow: 0 0 15px var(--glow-color);
+}
+
+.feature-title {
+    font-size: 1.5rem;
+    color: var(--light-purple);
+    margin-bottom: 15px;
+    font-weight: 700;
+}
+
+.feature-description {
+    color: var(--text-secondary);
+    line-height: 1.6;
+}
+
+/* CTA Section */
+.cta-section {
+    text-align: center;
+    padding: 60px 20px;
+    background: linear-gradient(45deg, rgba(138, 43, 226, 0.1), rgba(75, 0, 130, 0.2));
+    border-radius: 20px;
+    margin: 80px 0;
+    border: 1px solid var(--border-color);
+}
+
+.cta-section h2 {
+    color: var(--light-purple);
+    margin-bottom: 20px;
+    font-size: 2.2rem;
+}
+
+.cta-section p {
+    color: var(--text-secondary);
+    margin-bottom: 30px;
+    font-size: 1.1rem;
+}
+
+.cta-button {
+    display: inline-block;
+    background: linear-gradient(45deg, var(--bright-purple), var(--primary-purple));
+    color: white;
+    padding: 16px 45px;
+    text-decoration: none;
+    border-radius: 50px;
+    font-weight: bold;
+    font-size: 1.1rem;
+    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    box-shadow: 0 5px 20px var(--glow-color);
+    border: none;
+    position: relative;
+    overflow: hidden;
+}
+
+.cta-button::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+    transition: left 0.5s ease;
+}
+
+.cta-button:hover::before {
+    left: 100%;
+}
+
+.cta-button:hover {
+    transform: scale(1.08) translateY(-5px);
+    box-shadow: 0 15px 40px var(--glow-color), 0 0 30px rgba(138, 43, 226, 0.4);
+}
+
+/* Stats Section */
+.stats {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 30px;
+    margin: 80px 0;
+    text-align: center;
+}
+
+.stat-number {
+    font-size: 3rem;
+    font-weight: 900;
+    color: var(--light-purple);
+    margin-bottom: 10px;
+    text-shadow: 0 0 10px var(--glow-color);
+    transition: all 0.3s ease;
+}
+
+.stat-number:hover {
+    transform: scale(1.1);
+    text-shadow: 0 0 20px var(--glow-color);
+}
+
+.stat-label {
+    color: var(--text-secondary);
+    font-size: 1rem;
+}
+
+/* Changelog & Guides */
+.changelog-content, .guides-content {
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+.update-card, .guide-card {
+    margin-bottom: 20px;
+    padding: 25px;
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 10px;
+    border-left: 3px solid var(--primary-purple);
+    transition: all 0.3s ease;
+}
+
+.update-card:hover, .guide-card:hover {
+    transform: translateX(5px);
+    background: rgba(255, 255, 255, 0.08);
+    border-left-color: var(--bright-purple);
+    box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+}
+
+.update-card h3, .guide-card h3 {
+    color: var(--light-purple);
+    margin-bottom: 10px;
+    font-size: 1.3rem;
+}
+
+.update-card p {
+    color: var(--text-secondary);
+    font-size: 0.9rem;
+    margin-bottom: 15px;
+}
+
+.update-card ul, .guide-card ol, .guide-card ul {
+    color: var(--text-secondary);
+    padding-left: 20px;
+    line-height: 1.8;
+}
+
+.guides-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 30px;
+    max-width: 1000px;
+    margin: 0 auto;
+}
+
+.rarity-list strong {
+    display: inline-block;
+    width: 100px;
+}
+.rarity-common { color: #9E9E9E; }
+.rarity-rare { color: #C3B1E1; }
+.rarity-epic { color: #9370DB; }
+.rarity-legendary { color: #8A2BE2; text-shadow: 0 0 5px #8A2BE2; }
+.rarity-mythic { color: #A020F0; text-shadow: 0 0 8px #A020F0; }
+.rarity-dimensional { color: #FFFFFF; font-weight: bold; text-shadow: 0 0 10px #A020F0, 0 0 5px #FFFFFF; }
+
+/* Media Queries for index */
+@media (max-width: 768px) {
+    .cta-section h2 { font-size: 1.8rem; }
+}
