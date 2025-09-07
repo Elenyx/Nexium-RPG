@@ -11,6 +11,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="css/styles.css">
     <link rel="stylesheet" href="css/index.css">
+    <link rel="stylesheet" href="css/auth.css">
 </head>
 <body>
     <!-- Navigation Header -->
@@ -23,6 +24,14 @@
                 <li><a href="index.html#features">Features</a></li>
                 <li><a href="characters.html">Characters</a></li>
                 <li><a href="commands.html">Commands</a></li>
+                <li id="user-profile" style="display:none;" class="user-profile">
+                    <img id="user-avatar" alt="User Avatar" class="user-avatar">
+                    <span id="user-name" class="user-name"></span>
+                    <button id="logout-button" class="logout-button">Logout</button>
+                </li>
+                <li id="login-button-container">
+                    <a href="/auth/discord" class="nav-login-button">Login</a>
+                </li>
             </ul>
         </div>
     </nav>
@@ -193,5 +202,6 @@
             </div>
         </div>
     </footer>
+    <script src="js/auth.js"></script>
 </body>
 </html>
