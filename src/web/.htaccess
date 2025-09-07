@@ -1,34 +1,43 @@
-# Apache Reverse Proxy for Node.js App
-# -----------------------------------------
+# ==============================================================================
+# NEXIUM RPG - API FORWARDING WITH PHP
+# ==============================================================================
+# This version uses a PHP script to forward API requests to Node.js rather than
+# relying on Apache's mod_proxy which might not be available on shared hosting.
+# ==============================================================================
 
-# Enable the rewrite engine
+# Enable the rewrite engine for all rules
 RewriteEngine On
 
-# -----------------------------------------
-# RULE 1: Proxy API requests to the Node.js server
-# -----------------------------------------
-# This rule captures requests for specific API endpoints and forwards them
-# to the Node.js application running on port 3000.
-# The [P] flag indicates that this is a proxy request.
-# The [L] flag means this is the last rule to be processed if it matches.
-RewriteRule ^(auth/|me|leaderboards|rewards|logout)$ http://127.0.0.1:3000%{REQUEST_URI} [P,L]
+# ------------------------------------------------------------------------------
+# SECTION 1: FORWARD API REQUESTS TO PHP PROXY
+# ------------------------------------------------------------------------------
+# Routes requests to auth-proxy.php which will handle forwarding to Node.js
 
-# -----------------------------------------
-# RULE 2: Serve existing files and directories directly
-# -----------------------------------------
-# This condition checks if the requested path corresponds to an existing file.
-# If it does, the rewrite engine stops and serves the file.
+# Auth routes
+RewriteRule ^auth/(.*)$ auth-proxy.php [L,QSA]
+
+# Other API endpoints
+RewriteRule ^(me|leaderboards|rewards|logout)$ auth-proxy.php [L,QSA]
+
+# ------------------------------------------------------------------------------
+# SECTION 2: SERVE EXISTING STATIC FILES
+# ------------------------------------------------------------------------------
+# This section ensures that requests for actual files are served directly
+
+# If the request is for an existing file...
 RewriteCond %{REQUEST_FILENAME} -f [OR]
-# This condition checks if the requested path corresponds to an existing directory.
+# ...or an existing directory...
 RewriteCond %{REQUEST_FILENAME} -d
-# If either of the above conditions is met, this rule tells Apache to do nothing
-# and let the request be handled normally.
+# ...then stop processing and serve the file/directory directly.
 RewriteRule ^ - [L]
 
-# -----------------------------------------
-# RULE 3: Fallback for client-side routing (if needed)
-# -----------------------------------------
-# If the request is not for an API endpoint and not for an existing file,
-# this rule serves the main index.html file. This is useful for single-page
-# applications (SPAs) that handle their own routing.
+# ------------------------------------------------------------------------------
+# SECTION 3: FALLBACK FOR CLIENT-SIDE ROUTING
+# ------------------------------------------------------------------------------
+# For single-page application support - serve index.html for unmatched routes
 RewriteRule ^ index.html [L]
+
+# Add content type for .htaccess if a debug request is made
+<Files .htaccess>
+    ForceType text/plain
+</Files>
