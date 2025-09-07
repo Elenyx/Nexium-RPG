@@ -1,0 +1,34 @@
+# Apache Reverse Proxy for Node.js App
+# -----------------------------------------
+
+# Enable the rewrite engine
+RewriteEngine On
+
+# -----------------------------------------
+# RULE 1: Proxy API requests to the Node.js server
+# -----------------------------------------
+# This rule captures requests for specific API endpoints and forwards them
+# to the Node.js application running on port 3000.
+# The [P] flag indicates that this is a proxy request.
+# The [L] flag means this is the last rule to be processed if it matches.
+RewriteRule ^(auth/|me|leaderboards|rewards|logout)$ http://127.0.0.1:3000%{REQUEST_URI} [P,L]
+
+# -----------------------------------------
+# RULE 2: Serve existing files and directories directly
+# -----------------------------------------
+# This condition checks if the requested path corresponds to an existing file.
+# If it does, the rewrite engine stops and serves the file.
+RewriteCond %{REQUEST_FILENAME} -f [OR]
+# This condition checks if the requested path corresponds to an existing directory.
+RewriteCond %{REQUEST_FILENAME} -d
+# If either of the above conditions is met, this rule tells Apache to do nothing
+# and let the request be handled normally.
+RewriteRule ^ - [L]
+
+# -----------------------------------------
+# RULE 3: Fallback for client-side routing (if needed)
+# -----------------------------------------
+# If the request is not for an API endpoint and not for an existing file,
+# this rule serves the main index.html file. This is useful for single-page
+# applications (SPAs) that handle their own routing.
+RewriteRule ^ index.html [L]
